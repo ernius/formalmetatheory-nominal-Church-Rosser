@@ -1,0 +1,13 @@
+\begin{thebibliography}{1}
+
+\bibitem{GP02:newapproach}
+Murdoch~J. Gabbay and Andrew~M. Pitts.
+\newblock {A New Approach to Abstract Syntax with Variable Binding}.
+\newblock {\em Formal Aspects of Computing}, 13(3-5):341--363, 2002.
+
+\bibitem{Pitts2}
+Andrew~M. Pitts.
+\newblock Alpha-structural recursion and induction.
+\newblock {\em J. ACM}, 53(3):459--506, May 2006.
+
+\end{thebibliography}

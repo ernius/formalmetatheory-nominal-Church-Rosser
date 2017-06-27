@@ -1,0 +1,608 @@
+\documentclass{entcs} 
+\usepackage{entcsmacro}
+\usepackage{graphicx}
+\sloppy
+% The following is enclosed to allow easy detection of differences in
+% ascii coding.
+% Upper-case    A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+% Lower-case    a b c d e f g h i j k l m n o p q r s t u v w x y z
+% Digits        0 1 2 3 4 5 6 7 8 9
+% Exclamation   !           Double quote "          Hash (number) #
+% Dollar        $           Percent      %          Ampersand     &
+% Acute accent  '           Left paren   (          Right paren   )
+% Asterisk      *           Plus         +          Comma         ,
+% Minus         -           Point        .          Solidus       /
+% Colon         :           Semicolon    ;          Less than     <
+% Equals        =3D           Greater than >          QuestIon mark ?
+% At            @           Left bracket [          Backslash     \
+% Right bracket ]           Circumflex   ^          Underscore    _
+% Grave accent  `           Left brace   {          Vertical bar  |
+% Right brace   }           Tilde        ~
+
+%   \documentclass{article}
+
+    % When using XeLaTeX, the following should be used instead:
+    % \documentclass[xetex, mathserif, serif]{beamer}
+    %
+    % The default font in XeLaTeX doesn’t have the default bullet character, so 
+    % either change the font:
+    % \setmainfont{XITS}
+    % \setmathfont{XITS Math}
+    %
+    % Or change the character:
+    %\setbeamertemplate{itemize items}{•}
+
+%\usepackage[bw,references]{latex/agda}
+%\usepackage[conor,references]{latex/agda}
+%\usepackage[hidelinks]{hyperref}
+\usepackage[references,links]{agda}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{textgreek}
+\usepackage{catchfilebetweentags}
+\usepackage{tipa}
+
+%math
+\newcommand{\alp}{\ensuremath{\alpha}}
+\newcommand{\lamb}{\ensuremath{\lambda}}
+\newcommand{\alphaeqsym}{\ensuremath{\sim_\alpha}}
+\newcommand{\choice}{\ensuremath{\chi}}
+
+%Agda
+\newcommand{\perma}{\ensuremath{\mathbin{\AgdaFunction{∙}_a}}}
+\newcommand{\Lam}{\ensuremath{\AgdaDatatype{ Λ}}}
+\newcommand{\freshin}[2]{\ensuremath{#1 \mathbin{\AgdaDatatype{\#}} #2}}
+\newcommand{\lambAg}[2]{\ensuremath{\AgdaInductiveConstructor{ƛ}\, #1\, #2}}
+\newcommand{\inAg}{\ensuremath{\mathbin{\AgdaFunction{∈}}}}
+\newcommand{\ninAg}{\ensuremath{\mathbin{\AgdaFunction{∉}}}}
+\newcommand{\neqAg}{\ensuremath{\mathbin{\AgdaInductiveConstructor{≢}}}}
+\newcommand{\ap}[2]{#1 \ensuremath{\mathbin{\AgdaInductiveConstructorFunction{·}} #2}}
+\newcommand{\var}[1]{\ensuremath{\AgdaInductiveConstructorFunction{v}\, #1}}
+\newcommand{\fv}{\ensuremath{{\AgdaFunction{fv}}\,}}
+\newcommand{\perm}{\ensuremath{\mathbin{\AgdaFunction{∙}}}}
+\newcommand{\free}{\ensuremath{\mathbin{\AgdaFunction{*}}}}
+\newcommand{\choiceAg}{\ensuremath{\AgdaFunction{χ}\,}}
+\newcommand{\choiceAgaux}{\ensuremath{\AgdaFunction{χ'}\,}}
+\newcommand{\alpeqAg}{\ensuremath{\mathbin{\AgdaDatatype{∼α}}}}
+\newcommand{\swap}[3]{\ensuremath{(#1 \mathbin{\AgdaFunction{∙}} #2)\, #3}}
+
+% \newcommand{\agdaf}[1]{\ensuremath{\AgdaFunction{#1}\,}}
+% \newcommand{\agdaD}[1]{\ensuremath{\AgdaDatatype{#1}\,}}
+% \newcommand{\agdav}[1]{\ensuremath{\AgdaBound{#1}\,}}
+
+\DeclareUnicodeCharacter{411}{\textipa{\textcrlambda}}
+\DeclareUnicodeCharacter{65288}{(}
+\DeclareUnicodeCharacter{65289}{)}
+\DeclareUnicodeCharacter{8788}{\ensuremath{\coloneqq}}
+\DeclareUnicodeCharacter{8336}{\ensuremath{_a}}
+\DeclareUnicodeCharacter{8799}{\ensuremath{\overset{?}{=}}}
+\DeclareUnicodeCharacter{8759}{\ensuremath{\dblcolon}}
+\DeclareUnicodeCharacter{8718}{\ensuremath{\square}}
+
+%\title{Formalisation in Constructive Type Theory of Alpha-Structural Induction and Recursion for the Lambda Calculus.}
+
+\def\lastname{Copello, Tasistro, Szasz, Bove and  Fernandez}
+
+\begin{document}
+
+\begin{frontmatter}
+ \title{Alpha-Structural Induction and Recursion for the Lambda Calculus in Constructive Type Theory}
+  \author{Ernesto Copello \thanksref{emailC}}
+  \author{\'Alvaro Tasistro \thanksref{emailT}}
+  \author{Nora Szasz \thanksref{emailS}}
+  \address{Universidad ORT Uruguay\\
+      Montevideo, Uruguay}
+\author{Ana Bove \thanksref{emailB}}
+  \address{Chalmers University of Technology\\
+    Gothenburg, Sweden}
+  \author{Maribel Fern\'andez \thanksref{emailF}}
+  \address{King's College London\\
+      London, England}
+  \thanks[emailC]{Email: \href{mailto:copello@ort.edu.uy} {\texttt{\normalshape copello@ort.edu.uy}}}
+  \thanks[emailT]{Email: \href{mailto:tasistro@ort.edu.uy} {\texttt{\normalshape tasistro@ort.edu.uy}}} 
+  \thanks[emailS]{Email: \href{mailto:szasz@ort.edu.uy} {\texttt{\normalshape szasz@ort.edu.uy}}}
+    \thanks[emailB]{Email: \href{mailto:bove@chalmers.se} {\texttt{\normalshape bove@chalmers.se}}}
+  \thanks[emailF]{Email: \href{mailto:Maribel.Fernandez@kcl.ac.uk} {\texttt{\normalshape Maribel.Fernandez@kcl.ac.uk}}}
+
+\begin{abstract} 
+We formulate principles of induction and recursion for a variant of lambda calculus in its original syntax (i.e., with only one sort of names) where \alp-conversion is based upon name swapping as in nominal abstract syntax. The principles allow to work modulo $\alpha$-conversion and implement the Barendregt variable convention. We derive them all from the simple structural induction principle on concrete terms and work out applications to some fundamental meta-theoretical results, such as the substitution lemma for $\alpha$-conversion and the lemma on substitution composition. The whole work is implemented in Agda.
+\end{abstract}
+
+\begin{keyword}
+Formal Metatheory, Lambda Calculus, Constructive Type Theory
+\end{keyword}
+
+\end{frontmatter}
+
+\maketitle
+
+\section{Introduction}
+\label{sec:intro}
+We are interested in methods for formalising in constructive type theory the meta-theory of the lambda-calculus. The main reason for this is that the lambda calculus is both a primigenial programming language and a prime test bed
+for formal reasoning on tree structures that feature (name) binding. 
+
+Specifically concerning the latter, the informal procedure consists to begin with in ``identifying terms up to $\alpha$-conversion''. However, this is not simply carried out when functions are defined by recursion and properties proven by induction. The problem has to do with the fact that the consideration of the $\alpha$-equivalence classes is actually conducted through the use of convenient representatives thereof. These are chosen by the so-called Barendregt Variable Convention (BVC): each term representing its $\alpha$-class is assumed to have bound names all different and different from all names free in the current context. Now, a general validity criterion determines that this procedure ought to be accompanied in all cases by the verification that the proofs and results of functions depend only on the $\alpha$-class and do not vary with the particular choice of the representative in question. Such verification is seldom accomplished but yet it is not the main difficulty concerning the validity of the constructions so performed. The crucial point is that e.g. inductive proofs are often carried out employing the structural principle for concrete terms ---and then it may well happen that an induction step corresponding to functional abstractions can be carried out for a conveniently chosen bound name but not for an arbitrary one as the principle requires.
+
+The problem can be avoided by the use of de Bruijn's nameless syntax \cite{deBruijn1972} or its more up-to-date version \textit{locally nameless} syntax \cite{aydemir08,chargueraud12}, which uses names for the free or global variables and the indices counting up to the binding abstractor for the occurrences of local parameters. But these methods are not without overhead in the form of  several operations or well-formedness predicates.
+As a result, there certainly is a relief in not having to consider $\alpha$-conversion; but, at the same time, the nameless syntax seriously affects the connection between actual formal procedures and what could be considered the natural features of syntax.
+The same has to be said of the map representation introduced in \cite{sato}.
+
+A different alternative is to replace the (as explained above, problematic) use of structural induction and recursion principles on concrete terms by that of so-called \emph{alpha}-structural principles working directly on the $\alpha$-equivalence classes. This means providing principles that allow to prove properties by induction and to define functions by recursion by direct use of the BVC, so as to ease the burden associated to the verification of the validity of the procedure.
+
+A first attempt in this direction is ~\cite{DBLP:conf/tphol/GordonM96}, which gives an axiomatic description of lambda terms in which equality embodies $\alpha$-conversion and that provides a method of definition of functions by recursion on such type of objects. This work ultimately rests upon the use of higher-order abstract syntax within the HOL system, and a theoretical model using de Bruijn's nameless syntax is sketched to show the soundness of the system of axioms.
+In \cite{Gabbay,Pitts1,Pitts2}, models of syntax with binders are introduced which formulate the basic concepts of abstraction, $\alpha$-equivalence and a name being ``sufficiently fresh'' in a mathematical object, on the basis of the simple operation of name swapping. This theory ---which has become known as \emph{nominal abstract syntax}--- provides a framework of (first-order) languages with binding with associated principles of $\alpha$-structural recursion and induction that are based on the verification of the non-dependence of the mathematical objects in the current context, as well as of the results of step functions used in recursive definitions, on the bound names chosen for the representatives of the $\alpha$-classes involved.
+Implementations of this approach have been tried in Isabelle/HOL ~\cite{urban05} and Coq \cite{aydemir}. In the first case the solution rests upon a weak version of higher-order abstract syntax, whereas the second one is an axiomatisation in which ---similarly to ~\cite{DBLP:conf/tphol/GordonM96} cited above--- equality is postulated as embodying $\alpha$-conversion and a model of the system based on locally nameless syntax has been constructed.
+
+Yet another approach to the formulation of the alpha-structural principles originates in the observation that, if the property to be tried is $\alpha$-compatible ---i.e., it is actually a property of the $\alpha$-classes and not just of the concrete terms--- then (complete) induction on the \emph{size} of terms can be used to bridge over the possible gap pointed out above in proofs by induction that confine themselves to convenient choice of bound names. 
+Indeed, suppose you need to prove $\mathcal{P}(\lambda x.M)$; now, if what you have is a step from $\mathcal{P}(M^{*})$ to $\mathcal{P}(\lambda x^{*}.M^{*})$ for a convenient renaming of the term, then you will be able to use your strong size-induction hypothesis on $M^{*}$, since this is still of a size lesser than that of $\mathcal{P}(\lambda x.M)$. Hence you will arrive at $\mathcal{P}(\lambda x^{*}.M^{*})$ and from there to the desired $\mathcal{P}(\lambda x.M)$ because of the $\alpha$-compatibility of $\mathcal{P}$.
+This motivates trying to provide a mechanism of this kind to formalise the use of the BVC, and that is what we attempt in this paper. The result is  that we are able to provide principles of alpha-structural induction and recursion, implementing the BVC in constructive type theory, using just the ordinary first-order, name-carrying syntax and actually \emph{without} using the strong induction on the size of the terms ---i.e. we are able to derive the principles in question from just simple structural induction on concrete terms. To such effect we define $\alpha$-equivalence by using the basic concepts of nominal abstract syntax, namely freshness and swapping of names. Equality remains the simple definitional one and we do not either perform any kind of quotient construction. The whole development is implemented in the Agda system \cite{agda}.
+
+The rest of the paper goes as follows: in section 2 we present the infrastructure just mentioned. Section 3 presents the principles, starting from the simple structural induction on terms and ending up with the recursion principle on $\alpha$-classes. In section 4 we show several applications that bring about certain feeling for the usefulness of the method. Finally, section 5 compares with related work and points out conclusions and further work.
+
+The present is actually a literate Agda document, where we hide some code for reasons of conciseness.  The entire code is available at:
+\begin{center}
+  \href{https://github.com/ernius/formalmetatheory-nominal}{https://github.com/ernius/formalmetatheory-nominal}
+\end{center}
+and has been compiled with the last Agda version 2.4.2.2 and 0.9 standard library.
+
+
+
+\section{Infrastructure}
+\label{sec:infra}
+\subsection{Agda}
+\noindent Agda implements Constructive Type Theory \cite{mlof} (\textit{type theory} for short). It is actually a functional programming language in which: \begin{enumerate}
+\item Inductive types can be introduced as usual, i.e.\  by enumeration of their constructors, but they can be parameterised in objects of other types. Because of the latter it is said that  type theory features \emph{families} of types (indexed by a base type) or \emph{dependent} types. 
+\item Functions on families of types respect the dependence on the base object, which is to say that they are generally of the form $(x : \alpha) \rightarrow \beta_{x}$ where $\beta_{x}$ is the type parameterised on $x$ of type $\alpha$. Therefore the type of the output of a function depends on the \emph{value} of the input.
+\item Functions on inductive types are defined by \textit{pattern-maching} equations.
+\item Every function of the language must be terminating. The standard form of recursion that forces such condition is \emph{structural} recursion and is, of course, syntactically checked. 
+\item Because of the preceding feature, type theory can be interpreted as a constructive logic. Specifically, this is achieved by representing propositions as inductive types whose constructors are the introduction rules, i.e.\  methods of direct proof, of the propositions in question.
+\end{enumerate}
+
+Therefore we can say in summary that sets of data, predicates and relations are defined inductively, i.e.\  by enumeration of their constructors.
+
+\subsection{Syntax} 
+The set \Lam\ of terms is as usual. It is built up from a denumerable set of names, which we shall call \emph{atoms}, borrowing terminology from nominal abstract syntax.
+
+%\hfill
+
+\AgdaTarget{Λ}
+\ExecuteMetaData[Term.tex]{term} \hspace{5px}
+
+The following is called the \emph{freshness} relation. It holds when a variable does not occur free in a term.
+Parameters to a function written between curly brackets can be omitted when invoking the function.
+
+%\hfill
+
+\ExecuteMetaData[Term.tex]{fresh} \hspace{5px}
+
+Next comes the fundamental operation of \emph{swapping} of atoms. A finite sequence (composition) of atom swaps constitutes a (finite) atom \emph{permutation} which is the renaming mechanism to be used on terms.
+The action of atom swaps is first defined on atoms themselves:
+
+%\hfill
+
+\ExecuteMetaData[Atom.tex]{swap} \hspace{5px}
+
+Here it extends to terms:
+
+%\hfill
+
+\AgdaTarget{（}
+\ExecuteMetaData[Term.tex]{swap} \hspace{5px}
+
+And the same goes for permutations, which are \emph{lists} of swaps:
+
+%\hfill
+
+\AgdaTarget{∙ₐ}
+\ExecuteMetaData[Permutation.tex]{atomPermutation} \hspace{5px}
+
+\AgdaTarget{∙}
+\ExecuteMetaData[Permutation.tex]{permutation} \hspace{5px}
+
+We now introduce $\alpha$-conversion, denoted by \alpeqAg. We use a syntax-directed definition that uses co-finite quantification in the case of the lambda abstractions:
+%\hfill
+
+\AgdaTarget{∼α}
+\ExecuteMetaData[Alpha.tex]{alpha}
+
+\noindent The idea is that for proving two abstractions $\alpha$-equivalent you should be able to prove the respective bodies $\alpha$-equivalent when you rename the bound names to any name not free in both abstractions. The condition on the new name can be generalised to ``any name not in a given list'', yielding an equivalent relation. The latter condition is harder to prove, but more convenient to use when you assume \alpeqAg\ to hold, which is more often the case in the forthcoming proofs.
+
+\section{Alpha-Structural Induction and Recursion Principles}
+\label{sec:induction}
+
+We start with the simple structural induction over the concrete \AgdaDatatype{Λ} terms:
+
+\AgdaTarget{TermPrimInd}
+\begin{figure}[!ht]
+  \ExecuteMetaData[TermInduction.tex]{termPrimInduction} 
+  \caption{Concrete Structural Induction Principle}
+\label{fig:primInd}
+\end{figure}
+
+The next induction principle provides a strong hypothesis for the lambda abstraction case: it namely allows to assume the property for all renamings (given by finite permutations of names) of the body of the abstraction:
+
+\begin{figure}[!ht]
+  \AgdaTarget{TermIndPerm}
+  \ExecuteMetaData[TermInduction.tex]{termIndPermutation} 
+  \caption{Strong Permutation Induction Principle}
+\label{fig:permInd}
+\end{figure}
+
+\noindent Notice that the hypothesis provided for the case of abstractions is akin to the corresponding one of the principle of strong or complete induction on the size of terms, only that expressed in terms of name permutations. This principle can be derived from the former, i.e. from simple structural induction, in very much the same way as complete induction on natural numbers is derived from ordinary mathematical induction. That is to say, we can use structural induction to prove $(\forall \pi) P (\pi \perm M)$\ given the hypotheses of the new principle, from which $P\,M$ follows. For the interesting case of abstractions, we have to prove $(\forall \pi) P (\pi \perm \lambAg{a}{M})$, which is equal to $(\forall \pi) P (\lambAg{(\pi \perma a)}{(\pi \perm M)})$. The hypothesis of the new principle give us in this case $(∀ M', b) ((∀ \pi') P (\pi' \perm M') → P (\lambAg{b}{M'}))$. Now, instantiating $M'$\ as $\pi \perm M$\ and $b$\ as $\pi \perma a$, we obtain the desired result if we know that $(∀ \pi') P (\pi' \perm \pi \perm M)$, which holds by induction hypothesis of the structural principle.
+
+\hfill
+
+We call a predicate \alp-compatible if it is preserved by  $\alpha$-conversion:
+
+\AgdaTarget{αCompatiblePred}
+\ExecuteMetaData[Alpha.tex]{alphaCompatible} \hspace{5px}
+
+For \alp-compatible predicates we can use the preceding principle to derive the following: 
+
+\AgdaTarget{TermαPrimInd}
+\ExecuteMetaData[TermInduction.tex]{alphaPrimInduction} \hspace{5px}
+
+\noindent This new principle enables us to carry out the proof of the abstraction case by choosing a bound name  different from the names in a given list $\mathit{vs}$. It gives a way to
+ emulate the Barendregt Variable Convention (BVC) since, indeed, the names to be avoided will always be finitely many; in using the principle we must provide a list that includes them. This same principle is provided in \cite{aydemir}, only that we here give it a proof in terms of the ones previously introduced, instead of just postulating it. 
+Our aim is to employ this principle whenever possible, thereby hiding the use of the swap operation which is confined to the  previous principles exposed.
+\noindent The interesting case in the implementation of the principle is of course that of the functional abstraction. We must put ourselves in the position in which we are using the former strong principle and are given an abstraction \lambAg{b}{M} for which we have to prove $P$. We have to employ to this effect the clause of our new principle corresponding to the functional abstractions, which forces us to employ a name $b^{*}$ out of the given list $\mathit{vs}$. Therefore we can aspire at proving $P$ for a renaming of the original term, say \lambAg{b^{*}}{M^{*}}. The required result will then follow from the $\alpha$-compatibility of the predicate $P$ provided \lambAg{b^{*}}{M^{*}}\alpeqAg\ \lambAg{b}{M}. This imposes the condition that the name $b^{*}$ be chosen fresh in the original term \lambAg{b}{M} ---and that $M^{*} = \swap{b^{*}}{b}{M}$ .  We know $P M^{*}$ and therefore $P (\lambAg{b^{*}}{M^{*}})$ because we know $P$ for any renaming of $M$, by the hypothesis of the strong principle from which we start.
+
+ A very important point in this implementation is that, given the list of names to be avoided, we can and do choose $b^{*}$ deterministically for each class of $\alpha$-equivalent terms. Indeed, if we determine $b^{*}$ as e.g. the first name out of the given list that is fresh (i.e. not free) in the originally given term, then the result will be one and the same for every term of each $\alpha$-class, since $\alpha$-equivalent terms have the same free variables. Hence the representative of each $\alpha$-class chosen by this method will be fixed for each list of names to be avoided, which constitutes a basis for using the method for defining \emph{functions} on the $\alpha$-classes. This will work by associating to (each term of) the class the result of the corresponding computation on the canonically chosen representative.
+
+
+More precisely, let us say that a function $f : \Lam \rightarrow A$ is \emph{strongly} \alp-compatible iff $M \alpeqAg\ N \Rightarrow f\,M = f\,N$.
+%\AgdaTarget{strong∼αCompatible}
+%\ExecuteMetaData[Alpha.tex]{strongAlphaCompatible} \hspace{5px}
+We can now define an iteration principle over raw terms which always produces strongly \alp-compatible functions. For the abstraction case, this principle also allows us to give a list of variables from where the abstractions variables are not to be chosen. This iteration principle is derived from the BVC induction principle (\AgdaFunction{TermαPrimInd}) in a direct manner, just using a trivial constant predicate equivalent to the type $A$. 
+We exhibit the type and code of the iterator:
+% \neq \emptyset$
+
+\AgdaTarget{ΛIt}
+\ExecuteMetaData[TermRecursion.tex]{termIteration} \hspace{5px}
+
+To repeat the idea, the iterator works as a function on $\alpha$-classes because for each given abstraction, it will yield the result obtained by working on a canonically chosen representative that is determined by the list of names to be avoided and the (free names of the) $\alpha$-class in question.
+%Next result make explicit the iterator behaviour in the abstracion case.
+%
+%\AgdaTarget{ΛItƛ}
+%\ExecuteMetaData[TermRecursion.tex]{itlambda} \hspace{5px}
+%
+%The following lemma says our iteration principle always return strong compatibility functions. This result is proved using the induction principle in figure~\ref{fig:permAlphaInd}. 
+%
+%\begin{figure}[!ht]
+%  \AgdaTarget{lemmaΛItStrongαCompatible}
+%  \ExecuteMetaData[TermRecursion.tex]{iterationStrongCompatible}
+%  \caption{Strong \alp\ Compatibility of the Iteration Principle}
+%\label{fig:strongAlphaComp}
+%\end{figure}
+Strong compatibility would not obtain if we tried directly to formulate a recursion instead of an iteration principle, but we can recover the more general form by the standard procedure of computing pairs one of whose components is a term. Thereby we arrive at  the next recursion principle over terms, which also generates strong \alp-compatible functions.
+
+\AgdaTarget{ΛRec}
+\ExecuteMetaData[TermRecursion.tex]{termRecursion}
+
+\section{Applications in Meta-Theory}
+\label{sec:itapp}
+
+We present several applications of the iteration/recursion principle defined in the preceding section. In the following two sub-sections we implement two classic examples of \lamb-calculus theory. In the appendix~\ref{sec:applications} we also apply our iteration/recursion principle to the examples of functions over terms presented in~\cite{Norrish04recursivefunction}. This work presents a sequence of increasing complexity functions,  with the purpose of testing the applicability of recursion principles over \lamb-calculus terms. 
+%Each of the defined functions respects the \alp-equivalence relation, that is, are strong compatible functions by being implemented over the previously introduced itaration/recursion principles. 
+
+\subsection{Free Variables}
+\label{sec:freevar}
+
+We implement the function that returns the free variables of a term.
+
+\ExecuteMetaData[FreeVariables.tex]{freeVariables} %\hspace{5px}
+
+\noindent As a direct consequence of strong \alp-compatibility of the iteration principle we have that \alp-equivalent terms have the same free variables. 
+
+The relation \AgdaFunction{\_*\_} holds when a variable occurs free in a term.
+
+\AgdaTarget{*}
+\ExecuteMetaData[Term.tex]{free} %\hspace{5px}
+
+\noindent We can use our BVC-like induction principle to prove the following proposition:
+
+\AgdaTarget{Pfv*}
+\ExecuteMetaData[FreeVariables.tex]{fvPred} %\hspace{5px}
+
+\noindent In the  case of lambda abstractions we are able to simplify the proof by choosing the bound name different from $a$. 
+%We have to prove that $\forall b \neqAg a, a \inAg \fv (\lambAg{b}{M}) \Rightarrow a \free \lambAg{b} {M}$, knowing by inductive hypothesis that $\forall \pi , a \inAg \fv (\pi \perm M) \Rightarrow a \free (\pi \perm M)$. Using the lemma \AgdaFunction{ΛItƛ}, about the behaviour of the iterator for the abstraction case, we know $\fv (\lambAg{b}{M}) = \fv ((b \perm \chi)\ M) - \chi$\ where $\chi = \choiceAg [\,]\ \lambAg{b}{M}$, so we can infer that $a \inAg \fv ((b \perm \chi)\ M)$\ and $a \neqAg \chi$. We can use the inductive hypothesis with $\pi = [(b , \chi)]$\ and previous result to obtain that $a \free ((b \perm \chi) \perm M)$, which  using that $b \neqAg a$\ and $a \neqAg \chi$ we can obtain that $a \free M$. Finlally, we are able to apply the constructor \AgdaInductiveConstructor{ƛ*} of the relation \free\ to previous result and $b \neqAg a$\ to obtain the desired result.
+%So $a \inAg \fv (\lambAg{b}{M})$\ and $b \neqAg a$ then we can derive that $a \inAg \fv M$ holds. Now,  instantiating the inductive hypothesis with an empty permtutation and the previous result, we have that $a \free M$,  using again that $b \neqAg a$, we can then conclude the desired result: $a \free \lambAg{b}{M}$.
+This flexibility comes at a cost, i.e. we need to prove that the predicate $\AgdaFunction{Pfv*} a$\ is \alp-compatible in order to use the chosen induction principle. This \alp-compatibility proof is direct once we prove that \free\ is an \alp-compatible relation and the \fv function is strong \alp-compatible. The last property is direct because we implemented \fv with the iteration principle, so the extra cost is just the proof that \free\ is \alp-compatible. This in turn could be directly obtained if we defined the relation establishing that a variable $a$ is free in a term as a recursive function, as follows:
+
+\AgdaTarget{free}
+\ExecuteMetaData[FreeVariables.tex]{free} \hspace{5px}
+
+\noindent For the variable case we return the propositional equality of the searched variable to the term variable. The application case is the disjoint union of the types returned by the recursive calls. Finally, in the abstraction case we can choose the abstraction variable to be different from the searched one. In this way we can ignore the abstraction variable and return just the recursive call containing the evidence of any free ocurrence of the searched variable in the abstraction body. 
+This implementation is strong compatible by construction because we have built it from our iterator principle, so it is also immediate from this definition that $\alpha$-equivalent terms have the same free variables.
+
+
+\subsection{Substitution}
+\label{subst}
+
+We implement capture avoiding substitution in the following way:
+
+\ExecuteMetaData[Substitution.tex]{substitution} \hspace{5px}
+
+It shows to be quite close to the simple pencil-and-paper version assuming the BVC. Notice that we explicitly indicate that the bound name of the canonical representative to be chosen must be different from the replaced variable and not occur free in the substituted term.
+Again because of the strong \alp-compability of the iteration principle we obtain the following result for free:
+
+\AgdaTarget{lemmaSubst1}
+\ExecuteMetaData[Substitution.tex]{lemmaSubst1} \hspace{5px}
+
+Using the induction principle in figure~\ref{fig:permInd} we prove:
+
+\AgdaTarget{lemmaSubst2}
+\ExecuteMetaData[Substitution.tex]{lemmaSubst2} \hspace{5px}
+
+From the two previous results we directly obtain the \alp-substitution lemma:
+
+\AgdaTarget{lemmaSubst}
+\ExecuteMetaData[Substitution.tex]{lemmaSubst} \hspace{5px}
+
+In turn, with the preceding result we can derive that our substitution operation is \alp-equivalent with a na\"\i ve one for fresh enough bound names:
+
+\AgdaTarget{lemmaƛ∼[]}
+\ExecuteMetaData[Substitution.tex]{naivesubstitution} \hspace{5px}
+
+We can combine this last result with the \AgdaFunction{TermαPrimInd} principle which emulates BVC convention, and mimic in this way pencil-and-paper inductive proofs over \alp-equivalence classes of terms about substitution operation. As an example we show next the substitution composition lemma:
+
+\AgdaTarget{PSC}
+\ExecuteMetaData[Substitution.tex]{Psubstcomp} \hspace{5px}
+
+\noindent We first give a direct equational proof that \AgdaFunction{PSC} predicate is \alp-compatible:
+
+\AgdaTarget{αCompatiblePSC}
+\ExecuteMetaData[Substitution.tex]{PsubstcompAlphaCompatible} \hspace{5px}
+
+\noindent For the interesting abstraction case of the \alp-structural induction over the lambda term, we asume the abstraction variables in the term are not among the replaced variables or free in the subsituted terms. In this way the substitution operations become \alp-compatible to na\"ive substitutions, and the induction hypothesis allows us to complete the the inductive proof in a direct maner. The code fragment becomes:
+ 
+\ExecuteMetaData[Substitution.tex]{abstractionComposition} \hspace{5px}
+
+Remarkably these results are directly derived from the first primitive induction principle, and no induction on the length of terms or accesible predicates were needed in all of this formalization.
+
+\section{Conclusions}
+The main contribution of this work is a full implementation in Constructive Type Theory of principles of induction and recursion allowing to work on $\alpha$-classes of terms of the lambda calculus. The crucial component seems to be what we called a BVC-like induction principle allowing to choose the bound name in the case of the abstractions so that it does not belong to a given list of names. This principle is, on the one hand, derived (for $\alpha$-compatible predicates) from ordinary structural induction on concrete terms, thus avoiding any form of induction on the size of terms or other more complex forms of induction. And, on the other hand, it gives rise to principles of recursion that allow to define functions on $\alpha$-classes, especifically, functions giving identical results for $\alpha$-equivalent terms. We have also shown by way of a number of examples that the principles provide a flexible framework quite able to pleasantly mimic pencil-and-paper practice.
+
+Our work departs from e.g. \cite{Pitts2} in that we do fix the choice of representatives for implementing the alpha-structural recursion thereby forcing this principle to yield identical results for $\alpha$-equivalent terms. This might be a little too concrete  but, on the other hand, it gives us the possibility of completing a simple full implementation on an existing system, as different from other works which base themselves on postulates or more sophisticated systems of syntax or methods of implementation.
+
+We wish to continue exploring the capabilities of this method of formalisation by studying its application to the meta-theory of type systems. We also wish to deepen its comparison to the method  based on Stoughton's substitutions \cite{stoughton}, which we started to investigate in \cite{nos} and which we believe can give rise to formulations similar to the one exposed here.
+
+\appendix
+
+\section{Iteration/Recursion Applications}
+\label{sec:applications}
+
+In the following sections we successfully apply our iteration/recursion principle to all the examples from~\cite{Norrish04recursivefunction}. This work presents a sequence of functions whose definitions are increasing in complexity to provide a test for any principle of function definition, where each of the given functions respects the \alp-equivalence relation.
+
+\subsection{Case Analysis and Examining Constructor Arguments}
+\label{sec:caseanalysis}
+
+The following family of functions distinguishes between constructors returning the constructor components, giving in a sense a kind of \emph{pattern-matching}.
+
+\begin{minipage}{.5\textwidth}
+\[\begin{array}{rll}
+isVar &: \Lambda \rightarrow& Maybe\ ( Variable ) \\
+isVar &(v\ x)         &= Just \\
+isVar &(M \cdot N)   &= Nothing \\
+isVar &(\lambda x M) &= Nothing
+\end{array}\]
+\end{minipage}
+\begin{minipage}{.5\textwidth}
+\[\begin{array}{rll}
+isApp &: \Lambda \rightarrow& Maybe\ (\Lambda \times \Lambda) \\
+isApp &(v\ x)          &= Nothing \\
+isApp &(M \cdot N)   &= Just (M , N) \\
+isApp &(\lambda x M) &= Nothing
+\end{array}\]
+\end{minipage}
+
+\centerline{
+\begin{minipage}{.5\textwidth}
+\[
+\begin{array}{rll}
+isAbs &: \Lambda \rightarrow& Maybe\ (Variable \times \Lambda) \\
+isAbs &(v\ x)         &= Nothing \\
+isAbs &(M \cdot N)   &= Nothing \\
+isAbs &(\lambda x M) &= Just (x , M)
+\end{array} \]
+\end{minipage}}
+
+Next we present the corresponding encodings into our iteration/recursion principle:
+
+\AgdaTarget{isVar} \AgdaTarget{isApp} \AgdaTarget{isAbs}
+\ExecuteMetaData[Norrish.tex]{constructors} \hspace{5px}
+
+\subsection{Simple recursion}
+\label{sec:rec}
+
+The size function returns a numeric measurement of the size of a term.
+
+\centerline{
+\begin{minipage}{.5\textwidth}
+\[
+\begin{array}{rll}
+size &: \Lambda \rightarrow& \mathbb{N} \\
+size &(v\ x)         &= 1 \\
+size &(M \cdot N)   &= size (M) + size (N) + 1 \\
+size &(\lambda x M) &= size (M) + 1 
+\end{array} \]
+\end{minipage}}
+
+\AgdaTarget{size}
+\ExecuteMetaData[Norrish.tex]{size} \hspace{5px}
+
+\subsection{Alpha Equality}
+
+This function decides the \alp-equality relation between two terms.
+
+\AgdaTarget{equal}
+\ExecuteMetaData[Norrish.tex]{alphaEqual} \hspace{5px}
+
+Observe that \AgdaFunction{isAbs} function also normalises N, so it is correct in the last line to ask if the two bound names are the same.
+
+\subsection{Recursion Mentioning a Bound Variable}
+\label{sec:recbound}
+
+The $enf$ function is true of a term if it is in $\eta$-normal form. It invokes the $fv$ function, which returns the set of a term’s free variables and was previously defined.
+
+\centerline{
+\begin{minipage}{.8\textwidth}
+\[
+\begin{array}{rll}
+enf &: \Lambda \rightarrow& Bool \\
+enf &(v\ x)         &= True \\
+enf &(M \cdot N)   &= enf (M) \wedge enf (N) + 1 \\
+enf &(\lambda x M) &= enf (M) \wedge (∃ N, x / isApp (M) == Just (N , v\ x) \Rightarrow x \in fv (N))
+\end{array} \]
+\end{minipage}}
+
+\hspace{5px}
+
+\AgdaTarget{enf}
+\ExecuteMetaData[Norrish.tex]{enf} \hspace{5px}
+
+\subsection{Recursion with an Additional Parameter}
+
+Given the ternary type of possible directions to follow when passing through a term $({Lt, Rt, In})$, corresponding to the two sub-terms of an application constructor and the body of an abstraction, return the set of paths (lists of directions) to the occurrences of the given free variable in a term. Assume $cons$\ insert an element in front of a list.
+
+\[
+\begin{array}{rrll}
+&vposns &: Variable \times \Lambda \rightarrow & List\ (List\ Direction) \\
+&vposns &(x , v\ y)         &= if\ (x == y)\ then\ [[]]\ else\ []   \\
+&vposns &(x , M \cdot N)    &= map\ (cons\ Lt)\ (vposns\ x\ M) +\!\!+  \\
+& & &\ \ \ map\ (cons\ Rt)\ (vposns\ x\ N) \\
+x \neq y \Rightarrow&vposns &(x ,\lambda y M)   &= map\ (cons\ In)\ (vposns\ x\ M) \\
+\end{array} \]
+
+Notice how the condition guard of the abstraction case is translated to the list of variables from where not to choose the abstraction variable.
+
+\AgdaTarget{vposns}
+\ExecuteMetaData[Norrish.tex]{vposns} \hspace{5px}
+
+\subsection{Recursion with Varying Parameters and Terms as Range}
+
+A variant of the substitution function, which substitutes a term for a variable, but further adjusts the term being substituted by wrapping it in one application of the variable named "0" per traversed binder.
+
+\[
+\begin{array}{rrll}
+&sub' &: \Lambda \times Variable \times  \Lambda &   \rightarrow  \Lambda  \\
+&sub' &(P , x , v\ y)         &= if\ (x == y)\ then\ P\ else\ (v\ y)   \\
+&sub' &(P , x , M \cdot N)    &= (sub' (P , x , M)) \cdot (sub' (P , x , N)) \\
+\left. 
+\begin{array}{c}
+y \neq x  \ \wedge \\
+ y \neq 0\ \  \wedge \\
+ y \not\in fv(P) \\
+\end{array} \right\} \Rightarrow&sub' &(P , x , \lambda y M)   &= \lambda y (sub' ((v\ 0) \cdot M , x , M)) \\
+\end{array} \]
+
+To implement this function with our iterator principle we must change the order of the parameters, so our iterator principle now returns a function that is waiting for the term to be substituted. In this way we manage to vary the parameter through the iteration.
+
+\AgdaTarget{sub'}
+\ExecuteMetaData[Norrish.tex]{sub} \hspace{5px}
+
+%\bibliographystyle{plain}% the recommended bibstyle
+%\bibliography{resumen}
+
+\begin{thebibliography}{10}
+
+\bibitem{aydemir}
+Brian Aydemir, Aaron Bohannon, and Stephanie Weirich.
+\newblock Nominal reasoning techniques in {C}oq.
+\newblock {\em Electron. Notes Theor. Comput. Sci.}, 174(5):69--77, June 2007.
+
+\bibitem{aydemir08}
+Brian Aydemir, Arthur Chargu{\'e}raud, Benjamin~C. Pierce, Randy Pollack, and
+  Stephanie Weirich.
+\newblock Engineering formal metatheory.
+\newblock In {\em Proceedings of the 35th Annual ACM SIGPLAN-SIGACT Symposium
+  on Principles of Programming Languages}, POPL '08, pages 3--15, New York, NY,
+  USA, 2008. ACM.
+
+\bibitem{chargueraud12}
+Arthur Chargu{\'{e}}raud.
+\newblock The locally nameless representation.
+\newblock {\em J. Autom. Reasoning}, 49(3):363--408, 2012.
+
+\bibitem{deBruijn1972}
+N.~G. de~Bruijn.
+\newblock Lambda calculus notation with nameless dummies, a tool for automatic
+  formula manipulation, with applications to the church-rosser theorem.
+\newblock {\em Indagationes Mathematicae (Koninglijke Nederlandse Akademie van
+  Wetenschappen)}, 34(5):381--392, 1972.
+\newblock http://www.win.tue.nl/automath/archive/pdf/aut029.pdfElectronic
+  Edition.
+
+\bibitem{Gabbay}
+Murdoch~J. Gabbay and Andrew~M. Pitts.
+\newblock {A New Approach   to Abstract Syntax with Variable Binding}.
+\newblock {\em Formal Aspects of Computing}, 13(3—5):341—363, July 2001.
+
+\bibitem{DBLP:conf/tphol/GordonM96}
+Andrew~D. Gordon and Thomas~F. Melham.
+\newblock Five axioms of alpha-conversion.
+\newblock In Joakim von Wright, Jim Grundy, and John Harrison, editors, {\em
+  Theorem Proving in Higher Order Logics, 9th International Conference,
+  TPHOLs'96, Turku, Finland, August 26-30, 1996, Proceedings}, volume 1125 of
+  {\em Lecture Notes in Computer Science}, pages 173--190. Springer, 1996.
+
+\bibitem{nos}
+Álvaro Tasistro, Ernesto Copello, and Nora Szasz.
+\newblock Formalisation in constructive type theory of stoughton's substitution
+  for the lambda calculus.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 312(0):215 --
+  230, 2015.
+\newblock Ninth Workshop on Logical and Semantic Frameworks, with Applications
+  (LSFA 2014).
+
+\bibitem{mlof}
+P.~Martin-L{\"o}f and G.~Sambin.
+\newblock {\em Intuitionistic type theory}.
+\newblock Studies in Proof Theory. Bibliopolis, 1984.
+
+\bibitem{sato}
+Helmut~Schwichtenberg Masahiko~Sato, Randy~Pollack and Takafumi Sakurai.
+\newblock Viewing lambda-terms through maps, 2013.
+\newblock Available from
+  http://homepages.inf.ed.ac.uk/rpollack/export/Maps\_SatoPollackSchwichtenbergSakurai.pdf.
+
+\bibitem{agda}
+Ulf Norell.
+\newblock {\em Towards a practical programming language based on dependent type
+  theory}.
+\newblock PhD thesis, Department of Computer Science and Engineering, Chalmers
+  University of Technology, SE-412 96 G\"{o}teborg, Sweden, September 2007.
+
+\bibitem{Norrish04recursivefunction}
+Michael Norrish.
+\newblock Recursive function definition for types with binders.
+\newblock In {\em In Seventeenth International Conference on Theorem Proving in
+  Higher Order Logics}, pages 241--256, 2004.
+
+\bibitem{Pitts1}
+Andrew~M. Pitts.
+\newblock Nominal logic, a first order theory of names and binding.
+\newblock {\em Information and Computation}, 186(2):165 -- 193, 2003.
+\newblock Theoretical Aspects of Computer Software (TACS 2001).
+
+\bibitem{Pitts2}
+Andrew~M. Pitts.
+\newblock Alpha-structural recursion and induction.
+\newblock {\em J. ACM}, 53(3):459--506, May 2006.
+
+\bibitem{stoughton}
+A.~Stoughton.
+\newblock Substitution revisited.
+\newblock {\em Theor. Comput. Sci.}, 59:317--325, 1988.
+
+\bibitem{urban05}
+Christian Urban and Christine Tasson.
+\newblock Nominal techniques in isabelle/hol.
+\newblock In Robert Nieuwenhuis, editor, {\em Automated Deduction – CADE-20},
+  volume 3632 of {\em Lecture Notes in Computer Science}, pages 38--53.
+  Springer Berlin Heidelberg, 2005.
+
+\end{thebibliography}
+
+
+\end{document}

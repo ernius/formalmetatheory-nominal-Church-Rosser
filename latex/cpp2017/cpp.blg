@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: cpp.aux
+The style file: abbrvnat.bst
+Database file #1: resumen.bib
+You've used 17 entries,
+            2773 wiz_defined-function locations,
+            748 strings with 8769 characters,
+and the built_in function-call counts, 8769 in all, are:
+= -- 835
+> -- 427
+< -- 24
++ -- 146
+- -- 129
+* -- 681
+:= -- 1341
+add.period$ -- 83
+call.type$ -- 17
+change.case$ -- 87
+chr.to.int$ -- 17
+cite$ -- 34
+duplicate$ -- 419
+empty$ -- 716
+format.name$ -- 156
+if$ -- 1897
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 21
+newline$ -- 119
+num.names$ -- 74
+pop$ -- 171
+preamble$ -- 1
+purify$ -- 75
+quote$ -- 0
+skip$ -- 322
+stack$ -- 0
+substring$ -- 344
+swap$ -- 85
+text.length$ -- 11
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 162
+warning$ -- 0
+while$ -- 81
+width$ -- 0
+write$ -- 292

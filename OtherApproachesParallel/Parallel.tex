@@ -1,0 +1,1220 @@
+\documentclass{scrartcl}
+%% ODER: format ==         = "\mathrel{==}"
+%% ODER: format /=         = "\neq "
+%
+%
+\makeatletter
+\@ifundefined{lhs2tex.lhs2tex.sty.read}%
+  {\@namedef{lhs2tex.lhs2tex.sty.read}{}%
+   \newcommand\SkipToFmtEnd{}%
+   \newcommand\EndFmtInput{}%
+   \long\def\SkipToFmtEnd#1\EndFmtInput{}%
+  }\SkipToFmtEnd
+
+\newcommand\ReadOnlyOnce[1]{\@ifundefined{#1}{\@namedef{#1}{}}\SkipToFmtEnd}
+\usepackage{amstext}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\DeclareFontFamily{OT1}{cmtex}{}
+\DeclareFontShape{OT1}{cmtex}{m}{n}
+  {<5><6><7><8>cmtex8
+   <9>cmtex9
+   <10><10.95><12><14.4><17.28><20.74><24.88>cmtex10}{}
+\DeclareFontShape{OT1}{cmtex}{m}{it}
+  {<-> ssub * cmtt/m/it}{}
+\newcommand{\texfamily}{\fontfamily{cmtex}\selectfont}
+\DeclareFontShape{OT1}{cmtt}{bx}{n}
+  {<5><6><7><8>cmtt8
+   <9>cmbtt9
+   <10><10.95><12><14.4><17.28><20.74><24.88>cmbtt10}{}
+\DeclareFontShape{OT1}{cmtex}{bx}{n}
+  {<-> ssub * cmtt/bx/n}{}
+\newcommand{\tex}[1]{\text{\texfamily#1}}	% NEU
+
+\newcommand{\Sp}{\hskip.33334em\relax}
+
+
+\newcommand{\Conid}[1]{\mathit{#1}}
+\newcommand{\Varid}[1]{\mathit{#1}}
+\newcommand{\anonymous}{\kern0.06em \vbox{\hrule\@width.5em}}
+\newcommand{\plus}{\mathbin{+\!\!\!+}}
+\newcommand{\bind}{\mathbin{>\!\!\!>\mkern-6.7mu=}}
+\newcommand{\rbind}{\mathbin{=\mkern-6.7mu<\!\!\!<}}% suggested by Neil Mitchell
+\newcommand{\sequ}{\mathbin{>\!\!\!>}}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\usepackage{polytable}
+
+%mathindent has to be defined
+\@ifundefined{mathindent}%
+  {\newdimen\mathindent\mathindent\leftmargini}%
+  {}%
+
+\def\resethooks{%
+  \global\let\SaveRestoreHook\empty
+  \global\let\ColumnHook\empty}
+\newcommand*{\savecolumns}[1][default]%
+  {\g@addto@macro\SaveRestoreHook{\savecolumns[#1]}}
+\newcommand*{\restorecolumns}[1][default]%
+  {\g@addto@macro\SaveRestoreHook{\restorecolumns[#1]}}
+\newcommand*{\aligncolumn}[2]%
+  {\g@addto@macro\ColumnHook{\column{#1}{#2}}}
+
+\resethooks
+
+\newcommand{\onelinecommentchars}{\quad-{}- }
+\newcommand{\commentbeginchars}{\enskip\{-}
+\newcommand{\commentendchars}{-\}\enskip}
+
+\newcommand{\visiblecomments}{%
+  \let\onelinecomment=\onelinecommentchars
+  \let\commentbegin=\commentbeginchars
+  \let\commentend=\commentendchars}
+
+\newcommand{\invisiblecomments}{%
+  \let\onelinecomment=\empty
+  \let\commentbegin=\empty
+  \let\commentend=\empty}
+
+\visiblecomments
+
+\newlength{\blanklineskip}
+\setlength{\blanklineskip}{0.66084ex}
+
+\newcommand{\hsindent}[1]{\quad}% default is fixed indentation
+\let\hspre\empty
+\let\hspost\empty
+\newcommand{\NB}{\textbf{NB}}
+\newcommand{\Todo}[1]{$\langle$\textbf{To do:}~#1$\rangle$}
+
+\EndFmtInput
+\makeatother
+%
+%
+%
+%
+%
+%
+% This package provides two environments suitable to take the place
+% of hscode, called "plainhscode" and "arrayhscode". 
+%
+% The plain environment surrounds each code block by vertical space,
+% and it uses \abovedisplayskip and \belowdisplayskip to get spacing
+% similar to formulas. Note that if these dimensions are changed,
+% the spacing around displayed math formulas changes as well.
+% All code is indented using \leftskip.
+%
+% Changed 19.08.2004 to reflect changes in colorcode. Should work with
+% CodeGroup.sty.
+%
+\ReadOnlyOnce{polycode.fmt}%
+\makeatletter
+
+\newcommand{\hsnewpar}[1]%
+  {{\parskip=0pt\parindent=0pt\par\vskip #1\noindent}}
+
+% can be used, for instance, to redefine the code size, by setting the
+% command to \small or something alike
+\newcommand{\hscodestyle}{}
+
+% The command \sethscode can be used to switch the code formatting
+% behaviour by mapping the hscode environment in the subst directive
+% to a new LaTeX environment.
+
+\newcommand{\sethscode}[1]%
+  {\expandafter\let\expandafter\hscode\csname #1\endcsname
+   \expandafter\let\expandafter\endhscode\csname end#1\endcsname}
+
+% "compatibility" mode restores the non-polycode.fmt layout.
+
+\newenvironment{compathscode}%
+  {\par\noindent
+   \advance\leftskip\mathindent
+   \hscodestyle
+   \let\\=\@normalcr
+   \let\hspre\(\let\hspost\)%
+   \pboxed}%
+  {\endpboxed\)%
+   \par\noindent
+   \ignorespacesafterend}
+
+\newcommand{\compaths}{\sethscode{compathscode}}
+
+% "plain" mode is the proposed default.
+% It should now work with \centering.
+% This required some changes. The old version
+% is still available for reference as oldplainhscode.
+
+\newenvironment{plainhscode}%
+  {\hsnewpar\abovedisplayskip
+   \advance\leftskip\mathindent
+   \hscodestyle
+   \let\hspre\(\let\hspost\)%
+   \pboxed}%
+  {\endpboxed%
+   \hsnewpar\belowdisplayskip
+   \ignorespacesafterend}
+
+\newenvironment{oldplainhscode}%
+  {\hsnewpar\abovedisplayskip
+   \advance\leftskip\mathindent
+   \hscodestyle
+   \let\\=\@normalcr
+   \(\pboxed}%
+  {\endpboxed\)%
+   \hsnewpar\belowdisplayskip
+   \ignorespacesafterend}
+
+% Here, we make plainhscode the default environment.
+
+\newcommand{\plainhs}{\sethscode{plainhscode}}
+\newcommand{\oldplainhs}{\sethscode{oldplainhscode}}
+\plainhs
+
+% The arrayhscode is like plain, but makes use of polytable's
+% parray environment which disallows page breaks in code blocks.
+
+\newenvironment{arrayhscode}%
+  {\hsnewpar\abovedisplayskip
+   \advance\leftskip\mathindent
+   \hscodestyle
+   \let\\=\@normalcr
+   \(\parray}%
+  {\endparray\)%
+   \hsnewpar\belowdisplayskip
+   \ignorespacesafterend}
+
+\newcommand{\arrayhs}{\sethscode{arrayhscode}}
+
+% The mathhscode environment also makes use of polytable's parray 
+% environment. It is supposed to be used only inside math mode 
+% (I used it to typeset the type rules in my thesis).
+
+\newenvironment{mathhscode}%
+  {\parray}{\endparray}
+
+\newcommand{\mathhs}{\sethscode{mathhscode}}
+
+% texths is similar to mathhs, but works in text mode.
+
+\newenvironment{texthscode}%
+  {\(\parray}{\endparray\)}
+
+\newcommand{\texths}{\sethscode{texthscode}}
+
+% The framed environment places code in a framed box.
+
+\def\codeframewidth{\arrayrulewidth}
+\RequirePackage{calc}
+
+\newenvironment{framedhscode}%
+  {\parskip=\abovedisplayskip\par\noindent
+   \hscodestyle
+   \arrayrulewidth=\codeframewidth
+   \tabular{@{}|p{\linewidth-2\arraycolsep-2\arrayrulewidth-2pt}|@{}}%
+   \hline\framedhslinecorrect\\{-1.5ex}%
+   \let\endoflinesave=\\
+   \let\\=\@normalcr
+   \(\pboxed}%
+  {\endpboxed\)%
+   \framedhslinecorrect\endoflinesave{.5ex}\hline
+   \endtabular
+   \parskip=\belowdisplayskip\par\noindent
+   \ignorespacesafterend}
+
+\newcommand{\framedhslinecorrect}[2]%
+  {#1[#2]}
+
+\newcommand{\framedhs}{\sethscode{framedhscode}}
+
+% The inlinehscode environment is an experimental environment
+% that can be used to typeset displayed code inline.
+
+\newenvironment{inlinehscode}%
+  {\(\def\column##1##2{}%
+   \let\>\undefined\let\<\undefined\let\\\undefined
+   \newcommand\>[1][]{}\newcommand\<[1][]{}\newcommand\\[1][]{}%
+   \def\fromto##1##2##3{##3}%
+   \def\nextline{}}{\) }%
+
+\newcommand{\inlinehs}{\sethscode{inlinehscode}}
+
+% The joincode environment is a separate environment that
+% can be used to surround and thereby connect multiple code
+% blocks.
+
+\newenvironment{joincode}%
+  {\let\orighscode=\hscode
+   \let\origendhscode=\endhscode
+   \def\endhscode{\def\hscode{\endgroup\def\@currenvir{hscode}\\}\begingroup}
+   %\let\SaveRestoreHook=\empty
+   %\let\ColumnHook=\empty
+   %\let\resethooks=\empty
+   \orighscode\def\hscode{\endgroup\def\@currenvir{hscode}}}%
+  {\origendhscode
+   \global\let\hscode=\orighscode
+   \global\let\endhscode=\origendhscode}%
+
+\makeatother
+\EndFmtInput
+%
+%
+\ReadOnlyOnce{agda.fmt}%
+
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8x]{inputenc}
+\RequirePackage{ucs}
+\RequirePackage{amsfonts}
+
+\providecommand\mathbbm{\mathbb}
+
+% TODO: Define more of these ...
+\DeclareUnicodeCharacter{737}{\textsuperscript{l}}
+\DeclareUnicodeCharacter{8718}{\ensuremath{\blacksquare}}
+\DeclareUnicodeCharacter{8759}{::}
+\DeclareUnicodeCharacter{9669}{\ensuremath{\triangleleft}}
+\DeclareUnicodeCharacter{8799}{\ensuremath{\stackrel{\scriptscriptstyle ?}{=}}}
+\DeclareUnicodeCharacter{10214}{\ensuremath{\llbracket}}
+\DeclareUnicodeCharacter{10215}{\ensuremath{\rrbracket}}
+
+% TODO: This is in general not a good idea.
+\providecommand\textepsilon{$\epsilon$}
+\providecommand\textmu{$\mu$}
+
+
+%Actually, varsyms should not occur in Agda output.
+
+% TODO: Make this configurable. IMHO, italics doesn't work well
+% for Agda code.
+
+\renewcommand\Varid[1]{\mathord{\textsf{#1}}}
+\let\Conid\Varid
+\newcommand\Keyword[1]{\textsf{\textbf{#1}}}
+\EndFmtInput
+
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{textgreek}
+\usepackage{catchfilebetweentags}
+\usepackage{tipa}
+\usepackage{graphicx}
+\usepackage{bussproofs}
+
+\begin{document}
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Keyword{module}\;\Conid{Parallel}\;\Keyword{where}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Level}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Function}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Atom}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Alpha}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{ListProperties}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Term}\;\Keyword{hiding}\;(\Varid{fv}){}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{TermRecursion}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{TermInduction}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{TermAcc}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{NaturalProperties}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Equivariant}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Permutation}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Substitution}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Data.Bool}\;\Keyword{hiding}\;(\Varid{\char95 ∨\char95 }){}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Data.Nat}\;\Keyword{hiding}\;(\Varid{\char95 *\char95 }){}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Data.Nat.Properties}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Data.Empty}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Data.Sum}\mbox{\onelinecomment  renaming (_⊎_ to _∨_)}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Data.List}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Data.List.Any}\;\Varid{as}\;\Conid{Any}\;\Keyword{hiding}\;(\Varid{map}){}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Data.List.Any.Membership}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Conid{Any.Membership-≡}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Data.Product}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Relation.Binary.PropositionalEquality}\;\Varid{as}\;\Conid{PropEq}\;\Keyword{renaming}\;([\mskip1.5mu \anonymous \mskip1.5mu]\;\Varid{to}\;[\mskip1.5mu \anonymous \mskip1.5mu]\;\Varid{ᵢ}){}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Relation.Nullary}{}\<[E]%
+\\
+\>[B]{}\Keyword{open}\;\Keyword{import}\;\Conid{Relation.Nullary.Decidable}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+Parallel reduction.
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{⇉hv}\;\mathbin{:}\;\Conid{Atom}\;\Varid{→}\;\Conid{Λ}\;\Varid{→}\;\Conid{Set}{}\<[E]%
+\\
+\>[B]{}\Varid{⇉hv}\;\Varid{a}\;\Conid{M}\;\mathrel{=}\;\Varid{v}\;\Varid{a}\;\Varid{≡}\;\Conid{M}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\AxiomC{$P = P' P''$}
+\AxiomC{$\lambda x M \p P'$}
+\AxiomC{$N \p P''$}
+\TrinaryInfC{$(\lambda x M) N \alpha  \p P$}
+\DisplayProof
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{36}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{78}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{93}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{⇉h·}\;\mathbin{:}\;(\Conid{Λ}\;\Varid{→}\;\Conid{Set})\;\Varid{→}\;(\Conid{Λ}\;\Varid{→}\;\Conid{Set})\;\Varid{→}\;\Conid{Λ}\;\Varid{→}\;\Conid{Λ}\;\Varid{→}\;\Conid{Λ}\;\Varid{→}\;\Conid{Set}{}\<[E]%
+\\
+\>[B]{}\Varid{⇉h·}\;\Varid{r1}\;\Varid{r2}\;(\Varid{ƛ}\;\Varid{x}\;\Conid{M})\;{}\<[21]%
+\>[21]{}\Conid{N}\;\Conid{P}\;{}\<[33]%
+\>[33]{}\mathrel{=}\;{}\<[36]%
+\>[36]{}\Varid{∃}\;(\Varid{λ}\;\Conid{P'}\;\Varid{→}\;\Varid{∃}\;(\Varid{λ}\;\Conid{P''}\;\Varid{→}\;\Conid{P}\;\Varid{≡}\;\Conid{P'}\;\Varid{·}\;\Conid{P''}\;{}\<[78]%
+\>[78]{}\Varid{×}\;\Varid{r1}\;\Conid{P'}\;{}\<[93]%
+\>[93]{}\Varid{×}\;\Varid{r2}\;\Conid{P''}))\;\Varid{⊎}\;{}\<[E]%
+\\
+\>[36]{}\Varid{∃}\;(\Varid{λ}\;\Conid{P'}\;\Varid{→}\;\Varid{∃}\;(\Varid{λ}\;\Conid{P''}\;\Varid{→}\;\Conid{P}\;\Varid{∼α}\;\Conid{P'}\;[\mskip1.5mu \Varid{x}\;\Varid{≔}\;\Conid{P''}\mskip1.5mu]\;{}\<[78]%
+\>[78]{}\Varid{×}\;\Varid{r1}\;(\Varid{ƛ}\;\Varid{x}\;\Conid{P'})\;{}\<[93]%
+\>[93]{}\Varid{×}\;\Varid{r2}\;\Conid{P''})){}\<[E]%
+\\
+\>[B]{}\Varid{⇉h·}\;\Varid{r1}\;\Varid{r2}\;(\Conid{M}\;\Varid{·}\;\Conid{M'})\;{}\<[21]%
+\>[21]{}\Conid{N}\;(\Conid{P}\;\Varid{·}\;{}\<[29]%
+\>[29]{}\Conid{P'})\;\mathrel{=}\;{}\<[36]%
+\>[36]{}\Varid{r1}\;\Conid{P}\;\Varid{×}\;\Varid{r2}\;\Conid{P'}{}\<[E]%
+\\
+\>[B]{}\Varid{⇉h·}\;\Varid{r1}\;\Varid{r2}\;(\anonymous \;\Varid{·}\;\anonymous )\;{}\<[21]%
+\>[21]{}\Conid{N}\;(\Varid{v}\;\anonymous )\;{}\<[33]%
+\>[33]{}\mathrel{=}\;{}\<[36]%
+\>[36]{}\Varid{⊥}{}\<[E]%
+\\
+\>[B]{}\Varid{⇉h·}\;\Varid{r1}\;\Varid{r2}\;(\anonymous \;\Varid{·}\;\anonymous )\;{}\<[21]%
+\>[21]{}\Conid{N}\;(\Varid{ƛ}\;\anonymous \;\anonymous )\;{}\<[33]%
+\>[33]{}\mathrel{=}\;{}\<[36]%
+\>[36]{}\Varid{⊥}{}\<[E]%
+\\
+\>[B]{}\Varid{⇉h·}\;\Varid{r1}\;\Varid{r2}\;(\Varid{v}\;\Varid{x})\;{}\<[21]%
+\>[21]{}\Conid{N}\;(\Conid{P}\;\Varid{·}\;{}\<[29]%
+\>[29]{}\Conid{P'})\;\mathrel{=}\;{}\<[36]%
+\>[36]{}\Varid{r1}\;\Conid{P}\;\Varid{×}\;\Varid{r2}\;\Conid{P'}{}\<[E]%
+\\
+\>[B]{}\Varid{⇉h·}\;\Varid{r1}\;\Varid{r2}\;(\Varid{v}\;\anonymous )\;{}\<[21]%
+\>[21]{}\Conid{N}\;(\Varid{v}\;\anonymous )\;{}\<[33]%
+\>[33]{}\mathrel{=}\;{}\<[36]%
+\>[36]{}\Varid{⊥}{}\<[E]%
+\\
+\>[B]{}\Varid{⇉h·}\;\Varid{r1}\;\Varid{r2}\;(\Varid{v}\;\anonymous )\;{}\<[21]%
+\>[21]{}\Conid{N}\;(\Varid{ƛ}\;\anonymous \;\anonymous )\;{}\<[33]%
+\>[33]{}\mathrel{=}\;{}\<[36]%
+\>[36]{}\Varid{⊥}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{⇉hƛ}\;\mathbin{:}\;\Conid{Atom}\;\Varid{→}\;(\Conid{Λ}\;\Varid{→}\;\Conid{Set})\;\Varid{→}\;\Conid{Λ}\;\Varid{→}\;\Conid{Λ}\;\Varid{→}\;\Conid{Set}{}\<[E]%
+\\
+\>[B]{}\Varid{⇉hƛ}\;\anonymous \;\Varid{r}\;\anonymous \;(\Varid{v}\;\anonymous )\;{}\<[20]%
+\>[20]{}\mathrel{=}\;\Varid{⊥}{}\<[E]%
+\\
+\>[B]{}\Varid{⇉hƛ}\;\anonymous \;\anonymous \;\anonymous \;(\anonymous \;\Varid{·}\;\anonymous )\;{}\<[20]%
+\>[20]{}\mathrel{=}\;\Varid{⊥}{}\<[E]%
+\\
+\>[B]{}\Varid{⇉hƛ}\;\Varid{a}\;\Varid{r}\;\anonymous \;(\Varid{ƛ}\;\Varid{b}\;\Conid{M})\;{}\<[20]%
+\>[20]{}\mathrel{=}\;\Varid{r}\;(\Varid{（}\;\Varid{b}\;\Varid{∙}\;\Varid{a}\;\Varid{）}\;\Conid{M}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Keyword{infix}\;\Varid{4}\;\Varid{\char95 ⇉\char95 }{}\<[E]%
+\\
+\>[B]{}\Varid{\char95 ⇉\char95 }\;\mathbin{:}\;\Conid{Λ}\;\Varid{→}\;\Conid{Λ}\;\Varid{→}\;\Conid{Set}{}\<[E]%
+\\
+\>[B]{}\Varid{\char95 ⇉\char95 }\;\mathrel{=}\;\Conid{ΛRec}\;(\Conid{Λ}\;\Varid{→}\;\Conid{Set})\;\Varid{⇉hv}\;\Varid{⇉h·}\;([\mskip1.5mu \mskip1.5mu],\Varid{⇉hƛ}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+Is $\alpha$-compatible in the left side of the relation by being defined with $\alpha$ recursion principle.
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{lemma⇉αleft}\;\mathbin{:}\;\{\mskip1.5mu \Conid{M}\;\Conid{N}\;\Conid{P}\;\mathbin{:}\;\Conid{Λ}\mskip1.5mu\}\;\Varid{→}\;\Conid{M}\;\Varid{∼α}\;\Conid{N}\;\Varid{→}\;\Conid{N}\;\Varid{⇉}\;\Conid{P}\;\Varid{→}\;\Conid{M}\;\Varid{⇉}\;\Conid{P}{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉αleft}\;\{\mskip1.5mu \Conid{M}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{N}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{P}\mskip1.5mu\}\;\Conid{M∼N}\;\Conid{N⇉P}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{rewrite}\;\Varid{lemmaΛRecStrongαCompatible}\;(\Conid{Λ}\;\Varid{→}\;\Conid{Set})\;\Varid{⇉hv}\;\Varid{⇉h·}\;([\mskip1.5mu \mskip1.5mu],\Varid{⇉hƛ})\;\Conid{M}\;\Conid{N}\;\Conid{M∼N}\;\mathrel{=}\;\Conid{N⇉P}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{lemma⇉Equiv\#Left}\;\mathbin{:}\;\{\mskip1.5mu \Varid{a}\;\Varid{b}\;\mathbin{:}\;\Conid{Atom}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{M}\;\Conid{N}\;\mathbin{:}\;\Conid{Λ}\mskip1.5mu\}\;\Varid{→}\;\Varid{a}\;\Varid{\#}\;\Conid{M}\;\Varid{→}\;\Varid{b}\;\Varid{\#}\;\Conid{M}\;\Varid{→}\;\Conid{M}\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Varid{（}\;\Varid{a}\;\Varid{∙}\;\Varid{b}\;\Varid{）}\;\Conid{M}\;\Varid{⇉}\;\Conid{N}{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉Equiv\#Left}\;\{\mskip1.5mu \Varid{a}\mskip1.5mu\}\;\{\mskip1.5mu \Varid{b}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{M}\mskip1.5mu\}\;\Varid{a\#M}\;\Varid{b\#M}\;\Conid{M⇉N}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{rewrite}\;\Varid{lemmaΛRecEquiv\#}\;(\Conid{Λ}\;\Varid{→}\;\Conid{Set})\;\Varid{⇉hv}\;\Varid{⇉h·}\;([\mskip1.5mu \mskip1.5mu],\Varid{⇉hƛ})\;\Conid{M}\;\Varid{a}\;\Varid{b}\;\Varid{a\#M}\;\Varid{b\#M}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\Conid{M⇉N}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{lemma⇉·c}\;\mathbin{:}\;{}\<[13]%
+\>[13]{}\{\mskip1.5mu \Conid{M}\;\Conid{M'}\;\Conid{N}\;\Conid{N'}\;\mathbin{:}\;\Conid{Λ}\mskip1.5mu\}\;\Varid{→}\;\Conid{M}\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Conid{M'}\;\Varid{⇉}\;\Conid{N'}\;\Varid{→}\;\Conid{M}\;\Varid{·}\;\Conid{M'}\;\Varid{⇉}\;\Conid{N}\;\Varid{·}\;\Conid{N'}{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉·c}\;\{\mskip1.5mu \Varid{v}\;\Varid{x}\mskip1.5mu\}\;{}\<[33]%
+\>[33]{}\Conid{M⇉N}\;\Conid{M'⇉N'}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\Conid{M⇉N},\Conid{M'⇉N'}{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉·c}\;\{\mskip1.5mu \Conid{M}\;\Varid{·}\;\Conid{P}\mskip1.5mu\}\;{}\<[33]%
+\>[33]{}\Conid{M⇉N}\;\Conid{M'⇉N'}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\Conid{M⇉N},\Conid{M'⇉N'}{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉·c}\;\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{M'}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{N}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{N'}\mskip1.5mu\}\;{}\<[33]%
+\>[33]{}\Conid{M⇉N}\;\Conid{M'⇉N'}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\Varid{inj₁}\;(\Conid{N},\Conid{N'},\Varid{refl},{}\<[28]%
+\>[28]{}\Conid{M⇉N},\Conid{M'⇉N'}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+Examples
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{test0}\;\mathbin{:}\;\Varid{ƛ}\;\Varid{3}\;(\Varid{v}\;\Varid{1})\;\Varid{⇉}\;\Varid{ƛ}\;\Varid{2}\;(\Varid{v}\;\Varid{1}){}\<[E]%
+\\
+\>[B]{}\Varid{test0}\;\mathrel{=}\;\Varid{refl}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Varid{test1}\;\mathbin{:}\;(\Varid{ƛ}\;\Varid{2}\;(\Varid{v}\;\Varid{2}))\;\Varid{·}\;(\Varid{v}\;\Varid{3})\;\Varid{⇉}\;(\Varid{ƛ}\;\Varid{2}\;(\Varid{v}\;\Varid{2}))\;\Varid{·}\;(\Varid{v}\;\Varid{3}){}\<[E]%
+\\
+\>[B]{}\Varid{test1}\;\mathrel{=}\;{}\<[10]%
+\>[10]{}\Varid{inj₁}\;((\Varid{ƛ}\;\Varid{2}\;(\Varid{v}\;\Varid{2})),\Varid{v}\;\Varid{3},\Varid{refl},\Varid{refl},\Varid{refl}){}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Varid{test2}\;\mathbin{:}\;(\Varid{ƛ}\;\Varid{2}\;(\Varid{v}\;\Varid{2}))\;\Varid{·}\;(\Varid{v}\;\Varid{3})\;\Varid{⇉}\;\Varid{v}\;\Varid{3}{}\<[E]%
+\\
+\>[B]{}\Varid{test2}\;\mathrel{=}\;\Varid{inj₂}\;(\Varid{v}\;\Varid{0},{}\<[22]%
+\>[22]{}\Varid{v}\;\Varid{3},\Varid{∼αv},\Varid{refl},\Varid{refl}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+Also the right side of the relation is $\alpha$-compatible  !
+
+How easy is prove something about this relation ? next is induction on M or on the relation ?
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{32}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{36}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{43}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{52}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{53}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{55}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{74}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{lemma⇉\#}\;\mathbin{:}\;\{\mskip1.5mu \Varid{a}\;\mathbin{:}\;\Conid{Atom}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{M}\;\Conid{N}\;\mathbin{:}\;\Conid{Λ}\mskip1.5mu\}\;\Varid{→}\;\Conid{M}\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Varid{a}\;\Varid{\#}\;\Conid{M}\;\Varid{→}\;\Varid{a}\;\Varid{\#}\;\Conid{N}{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉\#}\;\mathrel{=}\;\{\mskip1.5mu \mathbin{!!}\mskip1.5mu\}{}\<[E]%
+\\
+\>[B]{}\mbox{\onelinecomment }{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉αright}\;\mathbin{:}\;\{\mskip1.5mu \Conid{M}\;\Conid{N}\;\Conid{P}\;\mathbin{:}\;\Conid{Λ}\mskip1.5mu\}\;\Varid{→}\;{}\<[31]%
+\>[31]{}\Conid{M}\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Conid{N}\;\Varid{∼α}\;\Conid{P}\;\Varid{→}\;\Conid{M}\;\Varid{⇉}\;\Conid{P}{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉αright}\;\{\mskip1.5mu \Conid{M}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{N}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{P}\mskip1.5mu\}\;\Conid{M⇉N}\;\Conid{N∼P}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\Conid{TermIndPerm}\;{}\<[18]%
+\>[18]{}(\Varid{λ}\;\Conid{M}\;\Varid{→}\;(\Conid{N}\;\Conid{P}\;\mathbin{:}\;\Conid{Λ})\;\Varid{→}\;\Conid{M}\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Conid{N}\;\Varid{∼α}\;\Conid{P}\;\Varid{→}\;\Conid{M}\;\Varid{⇉}\;\Conid{P})\;{}\<[E]%
+\\
+\>[18]{}\Varid{lemma⇉rightv}\;\Varid{lemma⇉right·}\;\Varid{lemma⇉rightƛ}\;{}\<[E]%
+\\
+\>[18]{}\Conid{M}\;\Conid{N}\;\Conid{P}\;\Conid{M⇉N}\;\Conid{N∼P}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Keyword{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉rightv}\;\mathbin{:}\;{}\<[19]%
+\>[19]{}(\Varid{a}\;\mathbin{:}\;\Conid{ℕ})\;(\Conid{N}\;\Conid{P}\;\mathbin{:}\;\Conid{Λ})\;\Varid{→}\;\Varid{v}\;\Varid{a}\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Conid{N}\;\Varid{∼α}\;\Conid{P}\;\Varid{→}\;\Varid{v}\;\Varid{a}\;\Varid{⇉}\;\Conid{P}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉rightv}\;\Varid{a}\;\mathbin{\circ}\;(\Varid{v}\;\Varid{a})\;\mathbin{\circ}\;(\Varid{v}\;\Varid{a})\;\Varid{refl}\;\Varid{∼αv}\;\mathrel{=}\;\Varid{refl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉right·}\;\mathbin{:}\;{}\<[19]%
+\>[19]{}(\Conid{M}\;\Conid{M'}\;\mathbin{:}\;\Conid{Λ})\;{}\<[E]%
+\\
+\>[19]{}\Varid{→}\;((\Conid{N}\;\Conid{P}\;\mathbin{:}\;\Conid{Λ})\;\Varid{→}\;\Conid{M}\;{}\<[37]%
+\>[37]{}\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Conid{N}\;\Varid{∼α}\;\Conid{P}\;\Varid{→}\;\Conid{M}\;{}\<[55]%
+\>[55]{}\Varid{⇉}\;\Conid{P})\;{}\<[E]%
+\\
+\>[19]{}\Varid{→}\;((\Conid{N}\;\Conid{P}\;\mathbin{:}\;\Conid{Λ})\;\Varid{→}\;\Conid{M'}\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Conid{N}\;\Varid{∼α}\;\Conid{P}\;\Varid{→}\;\Conid{M'}\;\Varid{⇉}\;\Conid{P})\;{}\<[E]%
+\\
+\>[19]{}\Varid{→}\;(\Conid{N}\;\Conid{P}\;\mathbin{:}\;\Conid{Λ})\;\Varid{→}\;\Conid{M}\;\Varid{·}\;\Conid{M'}\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Conid{N}\;\Varid{∼α}\;\Conid{P}\;\Varid{→}\;\Conid{M}\;\Varid{·}\;\Conid{M'}\;\Varid{⇉}\;\Conid{P}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉right·}\;{}\<[17]%
+\>[17]{}(\anonymous \;\Varid{·}\;\anonymous )\;{}\<[27]%
+\>[27]{}\anonymous \;{}\<[32]%
+\>[32]{}\anonymous \;{}\<[36]%
+\>[36]{}\anonymous \;{}\<[42]%
+\>[42]{}(\Varid{v}\;\anonymous )\;{}\<[53]%
+\>[53]{}\anonymous \;()\;\anonymous {}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉right·}\;{}\<[17]%
+\>[17]{}(\anonymous \;\Varid{·}\;\anonymous )\;{}\<[27]%
+\>[27]{}\anonymous \;{}\<[32]%
+\>[32]{}\anonymous \;{}\<[36]%
+\>[36]{}\anonymous \;{}\<[42]%
+\>[42]{}(\Varid{ƛ}\;\anonymous \;\anonymous )\;{}\<[53]%
+\>[53]{}\anonymous \;()\;\anonymous {}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉right·}\;{}\<[17]%
+\>[17]{}(\Varid{v}\;\anonymous )\;{}\<[27]%
+\>[27]{}\anonymous \;{}\<[32]%
+\>[32]{}\anonymous \;{}\<[36]%
+\>[36]{}\anonymous \;{}\<[42]%
+\>[42]{}(\Varid{v}\;\anonymous )\;{}\<[53]%
+\>[53]{}\anonymous \;()\;\anonymous {}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉right·}\;{}\<[17]%
+\>[17]{}(\Varid{v}\;\anonymous )\;{}\<[27]%
+\>[27]{}\anonymous \;{}\<[32]%
+\>[32]{}\anonymous \;{}\<[36]%
+\>[36]{}\anonymous \;{}\<[42]%
+\>[42]{}(\Varid{ƛ}\;\anonymous \;\anonymous )\;{}\<[53]%
+\>[53]{}\anonymous \;()\;\anonymous {}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉right·}\;{}\<[17]%
+\>[17]{}(\Varid{ƛ}\;\Varid{a}\;\Conid{M})\;{}\<[27]%
+\>[27]{}\Conid{M'}\;{}\<[32]%
+\>[32]{}\Varid{hiM}\;\Varid{hiM'}\;{}\<[42]%
+\>[42]{}\mathbin{\circ}\;(\Conid{N}\;\Varid{·}\;\Conid{N'})\;{}\<[53]%
+\>[53]{}\mathbin{\circ}\;(\Conid{P}\;\Varid{·}\;\Conid{P'})\;{}\<[E]%
+\\
+\>[17]{}(\Varid{inj₁}\;(\Conid{N},\Conid{N'},\Varid{refl},\Varid{ƛaM⇉N},\Conid{M'⇉N'}))\;{}\<[E]%
+\\
+\>[17]{}(\Varid{∼α·}\;\mathbin{\circ}\;\{\mskip1.5mu \Conid{N}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{P}\mskip1.5mu\}\;\mathbin{\circ}\;\{\mskip1.5mu \Conid{N'}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{P'}\mskip1.5mu\}\;\Conid{N∼P}\;\Conid{N'∼P'})\;{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathrel{=}\;\Varid{inj₁}\;(\Conid{P},\Conid{P'},\Varid{refl},\Varid{hiM}\;\Conid{N}\;\Conid{P}\;\Varid{ƛaM⇉N}\;\Conid{N∼P},\Varid{hiM'}\;\Conid{N'}\;\Conid{P'}\;\Conid{M'⇉N'}\;\Conid{N'∼P'}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉right·}\;{}\<[17]%
+\>[17]{}(\Varid{ƛ}\;\Varid{a}\;\Conid{M})\;{}\<[27]%
+\>[27]{}\Conid{M'}\;{}\<[32]%
+\>[32]{}\Varid{hiM}\;\Varid{hiM'}\;{}\<[42]%
+\>[42]{}\Conid{N}\;{}\<[53]%
+\>[53]{}\Conid{P}\;{}\<[E]%
+\\
+\>[17]{}(\Varid{inj₂}\;(\Conid{N'},\Conid{N''},\Conid{N∼N'}\;[\mskip1.5mu \Varid{a≔N''}\mskip1.5mu],\Varid{ƛaM⇉ƛaN'},\Conid{M'⇉N''}))\;{}\<[E]%
+\\
+\>[17]{}\Conid{N∼P}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathrel{=}\;\Varid{inj₂}\;(\Conid{N'},\Conid{N''},\Varid{τ}\;(\Varid{σ}\;\Conid{N∼P})\;(\Conid{N∼N'}\;[\mskip1.5mu \Varid{a≔N''}\mskip1.5mu]),\Varid{ƛaM⇉ƛaN'},\Conid{M'⇉N''}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉right·}\;{}\<[17]%
+\>[17]{}(\Conid{M}\;\Varid{·}\;\Conid{M'})\;{}\<[27]%
+\>[27]{}\Conid{M''}\;{}\<[32]%
+\>[32]{}\Varid{hiM}\;\Varid{hiM'}\;{}\<[42]%
+\>[42]{}(\Conid{N}\;\Varid{·}\;\Conid{N'})\;{}\<[52]%
+\>[52]{}(\Conid{P}\;\Varid{·}\;\Conid{P'})\;{}\<[E]%
+\\
+\>[17]{}(\Conid{MM'⇉N},\Conid{M''⇉N'})\;{}\<[E]%
+\\
+\>[17]{}(\Varid{∼α·}\;\Conid{N∼P}\;\Conid{N'∼P'})\;{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathrel{=}\;\Varid{hiM}\;\Conid{N}\;\Conid{P}\;\Conid{MM'⇉N}\;\Conid{N∼P},\Varid{hiM'}\;\Conid{N'}\;\Conid{P'}\;\Conid{M''⇉N'}\;\Conid{N'∼P'}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉right·}\;{}\<[17]%
+\>[17]{}(\Varid{v}\;\Varid{x})\;{}\<[27]%
+\>[27]{}\Conid{M'}\;{}\<[32]%
+\>[32]{}\Varid{hiM}\;\Varid{hiM'}\;{}\<[42]%
+\>[42]{}(\Conid{N}\;\Varid{·}\;\Conid{N'})\;{}\<[52]%
+\>[52]{}\mathbin{\circ}\;(\Conid{P}\;\Varid{·}\;\Conid{P'})\;{}\<[E]%
+\\
+\>[17]{}(\Varid{x⇉N},\Conid{M'⇉N'})\;{}\<[E]%
+\\
+\>[17]{}(\Varid{∼α·}\;\mathbin{\circ}\;\{\mskip1.5mu \Conid{N}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{P}\mskip1.5mu\}\;\mathbin{\circ}\;\{\mskip1.5mu \Conid{N'}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{P'}\mskip1.5mu\}\;{}\<[43]%
+\>[43]{}\Conid{N∼P}\;\Conid{N'∼P'})\;{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathrel{=}\;\Varid{hiM}\;\Conid{N}\;\Conid{P}\;\Varid{x⇉N}\;\Conid{N∼P},\Varid{hiM'}\;\Conid{N'}\;\Conid{P'}\;\Conid{M'⇉N'}\;\Conid{N'∼P'}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉rightƛ}\;{}\<[17]%
+\>[17]{}\mathbin{:}\;{}\<[20]%
+\>[20]{}(\Conid{M}\;\mathbin{:}\;\Conid{Λ})\;(\Varid{a}\;\mathbin{:}\;\Conid{ℕ})\;{}\<[E]%
+\\
+\>[20]{}\Varid{→}\;((\Varid{π}\;\mathbin{:}\;\Conid{List}\;(\Conid{Atom}\;\Varid{×}\;\Conid{Atom}))\;(\Conid{N}\;\Conid{P}\;\mathbin{:}\;\Conid{Λ})\;\Varid{→}\;(\Varid{π}\;\Varid{∙}\;\Conid{M})\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Conid{N}\;\Varid{∼α}\;\Conid{P}\;\Varid{→}\;(\Varid{π}\;\Varid{∙}\;\Conid{M})\;\Varid{⇉}\;\Conid{P})\;{}\<[E]%
+\\
+\>[20]{}\Varid{→}\;(\Conid{N}\;\Conid{P}\;\mathbin{:}\;\Conid{Λ})\;\Varid{→}\;\Varid{ƛ}\;\Varid{a}\;\Conid{M}\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Conid{N}\;\Varid{∼α}\;\Conid{P}\;\Varid{→}\;\Varid{ƛ}\;\Varid{a}\;\Conid{M}\;\Varid{⇉}\;\Conid{P}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉rightƛ}\;{}\<[17]%
+\>[17]{}\anonymous \;\anonymous \;\anonymous \;{}\<[25]%
+\>[25]{}(\Varid{v}\;\anonymous {}\<[31]%
+\>[31]{})\;{}\<[34]%
+\>[34]{}\anonymous \;{}\<[42]%
+\>[42]{}()\;\anonymous {}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉rightƛ}\;{}\<[17]%
+\>[17]{}\anonymous \;\anonymous \;\anonymous \;{}\<[25]%
+\>[25]{}(\anonymous \;\Varid{·}\;\anonymous )\;{}\<[34]%
+\>[34]{}\anonymous \;{}\<[42]%
+\>[42]{}()\;\anonymous {}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lemma⇉rightƛ}\;{}\<[17]%
+\>[17]{}\Conid{M}\;\Varid{a}\;\Varid{hi}\;{}\<[25]%
+\>[25]{}(\Varid{ƛ}\;\Varid{b}\;\Conid{N})\;\mathbin{\circ}\;(\Varid{ƛ}\;\Varid{c}\;\Conid{P})\;{}\<[E]%
+\\
+\>[17]{}\Varid{（ad）M⇉（bd）N}\;{}\<[E]%
+\\
+\>[17]{}(\Varid{∼αƛ}\;\mathbin{\circ}\;\{\mskip1.5mu \Conid{N}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{P}\mskip1.5mu\}\;\mathbin{\circ}\;\{\mskip1.5mu \Varid{b}\mskip1.5mu\}\;\{\mskip1.5mu \Varid{c}\mskip1.5mu\}\;\Varid{xs}\;\Varid{∀e→e∉xs→（be）N∼（ce）P}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Keyword{with}\;\Varid{lemma⇉\#}\;\{\mskip1.5mu \Varid{d}\mskip1.5mu\}\;\{\mskip1.5mu \Varid{ƛ}\;\Varid{a}\;\Conid{M}\mskip1.5mu\}\;\{\mskip1.5mu \Varid{ƛ}\;\Varid{b}\;\Conid{N}\mskip1.5mu\}\;\Varid{（ad）M⇉（bd）N}\;\Varid{d\#ƛaM}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Keyword{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{d}\;\mathrel{=}\;\Varid{χ}\;[\mskip1.5mu \mskip1.5mu]\;(\Varid{ƛ}\;\Varid{a}\;\Conid{M}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{d\#ƛaM}\;\mathrel{=}\;\Varid{χ\#}\;[\mskip1.5mu \mskip1.5mu]\;(\Varid{ƛ}\;\Varid{a}\;\Conid{M}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{...}\;\mid \;\Varid{d\#ƛbN}\;{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{rewrite}\;\Varid{aux}\;((\Conid{Λ}\;\Varid{→}\;\Conid{Set})\;\Varid{×}\;\Conid{Λ})\;\Varid{<}\;\Varid{⇉hv},\Varid{v}\;\Varid{>}\;(\Varid{app}\;\Varid{⇉h·})\;[\mskip1.5mu \mskip1.5mu]\;(\Varid{abs}\;\Varid{⇉hƛ})\;\Conid{M}\;[\mskip1.5mu (\Varid{a},\Varid{χ}\;[\mskip1.5mu \mskip1.5mu]\;(\Varid{ƛ}\;\Varid{a}\;\Conid{M}))\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathrel{=}\;\Varid{hi}\;[\mskip1.5mu (\Varid{a},\Varid{d})\mskip1.5mu]\;(\Varid{（}\;\Varid{b}\;\Varid{∙}\;\Varid{d}\;\Varid{）}\;\Conid{N})\;(\Varid{（}\;\Varid{c}\;\Varid{∙}\;\Varid{d}\;\Varid{）}\;\Conid{P})\;\Varid{（ad）M⇉（bd）N}\;\Varid{bdN∼cdP}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Keyword{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{d}\;\mathrel{=}\;\Varid{χ}\;[\mskip1.5mu \mskip1.5mu]\;(\Varid{ƛ}\;\Varid{a}\;\Conid{M}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{d\#ƛaM}\;\mathrel{=}\;\Varid{χ\#}\;[\mskip1.5mu \mskip1.5mu]\;(\Varid{ƛ}\;\Varid{a}\;\Conid{M}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{d\#ƛcP}\;\mathrel{=}\;\Varid{lemma∼α\#}\;(\Varid{∼αƛ}\;\{\mskip1.5mu \Conid{N}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{P}\mskip1.5mu\}\;\{\mskip1.5mu \Varid{b}\mskip1.5mu\}\;\{\mskip1.5mu \Varid{c}\mskip1.5mu\}\;\Varid{xs}\;\Varid{∀e→e∉xs→（be）N∼（ce）P})\;\Varid{d\#ƛbN}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{x}\;\mathrel{=}\;\Varid{χ}\;\Varid{xs}\;(\Varid{ƛ}\;\Varid{b}\;\Conid{N}\;\Varid{·}\;\Varid{ƛ}\;\Varid{c}\;\Conid{P}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{x\#ƛbN}\;\mathbin{:}\;\Varid{x}\;\Varid{\#}\;\Varid{ƛ}\;\Varid{b}\;\Conid{N}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{x\#ƛbN}\;\Keyword{with}\;\Varid{χ\#}\;\Varid{xs}\;(\Varid{ƛ}\;\Varid{b}\;\Conid{N}\;\Varid{·}\;\Varid{ƛ}\;\Varid{c}\;\Conid{P}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{...}\;\mid \;\Varid{\#·}\;\Varid{x\#ƛbN}\;\anonymous \;\mathrel{=}\;\Varid{x\#ƛbN}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{x\#ƛcP}\;\mathbin{:}\;\Varid{x}\;\Varid{\#}\;\Varid{ƛ}\;\Varid{c}\;\Conid{P}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{x\#ƛcP}\;\Keyword{with}\;\Varid{χ\#}\;\Varid{xs}\;(\Varid{ƛ}\;\Varid{b}\;\Conid{N}\;\Varid{·}\;\Varid{ƛ}\;\Varid{c}\;\Conid{P}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{...}\;\mid \;\Varid{\#·}\;\anonymous \;\Varid{x\#ƛcP}\;\mathrel{=}\;\Varid{x\#ƛcP}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{x∉xs}\;\mathrel{=}\;\Varid{χ∉}\;\Varid{xs}\;(\Varid{ƛ}\;\Varid{b}\;\Conid{N}\;\Varid{·}\;\Varid{ƛ}\;\Varid{c}\;\Conid{P}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{bdN∼cdP}\;\mathbin{:}\;\Varid{（}\;\Varid{b}\;\Varid{∙}\;\Varid{d}\;\Varid{）}\;\Conid{N}\;\Varid{∼α}\;\Varid{（}\;\Varid{c}\;\Varid{∙}\;\Varid{d}\;\Varid{）}\;\Conid{P}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{bdN∼cdP}\;\mathrel{=}\;{}\<[16]%
+\>[16]{}\Varid{begin}\;{}\<[E]%
+\\
+\>[16]{}\hsindent{2}{}\<[18]%
+\>[18]{}\Varid{（}\;\Varid{b}\;\Varid{∙}\;\Varid{d}\;\Varid{）}\;\Conid{N}\;{}\<[E]%
+\\
+\>[16]{}\Varid{∼⟨}\;\Varid{σ}\;(\Varid{lemma∙cancel∼α''}\;\Varid{d\#ƛbN}\;\Varid{x\#ƛbN})\;\Varid{⟩}\;{}\<[E]%
+\\
+\>[16]{}\hsindent{2}{}\<[18]%
+\>[18]{}\Varid{（}\;\Varid{x}\;\Varid{∙}\;\Varid{d}\;\Varid{）}\;\Varid{（}\;\Varid{b}\;\Varid{∙}\;\Varid{x}\;\Varid{）}\;\Conid{N}\;{}\<[E]%
+\\
+\>[16]{}\Varid{∼⟨}\;\Varid{lemma∼αEquiv}\;[\mskip1.5mu (\Varid{x},\Varid{d})\mskip1.5mu]\;(\Varid{∀e→e∉xs→（be）N∼（ce）P}\;\Varid{x}\;\Varid{x∉xs})\;{}\<[74]%
+\>[74]{}\Varid{⟩}\;{}\<[E]%
+\\
+\>[16]{}\hsindent{2}{}\<[18]%
+\>[18]{}\Varid{（}\;\Varid{x}\;\Varid{∙}\;\Varid{d}\;\Varid{）}\;\Varid{（}\;\Varid{c}\;\Varid{∙}\;\Varid{x}\;\Varid{）}\;\Conid{P}\;{}\<[E]%
+\\
+\>[16]{}\Varid{∼⟨}\;\Varid{lemma∙cancel∼α''}\;\Varid{d\#ƛcP}\;\Varid{x\#ƛcP}\;\Varid{⟩}\;{}\<[E]%
+\\
+\>[16]{}\hsindent{2}{}\<[18]%
+\>[18]{}\Varid{（}\;\Varid{c}\;\Varid{∙}\;\Varid{d}\;\Varid{）}\;\Conid{P}\;{}\<[E]%
+\\
+\>[16]{}\Varid{∎}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{36}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{46}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{55}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{lemma⇉Equiv}\;\mathbin{:}\;{}\<[16]%
+\>[16]{}(\Varid{a}\;\Varid{b}\;\mathbin{:}\;\Conid{Atom})\;\{\mskip1.5mu \Conid{M}\;\Conid{N}\;\mathbin{:}\;\Conid{Λ}\mskip1.5mu\}\;\Varid{→}\;\Conid{M}\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Varid{（}\;\Varid{a}\;\Varid{∙}\;\Varid{b}\;\Varid{）}\;\Conid{M}\;\Varid{⇉}\;\Varid{（}\;\Varid{a}\;\Varid{∙}\;\Varid{b}\;\Varid{）}\;\Conid{N}{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Varid{v}\;\Varid{x}\mskip1.5mu\}\;{}\<[46]%
+\>[46]{}\Varid{refl}\;{}\<[55]%
+\>[55]{}\mathrel{=}\;\Varid{refl}{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Varid{v}\;\Varid{x}\;{}\<[28]%
+\>[28]{}\Varid{·}\;\Conid{M'}\mskip1.5mu\}\;{}\<[35]%
+\>[35]{}\{\mskip1.5mu \Varid{v}\;\anonymous \mskip1.5mu\}\;{}\<[46]%
+\>[46]{}(){}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Varid{v}\;\Varid{x}\;{}\<[28]%
+\>[28]{}\Varid{·}\;\Conid{M'}\mskip1.5mu\}\;{}\<[35]%
+\>[35]{}\{\mskip1.5mu \Varid{ƛ}\;\anonymous \;\anonymous \mskip1.5mu\}\;{}\<[46]%
+\>[46]{}(){}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Varid{v}\;\Varid{x}\;{}\<[28]%
+\>[28]{}\Varid{·}\;\Conid{M'}\mskip1.5mu\}\;{}\<[35]%
+\>[35]{}\{\mskip1.5mu \Conid{N}\;\Varid{·}\;\Conid{N'}\mskip1.5mu\}\;{}\<[46]%
+\>[46]{}(\Varid{x⇉N},\Conid{M'⇉N'})\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Varid{v}\;\Varid{x}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{N}\mskip1.5mu\}\;\Varid{x⇉N},\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Conid{M'}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{N'}\mskip1.5mu\}\;\Conid{M'⇉N'}{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu (\Conid{M}\;\Varid{·}\;\Conid{M'})\;\Varid{·}\;\Conid{M''}\mskip1.5mu\}\;{}\<[35]%
+\>[35]{}\{\mskip1.5mu \Varid{v}\;\anonymous \mskip1.5mu\}\;{}\<[46]%
+\>[46]{}(){}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu (\Conid{M}\;\Varid{·}\;\Conid{M'})\;\Varid{·}\;\Conid{M''}\mskip1.5mu\}\;{}\<[35]%
+\>[35]{}\{\mskip1.5mu \Varid{ƛ}\;\anonymous \;\anonymous \mskip1.5mu\}\;{}\<[46]%
+\>[46]{}(){}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu (\Conid{M}\;\Varid{·}\;\Conid{M'})\;\Varid{·}\;\Conid{M''}\mskip1.5mu\}\;{}\<[35]%
+\>[35]{}\{\mskip1.5mu \Conid{N}\;\Varid{·}\;\Conid{N'}\mskip1.5mu\}\;{}\<[46]%
+\>[46]{}(\Conid{MM'⇉N},\Conid{M''⇉N'})\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Conid{M}\;\Varid{·}\;\Conid{M'}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{N}\mskip1.5mu\}\;\Conid{MM'⇉N},\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Conid{M''}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{N'}\mskip1.5mu\}\;\Conid{M''⇉N'}{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\;\Varid{·}\;\Conid{M'}\mskip1.5mu\}\;{}\<[35]%
+\>[35]{}\mathbin{\circ}\;\{\mskip1.5mu \Conid{P}\;\Varid{·}\;\Conid{P'}\mskip1.5mu\}\;{}\<[46]%
+\>[46]{}(\Varid{inj₁}\;(\Conid{P},\Conid{P'},\Varid{refl},\Varid{ƛxM⇉P},\Conid{M'⇉P'}))\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\Varid{inj₁}\;(\Varid{（}\;\Varid{a}\;\Varid{∙}\;\Varid{b}\;\Varid{）}\;\Conid{P},\Varid{（}\;\Varid{a}\;\Varid{∙}\;\Varid{b}\;\Varid{）}\;\Conid{P'},\Varid{refl},\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{P}\mskip1.5mu\}\;\Varid{ƛxM⇉P},\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Conid{M'}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{P'}\mskip1.5mu\}\;\Conid{M'⇉P'}){}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\;\Varid{·}\;\Conid{M'}\mskip1.5mu\}\;{}\<[46]%
+\>[46]{}(\Varid{inj₂}\;(\Conid{P},\Conid{P'},\Conid{N∼P}\;[\mskip1.5mu \Varid{χ=P'}\mskip1.5mu],\Varid{ƛxM⇉ƛxP},\Conid{M'⇉P'}))\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\{\mskip1.5mu \mathbin{!!}\mskip1.5mu\}{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\mskip1.5mu\}\;{}\<[36]%
+\>[36]{}\{\mskip1.5mu \Varid{v}\;\anonymous \mskip1.5mu\}\;{}\<[46]%
+\>[46]{}(){}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\mskip1.5mu\}\;{}\<[36]%
+\>[36]{}\{\mskip1.5mu \anonymous \;\Varid{·}\;\anonymous \mskip1.5mu\}\;{}\<[46]%
+\>[46]{}(){}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉Equiv}\;\Varid{a}\;\Varid{b}\;\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\mskip1.5mu\}\;{}\<[36]%
+\>[36]{}\{\mskip1.5mu \Varid{ƛ}\;\Varid{y}\;\Conid{N}\mskip1.5mu\}\;{}\<[46]%
+\>[46]{}\Varid{ƛxM⇉ƛyN}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\{\mskip1.5mu \mathbin{!!}\mskip1.5mu\}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{6}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{30}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{32}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{lemma⇉ƛc}\;\mathbin{:}\;\{\mskip1.5mu \Varid{x}\;\mathbin{:}\;\Conid{Atom}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{M}\;\Conid{N}\;\mathbin{:}\;\Conid{Λ}\mskip1.5mu\}\;\Varid{→}\;\Conid{M}\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Varid{ƛ}\;\Varid{x}\;\Conid{M}\;\Varid{⇉}\;\Varid{ƛ}\;\Varid{x}\;\Conid{N}{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉ƛc}\;\{\mskip1.5mu \Varid{x}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{M}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{N}\mskip1.5mu\}\;\Conid{M⇉N}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{rewrite}\;(\Varid{aux}\;((\Conid{Λ}\;\Varid{→}\;\Conid{Set})\;\Varid{×}\;\Conid{Λ})\;\Varid{<}\;\Varid{⇉hv},\Varid{v}\;\Varid{>}\;(\Varid{app}\;\Varid{⇉h·})\;[\mskip1.5mu \mskip1.5mu]\;(\Varid{abs}\;\Varid{⇉hƛ})\;\Conid{M}\;[\mskip1.5mu (\Varid{x},(\Varid{χ}\;[\mskip1.5mu \mskip1.5mu]\;(\Varid{ƛ}\;\Varid{x}\;\Conid{M})))\mskip1.5mu])\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\Varid{lemma⇉Equiv}\;\Varid{x}\;(\Varid{χ}\;[\mskip1.5mu \mskip1.5mu]\;(\Varid{ƛ}\;\Varid{x}\;\Conid{M}))\;\{\mskip1.5mu \Conid{M}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{N}\mskip1.5mu\}\;\Conid{M⇉N}{}\<[E]%
+\\
+\>[B]{}\mbox{\onelinecomment }{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉ƛd}\;\mathbin{:}\;{}\<[13]%
+\>[13]{}\{\mskip1.5mu \Varid{x}\;\mathbin{:}\;\Conid{Atom}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{M}\;\Conid{N}\;\mathbin{:}\;\Conid{Λ}\mskip1.5mu\}\;\Varid{→}\;\Varid{ƛ}\;\Varid{x}\;\Conid{M}\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Varid{∃}\;(\Varid{λ}\;\Conid{P}\;\Varid{→}\;\Conid{N}\;\Varid{∼α}\;\Varid{ƛ}\;\Varid{x}\;\Conid{P}\;\Varid{×}\;\Conid{M}\;\Varid{⇉}\;\Conid{P}){}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉ƛd}\;{}\<[19]%
+\>[19]{}\{\mskip1.5mu \Conid{N}\;\mathrel{=}\;\Varid{v}\;\anonymous \mskip1.5mu\}\;{}\<[32]%
+\>[32]{}(){}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉ƛd}\;{}\<[19]%
+\>[19]{}\{\mskip1.5mu \Conid{N}\;\mathrel{=}\;\anonymous \;\Varid{·}\;\anonymous \mskip1.5mu\}\;{}\<[32]%
+\>[32]{}(){}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉ƛd}\;\{\mskip1.5mu \Varid{x}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{M}\mskip1.5mu\}\;{}\<[19]%
+\>[19]{}\{\mskip1.5mu \Varid{ƛ}\;\Varid{y}\;\Conid{N}\mskip1.5mu\}\;{}\<[32]%
+\>[32]{}\Varid{ƛxM⇉ƛyN}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;{}\<[6]%
+\>[6]{}\Varid{（}\;\Varid{y}\;\Varid{∙}\;\Varid{x}\;\Varid{）}\;\Conid{N},{}\<[21]%
+\>[21]{}\Varid{lemma∼αλ'}\;\Varid{x\#ƛyN},\Conid{M⇉（yx）N}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Keyword{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{z}\;\mathrel{=}\;\Varid{χ}\;[\mskip1.5mu \mskip1.5mu]\;(\Varid{ƛ}\;\Varid{x}\;\Conid{M}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{z\#ƛxM}\;\mathrel{=}\;\Varid{χ\#}\;[\mskip1.5mu \mskip1.5mu]\;(\Varid{ƛ}\;\Varid{x}\;\Conid{M}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{z\#ƛyN}\;\mathbin{:}\;\Varid{z}\;\Varid{\#}\;\Varid{ƛ}\;\Varid{y}\;\Conid{N}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{z\#ƛyN}\;\mathrel{=}\;\Varid{lemma⇉\#}\;\Varid{ƛxM⇉ƛyN}\;\Varid{z\#ƛxM}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{x\#ƛxM}\;\mathbin{:}\;\Varid{x}\;\Varid{\#}\;\Varid{ƛ}\;\Varid{x}\;\Conid{M}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{x\#ƛxM}\;\mathrel{=}\;\Varid{\#ƛ≡}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{x\#ƛyN}\;\mathbin{:}\;\Varid{x}\;\Varid{\#}\;\Varid{ƛ}\;\Varid{y}\;\Conid{N}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{x\#ƛyN}\;\mathrel{=}\;\Varid{lemma⇉\#}\;\Varid{ƛxM⇉ƛyN}\;\Varid{x\#ƛxM}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{（xz）M⇉（yz）N}\;\mathbin{:}\;\Varid{（}\;\Varid{x}\;\Varid{∙}\;\Varid{z}\;\Varid{）}\;\Conid{M}\;\Varid{⇉}\;\Varid{（}\;\Varid{y}\;\Varid{∙}\;\Varid{z}\;\Varid{）}\;\Conid{N}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{（xz）M⇉（yz）N}\;\Varid{rewrite}\;\Varid{sym}\;(\Varid{aux}\;((\Conid{Λ}\;\Varid{→}\;\Conid{Set})\;\Varid{×}\;\Conid{Λ})\;\Varid{<}\;\Varid{⇉hv},\Varid{v}\;\Varid{>}\;(\Varid{app}\;\Varid{⇉h·})\;[\mskip1.5mu \mskip1.5mu]\;(\Varid{abs}\;\Varid{⇉hƛ})\;\Conid{M}\;[\mskip1.5mu (\Varid{x},\Varid{z})\mskip1.5mu])\;{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathrel{=}\;\Varid{ƛxM⇉ƛyN}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{（xz）（yz）N∼（yx）N}\;\mathbin{:}\;\Varid{（}\;\Varid{x}\;\Varid{∙}\;\Varid{z}\;\Varid{）}\;\Varid{（}\;\Varid{y}\;\Varid{∙}\;\Varid{z}\;\Varid{）}\;\Conid{N}\;\Varid{∼α}\;\Varid{（}\;\Varid{y}\;\Varid{∙}\;\Varid{x}\;\Varid{）}\;\Conid{N}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{（xz）（yz）N∼（yx）N}\;\mathrel{=}\;{}\<[22]%
+\>[22]{}\Varid{begin}\;{}\<[E]%
+\\
+\>[22]{}\hsindent{6}{}\<[28]%
+\>[28]{}\Varid{（}\;\Varid{x}\;\Varid{∙}\;\Varid{z}\;\Varid{）}\;\Varid{（}\;\Varid{y}\;\Varid{∙}\;\Varid{z}\;\Varid{）}\;\Conid{N}\;{}\<[E]%
+\\
+\>[22]{}\hsindent{4}{}\<[26]%
+\>[26]{}\Varid{≈⟨}\;\Varid{lemma∙comm}\;\Varid{⟩}\;{}\<[E]%
+\\
+\>[26]{}\hsindent{2}{}\<[28]%
+\>[28]{}\Varid{（}\;\Varid{z}\;\Varid{∙}\;\Varid{x}\;\Varid{）}\;\Varid{（}\;\Varid{y}\;\Varid{∙}\;\Varid{z}\;\Varid{）}\;\Conid{N}\;{}\<[E]%
+\\
+\>[22]{}\hsindent{4}{}\<[26]%
+\>[26]{}\Varid{∼⟨}\;{}\<[30]%
+\>[30]{}\Varid{lemma∙cancel∼α''}\;\Varid{x\#ƛyN}\;\Varid{z\#ƛyN}\;\Varid{⟩}\;{}\<[E]%
+\\
+\>[26]{}\hsindent{2}{}\<[28]%
+\>[28]{}\Varid{（}\;\Varid{y}\;\Varid{∙}\;\Varid{x}\;\Varid{）}\;\Conid{N}\;{}\<[E]%
+\\
+\>[22]{}\hsindent{4}{}\<[26]%
+\>[26]{}\Varid{∎}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Conid{M⇉（yx）N}\;\mathbin{:}\;\Conid{M}\;\Varid{⇉}\;\Varid{（}\;\Varid{y}\;\Varid{∙}\;\Varid{x}\;\Varid{）}\;\Conid{N}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Conid{M⇉（yx）N}\;{}\<[12]%
+\>[12]{}\mathrel{=}\;{}\<[15]%
+\>[15]{}\Varid{subst}\;(\Varid{λ}\;\Varid{p}\;\Varid{→}\;\Varid{p}\;\Varid{⇉}\;\Varid{（}\;\Varid{y}\;\Varid{∙}\;\Varid{x}\;\Varid{）}\;\Conid{N})\;{}\<[E]%
+\\
+\>[15]{}\hsindent{7}{}\<[22]%
+\>[22]{}(\Varid{lemma（ab）（ab）M≡M}\;\{\mskip1.5mu \Varid{x}\mskip1.5mu\}\;\{\mskip1.5mu \Varid{z}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{M}\mskip1.5mu\})\;{}\<[E]%
+\\
+\>[15]{}\hsindent{7}{}\<[22]%
+\>[22]{}(\Varid{lemma⇉αright}\;{}\<[37]%
+\>[37]{}\{\mskip1.5mu \Varid{（}\;\Varid{x}\;\Varid{∙}\;\Varid{z}\;\Varid{）}\;\Varid{（}\;\Varid{x}\;\Varid{∙}\;\Varid{z}\;\Varid{）}\;\Conid{M}\mskip1.5mu\}\;{}\<[E]%
+\\
+\>[37]{}(\Varid{lemma⇉Equiv}\;\Varid{x}\;\Varid{z}\;\{\mskip1.5mu \Varid{（}\;\Varid{x}\;\Varid{∙}\;\Varid{z}\;\Varid{）}\;\Conid{M}\mskip1.5mu\}\;\{\mskip1.5mu \Varid{（}\;\Varid{y}\;\Varid{∙}\;\Varid{z}\;\Varid{）}\;\Conid{N}\mskip1.5mu\}\;\Varid{（xz）M⇉（yz）N})\;{}\<[E]%
+\\
+\>[37]{}\Varid{（xz）（yz）N∼（yx）N}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+{- 
+Substitution lemma for parallel reduction.
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{lemma⇉subst}\;\mathbin{:}\;\{\mskip1.5mu \Varid{a}\;\mathbin{:}\;\Conid{Atom}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{M}\;\Conid{N}\;\Conid{P}\;\Conid{Q}\;\mathbin{:}\;\Conid{Λ}\mskip1.5mu\}\;\Varid{→}\;\Conid{M}\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Conid{P}\;\Varid{⇉}\;\Conid{Q}\;\Varid{→}\;\Conid{M}\;[\mskip1.5mu \Varid{a}\;\Varid{≔}\;\Conid{P}\mskip1.5mu]\;\Varid{⇉}\;\Conid{N}\;[\mskip1.5mu \Varid{a}\;\Varid{≔}\;\Conid{Q}\mskip1.5mu]{}\<[E]%
+\\
+\>[B]{}\Varid{lemma⇉subst}\;\mathrel{=}\;\{\mskip1.5mu \mathbin{!!}\mskip1.5mu\}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{59}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{test3}\;\mathbin{:}\;(\Varid{ƛ}\;\Varid{2}\;(\Varid{v}\;\Varid{2}))\;\Varid{·}\;(\Varid{ƛ}\;\Varid{0}\;(\Varid{v}\;\Varid{0}))\;\Varid{⇉}\;(\Varid{ƛ}\;\Varid{5}\;(\Varid{v}\;\Varid{5})){}\<[E]%
+\\
+\>[B]{}\Varid{test3}\;\mathrel{=}\;\Varid{inj₂}\;(\Varid{v}\;\Varid{0},(\Varid{ƛ}\;\Varid{0}\;(\Varid{v}\;\Varid{0})),\Varid{∼αƛ}\;[\mskip1.5mu \mskip1.5mu]\;(\Varid{λ}\;\anonymous \;\anonymous \;\Varid{→}\;\Varid{∼αv}),{}\<[59]%
+\>[59]{}\Varid{refl},\Varid{refl}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{6}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{8}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{40}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{44}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{diam⇉}\;\mathbin{:}\;{}\<[10]%
+\>[10]{}\{\mskip1.5mu \Conid{M}\;\Conid{N}\;\Conid{P}\;\mathbin{:}\;\Conid{Λ}\mskip1.5mu\}\;\Varid{→}\;\Conid{M}\;\Varid{⇉}\;\Conid{N}\;\Varid{→}\;\Conid{M}\;\Varid{⇉}\;\Conid{P}\;{}\<[E]%
+\\
+\>[10]{}\Varid{→}\;\Varid{∃}\;(\Varid{λ}\;\Conid{Q}\;\Varid{→}\;\Conid{N}\;\Varid{⇉}\;\Conid{Q}\;\Varid{×}\;\Conid{P}\;\Varid{⇉}\;\Conid{Q}){}\<[E]%
+\\
+\>[B]{}\Varid{diam⇉}\;{}\<[8]%
+\>[8]{}\{\mskip1.5mu \Varid{v}\;\Varid{a}\mskip1.5mu\}\;{}\<[26]%
+\>[26]{}\mathbin{\circ}\;\{\mskip1.5mu \Varid{v}\;\Varid{a}\mskip1.5mu\}\;{}\<[37]%
+\>[37]{}\mathbin{\circ}\;\{\mskip1.5mu \Varid{v}\;\Varid{a}\mskip1.5mu\}\;{}\<[E]%
+\\
+\>[8]{}\Varid{refl}\;{}\<[E]%
+\\
+\>[8]{}\Varid{refl}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\Varid{v}\;\Varid{a},\Varid{refl},\Varid{refl}{}\<[E]%
+\\
+\>[B]{}\Varid{diam⇉}\;{}\<[8]%
+\>[8]{}\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\;\Varid{·}\;\Conid{M'}\mskip1.5mu\}\;{}\<[26]%
+\>[26]{}\mathbin{\circ}\;\{\mskip1.5mu \Conid{N}\;\Varid{·}\;\Conid{N'}\mskip1.5mu\}\;{}\<[38]%
+\>[38]{}\mathbin{\circ}\;\{\mskip1.5mu \Conid{P}\;\Varid{·}\;\Conid{P'}\mskip1.5mu\}\;{}\<[E]%
+\\
+\>[8]{}(\Varid{inj₁}\;(\Conid{N},\Conid{N'},\Varid{refl},\Varid{ƛxM⇉N},\Conid{M'⇉N'}))\;{}\<[E]%
+\\
+\>[8]{}(\Varid{inj₁}\;(\Conid{P},\Conid{P'},\Varid{refl},\Varid{ƛxM⇉P},\Conid{M'⇉P'})){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Keyword{with}\;{}\<[9]%
+\>[9]{}\Varid{diam⇉}\;\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{N}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{P}\mskip1.5mu\}\;\Varid{ƛxM⇉N}\;\Varid{ƛxM⇉P}{}\<[E]%
+\\
+\>[3]{}\hsindent{3}{}\<[6]%
+\>[6]{}\mid \;{}\<[9]%
+\>[9]{}\Varid{diam⇉}\;\{\mskip1.5mu \Conid{M'}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{N'}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{P'}\mskip1.5mu\}\;\Conid{M'⇉N'}\;\Conid{M'⇉P'}{}\<[E]%
+\\
+\>[B]{}\Varid{...}\;{}\<[6]%
+\>[6]{}\mid \;{}\<[9]%
+\>[9]{}\Conid{Q},\Conid{N⇉Q},\Conid{P⇉Q}\;\mid \;\Conid{Q'},\Conid{N'⇉Q'},\Conid{P'⇉Q'}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\Conid{Q}\;\Varid{·}\;\Conid{Q'},\Varid{lemma⇉·}\;\{\mskip1.5mu \Conid{N}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{N'}\mskip1.5mu\}\;\Conid{N⇉Q}\;\Conid{N'⇉Q'},\Varid{lemma⇉·}\;\{\mskip1.5mu \Conid{P}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{P'}\mskip1.5mu\}\;\Conid{P⇉Q}\;\Conid{P'⇉Q'}{}\<[E]%
+\\
+\>[B]{}\Varid{diam⇉}\;{}\<[8]%
+\>[8]{}\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\;\Varid{·}\;\Conid{M'}\mskip1.5mu\}\;{}\<[26]%
+\>[26]{}\mathbin{\circ}\;\{\mskip1.5mu \Varid{v}\;\anonymous \;\Varid{·}\;\Conid{N'}\mskip1.5mu\}\;{}\<[40]%
+\>[40]{}\{\mskip1.5mu \Conid{P}\mskip1.5mu\}\;{}\<[E]%
+\\
+\>[8]{}(\Varid{inj₁}\;(\Varid{v}\;\anonymous ,\Conid{N'},\Varid{refl},(),\Conid{M'⇉N'}))\;{}\<[E]%
+\\
+\>[8]{}(\Varid{inj₂}\;(\Conid{P'},\Conid{P''},\Conid{P∼P'}\;[\mskip1.5mu \Varid{x≔P''}\mskip1.5mu],\Varid{ƛxM⇉ƛχP'},\Conid{M'⇉P''})){}\<[E]%
+\\
+\>[B]{}\Varid{diam⇉}\;{}\<[8]%
+\>[8]{}\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\;\Varid{·}\;\Conid{M'}\mskip1.5mu\}\;{}\<[26]%
+\>[26]{}\mathbin{\circ}\;\{\mskip1.5mu (\anonymous \;\Varid{·}\;\anonymous )\;\Varid{·}\;\Conid{N'}\mskip1.5mu\}\;{}\<[44]%
+\>[44]{}\{\mskip1.5mu \Conid{P}\mskip1.5mu\}\;{}\<[E]%
+\\
+\>[8]{}(\Varid{inj₁}\;(\anonymous \;\Varid{·}\;\anonymous ,\Conid{N'},\Varid{refl},(),\Conid{M'⇉N'}))\;{}\<[E]%
+\\
+\>[8]{}(\Varid{inj₂}\;(\Conid{P'},\Conid{P''},\Conid{P∼P'}\;[\mskip1.5mu \Varid{x≔P''}\mskip1.5mu],\Varid{ƛxM⇉ƛχP'},\Conid{M'⇉P''})){}\<[E]%
+\\
+\>[B]{}\Varid{diam⇉}\;{}\<[8]%
+\>[8]{}\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\;\Varid{·}\;\Conid{M'}\mskip1.5mu\}\;{}\<[26]%
+\>[26]{}\mathbin{\circ}\;\{\mskip1.5mu \Varid{ƛ}\;\Varid{y}\;\Conid{N}\;\Varid{·}\;\Conid{N'}\mskip1.5mu\}\;{}\<[42]%
+\>[42]{}\{\mskip1.5mu \Conid{P}\mskip1.5mu\}\;{}\<[E]%
+\\
+\>[8]{}(\Varid{inj₁}\;(\Varid{ƛ}\;\Varid{y}\;\Conid{N},\Conid{N'},\Varid{refl},\Varid{ƛxM⇉ƛyN},\Conid{M'⇉N'}))\;{}\<[E]%
+\\
+\>[8]{}(\Varid{inj₂}\;(\Conid{P'},\Conid{P''},\Conid{P∼P'}\;[\mskip1.5mu \Varid{x≔P''}\mskip1.5mu],\Varid{ƛxM⇉ƛχP'},\Conid{M'⇉P''})){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Keyword{with}\;{}\<[9]%
+\>[9]{}\Varid{diam⇉}\;\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\mskip1.5mu\}\;\{\mskip1.5mu \Varid{ƛ}\;\Varid{y}\;\Conid{N}\mskip1.5mu\}\;\{\mskip1.5mu \Varid{ƛ}\;(\Varid{χ}\;[\mskip1.5mu \mskip1.5mu]\;(\Varid{ƛ}\;\Varid{x}\;\Conid{M}))\;\Conid{P'}\mskip1.5mu\}\;\Varid{ƛxM⇉ƛyN}\;\Varid{ƛxM⇉ƛχP'}{}\<[E]%
+\\
+\>[3]{}\hsindent{3}{}\<[6]%
+\>[6]{}\mid \;{}\<[9]%
+\>[9]{}\Varid{diam⇉}\;\{\mskip1.5mu \Conid{M'}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{N'}\mskip1.5mu\}\;\{\mskip1.5mu \Conid{P''}\mskip1.5mu\}\;\Conid{M'⇉N'}\;\Conid{M'⇉P''}{}\<[E]%
+\\
+\>[B]{}\Varid{...}\;{}\<[6]%
+\>[6]{}\mid \;{}\<[9]%
+\>[9]{}\Conid{Q},\Varid{ƛyN⇉Q},\Varid{ƛχP'⇉Q}\;\mid \;\Conid{Q'},\Conid{N'⇉Q'},\Conid{P''⇉Q'}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\Conid{Q}\;[\mskip1.5mu \Varid{x}\;\Varid{≔}\;\Conid{Q'}\mskip1.5mu],\{\mskip1.5mu \mathbin{!}\;\mathbin{!}\mskip1.5mu\},\{\mskip1.5mu \mathbin{!!}\mskip1.5mu\}{}\<[E]%
+\\
+\>[B]{}\Varid{diam⇉}\;{}\<[8]%
+\>[8]{}\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\;\Varid{·}\;\Conid{M'}\mskip1.5mu\}\;{}\<[26]%
+\>[26]{}\{\mskip1.5mu \Conid{N}\mskip1.5mu\}\;{}\<[E]%
+\\
+\>[8]{}(\Varid{inj₂}\;(\Conid{N'},\Conid{N''},\Conid{N∼N'}\;[\mskip1.5mu \Varid{x≔N''}\mskip1.5mu],\Conid{M⇉N'},\Conid{M'⇉N''}))\;{}\<[E]%
+\\
+\>[8]{}\Conid{M⇉P}\;{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathrel{=}\;\{\mskip1.5mu \mathbin{!!}\mskip1.5mu\}{}\<[E]%
+\\
+\>[B]{}\Varid{diam⇉}\;{}\<[8]%
+\>[8]{}\{\mskip1.5mu (\Conid{M}\;\Varid{·}\;\Conid{M'})\;{}\<[19]%
+\>[19]{}\Varid{·}\;\Conid{M''}\mskip1.5mu\}\;{}\<[27]%
+\>[27]{}\{\mskip1.5mu \Conid{N}\;\Varid{·}\;\Conid{N'}\mskip1.5mu\}\;{}\<[38]%
+\>[38]{}\Conid{M⇉N}\;\Conid{M⇉P}\;\mathrel{=}\;\{\mskip1.5mu \mathbin{!!}\mskip1.5mu\}{}\<[E]%
+\\
+\>[B]{}\Varid{diam⇉}\;{}\<[8]%
+\>[8]{}\{\mskip1.5mu (\anonymous \;\Varid{·}\;\anonymous )\;{}\<[19]%
+\>[19]{}\Varid{·}\;\anonymous \mskip1.5mu\}\;{}\<[27]%
+\>[27]{}\{\mskip1.5mu \Varid{v}\;\anonymous \mskip1.5mu\}\;{}\<[38]%
+\>[38]{}()\;\anonymous {}\<[E]%
+\\
+\>[B]{}\Varid{diam⇉}\;{}\<[8]%
+\>[8]{}\{\mskip1.5mu (\anonymous \;\Varid{·}\;\anonymous )\;{}\<[19]%
+\>[19]{}\Varid{·}\;\anonymous \mskip1.5mu\}\;{}\<[27]%
+\>[27]{}\{\mskip1.5mu \Varid{ƛ}\;\anonymous \;\anonymous \mskip1.5mu\}\;{}\<[38]%
+\>[38]{}()\;\anonymous {}\<[E]%
+\\
+\>[B]{}\Varid{diam⇉}\;{}\<[8]%
+\>[8]{}\{\mskip1.5mu \Varid{v}\;\Varid{x}\;\Varid{·}\;\Conid{M}\mskip1.5mu\}\;{}\<[27]%
+\>[27]{}\{\mskip1.5mu \Conid{N}\;\Varid{·}\;\Conid{N'}\mskip1.5mu\}\;{}\<[38]%
+\>[38]{}\Conid{M⇉N}\;\Conid{M⇉P}\;\mathrel{=}\;\{\mskip1.5mu \mathbin{!!}\mskip1.5mu\}{}\<[E]%
+\\
+\>[B]{}\Varid{diam⇉}\;{}\<[8]%
+\>[8]{}\{\mskip1.5mu \Varid{v}\;\anonymous \;{}\<[19]%
+\>[19]{}\Varid{·}\;\anonymous \mskip1.5mu\}\;{}\<[27]%
+\>[27]{}\{\mskip1.5mu \Varid{v}\;\anonymous \mskip1.5mu\}\;{}\<[38]%
+\>[38]{}()\;\anonymous {}\<[E]%
+\\
+\>[B]{}\Varid{diam⇉}\;{}\<[8]%
+\>[8]{}\{\mskip1.5mu \Varid{v}\;\anonymous \;{}\<[19]%
+\>[19]{}\Varid{·}\;\anonymous \mskip1.5mu\}\;{}\<[27]%
+\>[27]{}\{\mskip1.5mu \Varid{ƛ}\;\anonymous \;\anonymous \mskip1.5mu\}\;{}\<[38]%
+\>[38]{}()\;\anonymous {}\<[E]%
+\\
+\>[B]{}\Varid{diam⇉}\;{}\<[8]%
+\>[8]{}\{\mskip1.5mu \Varid{ƛ}\;\Varid{x}\;\Conid{M}\mskip1.5mu\}\;{}\<[27]%
+\>[27]{}\Conid{M⇉N}\;\Conid{M⇉P}\;\mathrel{=}\;\{\mskip1.5mu \mathbin{!!}\mskip1.5mu\}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+-}
+\end{document}

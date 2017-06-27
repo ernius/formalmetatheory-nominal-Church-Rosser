@@ -1,0 +1,32 @@
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.4.11)  26 APR 2015 21:00
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**latex/resumen.tex
+(./latex/resumen.tex
+LaTeX2e <2011/06/27>
+Babel <3.9h> and hyphenation patterns for 9 languages loaded.
+
+! LaTeX Error: File `entcs.cls' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: cls)
+
+Enter file name: 
+! Emergency stop.
+<read *> 
+         
+l.2 \usepackage
+               {entcsmacro}^^M
+End of file on the terminal!
+
+ 
+Here is how much of TeX's memory you used:
+ 11 strings out of 494893
+ 200 string characters out of 6177977
+ 46329 words of memory out of 5000000
+ 3333 multiletter control sequences out of 15000+600000
+ 3640 words of font info for 14 fonts, out of 8000000 for 9000
+ 85 hyphenation exceptions out of 8191
+ 10i,0n,7p,58b,8s stack positions out of 5000i,500n,10000p,200000b,80000s
+!  ==> Fatal error occurred, no output PDF file produced!

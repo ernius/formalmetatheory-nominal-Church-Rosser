@@ -1,0 +1,29 @@
+\hspace{5px} 
+
+\AgdaTarget{Λ} 
+
+\hspace{5px}  
+
+
+\begin{code}%
+\>\AgdaKeyword{data} \AgdaDatatype{Λ} \AgdaSymbol{:} \AgdaPrimitiveType{Set} \AgdaKeyword{where}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaInductiveConstructor{v} \<[7]%
+\>[7]\AgdaSymbol{:} \AgdaFunction{Atom} \AgdaSymbol{→} \AgdaDatatype{Λ} \<[18]%
+\>[18]\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaInductiveConstructor{\_·\_} \<[7]%
+\>[7]\AgdaSymbol{:} \AgdaDatatype{Λ} \AgdaSymbol{→} \AgdaDatatype{Λ} \AgdaSymbol{→} \AgdaDatatype{Λ} \<[19]%
+\>[19]\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaInductiveConstructor{ƛ} \<[7]%
+\>[7]\AgdaSymbol{:} \AgdaFunction{Atom} \AgdaSymbol{→} \AgdaDatatype{Λ} \AgdaSymbol{→} \AgdaDatatype{Λ} \<%
+\end{code}
+
+\hspace{5px} 
+
+pp \hspace{5px}
+

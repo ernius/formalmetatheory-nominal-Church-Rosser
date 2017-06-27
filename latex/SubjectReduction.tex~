@@ -1,0 +1,639 @@
+\documentclass{article} 
+
+\usepackage{hyperref}
+\usepackage[references,links]{agda}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{textgreek}
+\usepackage{catchfilebetweentags}
+\usepackage{tipa}
+\usepackage{graphicx}
+\usepackage{bussproofs}
+
+%math
+\newcommand{\alp}{\ensuremath{\alpha}}
+\newcommand{\lamb}{\ensuremath{\lambda}}
+\newcommand{\alpsym}{\ensuremath{\sim_\alpha}}
+\newcommand{\choice}{\ensuremath{\chi}}
+\newcommand{\p}{\ensuremath{\rightrightarrows}}
+\newcommand{\ninb}{\ensuremath{\not\in_b}}
+
+%Agda
+\newcommand{\freshin}[2]{\ensuremath{#1 \mathbin{\AgdaDatatype{\#}} #2}}
+\newcommand{\lambAg}[2]{\ensuremath{\AgdaInductiveConstructor{ƛ}\, #1\, #2}}
+\newcommand{\inAg}{\ensuremath{\mathbin{\AgdaFunction{∈}}}}
+\newcommand{\ninAg}{\ensuremath{\mathbin{\AgdaFunction{∉}}}}
+\newcommand{\neqAg}{\ensuremath{\mathbin{\AgdaInductiveConstructor{≢}}}}
+\newcommand{\ap}[2]{#1 \ensuremath{\mathbin{\AgdaInductiveConstructorFunction{·}} #2}}
+\newcommand{\var}[1]{\ensuremath{\AgdaInductiveConstructorFunction{v}\, #1}}
+\newcommand{\fv}{\ensuremath{{\AgdaFunction{fv}}\,}}
+\newcommand{\perm}{\ensuremath{\mathbin{\AgdaFunction{∙}}}}
+\newcommand{\perma}{\ensuremath{\mathbin{\AgdaFunction{∙}_a}}}
+\newcommand{\free}{\ensuremath{\mathbin{\AgdaFunction{*}}}}
+\newcommand{\choiceAg}{\ensuremath{\AgdaFunction{χ}\,}}
+\newcommand{\choiceAgaux}{\ensuremath{\AgdaFunction{χ'}\,}}
+\newcommand{\alpeqAg}{\ensuremath{\mathbin{\AgdaDatatype{∼α}}}}
+\newcommand{\swap}[3]{\ensuremath{(#1 \mathbin{\AgdaFunction{∙}} #2)\, #3}}
+
+\newcommand{\betaalpha}{\ensuremath{\rightarrow_\alpha}}
+\newcommand{\betaaster}{\ensuremath{\rightarrow_\beta^*}}
+\newcommand{\lam}{\ensuremath{\lambda}}
+\newcommand{\conc}{\ensuremath{\mathop{+\!\!+}}}
+
+
+\newcommand{\freer}[2]{\ensuremath{#1 *#2}}
+\newcommand{\samefree}[2]{\ensuremath{#1 \sim_{*} #2}}
+\newcommand{\ssamefree}[3]{\ensuremath{\res{\samefree{#1}{#2}}{#3}}}
+
+\newcommand{\comm}[1]{\textsf{#1}}
+\newcommand{\cnst}[1]{\textsl{#1}}
+\newcommand{\vart}{\textsf{V}}
+\newcommand{\codom}{range}
+\newcommand{\res}[2]{\ensuremath{#1\downharpoonright#2}}
+\newcommand{\rest}{\textsf{P}}
+\newcommand{\reseqs}{\ensuremath{\cong}}
+\newcommand{\freshr}[2]{\ensuremath{#1\ \#\,#2}}
+\newcommand{\fresh}[3]{\ensuremath{#1\ \#\,\,\res{#2}{#3}}}
+\newcommand{\subseq}[3]{\ensuremath{\res{#1 \reseqs #2}{#3}}}
+\newcommand{\sexteq}[2]{\ensuremath{#1 \reseqs #2}}
+\newcommand{\alpeq}{\ensuremath{\sim_{\alpha}}}
+\newcommand{\alcnv}[2]{\ensuremath{#1\alpeq #2}}
+\newcommand{\subscnv}[3]{\ensuremath{\res{#1\alpeq #2}{#3}}}
+\newcommand{\longred}[2]{\ensuremath{#1\,\mbox{$\to\!\!\!\!\!\to$}\,#2}}
+\newcommand{\idsubst}{\ensuremath{\iota}}
+\newcommand{\upd}[3]{\ensuremath{#1, #2 {:=} #3}}
+%<\!\!\!+
+\newcommand{\subsap}[2]{\ensuremath{#1 #2}}
+
+\newcommand{\scomp}[2]{\ensuremath{#1 \circ #2}}
+\newcommand{\noalp}{\ensuremath{no\alpha}}
+\newcommand{\betaarr}{\ensuremath{\rightarrow_\beta}}
+\newcommand{\type}[3]{\ensuremath{#1 \vdash #2 : #3}}
+\newcommand{\first}[2]{\ensuremath{\text{First}\ #1\ #2}}
+\newcommand{\goes}[3]{\ensuremath{#1 : #2 \rightharpoonup #3}}
+\newcommand{\goesd}[4]{\ensuremath{#1 : #2 \rightharpoonup #3 \downharpoonright #4}}
+\newcommand{\betacontr}[2]{\ensuremath{#1 \triangleright #2}}
+\newcommand{\restfresh}[3]{\ensuremath{#1 \mathbin{\#\!\!\downharpoonright} (#2,#3)}}
+
+
+
+
+% \newcommand{\agdaf}[1]{\ensuremath{\AgdaFunction{#1}\,}}
+% \newcommand{\agdaD}[1]{\ensuremath{\AgdaDatatype{#1}\,}}
+% \newcommand{\agdav}[1]{\ensuremath{\AgdaBound{#1}\,}}
+
+\DeclareUnicodeCharacter{411}{\textipa{\textcrlambda}}
+\DeclareUnicodeCharacter{65288}{(}
+\DeclareUnicodeCharacter{65289}{)}
+\DeclareUnicodeCharacter{8788}{\ensuremath{\coloneqq}}
+\DeclareUnicodeCharacter{8336}{\ensuremath{_a}}
+\DeclareUnicodeCharacter{8799}{\ensuremath{\overset{?}{=}}}
+\DeclareUnicodeCharacter{8759}{\ensuremath{\dblcolon}}
+\DeclareUnicodeCharacter{8718}{\ensuremath{\square}}
+
+\newtheorem{lem}{Lemma}
+\newtheorem{coro}{Corollary}
+
+\begin{document}
+
+
+\section{Types}
+\label{sec:types}
+
+\[ \alpha,\beta ::= \tau\ |\ \alpha \rightarrow \beta \]
+
+\subsection{First Element of a List Satisfying a Property}
+\label{sec:first}
+
+\begin{minipage}{0.5\linewidth}
+\AxiomC{$P(x)$}
+\LeftLabel{here}
+\UnaryInfC{$\first{P}{(x : xs)}$}
+\DisplayProof
+\end{minipage}
+\begin{minipage}{0.5\linewidth}
+\AxiomC{$\neg P(x)$}
+\AxiomC{$\first{P}{xs}$}
+\LeftLabel{there}
+\BinaryInfC{$\first{P}{(x : xs)}$}
+\DisplayProof
+\end{minipage}
+
+A context is a list of pairs of atoms and types: \[ Context \equiv [(a,\alp)]\]
+
+, where for any atom $a$\ and context $\Gamma$\ we denote as $a \in \Gamma$\ when:
+
+\[ \first{((\_\!\!\equiv\!\!\_\ b) \circ \pi_1)}{\Gamma} \]
+
+Given evidence that an atom $a$\ is a context $\Gamma$, of type $a \in \Gamma$. Note this evidence always points to its first ocurrence by definition of \first{}{} predicate. We denote the function that returns the asociated type for the atom $a$\ by simple concatenation: 
+
+   \[ \_\ \_ : (\Gamma : Context) \rightarrow a \in \Gamma \rightarrow \alp \]
+
+To make the notation more classic, we will just concatenate the context directly with the atom, not the evidence that the atom is in the context, but in all aplications of this function we will ask in the premises the required evidence.
+
+We say a context $\Gamma$\ is included in other $\Delta$, denoted as $\Gamma \subseteq \Delta$,  if:
+
+\[ \forall a \in \Gamma, a \in \Delta \wedge \Gamma x \equiv \Delta x \]
+
+Extending or overriding a context $\Gamma$\ with a new association atom $a$\ with a type \alp\ is denoted by $\Gamma , a : \alp$.
+
+\subsection{Typing Relation}\label{sec:typing}
+
+\begin{center}
+\AxiomC{$x \in \Gamma$}
+\LeftLabel{$\vdash$v}
+\UnaryInfC{$\type{\Gamma}{x}{\Gamma x}$}
+\DisplayProof
+    \hskip 3em
+\AxiomC{$\type{\Gamma}{M}{\alpha \rightarrow  \beta}$}
+\AxiomC{$\type{\Gamma}{N}{\alpha}$}
+\LeftLabel{$\vdash$a}
+\BinaryInfC{$\type{\Gamma}{M N}{\beta}$}
+\DisplayProof
+    \hskip 3em
+\AxiomC{$\type{\Gamma , x : \alpha}{M}{\beta}$}
+\LeftLabel{$\vdash$\lam}
+\UnaryInfC{$\type{\Gamma}{\lambda x M}{\alpha \rightarrow \beta}$}
+\DisplayProof
+\end{center}
+
+\subsection{Weakening Lemmas}
+\label{sec:weaken}
+
+\begin{lem}[Weakening Lemma]
+  \label{lem:weak}
+  \[ \Gamma \subseteq \Delta \wedge \type{\Gamma}{M}{\alp} \Rightarrow \type{\Delta}{M}{\alp}\]
+\end{lem}
+
+\begin{proof} Induction on the typing relation.
+
+  \begin{itemize}
+  \item[var case:] Hypothesis : \AxiomC{$x \in \Gamma$} \LeftLabel{$\vdash$v}\UnaryInfC{$\type{\Gamma}{x}{\Gamma x}$} \DisplayProof
+                   Thesis : $\type{\Delta}{x}{\Delta x}$
+                         
+             \AxiomC{$x \in \Gamma$}
+             \AxiomC{$\Gamma \subseteq \Delta$}
+             \BinaryInfC{$x \in \Delta \wedge \Gamma x = \Delta x$}
+             \LeftLabel{$\vdash$v}
+             \UnaryInfC{$\type{\Delta}{x}{\Delta x =\Gamma x}$}
+             \DisplayProof
+  \item[app. case:]
+             Hypothesis: 
+             \AxiomC{$\type{\Gamma}{M}{\alpha \rightarrow  \beta}$}
+             \AxiomC{$\type{\Gamma}{N}{\alpha}$}
+             \LeftLabel{$\vdash$a}
+             \BinaryInfC{$\type{\Gamma}{M N}{\beta}$}
+             \DisplayProof
+             Thesis: $\type{\Delta}{M N}{\beta}$
+
+             \AxiomC{$\Gamma \subseteq \Delta$}
+             \AxiomC{$\type{\Gamma}{M}{\alp \rightarrow \beta}$}
+             \LeftLabel{$ih$}
+             \BinaryInfC{$\type{\Delta}{M}{\alp \rightarrow \beta}$}
+             \AxiomC{$\Gamma \subseteq \Delta$}
+             \AxiomC{$\type{\Gamma}{N}{\alp}$}
+             \LeftLabel{$ih$}
+             \BinaryInfC{$\type{\Delta}{N}{ \beta}$}
+             \LeftLabel{$\vdash$a}
+             \BinaryInfC{$\type{\Delta}{M N}{\beta}$}
+             \DisplayProof
+  \item[abs. case:]
+             Hypothesis:
+             \AxiomC{$\type{\Gamma , x : \alpha}{M}{\beta}$}
+             \LeftLabel{$\vdash$\lam}
+             \UnaryInfC{$\type{\Gamma}{\lambda x M}{\alpha \rightarrow \beta}$}
+             \DisplayProof
+
+             Thesis: $\type{\Delta}{\lambda x M}{\alpha \rightarrow \beta}$
+
+             \AxiomC{$\Gamma \subseteq \Delta$}
+             \UnaryInfC{$\Gamma , x : \beta \subseteq \Delta , x : \beta$}
+             \AxiomC{$\type{\Gamma , x : \beta}{M}{\alp}$}
+             \LeftLabel{ih}
+             \BinaryInfC{$\type{\Delta , x : \beta}{M}{\alp}$}
+             \LeftLabel{ih}
+             \LeftLabel{$\vdash$\lam}
+             \UnaryInfC{$\type{\Delta }{\lam x M}{\alp}$}
+             \DisplayProof
+  \end{itemize}
+  
+\end{proof}
+
+\begin{lem}[Weakening Fresh Atoms] \label{lem:weakf}
+  \[ x \# M  \wedge \type{\Gamma}{M}{\alp} \Rightarrow \type{\Gamma , x : \beta}{M}{\alp}\]
+\end{lem}
+
+\begin{proof} Induction on the typing relation.
+  \begin{itemize}
+  \item[var case:]   
+    Hypothesis : \AxiomC{$y \in \Gamma$} \LeftLabel{$\vdash$v}\UnaryInfC{$\type{\Gamma}{y}{\Gamma y}$} \DisplayProof
+    Thesis : $\type{\Gamma , x : \beta}{y}{\Gamma y}$             
+
+
+    \AxiomC{$x \# y$}
+    \UnaryInfC{$x \not= y$}
+    \AxiomC{$\type{\Gamma}{y}{\Gamma y}$}
+    \UnaryInfC{$y \in \Gamma$}
+    \BinaryInfC{$y \in (\Gamma , x : \beta) \wedge (\Gamma , x : \beta) y = \Gamma y $}
+    \LeftLabel{$\vdash$v}
+    \UnaryInfC{$\type{\Gamma , x : \beta}{y}{(\Gamma , x : \beta) y = \Gamma y}$}
+    \DisplayProof
+  \item[app. case:]
+             Hypothesis:
+             \AxiomC{$\type{\Gamma}{M}{\gamma \rightarrow  \alp}$}
+             \AxiomC{$\type{\Gamma}{N}{\gamma}$}
+             \LeftLabel{$\vdash$a}
+             \BinaryInfC{$\type{\Gamma}{M N}{\alp}$}
+             \DisplayProof
+
+             Thesis:  $\type{\Gamma , x : \beta}{M N}{\alpha }$
+
+    \AxiomC{$x \# M N$}
+    \UnaryInfC{$x \# M$}
+    \AxiomC{$\type{\Gamma}{M}{\gamma \rightarrow \alp}$}
+    \LeftLabel{$ih$}   
+    \BinaryInfC{$\type{\Gamma, x : \beta}{M}{\gamma \rightarrow \alp}$}
+    \AxiomC{$x \# M N$}
+    \UnaryInfC{$x \# N$}
+    \AxiomC{$\type{\Gamma}{N}{\gamma}$}
+    \LeftLabel{$ih$}   
+    \BinaryInfC{$\type{\Gamma, x : \beta}{N}{\gamma}$}
+    \BinaryInfC{$\type{\Gamma, x : \beta}{M N}{\alp}$}
+    \DisplayProof
+  \item[abs. case:] 
+             Hypothesis:
+             \AxiomC{$\type{\Gamma , y : \gamma}{M}{\alp}$}
+             \LeftLabel{$\vdash$\lam}
+             \UnaryInfC{$\type{\Gamma}{\lambda y M}{\gamma \rightarrow \alp}$}
+             \DisplayProof
+
+             Thesis: $\type{\Gamma , x : \beta}{\lambda y M}{\gamma \rightarrow \alp}$
+
+
+    \begin{itemize}
+    \item[$x = y$\ subcase:]
+       \AxiomC{$\Gamma , x : \gamma \subseteq \Gamma , x : \beta , x : \gamma$}
+       \AxiomC{$\type{\Gamma , x : \gamma}{M}{\alp}$}
+       \LeftLabel{lem.~\ref{lem:weak}}
+       \BinaryInfC{$\type{\Gamma , x : \beta , x : \gamma}{M}{\alp}$}
+       \LeftLabel{$\vdash \lam$}
+       \UnaryInfC{$\type{\Gamma , x : \beta}{\lam x M}{\gamma \rightarrow \alp}$}
+       \DisplayProof
+    \item[$x \not= y$\ subcase:]
+       \AxiomC{$x \# \lam y M$}
+       \AxiomC{$x \not= y$}
+       \BinaryInfC{$x \# M$}
+       \AxiomC{$\type{\Gamma , y : \gamma}{M}{\alp}$}
+       \LeftLabel{ih}
+       \BinaryInfC{$\type{\Gamma , y : \gamma , x : \beta}{M}{\alp}$}
+       \AxiomC{$x \not= y$}
+       \BinaryInfC{$\type{\Gamma , x : \beta , y : \gamma}{M}{\alp}$}
+       \LeftLabel{$\vdash \lam$}
+       \UnaryInfC{$\type{\Gamma , x : \beta}{\lam y M}{\gamma \rightarrow \alp}$}
+       \DisplayProof
+    \end{itemize}
+  \end{itemize}
+\end{proof}
+
+\subsection{Strengthening Lemma}
+
+\begin{lem}[Strengthening Fresh Variables] \label{lem:strengf}
+    \[ x \# M  \wedge \type{\Gamma , x : \beta}{M}{\alp} \Rightarrow \type{\Gamma}{M}{\alp}\]
+\end{lem}
+
+\begin{proof} Induction on the typing relaton.
+
+  \begin{itemize}
+  \item[var case:] 
+    Hypothesis : \AxiomC{$y \in \Gamma , x : \beta$} \LeftLabel{$\vdash$v}\UnaryInfC{$\type{\Gamma , x : \beta}{y}{(\Gamma , y : \beta) y}$} \DisplayProof
+    Thesis : $\type{\Gamma}{y}{(\Gamma , x : \beta) y}$             
+
+    \AxiomC{$x \# y$}
+    \UnaryInfC{$x \not= y$}
+    \AxiomC{$y \in \Gamma , x : \beta$}
+    \BinaryInfC{$y \in \Gamma \wedge (\Gamma , x : \beta) y = \Gamma y$}
+    \LeftLabel{$\vdash$v}
+    \UnaryInfC{$\type{\Gamma}{y}{\Gamma y = (\Gamma , x : \beta) y}$}             
+    \DisplayProof
+
+  \item[app. case:]
+             Hypothesis:
+             \AxiomC{$\type{\Gamma , x : \beta}{M}{\gamma \rightarrow  \alp}$}
+             \AxiomC{$\type{\Gamma , x : \beta}{N}{\gamma}$}
+             \LeftLabel{$\vdash$a}
+             \BinaryInfC{$\type{\Gamma , x : \beta}{M N}{\alp}$}
+             \DisplayProof
+
+             Thesis:  $\type{\Gamma }{M N}{\alpha }$
+
+    \AxiomC{$x \# M N$}
+    \UnaryInfC{$x \# M$}
+    \AxiomC{$\type{\Gamma, x : \beta}{M}{\gamma \rightarrow \alp}$}
+    \LeftLabel{$ih$}   
+    \BinaryInfC{$\type{\Gamma}{M}{\gamma \rightarrow \alp}$}
+    \AxiomC{$x \# M N$}
+    \UnaryInfC{$x \# N$}
+    \AxiomC{$\type{\Gamma, x : \beta}{N}{\gamma}$}
+    \LeftLabel{$ih$}   
+    \BinaryInfC{$\type{\Gamma}{N}{\gamma}$}
+    \BinaryInfC{$\type{\Gamma}{M N}{\alp}$}
+    \DisplayProof
+
+
+  \item[abs. case:]
+             Hypothesis:
+             \AxiomC{$\type{\Gamma  , x : \beta , y : \gamma}{M}{\alp}$}
+             \LeftLabel{$\vdash$\lam}
+             \UnaryInfC{$\type{\Gamma  , x : \beta}{\lambda y M}{\gamma \rightarrow \alp}$}
+             \DisplayProof
+
+             Thesis: $\type{\Gamma}{\lambda y M}{\gamma \rightarrow \alp}$
+
+    \begin{itemize}
+    \item[$x = y$\ subcase:]
+       \AxiomC{$\Gamma , x : \gamma \subseteq \Gamma , x : \beta , x : \gamma$}
+       \AxiomC{$\type{\Gamma , x : \gamma}{M}{\alp}$}
+       \LeftLabel{lem.~\ref{lem:weak}}
+       \BinaryInfC{$\type{\Gamma , x : \beta , x : \gamma}{M}{\alp}$}
+       \LeftLabel{$\vdash \lam$}
+       \UnaryInfC{$\type{\Gamma , x : \beta}{\lam x M}{\gamma \rightarrow \alp}$}
+       \DisplayProof
+    \item[$x \not= y$\ subcase:]
+       \AxiomC{$x \# \lam y M$}
+       \AxiomC{$x \not= y$}
+       \BinaryInfC{$x \# M$}
+       \AxiomC{$\type{\Gamma , y : \gamma}{M}{\alp}$}
+       \LeftLabel{ih}
+       \BinaryInfC{$\type{\Gamma , y : \gamma , x : \beta}{M}{\alp}$}
+       \AxiomC{$x \not= y$}
+       \BinaryInfC{$\type{\Gamma , x : \beta , y : \gamma}{M}{\alp}$}
+       \LeftLabel{$\vdash \lam$}
+       \UnaryInfC{$\type{\Gamma , x : \beta}{\lam y M}{\gamma \rightarrow \alp}$}
+       \DisplayProof
+    \end{itemize}
+  \end{itemize}
+\end{proof}
+
+\subsection{Equivariant}
+
+\begin{lem}[Typing Relation is Equivariant] \label{lem:equiv}
+  \[ \type{\Gamma}{M}{\alp} \Rightarrow \type{(x\ y) \Gamma}{(x\ y) M}{\alp} \]
+\end{lem}
+
+\begin{proof} Induction on the typing relation.
+
+  \begin{itemize}
+  \item[var case:]
+        Hypothesis : 
+        \AxiomC{$z \in \Gamma $} 
+        \LeftLabel{$\vdash$v}
+        \UnaryInfC{$\type{\Gamma}{z}{\Gamma z}$} 
+        \DisplayProof
+        Thesis : $\type{(x\ y) \Gamma}{(x\ y)z}{\Gamma  z}$             
+        
+        \AxiomC{$z \in \Gamma$}
+        \UnaryInfC{$(x\ y) z \in (x\ y) \Gamma \wedge \Gamma z = ((x\ y) \Gamma) ((x\ y) z) $}
+        \LeftLabel{$\vdash$v}
+        \UnaryInfC{$\type{(x\ y) \Gamma}{(x\ y)z}{((x\ y) \Gamma) ((x\ y) z) = \Gamma  z}$} 
+        \DisplayProof
+
+  \item[app. case:]  
+    Hypothesis:
+    \AxiomC{$\type{\Gamma}{M}{\beta \rightarrow  \alp}$}
+    \AxiomC{$\type{\Gamma}{N}{\beta}$}
+    \LeftLabel{$\vdash$a}
+    \BinaryInfC{$\type{\Gamma }{M N}{\alp}$}
+    \DisplayProof
+
+    Thesis:  $\type{(x\ y) \Gamma }{(x\ y)(M N)}{\alpha }$
+
+    \AxiomC{$\type{\Gamma}{M}{\beta \rightarrow \alp}$}
+    \LeftLabel{$ih$}   
+    \UnaryInfC{$\type{(x\ y) \Gamma}{(x\ y)M}{\beta \rightarrow \alp}$}
+    \AxiomC{$\type{\Gamma}{N}{\gamma}$}
+    \LeftLabel{$ih$}   
+    \UnaryInfC{$\type{(x\ y)\Gamma}{(x\ y)N}{\gamma}$}
+    \BinaryInfC{$\type{(x\ y)\Gamma}{((x\ y)M) ((x\ y)N)}{\alp}$}
+    \UnaryInfC{$\type{(x\ y)\Gamma}{(x\ y)(M N)}{\alp}$}
+    \DisplayProof
+
+
+  \item[abs. case:]
+    Hypothesis:
+    \AxiomC{$\type{\Gamma , z : \beta}{M}{\alp}$}
+    \LeftLabel{$\vdash$\lam}
+    \UnaryInfC{$\type{\Gamma  }{\lambda z M}{\beta \rightarrow \alp}$}
+    \DisplayProof
+
+    Thesis: $\type{(x\ y)\Gamma}{(x\ y)(\lambda z M)}{\beta \rightarrow \alp}$
+    
+    \AxiomC{$\type{\Gamma , z : \beta}{M}{\alp}$}
+    \LeftLabel{ih}
+    \UnaryInfC{$\type{(x\ y)(\Gamma , z : \beta)}{(x\ y)M}{\alp}$}
+    \UnaryInfC{$\type{((x\ y) \Gamma) , (x\ y) z : \beta}{(x\ y) M}{\alp}$}
+    \LeftLabel{$\vdash$\lam}
+    \UnaryInfC{$\type{(x\ y) \Gamma  }{\lambda ((x\ y) z) ((x\ y)M)}{\beta \rightarrow \alp}$}
+    \UnaryInfC{$\type{(x\ y) \Gamma  }{(x\ y)(\lambda z  M)}{\beta \rightarrow \alp}$}
+    \DisplayProof
+  \end{itemize}
+\end{proof}
+
+\subsection{\alp-compatible}
+
+\begin{lem}[Typing relation is \alp-compatible] \label{lem:typalp}
+  \[ \type{\Gamma}{M}{\alp} \wedge M \alpsym N \Rightarrow \type{\Gamma}{N}{\alp}\]
+\end{lem}
+
+\begin{proof} Permutation induction on $M$.
+  \begin{itemize}
+  \item[var case:] Direct.
+  \item[app. case:] Direct.
+  \item[abs. case:] 
+    Hypotheses:
+    \AxiomC{$\type{\Gamma , x : \alp}{M}{\beta}$}
+    \LeftLabel{$\vdash$\lam}
+    \UnaryInfC{$\type{\Gamma  }{\lambda x M}{\alp \rightarrow \beta}$}
+    \DisplayProof
+    \AxiomC{$\exists xs, \forall z \not\in xs, (x\ z) M \alpsym (y\ z) N$} 
+    \LeftLabel{\alpsym \lam}
+    \UnaryInfC{$\lambda x M  \alpsym  \lambda y N$} 
+    \DisplayProof
+    Inductive Hypothesis: \
+
+    \[ \forall u,v,N,\Gamma,\gamma, 
+    \left.
+    \begin{array}{lc}
+      \type{\Gamma}{(u\ v) M}{\gamma} & \wedge \\
+      (u\ v) M \alpsym (u\ v) N &
+    \end{array}
+    \right\}   \Rightarrow \type{\Gamma}{(u\ v) N}{\gamma} \]
+    
+    Thesis: $\type{\Gamma}{\lambda y N}{\beta \rightarrow \alp}$
+
+    Let be $z \not\in \{y\} \cup xs \cup dom(\Gamma) \cup fv(N)$.
+
+%    \AxiomC{$z \not\in \{y\} \cup xs \cup dom(\Gamma) \cup fv(N)$}
+%    \UnaryInfC{$z \not\in xs$}
+    \AxiomC{$\type{\Gamma , x : \alp}{M}{\beta}$}
+    \LeftLabel{lem.~\ref{lem:equiv}}
+    \UnaryInfC{$\type{(x\ z) (\Gamma , x : \alp)}{(x\ z) M}{\beta}$}
+    \UnaryInfC{$\type{ (x\ z) \Gamma , z : \alp}{(x\ z) M}{\beta}$}
+
+    \AxiomC{$z \not\in dom(\Gamma)$}
+    \UnaryInfC{$(x\ z) \Gamma , z : \alp \subseteq \Gamma , z : \alp$}
+    \LeftLabel{lem.~\ref{lem:weak}}
+    \BinaryInfC{$\type{ \Gamma , z : \alp}{(x\ z) M}{\beta}$}
+
+    \AxiomC{$z \not\in xs$}
+    \UnaryInfC{$(x\ z) M \alpsym (y\ z) N$}
+    \LeftLabel{ih}
+    \BinaryInfC{$\type{ \Gamma , z : \alp}{(y\ z) N}{\beta}$}
+    \LeftLabel{lem.~\ref{lem:equiv}}
+    \UnaryInfC{$\type{(y\ z) (\Gamma , z : \alp)}{(y\ z)(y\ z) N}{\beta}$}
+    \UnaryInfC{$\type{(y\ z) \Gamma , y : \alp}{N}{\beta}$}
+    \DisplayProof
+
+    \AxiomC{$z \# N$}
+    \AxiomC{$(y\ z) \Gamma , y : \alp, z : \alp \subseteq \Gamma , y : \alp, z : \alp$}
+    \AxiomC{$z \# N$}
+    \AxiomC{$\type{(y\ z) \Gamma , y : \alp}{N}{\beta}$}
+    \LeftLabel{lem.~\ref{lem:weakf}}
+    \BinaryInfC{$\type{(y\ z) \Gamma , y : \alp, z : \alp}{N}{\beta}$}
+    \BinaryInfC{$\type{\Gamma , y : \alp, z : \alp}{N}{\beta}$}
+    \LeftLabel{lem.~\ref{lem:strengf}}
+    \BinaryInfC{$\type{\Gamma , y : \alp}{N}{\beta}$}
+    \LeftLabel{$\vdash$\lam}
+    \UnaryInfC{$\type{\Gamma}{\lam y N}{\alp \rightarrow \beta}$}
+    \DisplayProof
+  \end{itemize}
+\end{proof}
+
+\subsection{Substitution Lemma for Typing Relation}
+\label{sec:subst}
+
+\begin{lem}[Substitution Lemma for Typing Relation] \label{lem:substtype}
+  \[ \type{\Gamma , x : \beta}{M}{\alp} \wedge \type{\Gamma}{N}{\beta} \Rightarrow \type{\Gamma}{M [x := N]}{\alp} \]
+\end{lem}
+
+\begin{proof} \alp-induction principle on $M$\ term to avoid $x$\ and free variables in $N$ as bound variable in the abstraction case. The predicate is \alp-compatible\ on $M$\ as direct consequence of the substitution lemma for \alp-convertible terms.
+
+  \begin{itemize}
+  \item[var case:]  
+        Hypothesis : 
+        \AxiomC{$y \in (\Gamma , x : \beta) $} 
+        \LeftLabel{$\vdash$v}
+        \UnaryInfC{$\type{\Gamma , x : \beta}{y}{(\Gamma , x : \beta) y}$} 
+        \DisplayProof \
+
+        Thesis : $\type{\Gamma}{y [x := N]}{(\Gamma , x : \beta)  y}$             
+        
+        \begin{itemize}
+        \item[case $x = y$:] 
+          \AxiomC{$\type{\Gamma}{x [x := N]}{(\Gamma , x : \beta)  x}$}
+          \LeftLabel{hyp.}
+          \UnaryInfC{$\type{\Gamma}{N}{\beta}$}
+          \DisplayProof
+        \item[case $x \not= y$:]
+
+          \AxiomC{$y \in (\Gamma , x : \beta)$}
+          \AxiomC{$x \not= y$}
+          \BinaryInfC{$y \in \Gamma$}
+          \LeftLabel{$\vdash$v}
+          \UnaryInfC{$\type{\Gamma}{\underbrace{y}_{=y [x:=N]}}{\underbrace{\Gamma y}_{=(\Gamma , x : \beta)  y}}$}
+          \DisplayProof
+
+        \end{itemize}
+
+  \item[app. case:]
+    Hypothesis:
+    \AxiomC{$\type{\Gamma , x : \beta}{M}{\gamma \rightarrow  \alp}$}
+    \AxiomC{$\type{\Gamma , x : \beta}{P}{\gamma}$}
+    \LeftLabel{$\vdash$a}
+    \BinaryInfC{$\type{\Gamma , x : \beta }{M P}{\alp}$}
+    \DisplayProof
+
+    Thesis:  $\type{\Gamma }{(M P)[x:=N]}{\alpha }$
+
+    \AxiomC{$\type{\Gamma , x : \beta}{M}{\gamma \rightarrow  \alp}$}
+    \LeftLabel{ih.}
+    \UnaryInfC{$\type{\Gamma}{M [x : = N]}{\gamma \rightarrow  \alp}$}
+    \AxiomC{$\type{\Gamma , x : \beta}{P}{\gamma}$}
+    \LeftLabel{ih.}
+    \UnaryInfC{$\type{\Gamma}{P [x:=N]}{\gamma}$}
+    \LeftLabel{$\vdash$a}
+    \BinaryInfC{$\type{\Gamma  }{\underbrace{(M [x := N])(P [x := N])}_{=(M P) [ x := N]}}{\alp}$}
+    \DisplayProof
+
+  \item[abs. case:]
+    Hypothesis:
+    \AxiomC{$\type{\Gamma , x : \beta , y : \gamma}{M}{\alp}$}
+    \LeftLabel{$\vdash$\lam}
+    \UnaryInfC{$\type{\Gamma , x : \beta  }{\lambda y M}{\gamma \rightarrow \alp}$}
+    \DisplayProof
+
+    Thesis: $\type{\Gamma}{(\lambda y M) [x := N]}{\gamma \rightarrow \alp}$
+
+    We can asume $y \not\in \{x\} \cup fv(N)$.
+
+    \AxiomC{$\type{\Gamma , x : \beta , y : \gamma}{M}{\alp}$}
+    \AxiomC{$y \not= x$}
+    \UnaryInfC{$\Gamma , x : \beta , y : \gamma \subseteq \Gamma  , y : \gamma, x : \beta$}
+    \LeftLabel{lem.~\ref{lem:weak}}
+    \BinaryInfC{$\type{\Gamma, y : \gamma , x : \beta}{M}{\alp}$}
+    \AxiomC{$\type{\Gamma}{N}{\beta}$}
+    \AxiomC{$y \# N$}
+    \LeftLabel{lem.~\ref{lem:weakf}}
+    \BinaryInfC{$\type{\Gamma, y : \gamma}{N}{\beta}$}
+    \LeftLabel{ih}
+    \BinaryInfC{$\type{\Gamma , y : \gamma}{M [x := N]}{ \alp}$}    
+    \LeftLabel{$\vdash \lam$}
+    \UnaryInfC{$\type{\Gamma}{\lambda y (M [x := N])}{\gamma \rightarrow \alp}$}
+    \DisplayProof    
+
+    Finally, by the \alp-compatible property of typing relation and due to freshness of binder variable we end up with the naive case of substitution case.
+    
+    \AxiomC{$\type{\Gamma}{\lambda y (M [x := N])}{\gamma \rightarrow \alp}$}
+    \AxiomC{$x \not\in \{ x \} \cup fv(N)$}
+    \UnaryInfC{$\lambda y (M [x := N]) \alpsym (\lambda y M) [x := N]$}
+    \LeftLabel{lem.~\ref{lem:typalp}}
+    \BinaryInfC{$\type{\Gamma}{(\lambda y M) [x := N]}{\gamma \rightarrow \alp}$}
+    \DisplayProof    
+  \end{itemize}
+  
+\end{proof}
+
+\section{Subject Reduction}
+
+\begin{center}
+\AxiomC{}
+\LeftLabel{\betacontr{}{\beta}}
+\UnaryInfC{$\betacontr{(\lam x M) N}{M[x:=N]} $}
+\DisplayProof
+\end{center}
+
+\begin{coro}[Typing judge is preserved by $\beta$-contraction]
+  \[ \type{\Gamma}{M}{\alpha}, \betacontr{M}{N} \Rightarrow \type{\Gamma}{N}{\alpha} \]
+\end{coro}
+
+\begin{proof}
+  We have to prove that $\type{\Gamma}{M [x := N]}{\alpha}$. By hypotheses $\type{\Gamma}{(\lambda x M)}{\alpha}$ , then by typing judge $\type{\Gamma,x:\alpha}{M}{\beta}$\ and $\type{\Gamma}{N}{\alpha}$, using last lemma~\ref{lem:substtype} we end up with the desired result.
+\end{proof}
+
+We define the $\beta$-reduction relation as the contextual clousure of the $\beta$-contraction. We denote it as $\betaarr$.
+
+\begin{coro} \label{lem:betred}
+  $\type{\Gamma}{M}{\alpha}, M \betaarr N \Rightarrow \type{\Gamma}{N}{\alpha}$
+\end{coro}
+
+\begin{proof}
+  Direct induction on the contextual clousure relation. For the $\beta$-contraction case we directly use last result.
+\end{proof}
+
+Subject redution is proved by induction on the reflexive-transitive closure of \betaalpha ($\betaarr \cup \alpeq$) relation, using directly the last result~\ref{lem:betred} and the \alp-compatible of the typing relation lemma~\ref{lem:typalp} for the \betaalpha\ and \alpeq\ cases respectively.
+
+\begin{lem}[Subject Reduction]
+  $\type{\Gamma}{M}{\alpha}, M \betaaster N \Rightarrow \type{\Gamma}{N}{\alpha}$
+\end{lem}
+
+\end{document}

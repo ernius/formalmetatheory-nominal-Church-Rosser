@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.36pt}
+\beamer@sectionintoc {1}{Motivation}{2}{0}{1}
+\beamer@sectionintoc {2}{Reasoning over $\alpha $-equivalence classes}{4}{0}{2}
+\beamer@sectionintoc {3}{Nominal approach}{7}{0}{3}
+\beamer@sectionintoc {4}{$\alpha $-structural induction \& recursion}{14}{0}{4}
+\beamer@sectionintoc {5}{Applications}{21}{0}{5}
+\beamer@sectionintoc {6}{Results and Conclusions}{33}{0}{6}

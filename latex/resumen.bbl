@@ -1,0 +1,40 @@
+\begin{thebibliography}{1}
+
+\bibitem{deBruijn1972381}
+N.G de~Bruijn.
+\newblock Lambda calculus notation with nameless dummies, a tool for automatic
+  formula manipulation, with application to the church-rosser theorem.
+\newblock {\em Indagationes Mathematicae (Proceedings)}, 75(5):381 -- 392,
+  1972.
+
+\bibitem{gordon:mechanisation:1993}
+Andrew~D. Gordon.
+\newblock {A Mechanisation of Name Carrying Syntax up to Alpha Conversion}.
+\newblock In {\em Proceedings of Higher Order Logic Theorem Proving and its
+  Applications}, Lecture Notes in Computer Science, pages 414--426, 1993.
+
+\bibitem{DBLP:conf/tphol/GordonM96}
+Andrew~D. Gordon and Thomas~F. Melham.
+\newblock Five axioms of alpha-conversion.
+\newblock In Joakim von Wright, Jim Grundy, and John Harrison, editors, {\em
+  Theorem Proving in Higher Order Logics, 9th International Conference,
+  TPHOLs'96, Turku, Finland, August 26-30, 1996, Proceedings}, volume 1125 of
+  {\em Lecture Notes in Computer Science}, pages 173--190. Springer, 1996.
+
+\bibitem{mlof90}
+Bengt Nordstrom, Kent Petersson, and Jan~M. Smith.
+\newblock {\em {Programming in Martin-L\"{o}f's Type Theory: An Introduction}}.
+\newblock Oxford University Press, USA, 0 edition, July 1990.
+
+\bibitem{Norrish04recursivefunction}
+Michael Norrish.
+\newblock Recursive function definition for types with binders.
+\newblock In {\em In Seventeenth International Conference on Theorem Proving in
+  Higher Order Logics}, pages 241--256, 2004.
+
+\bibitem{agdawiki}
+{The Agda Team}.
+\newblock {The Agda Wiki}.
+\newblock Available at http://appserv.cs.chalmers.se/users/ulfn/wiki/agda.php.
+
+\end{thebibliography}

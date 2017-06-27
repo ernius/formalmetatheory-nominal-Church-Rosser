@@ -1,0 +1,647 @@
+\documentclass[utf,utf8x,hyperref=hidelinks,xcolor=table]{beamer} %handout,notes=only
+
+% no margen
+%\usepackage[margin=0.1in]{geometry}
+\usepackage{graphicx}
+%\usepackage[bw,references]{latex/agda}
+%\usepackage[conor,references]{latex/agda}
+\usepackage[references,links]{agda}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{textgreek}
+\usepackage{catchfilebetweentags}
+\usepackage{tipa}
+\usepackage{framed}
+%\usepackage{biblatex}
+
+%math
+\newcommand{\alp}{\ensuremath{\alpha}}
+\newcommand{\lamb}{\ensuremath{\lambda}}
+\newcommand{\alphaeqsym}{\ensuremath{\sim_\alpha}}
+\newcommand{\choice}{\ensuremath{\chi}}
+
+%Agda
+\newcommand{\freshin}[2]{\ensuremath{#1 \mathbin{\AgdaDatatype{\#}} #2}}
+\newcommand{\freein}[2]{\ensuremath{#1 \mathbin{\AgdaDatatype{*}} #2}}
+\newcommand{\lambAg}[2]{\ensuremath{\AgdaInductiveConstructor{ƛ}\, #1\, #2}}
+\newcommand{\inAg}{\ensuremath{\mathbin{\AgdaFunction{∈}}}}
+\newcommand{\ninAg}{\ensuremath{\mathbin{\AgdaFunction{∉}}}}
+\newcommand{\neqAg}{\ensuremath{\mathbin{\AgdaInductiveConstructor{≢}}}}
+\newcommand{\ap}[2]{#1 \ensuremath{\mathbin{\AgdaInductiveConstructorFunction{·}} #2}}
+\newcommand{\var}[1]{\ensuremath{\AgdaInductiveConstructorFunction{v}\, #1}}
+\newcommand{\fv}{\ensuremath{{\AgdaFunction{fv}}\,}}
+\newcommand{\perm}{\ensuremath{\mathbin{\AgdaFunction{∙}}}}
+\newcommand{\perma}{\ensuremath{\mathbin{\AgdaFunction{∙}_a}}}
+\newcommand{\free}{\ensuremath{\mathbin{\AgdaFunction{*}}}}
+\newcommand{\choiceAg}{\ensuremath{\AgdaFunction{χ}\,}}
+\newcommand{\choiceAgaux}{\ensuremath{\AgdaFunction{χ'}\,}}
+\newcommand{\alpeqAg}{\ensuremath{\mathbin{\AgdaDatatype{∼α}}}}
+\newcommand{\swap}[3]{\ensuremath{(#1 \mathbin{\AgdaFunction{∙}} #2)\, #3}}
+
+% \newcommand{\agdaf}[1]{\ensuremath{\AgdaFunction{#1}\,}}
+% \newcommand{\agdaD}[1]{\ensuremath{\AgdaDatatype{#1}\,}}
+% \newcommand{\agdav}[1]{\ensuremath{\AgdaBound{#1}\,}}
+
+\DeclareUnicodeCharacter{411}{\textipa{\textcrlambda}}
+\DeclareUnicodeCharacter{65288}{(}
+\DeclareUnicodeCharacter{65289}{)}
+\DeclareUnicodeCharacter{8788}{\ensuremath{\coloneqq}}
+\DeclareUnicodeCharacter{8336}{\ensuremath{_a}}
+\DeclareUnicodeCharacter{8799}{\ensuremath{\overset{?}{=}}}
+\DeclareUnicodeCharacter{8759}{\ensuremath{\dblcolon}}
+\DeclareUnicodeCharacter{8718}{\ensuremath{\square}}
+\DeclareUnicodeCharacter{9657}{\ensuremath{\triangleright}}
+
+%\usetheme{Berlin}
+%\inserttocsection
+%\mode<presentation>
+%% \newcommand\Section[2][]{%
+%%    \section<presentation>[#1]{#2}
+%%    \section<article>{#2}
+%% }
+
+\addtobeamertemplate{frametitle}{\vspace*{-0.1cm}}{\vspace*{-0.5cm}}
+
+
+
+\begin{document}
+
+\title{Alpha-Structural Induction and Recursion for the Lambda Calculus in Constructive Type Theory}
+\author{Ernesto Copello,\'Alvaro Tasistro,Nora Szasz, Ana Bove, Maribel Fern\'andez}
+
+\date[LSFA ’15]{10th Workshop on Logical and Semantic Frameworks, with Applications.}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Outline}
+%\tableofcontents
+%\end{frame}
+
+\section{Motivation}
+
+\begin{frame}{Motivation}
+\begin{block}{}
+  Studying and formalising reasoning techniques over programming languages.
+  \begin{itemize}
+  \item Reasoning like in pen-and-paper proofs.
+  \item Using constructive type theory as proof assistant.
+  \end{itemize}
+
+  More specifically: $\lambda$-calculus \& Agda.
+\end{block}
+
+\pause
+
+\bigskip
+
+We study a formalisation of $\lambda$-calculus with the following characteristics:
+
+\begin{itemize}
+\item In its original syntax with only one sort of names, \\  like pen-and-paper.
+\item Substitution  and \alp-conversion is based upon name swapping (\emph{Nominal} approach).
+\end{itemize}
+
+%%Hacerla mas sencilla, decir que es la sintaxis clasica con un solo tipo de variables, lo mas parecido a lapiz y papel, y recalcar que se basa en la operacion de swaping mas sencilla
+
+%% \footnotesize{
+%%   \begin{tabular}{c|c|c}
+%%     Approach & Pros & Cons \\
+%%     \hline
+%%     One sort variables  & Simple one &
+%%                           \begin{tabular}{c}
+%%                             capture avoiding substitution \\
+%%                             (Church 36 / Curry-Feys 58) \\
+%%                             reasoning over $\alpha$-eq. classes (\emph{BVC}) \\
+%%                           \end{tabular}  \onslide<3-> \\ 
+%%     \hline
+
+%%     Frege     & substitution & reasoning over $\alpha$-eq. classes \onslide<4->\\
+%%     \hline
+
+%%     De Bruijn & $\alpha$-eq. classes & 
+%%                           \begin{tabular}{rl}
+%%                                & indexes operations \\
+%%                              + & well-formed predicates \\
+%%                             \hline
+%%                                & distance from intuitive proofs
+%%                            \end{tabular}  \onslide<5->\\
+%%     \hline
+
+%%     Locally Nameless & less indexes operations & distance from intuitive proofs   \onslide<6->\\
+%%     \hline
+
+%%     HOAS      & substitution & has limitations   \onslide<7->\\
+%%     \hline
+
+%%     Nominal   & 
+%%                 \begin{tabular}{c}
+%%                   swapping \\
+%%                   \cellcolor{blue!25} $\alpha$-eq. classes 
+%%                 \end{tabular} 
+%%              &
+%%                 \begin{tabular}{c}
+%%                introduce swapping lemmas \\
+%%                choice axiom incompatible
+%%                \end{tabular}
+%%   \end{tabular}}
+\end{frame}
+
+\note[itemize]{
+
+\item We are interested in studying reasoning techniques over programming languages.
+\item Besides we want to formalise theses techniques in Constructive Type Theory.
+\item Specifically, we choose as our object of study the $\lambda$-calculus
+\item and Agda as proof assistant and programming language where we will develop some $\lambda$-calculus meta-theory.
+\item But we do not want to diverge from classical pen-and-paper proofs.
+\item So we study the most direct formalisation: the original syntax with one sort of variables.
+\item We take the swapping operation from the nominal approach
+\item to define \alp-conversion and substitution.
+}
+
+\section{Reasoning over $\alpha$-equivalence classes}
+
+\begin{frame}{Reasoning over $\alpha$-equivalence classes} \smallskip
+
+  \begin{block}{Barendregt's variable convention (BVC)}
+    Each $\lambda$-term represents its $\alpha$ class, so we can assume that we have bound and free variables all different.
+  \end{block}
+
+  \bigskip
+ \pause
+
+  \begin{block}{A complete formalisation often implies:}
+    \begin{itemize}
+    \item Define a no capture substitution operation.
+    \item Complete induction over the \emph{size} of terms is needed to fill the gap between terms and $\alpha$-equivalence classes.
+    \item Prove that all properties being proved are preserved under $\alpha$-conversion ($\alpha$-compatible  predicates).
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\note[itemize]{
+\setlength\itemsep{1em}
+\item Most of $lambda$ calculus's meta-theory implicitly work over \alp-equivalences classes of terms.
+\item This common practise even has a name: Barendregt´s Variable convention, that says:
+\item This practice often doesn´t make explicit:
+  \begin{itemize}
+  \item  A definition of substitution that avoids variable capture is needed
+  \item  for some proofs an induction over the size of the terms must be made
+  \item  And That the properties being proved should be preserved under $\alpha$-conversion:  
+ \item   we call this $\alpha$-compatibility of the properties.
+  \end{itemize}
+}
+
+\begin{frame}{Reasoning over $\alpha$-equivalence classes} 
+  \begin{block}{We want to be able to reproduce the following induction sketch} \bigskip
+     \underline{$\lambda$\ case:} \\
+              \ \ To prove  $\forall x, M,\ P(M) \Rightarrow P(\lambda x M)$\ we  instead prove:
+             \[ \begin{array}{c}
+                    \exists A\subseteq V, A\ \text{finite},\forall x^*, M^*\ \text{renamings} / x^* \not\in A, \lambda x M \alphaeqsym \lambda x^* M^*, \\ \\
+                     P(M^*) \Rightarrow P(\lambda x^* M^*) 
+                \end{array}  \]
+  \end{block}
+
+\end{frame}
+
+\note[itemize]{
+\setlength\itemsep{1em}
+\item We want to reproduce the following induction sketch:
+  \begin{itemize}
+  \item instead of proving the classic abstraction case
+  \item we can give some finite set of variables from where the abstraction variable will not be chosen
+  \item and then for an \alp-equivalent renaming of the term with any variable not in the chosen context
+  \item we prove the induction step.
+  \end{itemize}
+}
+
+\section{Nominal approach}
+
+\begin{frame}{Formalisation}
+
+All the slides from now on are fragments of our compiled Agda code.
+
+\end{frame}
+
+
+\begin{frame}{Variable Swapping}
+
+\ExecuteMetaData[Atom.tex]{swap} 
+
+\end{frame}
+
+\note[itemize]{
+\setlength\itemsep{1.5em}
+\item From this slide until the end of this presentation we will directly show Agda's code of our formalisation.
+\item We begin with the basis of our formalization: which is the swapping operation.
+\item Next we show the swapping operation over variables, which is a ternary funcion that takes two atoms to be swapped in a third one
+\item and is defined by cases
+}
+
+\begin{frame}{Terms}
+\medskip
+
+\ExecuteMetaData[Term.tex]{term} 
+
+\pause
+
+\bigskip
+Swapping operation is extended to $\lambda$-terms, swapping free and bound variables. \\
+
+\pause
+
+\bigskip
+
+Swapping operation on terms is simpler than substitution, and with nicer properties than \emph{renaming}: \\
+
+\pause
+
+
+\bigskip
+
+Because it also changes bound variables $\Rightarrow$ no variable capture\\ 
+
+\end{frame}
+
+\note[itemize]{
+\setlength\itemsep{1.5em}
+\item Lambda terms are directly defined  as follows
+\item The swapping operation is trivially  extended to $\lambda$-terms.
+\item And we swap free variables, and also bound variables.
+\item Swapping is simpler than substitution and with better properties than renaming:
+  \begin{itemize}
+  \item because it also changes bound variables, then there is no possible variable capture
+  \item it is injective
+  \item it is idempotent: sofor any swapping there always  exists the inverse operation !
+  \end{itemize}
+}
+
+\begin{frame}{$\alpha$-conversion, not using substitution!}
+
+
+\ExecuteMetaData[Alpha.tex]{alpha}
+
+\medskip
+
+Novel definition.
+
+\begin{itemize}
+\item syntax directed
+\pause
+\item equivalent to classical one
+\pause
+\item inspired in ``cofinite quantification''\\ (Brian Aydemir et al, ``Engineering formal metatheory'', 2008)
+\end{itemize}
+
+
+
+\end{frame}
+
+\note[itemize]{
+\setlength\itemsep{1em}
+\item We present a syntax directed \alp-conversion definition.
+\item 
+  \begin{itemize}
+    \item in the abstraction rule we have a stronger hypothesis than in the classic definition, that says:
+    \item $\forall$\ variable $c$\ not in a given context $xs$, 
+    \item we have the \alp-compatibility for the abstraction sub-terms$M,N$  with the binder variable swapped with $c$.
+    \item it is Inspired in Aydemir's ``cofinite quantification'' 
+  \end{itemize}
+\item This definition fits with Barendregt´s convension, where we choose the bound variable different from some given finite context.
+\item This definition is easier to use but more difficult to prove
+\item But This is not a problem because \alp-compatibility is usually a hypothesis.
+}
+
+\section{$\alpha$-structural induction \& recursion}
+
+\begin{frame}{Induction Principles for $\lambda$-terms}
+
+In the following slides we will iterate over several induction principles, until we get one which captures Barenregt´s variable convention.
+
+\pause
+
+\bigskip
+
+Each one can be derived from the previous one.
+
+\end{frame}
+
+
+\begin{frame}{Primitive induction}
+
+  Comes for free with the definition of terms : \bigskip
+
+  \ExecuteMetaData[TermInduction.tex]{termPrimInduction}
+\end{frame}
+
+\note[itemize]{
+\setlength\itemsep{1.5em}
+\item This is the classic primitive induction principle where we have to prove the abstraction case for any  variable $b$.
+\item But this induction principle comes for free with the simple syntax definition.
+}
+
+\begin{frame}{Permutation induction}
+
+A permutation $\pi$ is a sequence of swappings.
+ 
+\bigskip
+\pause
+
+\bigskip
+
+We derive this induction principle, from simple structural induction:
+
+ \bigskip
+
+\ExecuteMetaData[TermInduction.tex]{termIndPermutation}
+
+\bigskip
+\pause
+Is derived from the primitive induction as complete induction on naturals is derived from primitive induction.
+
+\bigskip
+\pause
+This principle enables us to avoid the induction on length of term in all of our formalisation.
+
+
+\end{frame}
+
+\note[itemize]{
+\setlength\itemsep{1.5em}
+\item A permutation $\pi$ is a sequence of swappings.
+\item We can derive the following induction principle for lambda terms
+\item Stronger: Note thay the inductive hypothesis of the abstraction case is given for any permutation 
+\item No need of induction on the length of terms!
+\item Derived in the same way as we can derive the complete induction principle on natural numbers from primitive induction.  
+}
+
+
+\begin{frame}{$\alpha$-structural induction}
+
+
+\ExecuteMetaData[Alpha.tex]{alphaCompatible}
+
+\bigskip
+\pause
+
+We derive this induction principle from the former one:
+
+\ExecuteMetaData[TermInduction.tex]{alphaPrimInduction}
+
+\bigskip
+
+Now we can emulate the BVC!
+
+\end{frame}
+
+\note[itemize]{
+\setlength\itemsep{1.5em}
+\item We define what is to be an \alp-compatible predicate: that is, the predicate is preserved for {\bf \alp-equivalent} terms 
+\item And then we obtain the next induction principle directly from the previous one and we get our goal.
+\item Not that in the abstraction case of we can exclude  some finite set of variables 
+}
+
+
+\begin{frame}{$\alpha$-structural iteration}
+
+\bigskip
+
+  We can easily derive an iteration principle from the previous principle.
+
+\bigskip
+\bigskip
+
+\ExecuteMetaData[TermRecursion.tex]{termIteration}
+
+%\begin{framed}
+%  \begin{minipage}{0.15\linewidth}
+%     Remember:
+%  \end{minipage}
+%  \begin{minipage}{0.6\linewidth}
+%    \scriptsize{\ExecuteMetaData[TermInduction.tex]{alphaPrimInduction}}
+%  \end{minipage}
+%\vspace{-10px}
+%\end{framed}
+
+\end{frame}
+
+
+\note[itemize]{
+\setlength\itemsep{1.5em}
+\item We also derive an iteration principle
+\item In the abstraction case of this principle:
+  \begin{itemize}
+  \item we give some list of variables to be excluded 
+  \item and a function that given a selected variable not in the  list (to be choosen as the abstraction variable)
+  \item and the  result of the recursive call of the iteration
+\item  constructs a result
+  \end{itemize}
+}
+
+
+\begin{frame}{$\alpha$-structural iteration}
+
+\ExecuteMetaData[Alpha.tex]{strongAlphaCompatible}      
+
+\bigskip
+\bigskip
+
+\ExecuteMetaData[TermRecursion.tex]{iterationStrongCompatible}
+
+\end{frame}
+
+\note[itemize]{
+\setlength\itemsep{1.5em}
+\item Now we define what it means that a function is strong\alp-compatible: 
+\item That is, for any two \alp-equivalent terms the result of the function is the same.
+\item The following lema states that our iteration principle always defines strong\alp-compatible funcions
+\item This is a direct consequence of the fact that the recursive call is done over a renamed sub-term
+\item Note that because of this, the iteration principle has no way of extracting any information from bound variables
+}
+
+
+
+\begin{frame}{$\alpha$-structural recursion}
+  Using the last iteration principle we define a recursion principle: 
+  \bigskip
+
+  \ExecuteMetaData[TermRecursion.tex]{termRecursion}
+
+  \bigskip
+
+  Inherits \alp-compatibility property from the iteration principle.
+  
+\end{frame}
+
+\note[itemize]{
+\setlength\itemsep{1.5em}
+\item We generalize a recursion principle from the iterative one.
+\item It inherits \alp-compatibility
+}
+
+\section{Applications}
+
+%% \begin{frame}{Norrish}
+%%   We successfully apply theses iteration/recursion principles to several difficult examples extracted from literature.
+%% \end{frame}
+
+\begin{frame}{Applications}
+
+In the following slides we will show some classic results of the $\lambda$-calculus meta-theory that can be formalized with our principles.
+
+\end{frame}
+
+
+
+\begin{frame}{Free variables}
+
+We use the iteration principle to define the free variables function. \bigskip
+
+\ExecuteMetaData[FreeVariables.tex]{freeVariables} 
+
+\bigskip
+
+\bigskip
+
+\ExecuteMetaData[FreeVariables.tex]{fvalpha} 
+
+\end{frame}
+
+\note[itemize]{
+\setlength\itemsep{1.5em}
+\item As an example we use the iteration principle to define the free variables function.
+\item for the variable case we give the singleton list constructor
+\item for the application we junt concatenate the recursive calls
+\item for the abstraction case, given the abstraction variable and the recursive call, we just return the recursive call minus the  variable
+\item The function is \alp-compatible by definition
+}
+
+\begin{frame}{Soundness of the fv function} \bigskip
+
+\ExecuteMetaData[FreeVariables.tex]{fvPred} \smallskip
+
+\small{\ExecuteMetaData[Term.tex]{free}}  \bigskip
+
+\pause
+We can define \AgdaDatatype{\_*\_} relation in the following equivalent way: \bigskip
+
+\ExecuteMetaData[FreeVariables.tex]{free} \smallskip
+
+Now \AgdaFunction{\_free\_}  is $\alpha$-compatible by definition, by being defined with our iteration principle.\\
+As \AgdaFunction{fv} is strong \alp-compatible, then \AgdaFunction{Pfv*}\ is  $\alpha$-compatible!
+\end{frame}
+
+\note[itemize]{
+\item We want to prove that the function we have just defined is sound.
+\item First we define the property to be proven: Pfv* states that if a variable belongs to the result of fv applied to a term, then it is fee in that term
+\item This is thee classical definition of  free variable
+\item We can also use our iteration principle to define this predicate
+\item For the variable case, it is a function that for a variable $b$\ it is returned a Set inhabited by a proof that $a \equiv b$.
+\item The application case is the disjoint union of the recursive calls result sets.
+\item Finally the abstraction case, as we can choose the binder variable not equal to $a$, so the set only inhabited by the proof that $a$ is free in the abstraction sub-term is directly a proof that $a$ is free in the abstraction.
+\item And this predicate is $\alpha$-compatible by definition!!!
+%\item We can return \AgdaDatatype{Set} in this example because of we use levels in our induction/recursion principles.
+}
+
+
+
+\begin{frame}{Substitution}
+\ExecuteMetaData[Substitution.tex]{substitution}
+
+\bigskip
+
+\pause
+
+\ExecuteMetaData[Substitution.tex]{lemmaSubst1}
+\end{frame}
+
+\note[itemize]{
+\setlength\itemsep{0.2em}
+\item Next we define the substitution operation on terms using the iteration principle.
+\item The variable case is defined with the hvar function, which replaces a variable by a term
+\item The application case is just the application constructor applied to the recursive subtitution results.
+\item In the abstraction case we can exclude the variable being susbtituted and the free variables of the term susbtituted to avoid any variable capture.
+\item then we can proceed as in the application case, returning the abstraction constructor appied to the bound variable and the recursive substitution result.
+\item This definition is \alp-compatible because it was defined with the iteration principle.
+}
+
+
+% \begin{frame}{Substitution} \bigskip
+
+% We use \AgdaFunction{TermIndPerm} induction principle to prove: \medskip
+
+% \ExecuteMetaData[Substitution.tex]{lemmaSubst2}
+
+% \pause
+% \bigskip
+% With the two previous results we can now directly prove the next result. 
+
+% \ExecuteMetaData[Substitution.tex]{lemmaSubst}
+% \end{frame}
+
+\begin{frame}{Substitution}
+
+The substitution is alpha-equivalent to a na\"{\i}ve substitution when no variable capture exists. \bigskip
+
+\small{\ExecuteMetaData[Substitution.tex]{naivesubstitution}} \\ 
+\bigskip
+
+\bigskip
+\pause
+With the previous result and the \alp-structural induction principle we can do any classic pen-and-paper proofs about substitution. \medskip
+
+\pause
+For example, the next classic result: \medskip
+
+\small{\ExecuteMetaData[Substitution.tex]{Psubstcomp}}
+\end{frame}
+
+\note[itemize]{
+\item The result of substitution is alpha-equivalent to a naive substitution when no variable capture exists. 
+\item With the previous result and the \alp-structural induction principle we can prove any result about substitution and terms as in classic pen-and-paper proofs. 
+\item For example, the next classic result about composition of substitutions for fresh enough variables  
+}
+
+\begin{frame}{Substitution} \bigskip
+
+Abstraction case of the \alp-structural induction, choosing $b \not\in [y]\ +\!\!+\ fv\ N\ +\!\!+\ fv\ N [y := L] $  \smallskip
+
+\scriptsize{\ExecuteMetaData[Substitution.tex]{abstractionComposition}}
+
+\end{frame}
+
+\note[itemize]{
+\setlength\itemsep{1.5em}
+\item In the abstraction case we can do the following direct equational proof, identical to a classical pen-and-paper proof, for a bi abstraction variable enough fresh.
+}
+
+
+\section{Results and Conclusions} 
+\begin{frame}{Summary} \medskip
+
+
+We present an induction principle that mimics Barenregt´s convention for $\alpha$-compatible predicates, which allows us to choose the bound name in the abstraction case so that it does not belong to a given list of names. \bigskip \bigskip
+
+\pause
+
+We derive a recursion principle which defines strong \alp-compatible functions. \bigskip
+\pause
+
+All results are derived from the first primitive recursion, and no induction on the length of terms or accessible predicates were needed. \bigskip \bigskip
+
+\pause
+
+With this basic framework we are able to reproduce classic pen-and-paper proofs in a formal proof assistant.
+\end{frame}
+
+
+\begin{frame}{Thank you!}
+  Questions ? 
+\end{frame}
+
+\bibliographystyle{plain}
+\bibliography{resumen}
+
+\end{document}

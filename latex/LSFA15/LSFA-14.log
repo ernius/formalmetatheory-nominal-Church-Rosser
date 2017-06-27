@@ -1,0 +1,1033 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev) (preloaded format=pdflatex 2015.12.17)  26 FEB 2016 16:03
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**LSFA-14.tex
+(./LSFA-14.tex
+LaTeX2e <2014/05/01>
+Babel <3.9l> and hyphenation patterns for 79 languages loaded.
+(./entcs.cls
+Document Class: entcs 2003/9/14, 2e-1.15: Electronic Notes in Theoretical Compu
+ter Science
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/base/newlfont.sty
+Package: newlfont 1998/08/17 v2.2m Standard LaTeX package
+LaTeX Info: Redefining \em on input line 67.
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/base/latexsym.sty
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
+))
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks14
+\symAMSa=\mathgroup5
+\symAMSb=\mathgroup6
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/gen
+eric/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/hyperref/hyperref.sty
+Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/gen
+eric/oberdiek/hobsub-hyperref.sty
+Package: hobsub-hyperref 2012/05/28 v1.13 Bundle oberdiek, subset hyperref (HO)
+
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/gen
+eric/oberdiek/hobsub-generic.sty
+Package: hobsub-generic 2012/05/28 v1.13 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2012/05/28 v1.13 Construct package bundles (HO)
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2007/09/27 v1.1 Expandable calculations with integers (HO)
+Package hobsub Info: Skipping package `ifpdf' (already loaded).
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2011/11/25 v1.13 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2012/04/08 v1.3 Expandable calculations on big integers (HO
+)
+Package: bitset 2011/01/30 v1.1 Handle bit-vector datatype (HO)
+Package: uniquecounter 2011/01/30 v1.2 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+Package: hopatch 2012/05/28 v1.2 Wrapper for package hooks (HO)
+Package: xcolor-patch 2011/01/30 xcolor patch
+Package: atveryend 2011/06/30 v1.8 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
+Package: refcount 2011/10/16 v3.4 Data extraction from label references (HO)
+Package: hycolor 2011/01/30 v1.7 Color options for hyperref/bookmark (HO)
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/graphics/keyval.sty
+Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
+\KV@toks@=\toks15
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/gen
+eric/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/oberdiek/auxhook.sty
+Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+)
+\@linkdim=\dimen102
+\Hy@linkcounter=\count79
+\Hy@pagecounter=\count80
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/hyperref/pd1enc.def
+File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
+)
+\Hy@SavedSpaceFactor=\count81
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Option `raiselinks' set `false' on input line 4319.
+Package hyperref Info: Option `colorlinks' set `true' on input line 4319.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 4319.
+Package hyperref Info: Hyper figures OFF on input line 4443.
+Package hyperref Info: Link nesting OFF on input line 4448.
+Package hyperref Info: Hyper index ON on input line 4451.
+Package hyperref Info: Plain pages OFF on input line 4458.
+Package hyperref Info: Backreferencing OFF on input line 4463.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4688.
+\c@Hy@tempcnt=\count82
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/url/url.sty
+\Urlmuskip=\muskip10
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 5041.
+\XeTeXLinkMargin=\dimen103
+\Fld@menulength=\count83
+\Field@Width=\dimen104
+\Fld@charsize=\dimen105
+Package hyperref Info: Hyper figures OFF on input line 6295.
+Package hyperref Info: Link nesting OFF on input line 6300.
+Package hyperref Info: Hyper index ON on input line 6303.
+Package hyperref Info: backreferencing OFF on input line 6310.
+Package hyperref Info: Link coloring ON on input line 6313.
+Package hyperref Info: Link coloring with OCG OFF on input line 6320.
+Package hyperref Info: PDF/A mode OFF on input line 6325.
+LaTeX Info: Redefining \ref on input line 6365.
+LaTeX Info: Redefining \pageref on input line 6369.
+
+
+Package hyperref Warning: Option `pdfpagelabels' is turned off
+(hyperref)                because \thepage is undefined.
+
+\c@Item=\count84
+\c@Hfootnote=\count85
+)
+
+Package hyperref Message: Driver: hpdftex.
+
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/hyperref/hpdftex.def
+File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
+\Fld@listcount=\count86
+\c@bookmark@seq@number=\count87
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/oberdiek/rerunfilecheck.sty
+Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip41
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/base/leqno.clo
+File: leqno.clo 1998/08/17 v1.1c Standard LaTeX option (left equation numbers)
+)
+LaTeX Info: Redefining \rm on input line 76.
+LaTeX Info: Redefining \cal on input line 77.
+LaTeX Info: Redefining \sf on input line 78.
+LaTeX Info: Redefining \tt on input line 79.
+LaTeX Info: Redefining \bf on input line 80.
+LaTeX Info: Redefining \it on input line 81.
+LaTeX Info: Redefining \sl on input line 82.
+LaTeX Info: Redefining \sc on input line 83.
+\@bls=\dimen106
+\eqntopsep=\skip42
+\eqnarraycolsep=\dimen107
+\labelwidthi=\dimen108
+\labelwidthii=\dimen109
+\labelwidthiii=\dimen110
+\labelwidthiv=\dimen111
+\@maxlistdepth=\count88
+\eqnbaselineskip=\skip43
+\eqnlineskip=\skip44
+\mathindent=\dimen112
+\c@part=\count89
+\c@section=\count90
+\c@subsection=\count91
+\c@subsubsection=\count92
+\c@paragraph=\count93
+\c@subparagraph=\count94
+\c@thm=\count95
+\c@alg=\count96
+\c@algorithm=\count97
+\c@note=\count98
+\c@summ=\count99
+\c@case=\count100
+\@tempcntc=\count101
+\c@figure=\count102
+\c@table=\count103
+\t@glob@notes=\toks16
+\t@loc@notes=\toks17
+\note@cnt=\count104
+\c@author=\count105
+\n@author=\count106
+\c@collab=\count107
+\n@collab=\count108
+\c@address=\count109
+\sv@mathsurround=\dimen113
+\sv@hyphenpenalty=\count110
+\prev@elem=\count111
+\cur@elem=\count112
+\fm@box=\box26
+\fm@size=\dimen114
+\t@abstract=\box27
+\t@keyword=\box28
+\t@xtheight=\dimen115
+\@logoheight=\dimen116
+\@pubyear=\count113
+\@copyear=\count114
+\slashbox=\box29
+LaTeX Font Info:    Try loading font information for U+lasy on input line 1133.
+
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/base/ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 1133.
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 1133.
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+\Slashbox=\box30
+) (./entcsmacro.sty)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/graphics/graphicx.sty
+Package: graphicx 2014/04/25 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+\Gread@gobject=\count115
+))
+\Gin@req@height=\dimen117
+\Gin@req@width=\dimen118
+) (./agda.sty
+Package: agda 
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/xifthen/xifthen.sty
+Package: xifthen 2009/04/17 v1.3 Extended ifthen features
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/etex-pkg/etex.sty
+Package: etex 1998/03/26 v2.0 eTeX basic definition package (PEB)
+\et@xins=\count116
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/tools/calc.sty
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count117
+\calc@Bcount=\count118
+\calc@Adimen=\dimen119
+\calc@Bdimen=\dimen120
+\calc@Askip=\skip45
+\calc@Bskip=\skip46
+LaTeX Info: Redefining \setlength on input line 75.
+LaTeX Info: Redefining \addtolength on input line 76.
+\calc@Ccount=\count119
+\calc@Cskip=\skip47
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/ifmtarg/ifmtarg.sty
+Package: ifmtarg 2009/09/02 v1.2a check for an empty argument
+))
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/xcolor/xcolor.sty
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/polytable/polytable.sty
+Package: polytable 2013/07/18 v0.8.5 `polytable' package (Andres Loeh)
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/lazylist/lazylist.sty)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/tools/array.sty
+Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen121
+\extrarowheight=\dimen122
+\NC@list=\toks18
+\extratabsurround=\skip48
+\backup@length=\skip49
+)
+\PT@colwidth=\dimen123
+\PT@cols=\count120
+\PT@table=\count121
+\PT@toks=\toks19
+\PT@in=\read1
+\PT@out=\write3
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/etoolbox/etoolbox.sty
+Package: etoolbox 2011/01/03 v2.1 e-TeX tools for LaTeX
+\etb@tempcnta=\count122
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/ucs/ucs.sty
+Package: ucs 2013/05/11 v2.2 UCS: Unicode input support
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/ucs/data/uni-global.def
+File: uni-global.def 2013/05/13 UCS: Unicode global data
+)
+\uc@secondtry=\count123
+\uc@combtoks=\toks20
+\uc@combtoksb=\toks21
+\uc@temptokena=\toks22
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/tipa/tipa.sty
+Package: tipa 2002/08/08 TIPA version 1.1
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/base/fontenc.sty
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/tipa/t3enc.def
+File: t3enc.def 2001/12/31 T3 encoding
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/base/ot1enc.def
+File: ot1enc.def 2005/09/27 v1.99g Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding OT1 on input line 43.
+)))
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/base/fontenc.sty
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/base/t1enc.def
+File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+))
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/base/inputenc.sty
+Package: inputenc 2014/04/30 v1.2b Input encoding file
+\inpenc@prehook=\toks23
+\inpenc@posthook=\toks24
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/ucs/utf8x.def
+File: utf8x.def 2004/10/17 UCS: Input encoding UTF-8
+))
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/catchfilebetweentags/catchfilebetweentags.sty
+Package: catchfilebetweentags 2011/02/19 v1.1 - Catch file between tags (FC)
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/gen
+eric/oberdiek/catchfile.sty
+Package: catchfile 2011/03/01 v1.6 Catch the contents of a file (HO)
+)
+\CatchFBT@tok=\toks256
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/gen
+eric/xstring/xstring.sty
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/gen
+eric/xstring/xstring.tex
+\@xs@message=\write4
+\integerpart=\count124
+\decimalpart=\count125
+)
+Package: xstring 2013/10/13  v1.7c  String manipulations (C Tellechea)
+)
+\c@AgdaIndex=\count126
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/amsmath/amsmath.sty
+Package: amsmath 2013/01/14 v2.14 AMS math features
+\@mathmargin=\skip50
+
+For additional information on amsmath, use the `?' option.
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks25
+\ex@=\dimen124
+))
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen125
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+LaTeX Info: Redefining \operatorname on input line 46.
+)
+\inf@bad=\count127
+LaTeX Info: Redefining \frac on input line 210.
+\uproot@=\count128
+\leftroot@=\count129
+LaTeX Info: Redefining \overline on input line 306.
+\classnum@=\count130
+\DOTSCASE@=\count131
+LaTeX Info: Redefining \ldots on input line 378.
+LaTeX Info: Redefining \dots on input line 381.
+LaTeX Info: Redefining \cdots on input line 466.
+\Mathstrutbox@=\box31
+\strutbox@=\box32
+\big@size=\dimen126
+LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
+\macc@depth=\count132
+\c@MaxMatrixCols=\count133
+\dotsspace@=\muskip11
+\c@parentequation=\count134
+\dspbrk@lvl=\count135
+\tag@help=\toks26
+\row@=\count136
+\column@=\count137
+\maxfields@=\count138
+\andhelp@=\toks27
+\eqnshift@=\dimen127
+\alignsep@=\dimen128
+\tagshift@=\dimen129
+\tagwidth@=\dimen130
+\totwidth@=\dimen131
+\lineht@=\dimen132
+\@envbody=\toks28
+\multlinegap=\skip51
+\multlinetaggap=\skip52
+\mathdisplay@stack=\toks29
+LaTeX Info: Redefining \[ on input line 2665.
+LaTeX Info: Redefining \] on input line 2666.
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/mathtools/mathtools.sty
+Package: mathtools 2014/07/16 v1.15 mathematical typesetting tools
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/mathtools/mhsetup.sty
+Package: mhsetup 2010/01/21 v1.2a programming setup (MH)
+)
+LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
+\g_MT_multlinerow_int=\count139
+\l_MT_multwidth_dim=\dimen133
+\origjot=\skip53
+\l_MT_shortvdotswithinadjustabove_dim=\dimen134
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen135
+\l_MT_above_intertext_sep=\dimen136
+\l_MT_below_intertext_sep=\dimen137
+\l_MT_above_shortintertext_sep=\dimen138
+\l_MT_below_shortintertext_sep=\dimen139
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/textgreek/textgreek.sty
+Package: textgreek 2011/10/09 v0.7 Greek symbols in text
+Package textgreek Info: Loading the definitions for the Greek fontencoding. on 
+input line 39.
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/greek-fontenc/lgrenc.def
+File: lgrenc.def 2013/12/02 v0.11.2 LGR Greek font encoding definitions
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/greek-fontenc/greek-fontenc.def
+File: greek-fontenc.def 2013/11/28 v0.11 Common Greek font encoding definitions
+
+))
+Package textgreek Info: Loaded fontmap: {eur/*/*}{U/eur/*/*} {phv/*/*}{U/psy/*/
+*}. on input line 69.
+) (./LSFA-14.aux)
+\openout1 = `LSFA-14.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 82.
+LaTeX Font Info:    Try loading font information for T3+cmr on input line 82.
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/tipa/t3cmr.fd
+File: t3cmr.fd 2001/12/31 TIPA font definitions
+)
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 82.
+LaTeX Font Info:    Try loading font information for LGR+cmr on input line 82.
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/cbfonts-fd/lgrcmr.fd
+File: lgrcmr.fd 2013/09/01 v1.0 Greek European Computer Regular
+)
+LaTeX Font Info:    ... okay on input line 82.
+\AtBeginShipoutBox=\box33
+
+
+Package hyperref Warning: Height of page (\paperheight) is invalid (0.0pt),
+(hyperref)                using 11in.
+
+Package hyperref Info: Link coloring ON on input line 82.
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/hyperref/nameref.sty
+Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/gen
+eric/oberdiek/gettitlestring.sty
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
+)
+\c@section@level=\count140
+)
+LaTeX Info: Redefining \ref on input line 82.
+LaTeX Info: Redefining \pageref on input line 82.
+LaTeX Info: Redefining \nameref on input line 82.
+ (./LSFA-14.out) (./LSFA-14.out)
+\@outlinefile=\write5
+\openout5 = `LSFA-14.out'.
+
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/con
+text/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count141
+\scratchdimen=\dimen140
+\scratchbox=\box34
+\nofMPsegments=\count142
+\nofMParguments=\count143
+\everyMPshowfont=\toks30
+\MPscratchCnt=\count144
+\MPscratchDim=\dimen141
+\MPnumerator=\count145
+\makeMPintoPDFobject=\count146
+\everyMPtoPDFconversion=\toks31
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+)
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/ucs/ucsencs.def
+File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
+LGR\textpentedeka already defined.
+LGR\textpenteqilioi already defined.
+LGR\textpentemuria already defined.
+LGR\textstigma already defined.
+LGR\textqoppa already defined.
+LGR\texteuro already defined.
+LGR\textperthousand already defined.
+LGR\textquoteleft already defined.
+LGR\textquoteright already defined.
+LGR\u already defined.
+LGR\= already defined.
+LGR\" already defined.
+LGR\textpercent already defined.
+LGR\textperiodcentered already defined.
+LGR\' already defined.
+LGR\textanoteleia already defined.
+LGR\textAlpha already defined.
+LGR\textBeta already defined.
+LGR\textDelta already defined.
+LGR\textEpsilon already defined.
+LGR\textPhi already defined.
+LGR\textGamma already defined.
+LGR\textEta already defined.
+LGR\textIota already defined.
+LGR\textTheta already defined.
+LGR\textKappa already defined.
+LGR\textLambda already defined.
+LGR\textMu already defined.
+LGR\textNu already defined.
+LGR\textOmicron already defined.
+LGR\textPi already defined.
+LGR\textChi already defined.
+LGR\textRho already defined.
+LGR\textSigma already defined.
+LGR\textTau already defined.
+LGR\textUpsilon already defined.
+LGR\textOmega already defined.
+LGR\textXi already defined.
+LGR\textPsi already defined.
+LGR\textZeta already defined.
+LGR\` already defined.
+LGR\textalpha already defined.
+LGR\textbeta already defined.
+LGR\textvarsigma already defined.
+LGR\textdelta already defined.
+LGR\textepsilon already defined.
+LGR\textphi already defined.
+LGR\textgamma already defined.
+LGR\texteta already defined.
+LGR\textiota already defined.
+LGR\texttheta already defined.
+LGR\textkappa already defined.
+LGR\textlambda already defined.
+LGR\textmu already defined.
+LGR\textnu already defined.
+LGR\textomicron already defined.
+LGR\textpi already defined.
+LGR\textchi already defined.
+LGR\textrho already defined.
+LGR\textautosigma already defined.
+LGR\textsigma already defined.
+LGR\texttau already defined.
+LGR\textupsilon already defined.
+LGR\textomega already defined.
+LGR\textxi already defined.
+LGR\textpsi already defined.
+LGR\textzeta already defined.
+LGR\guillemotleft already defined.
+LGR\guillemotright already defined.
+LGR\~ already defined.
+LGR\textemdash already defined.
+LGR\textdigamma already defined.
+LGR\textDigamma already defined.
+LGR\textdexiakeraia already defined.
+LGR\textaristerikeraia already defined.
+
+fontencoding LGR patched
+T3\textscriptg already defined.
+fontencoding T3 patched
+)
+
+LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 86.
+
+
+LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 87.
+
+
+LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 88.
+
+
+LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 91.
+
+
+LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 94.
+
+\c@sv@footnote=\count147
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 111.
+
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/base/t1cmtt.fd
+File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+Underfull \hbox (badness 10000) has occurred while \output is active
+
+ []
+
+
+Overfull \vbox (6.55998pt too high) has occurred while \output is active []
+
+
+Overfull \hbox (1.88843pt too wide) has occurred while \output is active
+ []
+ []
+
+[1{/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-config/fon
+ts/map/pdftex/updmap/pdftex.map}pdfTeX warning (ext4): destination with the sam
+e identifier (name{footnote.0}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.121 
+      pdfTeX warning (ext4): destination with the same identifier (name{footnot
+e.0}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.121 
+      pdfTeX warning (ext4): destination with the same identifier (name{footnot
+e.0}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.121 
+      pdfTeX warning (ext4): destination with the same identifier (name{footnot
+e.0}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.121 
+      ]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [2]
+[3]
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 160.
+
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/base/t1cmss.fd
+File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/ucs/data/uni-3.def
+File: uni-3.def 2013/05/13 UCS: Unicode data U+0300..U+03FF
+)
+LaTeX Font Info:    Try loading font information for LGR+cmss on input line 160
+.
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/cbfonts-fd/lgrcmss.fd
+File: lgrcmss.fd 2013/09/01 v1.0 Greek European Computer Sans Serif
+)
+\openout3 = `LSFA-14.ptb'.
+
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/ucs/data/uni-33.def
+File: uni-33.def 2013/05/13 UCS: Unicode data U+2100..U+21FF
+)
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/ucs/data/uni-0.def
+File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
+)
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 179
+.
+LaTeX Font Info:    No file OMScmss.fd. on input line 179.
+
+
+LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textperiodcentered' on input line 179.
+
+LaTeX Font Info:    Try loading font information for T3+cmss on input line 179.
+
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/tipa/t3cmss.fd
+File: t3cmss.fd 2001/12/31 TIPA font definitions
+)
+\openout3 = `LSFA-14.ptb'.
+
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/ucs/data/uni-34.def
+File: uni-34.def 2013/05/13 UCS: Unicode data U+2200..U+22FF
+)
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+
+Underfull \vbox (badness 1178) has occurred while \output is active []
+
+ [4]
+\openout3 = `LSFA-14.ptb'.
+
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/ucs/data/uni-32.def
+File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
+)
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+ [5]
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+ [6pdfTeX warning (ext4): destination with the same identifier (name{Agda6}) ha
+s been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.421 
+      ]
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+ [7]
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [8]
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/ucs/data/uni-39.def
+File: uni-39.def 2013/05/13 UCS: Unicode data U+2700..U+27FF
+)
+\openout3 = `LSFA-14.ptb'.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [9]
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+LaTeX Font Info:    Try loading font information for LGR+cmtt on input line 761
+.
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/cbfonts-fd/lgrcmtt.fd
+File: lgrcmtt.fd 2013/09/01 v1.0 Greek European Computer Typewriter
+)
+\openout3 = `LSFA-14.ptb'.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [10]
+[11]
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+\openout3 = `LSFA-14.ptb'.
+
+
+(/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/tex/lat
+ex/ucs/data/uni-35.def
+File: uni-35.def 2013/05/13 UCS: Unicode data U+2300..U+23FF
+)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [12]
+\openout3 = `LSFA-14.ptb'.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [13]
+\openout3 = `LSFA-14.ptb'.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [14]
+\openout3 = `LSFA-14.ptb'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1243--1250
+\T1/cmr/m/n/8 ma-nip-u-la-tion, with ap-pli-ca-tions to the church-rosser the-o
+-rem.
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 1279--1283
+[]\T1/cmr/m/n/8 Helmut Schwicht-en-berg Masahiko Sato,
+ []
+
+[16]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1323.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1323.
+ (./LSFA-14.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1323.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1323.
+
+Package rerunfilecheck Info: File `LSFA-14.out' has not changed.
+(rerunfilecheck)             Checksum: 26FD0DDB3B8E340BFA821AE0378609AF;1152.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1323.
+ ) 
+Here is how much of TeX's memory you used:
+ 13281 strings out of 493109
+ 196395 string characters out of 6117082
+ 288843 words of memory out of 5000000
+ 16415 multiletter control sequences out of 15000+600000
+ 33800 words of font info for 92 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 40i,11n,95p,1415b,670s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fonts
+/enc/cm-super-t1.enc}</nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkd
+ir/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></nix/store/r224432qa1
+hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmex10.pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></nix/store/r224432qa1hw2hx5cl8
+vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.p
+fb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr10.pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvd
+c3-TeXLive-linkdir/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></nix/sto
+re/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr8.pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-li
+nkdir/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></nix/store/r224432q
+a1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy10.pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></nix/store/r224432qa1hw2hx5cl
+8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10
+.pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmtt8.pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5v
+vdc3-TeXLive-linkdir/texmf-dist/fonts/type1/public/cbfonts/grmi1095.pfb></nix/s
+tore/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fonts/type1/pu
+blic/cbfonts/gsmn1095.pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-
+linkdir/texmf-dist/fonts/type1/public/cbfonts/gttn1095.pfb></nix/store/r224432q
+a1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fonts/type1/public/amsfonts
+/symbols/msam10.pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdi
+r/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></nix/store/r224432
+qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fonts/type1/public/cm-supe
+r/sfbx0800.pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/tex
+mf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></nix/store/r224432qa1hw2hx5cl
+8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fonts/type1/public/cm-super/sfbx1728.
+pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fon
+ts/type1/public/cm-super/sfrm0800.pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5vv
+dc3-TeXLive-linkdir/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></nix/s
+tore/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fonts/type1/pu
+blic/cm-super/sfrm1440.pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive
+-linkdir/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb></nix/store/r22443
+2qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fonts/type1/public/cm-sup
+er/sfss1095.pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/te
+xmf-dist/fonts/type1/public/cm-super/sfti0800.pfb></nix/store/r224432qa1hw2hx5c
+l8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fonts/type1/public/cm-super/sfti1095
+.pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fo
+nts/type1/public/cm-super/sftt0800.pfb></nix/store/r224432qa1hw2hx5cl8vcjjj3h5v
+vdc3-TeXLive-linkdir/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb></nix/
+store/r224432qa1hw2hx5cl8vcjjj3h5vvdc3-TeXLive-linkdir/texmf-dist/fonts/type1/f
+kr/tipa/tipass10.pfb>
+Output written on LSFA-14.pdf (16 pages, 479508 bytes).
+PDF statistics:
+ 1067 PDF objects out of 1200 (max. 8388607)
+ 522 compressed objects within 6 object streams
+ 87 named destinations out of 1000 (max. 500000)
+ 137 words of extra memory for PDF output out of 10000 (max. 10000000)
+

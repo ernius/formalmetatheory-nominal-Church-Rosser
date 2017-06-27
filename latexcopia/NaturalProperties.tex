@@ -1,0 +1,136 @@
+\begin{code}%
+\>\AgdaKeyword{module} \AgdaModule{NaturalProperties} \AgdaKeyword{where}\<%
+\\
+%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.Nat} \AgdaSymbol{as} \AgdaModule{Nat}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Relation.Binary.PropositionalEquality}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Algebra}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.Empty}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Algebra.Structures}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Relation.Binary}\<%
+\\
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.Nat.Properties}\<%
+\\
+\>\AgdaKeyword{open} \AgdaModule{DecTotalOrder} \AgdaFunction{Nat.decTotalOrder} \AgdaKeyword{using} \AgdaSymbol{()} \AgdaKeyword{renaming} \AgdaSymbol{(}refl \AgdaSymbol{to} ≤-refl\AgdaSymbol{)}\<%
+\\
+\>\AgdaKeyword{open} \AgdaModule{≤-Reasoning}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaKeyword{renaming} \AgdaSymbol{(}begin\_ \AgdaSymbol{to} start\_\AgdaSymbol{;} \_∎ \AgdaSymbol{to} \_◽\AgdaSymbol{;} \_≡⟨\_⟩\_ \AgdaSymbol{to} \_≤⟨\_⟩'\_\AgdaSymbol{)}\<%
+\\
+%
+\\
+\>\AgdaFunction{+-comm} \AgdaSymbol{=} \AgdaField{IsCommutativeMonoid.comm} \AgdaSymbol{(}\AgdaField{IsCommutativeSemiring.+-isCommutativeMonoid} \AgdaFunction{isCommutativeSemiring}\AgdaSymbol{)}\<%
+\\
+\>\AgdaComment{--}\<%
+\\
+\>\AgdaFunction{lemmam+sucn≡sucm+n} \AgdaSymbol{:} \AgdaSymbol{∀} \AgdaSymbol{\{}\AgdaBound{m} \AgdaBound{n}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaBound{m} \AgdaPrimitive{+} \AgdaInductiveConstructor{suc} \AgdaBound{n} \AgdaDatatype{≡} \AgdaInductiveConstructor{suc} \AgdaSymbol{(}\AgdaBound{m} \AgdaPrimitive{+} \AgdaBound{n}\AgdaSymbol{)}\<%
+\\
+\>\AgdaFunction{lemmam+sucn≡sucm+n} \AgdaSymbol{\{}\AgdaInductiveConstructor{zero}\AgdaSymbol{\}} \<[32]%
+\>[32]\AgdaSymbol{=} \AgdaInductiveConstructor{refl}\<%
+\\
+\>\AgdaFunction{lemmam+sucn≡sucm+n} \AgdaSymbol{\{}\AgdaInductiveConstructor{suc} \AgdaBound{m}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{n}\AgdaSymbol{\}} \<[32]%
+\>[32]\AgdaSymbol{=} \AgdaFunction{cong} \AgdaInductiveConstructor{suc} \AgdaSymbol{(}\AgdaFunction{lemmam+sucn≡sucm+n} \AgdaSymbol{\{}\AgdaBound{m}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{n}\AgdaSymbol{\})}\<%
+\\
+%
+\\
+\>\AgdaFunction{lemmam+sucn≤sucm+n} \AgdaSymbol{:} \AgdaSymbol{∀} \AgdaSymbol{\{}\AgdaBound{m} \AgdaBound{n}\AgdaSymbol{\}} \AgdaSymbol{→} \<[32]%
+\>[32]\AgdaInductiveConstructor{suc} \AgdaSymbol{(}\AgdaBound{m} \AgdaPrimitive{+} \AgdaBound{n}\AgdaSymbol{)} \AgdaDatatype{≤} \AgdaBound{m} \AgdaPrimitive{+} \AgdaInductiveConstructor{suc} \AgdaBound{n}\<%
+\\
+\>\AgdaFunction{lemmam+sucn≤sucm+n} \AgdaSymbol{\{}\AgdaBound{m}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{n}\AgdaSymbol{\}} \AgdaKeyword{rewrite} \AgdaFunction{lemmam+sucn≡sucm+n} \AgdaSymbol{\{}\AgdaBound{m}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{n}\AgdaSymbol{\}} \AgdaSymbol{=} \AgdaFunction{≤-refl}\<%
+\\
+\>\AgdaComment{--}\<%
+\\
+\>\AgdaFunction{lemmam≡n→m+1≤n+1} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{m} \AgdaBound{n} \AgdaSymbol{:} \AgdaDatatype{ℕ}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaBound{n} \AgdaDatatype{≡} \AgdaBound{m} \AgdaSymbol{→} \AgdaInductiveConstructor{suc} \AgdaBound{m} \AgdaDatatype{≤′} \AgdaInductiveConstructor{suc} \AgdaBound{n}\<%
+\\
+\>\AgdaFunction{lemmam≡n→m+1≤n+1} \AgdaSymbol{\{}\AgdaBound{m}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaSymbol{.}\AgdaBound{m}\AgdaSymbol{\}} \AgdaInductiveConstructor{refl} \AgdaSymbol{=} \AgdaInductiveConstructor{≤′-refl}\<%
+\\
+\>\AgdaComment{--}\<%
+\\
+\>\AgdaFunction{lemmam>0→n+1≤m+n} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{m} \AgdaBound{n} \AgdaSymbol{:} \AgdaDatatype{ℕ}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaBound{m} \AgdaFunction{>} \AgdaInductiveConstructor{zero} \AgdaSymbol{→} \AgdaInductiveConstructor{suc} \AgdaBound{n} \AgdaDatatype{≤′} \AgdaBound{m} \AgdaPrimitive{+} \AgdaBound{n}\<%
+\\
+\>\AgdaFunction{lemmam>0→n+1≤m+n} \AgdaSymbol{\{}\AgdaNumber{0}\AgdaSymbol{\}} \<[25]%
+\>[25]\AgdaSymbol{\{}\AgdaBound{n}\AgdaSymbol{\}} \AgdaSymbol{()}\<%
+\\
+\>\AgdaFunction{lemmam>0→n+1≤m+n} \AgdaSymbol{\{}\AgdaInductiveConstructor{suc} \AgdaBound{m}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{n}\AgdaSymbol{\}} \AgdaBound{1≤m}\<%
+\\
+\>[0]\AgdaIndent{2}{}\<[2]%
+\>[2]\AgdaSymbol{=} \AgdaFunction{≤⇒≤′} \AgdaSymbol{(}\AgdaFunction{start}\<%
+\\
+\>[2]\AgdaIndent{12}{}\<[12]%
+\>[12]\AgdaInductiveConstructor{suc} \AgdaBound{n}\<%
+\\
+\>[2]\AgdaIndent{12}{}\<[12]%
+\>[12]\AgdaFunction{≤⟨} \AgdaInductiveConstructor{s≤s} \AgdaSymbol{(}\AgdaFunction{n≤m+n} \AgdaBound{m} \AgdaBound{n}\AgdaSymbol{)} \AgdaFunction{⟩}\<%
+\\
+\>[2]\AgdaIndent{12}{}\<[12]%
+\>[12]\AgdaInductiveConstructor{suc} \AgdaSymbol{(}\AgdaBound{m} \AgdaPrimitive{+} \AgdaBound{n}\AgdaSymbol{)}\<%
+\\
+\>[2]\AgdaIndent{12}{}\<[12]%
+\>[12]\AgdaFunction{≤⟨} \AgdaFunction{≤-refl} \AgdaFunction{⟩}\<%
+\\
+\>[2]\AgdaIndent{12}{}\<[12]%
+\>[12]\AgdaInductiveConstructor{suc} \AgdaBound{m} \AgdaPrimitive{+} \AgdaBound{n}\<%
+\\
+\>[0]\AgdaIndent{10}{}\<[10]%
+\>[10]\AgdaFunction{◽}\AgdaSymbol{)}\<%
+\\
+\>\AgdaComment{--}\<%
+\\
+\>\AgdaFunction{lemman>0→m+1≤m+n} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{m} \AgdaBound{n} \AgdaSymbol{:} \AgdaDatatype{ℕ}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaBound{n} \AgdaFunction{>} \AgdaInductiveConstructor{zero} \AgdaSymbol{→} \AgdaInductiveConstructor{suc} \AgdaBound{m} \AgdaDatatype{≤′} \AgdaBound{m} \AgdaPrimitive{+} \AgdaBound{n}\<%
+\\
+\>\AgdaFunction{lemman>0→m+1≤m+n} \AgdaSymbol{\{}\AgdaBound{m}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{n}\AgdaSymbol{\}} \AgdaBound{1≤n} \AgdaKeyword{rewrite} \AgdaFunction{sym} \AgdaSymbol{(}\AgdaFunction{+-comm} \AgdaBound{n} \AgdaBound{m}\AgdaSymbol{)} \AgdaSymbol{=} \AgdaFunction{lemmam>0→n+1≤m+n} \AgdaSymbol{\{}\AgdaBound{n}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{m}\AgdaSymbol{\}} \AgdaBound{1≤n} \<[86]%
+\>[86]\<%
+\\
+\>\AgdaComment{--}\<%
+\\
+\>\AgdaFunction{lemmam≡n→m≤n} \AgdaSymbol{:} \AgdaSymbol{\{}\AgdaBound{m} \AgdaBound{n} \AgdaSymbol{:} \AgdaDatatype{ℕ}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaBound{m} \AgdaDatatype{≡} \AgdaBound{n} \AgdaSymbol{→} \AgdaBound{m} \AgdaDatatype{≤′} \AgdaBound{n}\<%
+\\
+\>\AgdaFunction{lemmam≡n→m≤n} \AgdaSymbol{\{}\AgdaBound{m}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaSymbol{.}\AgdaBound{m}\AgdaSymbol{\}} \AgdaInductiveConstructor{refl} \AgdaSymbol{=} \AgdaInductiveConstructor{≤′-refl}\<%
+\\
+\>\AgdaComment{--}\<%
+\\
+\>\AgdaFunction{lemmam>0∧n>0→m+n>1} \AgdaSymbol{:} \AgdaSymbol{∀} \AgdaSymbol{\{}\AgdaBound{m} \AgdaBound{n}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaBound{m} \AgdaFunction{>} \AgdaNumber{0} \AgdaSymbol{→} \AgdaBound{n} \AgdaFunction{>} \AgdaNumber{0} \AgdaSymbol{→} \AgdaBound{m} \AgdaPrimitive{+} \AgdaBound{n} \AgdaFunction{>} \AgdaNumber{1}\<%
+\\
+\>\AgdaFunction{lemmam>0∧n>0→m+n>1} \AgdaSymbol{\{}\AgdaInductiveConstructor{suc} \AgdaBound{m}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaInductiveConstructor{suc} \AgdaBound{n}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaInductiveConstructor{s≤s} \AgdaSymbol{\_)} \AgdaSymbol{(}\AgdaInductiveConstructor{s≤s} \AgdaSymbol{\_)} \AgdaSymbol{=} \<[54]%
+\>[54]\AgdaFunction{start} \<[60]%
+\>[60]\<%
+\\
+\>[10]\AgdaIndent{56}{}\<[56]%
+\>[56]\AgdaInductiveConstructor{suc} \AgdaSymbol{(}\AgdaInductiveConstructor{suc} \AgdaInductiveConstructor{zero}\AgdaSymbol{)}\<%
+\\
+\>[0]\AgdaIndent{54}{}\<[54]%
+\>[54]\AgdaFunction{≤⟨} \AgdaInductiveConstructor{s≤s} \AgdaSymbol{(}\AgdaInductiveConstructor{s≤s} \AgdaSymbol{(}\AgdaInductiveConstructor{z≤n}\AgdaSymbol{))} \AgdaFunction{⟩}\<%
+\\
+\>[54]\AgdaIndent{56}{}\<[56]%
+\>[56]\AgdaInductiveConstructor{suc} \AgdaSymbol{(}\AgdaInductiveConstructor{suc} \AgdaSymbol{(}\AgdaBound{m} \AgdaPrimitive{+} \AgdaBound{n}\AgdaSymbol{))}\<%
+\\
+\>[0]\AgdaIndent{54}{}\<[54]%
+\>[54]\AgdaFunction{≤⟨} \AgdaInductiveConstructor{s≤s} \AgdaSymbol{(}\AgdaFunction{lemmam+sucn≤sucm+n} \AgdaSymbol{\{}\AgdaBound{m}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{n}\AgdaSymbol{\})} \AgdaFunction{⟩} \<[111]%
+\>[111]\<%
+\\
+\>[54]\AgdaIndent{56}{}\<[56]%
+\>[56]\AgdaInductiveConstructor{suc} \AgdaSymbol{(}\AgdaBound{m} \AgdaPrimitive{+} \AgdaInductiveConstructor{suc} \AgdaBound{n}\AgdaSymbol{)}\<%
+\\
+\>[0]\AgdaIndent{54}{}\<[54]%
+\>[54]\AgdaFunction{≤⟨} \AgdaFunction{≤-refl} \AgdaFunction{⟩} \<[85]%
+\>[85]\<%
+\\
+\>[54]\AgdaIndent{56}{}\<[56]%
+\>[56]\AgdaInductiveConstructor{suc} \AgdaBound{m} \AgdaPrimitive{+} \AgdaInductiveConstructor{suc} \AgdaBound{n}\<%
+\\
+\>[0]\AgdaIndent{54}{}\<[54]%
+\>[54]\AgdaFunction{◽}\<%
+\\
+\>\AgdaComment{--}\<%
+\\
+\>\AgdaFunction{>1→¬≤1} \AgdaSymbol{:} \AgdaSymbol{∀} \AgdaSymbol{\{}\AgdaBound{n}\AgdaSymbol{\}} \AgdaSymbol{→} \AgdaBound{n} \AgdaFunction{>} \AgdaNumber{1} \AgdaSymbol{→} \AgdaBound{n} \AgdaDatatype{≤} \AgdaNumber{1} \AgdaSymbol{→} \AgdaDatatype{⊥}\<%
+\\
+\>\AgdaFunction{>1→¬≤1} \AgdaSymbol{\{}\AgdaBound{n}\AgdaSymbol{\}} \AgdaBound{suc1≤n} \AgdaBound{n≤1} \AgdaSymbol{=} \AgdaFunction{1+n≰n} \AgdaSymbol{\{}\AgdaNumber{1}\AgdaSymbol{\}} \AgdaSymbol{(}\AgdaFunction{start} \AgdaInductiveConstructor{suc} \AgdaNumber{1} \AgdaFunction{≤⟨} \AgdaBound{suc1≤n} \AgdaFunction{⟩} \AgdaBound{n} \AgdaFunction{≤⟨} \AgdaBound{n≤1} \AgdaFunction{⟩} \AgdaNumber{1} \AgdaFunction{◽}\AgdaSymbol{)}\<%
+\end{code}

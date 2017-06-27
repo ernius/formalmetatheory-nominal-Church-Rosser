@@ -1,0 +1,18 @@
+\BOOKMARK [1][]{section.0.1}{Introduction}{}% 1
+\BOOKMARK [2][]{subsection.0.1.1}{Related Work}{section.0.1}% 2
+\BOOKMARK [2][]{subsection.0.1.2}{A brief introduction to Agda}{section.0.1}% 3
+\BOOKMARK [1][]{section.0.2}{Infrastructure}{}% 4
+\BOOKMARK [1][]{section.0.3}{Induction Principles}{}% 5
+\BOOKMARK [1][]{section.0.4}{The Choice Function}{}% 6
+\BOOKMARK [1][]{section.0.5}{Iteration and Recursion Principles}{}% 7
+\BOOKMARK [1][]{section.0.6}{Iterator Application}{}% 8
+\BOOKMARK [2][]{subsection.0.6.1}{Free Variables}{section.0.6}% 9
+\BOOKMARK [2][]{subsection.0.6.2}{Substitution}{section.0.6}% 10
+\BOOKMARK [1][]{section.A}{Iteration/Recursion Applications}{}% 11
+\BOOKMARK [2][]{subsection.A.1}{Case Analysis and Examining Constructor Arguments}{section.A}% 12
+\BOOKMARK [2][]{subsection.A.2}{Simple recursion}{section.A}% 13
+\BOOKMARK [2][]{subsection.A.3}{Alfa Equality}{section.A}% 14
+\BOOKMARK [2][]{subsection.A.4}{Recursion Mentioning a Bound Variable}{section.A}% 15
+\BOOKMARK [2][]{subsection.A.5}{Recursion with an Additional Parameter}{section.A}% 16
+\BOOKMARK [2][]{subsection.A.6}{Recursion with Varying Parameters and Terms as Range}{section.A}% 17
+\BOOKMARK [1][]{section*.1}{References}{}% 18

@@ -1,0 +1,99 @@
+\begin{thebibliography}{10}
+
+\bibitem{aydemir}
+Brian Aydemir, Aaron Bohannon, and Stephanie Weirich.
+\newblock Nominal reasoning techniques in {C}oq.
+\newblock {\em Electron. Notes Theor. Comput. Sci.}, 174(5):69--77, June 2007.
+
+\bibitem{aydemir08}
+Brian Aydemir, Arthur Chargu{\'e}raud, Benjamin~C. Pierce, Randy Pollack, and
+  Stephanie Weirich.
+\newblock Engineering formal metatheory.
+\newblock In {\em Proceedings of the 35th Annual ACM SIGPLAN-SIGACT Symposium
+  on Principles of Programming Languages}, POPL '08, pages 3--15, New York, NY,
+  USA, 2008. ACM.
+
+\bibitem{chargueraud12}
+Arthur Chargu{\'{e}}raud.
+\newblock The locally nameless representation.
+\newblock {\em J. Autom. Reasoning}, 49(3):363--408, 2012.
+
+\bibitem{deBruijn1972}
+N.~G. de~Bruijn.
+\newblock Lambda calculus notation with nameless dummies, a tool for automatic
+  formula manipulation, with applications to the church-rosser theorem.
+\newblock {\em Indagationes Mathematicae (Koninglijke Nederlandse Akademie van
+  Wetenschappen)}, 34(5):381--392, 1972.
+\newblock http://www.win.tue.nl/automath/archive/pdf/aut029.pdfElectronic
+  Edition.
+
+\bibitem{Gabbay}
+Murdoch~J. Gabbay and Andrew~M. Pitts.
+\newblock {A New Approach   to Abstract Syntax with Variable Binding}.
+\newblock {\em Formal Aspects of Computing}, 13(3—5):341—363, July 2001.
+
+\bibitem{DBLP:conf/tphol/GordonM96}
+Andrew~D. Gordon and Thomas~F. Melham.
+\newblock Five axioms of alpha-conversion.
+\newblock In Joakim von Wright, Jim Grundy, and John Harrison, editors, {\em
+  Theorem Proving in Higher Order Logics, 9th International Conference,
+  TPHOLs'96, Turku, Finland, August 26-30, 1996, Proceedings}, volume 1125 of
+  {\em Lecture Notes in Computer Science}, pages 173--190. Springer, 1996.
+
+\bibitem{nos}
+Álvaro Tasistro, Ernesto Copello, and Nora Szasz.
+\newblock Formalisation in constructive type theory of stoughton's substitution
+  for the lambda calculus.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 312(0):215 --
+  230, 2015.
+\newblock Ninth Workshop on Logical and Semantic Frameworks, with Applications
+  (LSFA 2014).
+
+\bibitem{mlof}
+P.~Martin-L{\"o}f and G.~Sambin.
+\newblock {\em Intuitionistic type theory}.
+\newblock Studies in Proof Theory. Bibliopolis, 1984.
+
+\bibitem{sato}
+Helmut~Schwichtenberg Masahiko~Sato, Randy~Pollack and Takafumi Sakurai.
+\newblock Viewing lambda-terms through maps, 2013.
+\newblock Available from
+  http://homepages.inf.ed.ac.uk/rpollack/export/Maps\_SatoPollackSchwichtenbergSakurai.pdf.
+
+\bibitem{agda}
+Ulf Norell.
+\newblock {\em Towards a practical programming language based on dependent type
+  theory}.
+\newblock PhD thesis, Department of Computer Science and Engineering, Chalmers
+  University of Technology, SE-412 96 G\"{o}teborg, Sweden, September 2007.
+
+\bibitem{Norrish04recursivefunction}
+Michael Norrish.
+\newblock Recursive function definition for types with binders.
+\newblock In {\em In Seventeenth International Conference on Theorem Proving in
+  Higher Order Logics}, pages 241--256, 2004.
+
+\bibitem{Pitts1}
+Andrew~M. Pitts.
+\newblock Nominal logic, a first order theory of names and binding.
+\newblock {\em Information and Computation}, 186(2):165 -- 193, 2003.
+\newblock Theoretical Aspects of Computer Software (TACS 2001).
+
+\bibitem{Pitts2}
+Andrew~M. Pitts.
+\newblock Alpha-structural recursion and induction.
+\newblock {\em J. ACM}, 53(3):459--506, May 2006.
+
+\bibitem{stoughton}
+A.~Stoughton.
+\newblock Substitution revisited.
+\newblock {\em Theor. Comput. Sci.}, 59:317--325, 1988.
+
+\bibitem{urban05}
+Christian Urban and Christine Tasson.
+\newblock Nominal techniques in isabelle/hol.
+\newblock In Robert Nieuwenhuis, editor, {\em Automated Deduction – CADE-20},
+  volume 3632 of {\em Lecture Notes in Computer Science}, pages 38--53.
+  Springer Berlin Heidelberg, 2005.
+
+\end{thebibliography}

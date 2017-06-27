@@ -1,0 +1,950 @@
+%-----------------------------------------------------------------------------
+%
+%               Template for sigplanconf LaTeX Class
+%
+% Name:         sigplanconf-template.tex
+%
+% Purpose:      A template for sigplanconf.cls, which is a LaTeX 2e class
+%               file for SIGPLAN conference proceedings.
+%
+% Guide:        Refer to "Author's Guide to the ACM SIGPLAN Class,"
+%               sigplanconf-guide.pdf
+%
+% Author:       Paul C. Anagnostopoulos
+%               Windfall Software
+%               978 371-2316
+%               paul@windfall.com
+%
+% Created:      15 February 2005
+%
+%-----------------------------------------------------------------------------
+
+\documentclass[preprint,10pt]{sigplanconf}
+
+% The following \documentclass options may be useful:
+
+% preprint      Remove this option only once the paper is in final form.
+% 10pt          To set in 10-point type instead of 9-point.
+% 11pt          To set in 11-point type instead of 9-point.
+% numbers       To obtain numeric citation style instead of author/year.
+
+\usepackage{amsmath}
+\usepackage[hidelinks]{hyperref}
+\usepackage{bussproofs}
+\usepackage{amssymb} 
+\usepackage{amsthm}
+\usepackage{tikz}
+
+\newcommand{\cL}{{\cal L}}
+
+\newcommand{\breds}{\ensuremath{\twoheadrightarrow}}
+
+
+%math
+\newcommand{\alp}{\ensuremath{\alpha}}
+\newcommand{\lam}{\ensuremath{\lambda}}
+\newcommand{\alpsym}{\ensuremath{\sim_\alpha}}
+\newcommand{\choice}{\ensuremath{\chi}}
+\newcommand{\p}{\ensuremath{\rightrightarrows}}
+\newcommand{\pp}{\ensuremath{\rightarrow\!\!\!\!\rightarrow}}
+\newcommand{\ninb}{\ensuremath{\not\in_b}}
+\newcommand{\betar}{\ensuremath{\triangleright}}
+\newcommand{\conc}{\ensuremath{+\!\!+}}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{coro}{Corollary}
+\newtheorem{theo}{Theorem}
+
+
+\begin{document}
+
+\special{papersize=8.5in,11in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+\conferenceinfo{CONF 'yy}{Month d--d, 20yy, City, ST, Country}
+\copyrightyear{20yy}
+\copyrightdata{978-1-nnnn-nnnn-n/yy/mm}
+\copyrightdoi{nnnnnnn.nnnnnnn}
+
+% Uncomment the publication rights you want to use.
+%\publicationrights{transferred}
+%\publicationrights{licensed}     % this is the default
+%\publicationrights{author-pays}
+
+\titlebanner{banner above paper title}        % These are ignored unless
+\preprintfooter{short description of paper}   % 'preprint' option specified.
+
+\title{Título?}
+%\subtitle{Subtitle Text, if any}
+
+\authorinfo{Ernesto Copello \and\'Alvaro Tasistro \and Nora Szasz}
+           {Universidad ORT Uruguay}
+           {copello,tasistro,szasz@ort.edu.uy}
+
+\maketitle
+
+\begin{abstract}
+We formulate principles of induction and recursion for simply typed lambda calculus with bound names where \alp-conversion is based upon name swapping as in nominal abstract syntax. The principles allow us to work modulo \alp-conversion and formally reproduce the Barendregt variable convention. We successfully apply those induction principles to get some fundamental meta-theoretical results, such as the Church-Rosser theorem and the Subject Reduction theorem for the system of assignment of simple types. The whole development has been machine-checked using the system Agda. 
+\end{abstract}
+
+\category{CR-number}{subcategory}{third-level}
+
+% \begin{CCSXML}
+% <ccs2012>
+% <concept>
+% <concept_id>10003752</concept_id>
+% <concept_desc>Theory of computation</concept_desc>
+% <concept_significance>500</concept_significance>
+% </concept>
+% <concept>
+% <concept_id>10003752.10003753.10003754.10003733</concept_id>
+% <concept_desc>Theory of computation~Lambda calculus</concept_desc>
+% <concept_significance>500</concept_significance>
+% </concept>
+% </ccs2012>
+% \end{CCSXML}
+
+% \ccsdesc[500]{Theory of computation}
+% \ccsdesc[500]{Theory of computation~Lambda calculus}
+
+% general terms are not compulsory anymore,
+% you may leave them out
+%\terms
+
+\keywords
+Formal Metatheory, Lambda Calculus, Constructive Type Theory.
+
+\section{Introduction}
+
+There is great interest in the use of proof assistants for formalising definitions of programming languages and checking proofs of their properties. However, despite of the amount of work in this area, the community remains fragmented in the basic issue of how to represent the abstract syntax of programming languages, and in particular, how to represent bound variables. There exists a collection of different name bindings representation techniques, with no one coming up as a clear optimal solution. Aydemir~\cite{Aydemir2005} proposed the POPLMARK challenge, a set of tasks designed to evaluate many of the critical issues that commonly arise in the formalisations of programming languages. They propose three main criteria for evaluating proposed formalisations:
+
+\begin{itemize}
+\item \emph{formalisation overheads}: operations and proof obligations introduced by the technique and not related to the original problem.
+\item \emph{transparency}: formal definitions and theorems should not depart radically from the usual informal conventions.
+\item \emph{cost of entry}: the infrastructure should be usable by someone who is not an expert in theorem prover technology.
+\end{itemize}
+
+
+
+Our line of research goes after those criteria, looking for a formalisation as close to pencil-and-paper informal practices as possible while remaning formal. The usual informal procedure in the formalisation of programming languages consists in  identify terms up to $\alpha$-conversion. However, this is not simply carried out when functions are defined by recursion and properties proven by induction over abstract syntax. The problem has to do with the fact that the consideration of the $\alpha$-equivalence classes is in general actually conducted through the use of convenient representatives thereof. These are chosen by the so-called \emph{Barendregt Variable Convention} (BVC~\cite{bar84:lambda}): each term representing its $\alpha$-class is assumed to have bound names all different and different from all names free in the current context. This usual informal practice collides with the primitve induction principles automatically derived from the abstract syntax by nowadays proof assistants, which requiries proofs obligations quantified over arbitrary terms, not over $\alpha$-equivalence classes, or as in the informal practice, over convenient representatives of terms.
+
+There exist formalisations where this problem is avoided, as in the DeBruijn nameless syntax~\cite{deBruijn1972}, or its more up-to-date version \textit{locally nameless} syntax \cite{aydemir08,chargueraud12}, which uses names for the free or global variables and  indices counting up to the binding abstractor for the occurrences of local parameters. But these methods are not without formalisation overheads in the form of several  operations or well-formedness predicates introduced by this representation. As a result, these syntax seriously affects the connection between actual formal procedures and informal parctices.
+
+A continuous line of work during the last decade has been the formalisation of  induction/recursion principles over \alp-equivalence classes of lambda terms, trying to capture the BVC convention. 
+
+In one of the first works in this line, Gordon~\cite{gordon:mechanisation:1993} proposes the induction principle shown in figure~\ref{fig:alphainduction}. This principle allows to conveniently choose the abstraction binder $a$ not in a predefined finite set of variables $X$\ in the abstraction case of an inductive proof over terms.
+
+\begin{figure}[h]
+\[ 
+  \begin{array}{lc}
+    \forall a, P(a) & \wedge\\
+    \forall M\ N,  P(M) \wedge P(N)  \Rightarrow P (M N) & \wedge \\    
+    \forall M\ a,\  a \not\in X, P(M)   \Rightarrow P (\lam a. M) \\    
+    \hline
+    \forall M, P(M)\\
+  \end{array}
+\]
+  \caption{Alpha induction principle}
+  \label{fig:alphainduction}
+\end{figure}
+
+Although in this principle variables appear in binder positions, 
+Gordon uses a \emph{locally nameless} syntax in his development, managing to hide  De Bruijn notation behind some succinct set of lemmas. 
+The main property of this syntax is that alpha convertible terms are syntactically equal.
+As a consequence of this, in the abstraction case, proposition $P$ can be proved for any representative of the equivalence class.
+The use of indices for bound variables introduces invalid terms, and a well-formedness predicate is needed to exclude ill terms from the formalisation. 
+Besides, every function introduced must be proved to be closed under well-formed terms, and well-formed hypotheses must be added to all proofs and relations. 
+On the other hand, the main advantage of this mixed strategy is that theorems can be expressed in a conventional form, without showing the De Bruijn encoding, and in spite of this, the renaming of bound variables for fresh ones is still supported in proofs, because syntactical equality is up to alpha conversion. 
+Anyway, when renaming has to be done to pick another representative of an alpha equivalence class, the classical primitive induction hypothesis does not have any information about the new renamed sub-term, becoming necessary in general to do induction over the length of terms. 
+To overcome this overhead, Gordon introduces the presented alpha induction principle for decidable predicates, which, as expected, is proved by induction on the length of De Bruijn's terms, and it is used when renaming is neccesary.
+%As Gordon point out, name-carrying syntax up to literal equality would be needed to represent language definitions, such as that of standard ML, for instance, where syntax is not identified up to alpha conversion. Although De Bruijn notation has been used to implement several theorem provers, where syntax is internally represented in De Bruijn notation, and for human interacting, a map is given to a more human readable name-carrying syntax, this is different to use this internal notation also at a logic level. In spite of this, 
+%Gordon manages to hide  De Bruijn notation behind some succinct set of lemmas, and when renaming is neccesary, the introduced induction principle hides the inductions on the length of terms. 
+As an example of this methodology, some substitution lemmas from Hindley and Seldin's book~\cite{DBLP:books/cu/HindleyS86} are directly derived using the BVC induction principle, without using theorems about the underlying De Bruijn representation, neither exposing the internal renaming done to select fresh variables.
+
+In~\cite{DBLP:conf/tphol/GordonM96}, they continue working in this formalisation, and present a way to define functions over lambda terms without any overhead. 
+They do so by introducing an iteration principle over lambda terms. 
+While the previous approach was developed in a \emph{first-order} encoding --in the sense that the variable-binding operations of the embedded syntax is distinct form the meta variable-binding-- this work introduces a kind of \emph{second-order} approach, where a typical abstraction expression $Lam\ x\ u$\ can be obtained from a meta-level abstraction expression $\lambda y . u [x {:=} y]$. For this, they use a function $abs:(variables\,\rightarrow\,terms)\,\rightarrow\,terms$, that is, any meta-level function from variables to terms represents a lambda abstraction in the embedded language. 
+%In their iteration principle, to define the abstraction case $Lam\ x\ u$\ of a function $f$, the value of $f(Lam\ x\ u)$\ can be determined using the meta-abstraction $\lambda y . f(u [ x {:=}  y ])$, not the classic primitive call $f(u)$. If it was the latter, that will allow us to distinguish alpha equivalente terms in the definition of a function, so theirs iteration principle defines well behaved functions in the sense alpha equivalent terms should return equal results. 
+The key of their development is a proof of the existence of a theoretical model for the $abs$\ function, but they do not give explicitely a computable one. 
+%We do not know in deep the Isabelle/HOL proof assistant capabilities, and 
+The paper does not give much more insight about the codification of $abs$\ in their formalisation. 
+So this requirement is not easy to evaluate, and neither is to deduce how feasible it is to transfer it to a Constructive Type Theory environment. 
+
+Gabbay-Pitts~\cite{GP02:newapproach} introduce a general theory, called \emph{nominal approach}, to deal with issues of bound names and alpha equivalence classes in any abstract syntax. 
+They consider constructions and properties that are invariant with respect to permutation of names, and give principles of recursion/induction over the alpha equivalence classes defined by the abstract syntax with bindings. 
+At the base of their theory is the notion of \emph{finite supported} mathematical objects, which gives a general way of expressing the fact that atoms are fresh for mathematical objects, in terms of name-permutations. 
+This notion allows them to extend the concept of \emph{fresh names} from finite objects (as abstract syntax trees) to infinite ones, as infinite sets and functions.
+
+Continuing Gordon and Melham's work, Norrish~\cite{Norrish04recursivefunction} introduces a method to define functions in a much more familiar way, approximating it to the classic principles of primitive recursion. 
+For this, he uses some ideas of Gabbay-Pitts nominal approach, introducing the swapping of names operation as a basics for syntax with binders. 
+The swapping operation has nicer properties than the one of renaming as it defines an injection over terms. 
+The introduced iteration principle comes with proof obligations for each auxiliary function used to instantiate its cases. 
+One has to prove that these auxiliary functions are finitely supported, that is, that they do not create too many fresh variables, and that they behave well through the swapping operation (that is, for any auxiliary function $f$, term $M$ and variables $x , y$, $swap(x,y,f(M)) \equiv f(swap(x,y,M)$).
+
+Urban and Tasson~\cite{urban05} use more deeply the Gabbay-Pitts theory to construct an induction principle based on the one introduced by Gordon,  introducing the concept of finite support of nominal sets to state the freshness conditions. 
+They also abandon the De Bruijn notation, as in~\cite{DBLP:conf/tphol/GordonM96}, losing syntactical equality of alpha compatible terms, and need to introduce an alpha conversion relation. 
+They define the quotient set over this relation using a weak HOAS~\cite{DespeyrouxFH95}. 
+Besides, they have to define the substitution operation because weak HOAS does not use meta-level substitution.
+Anyway, they have an alpha induction principle for ``free'' over the defined quotient set of terms. 
+They prove the composition lemma for substitutions % of~\cite{DBLP:books/cu/HindleyS86}) 
+as an example of use of their induction principle. 
+
+As in the previous works, we use lambda calculus as a minimal programming language in which we can validate formal reasoning techniques over abstract syntax trees with name bindings. 
+In our previous work~\cite{CopelloTSBF16}, we follow Gordon's ideas, but using a named first-order syntax.  
+We presented  an alpha induction principle, equivalent to the  one defined by Gordon. 
+Our principle enables us to carry out the proof of the lambda-abstraction case by choosing a bound name different from the names in a given list of names, emulating the BVC convention. But, as we do not work over a quotient sets, neither we have syntactical equality of alpha convertible terms, our induction principle requires the property being proved  to be \emph{\alp-compatible}, that is, it must be preserved by the \alp-conversion relation. 
+
+From our induction principle we also directly derive an \emph{alpha iteration} principle. 
+This principle does not have any side-condition properties to be verified, and the result of the iteration is what we call \emph{strong alpha compatible}, that is, the result of applying these principle to alpha convertible terms is syntactically equal. 
+This issue becomes an important one because our approach is computable instead of being a logic framework as~\cite{urban05}.  ??
+
+The present work complements and re-validates our previous work, scaling it up to the Church-Rosser and Subject Reduction theorems. 
+The main novelity of this work is the realisation that the alpha induction principle, commonly proposed in the literature to capture the BVC convention fails in its objective when it is used to prove the Church-Rosser theorem, specifically in the proof that the $\beta$-reduction relation is preserved by the substitution operation. 
+This happens because when a $\beta$-contraction is applied, we have to apply the substitution operation to a contractum $(\lam y . Q) P$\ but in this case we are in the application case of the induction, so the alpha induction principle gives no freshness information about the variable $y$.
+
+We present a novel principle which succesfully addresses this issue. 
+This is the first detailed publication of a formalistation of the Church-Rosser and Subject Reduction theorems based upon name swapping as in nominal abstract syntax, formally reasembling the BVC convention in the formalisation by the use of an alpha induction principle.
+
+Specifically, concerning $\beta$-reduction, we prove three so-called \emph{substitution lemmas} showing that substitution is compatible with $\alpha$-conversion, parallel $\beta$-reduction, and typing in the system of simple type assignment (a.k.a. simply typed Lambda calculus \`a la Curry).
+
+
+All the definitions and proofs have been fully formalised in Constructive Type Theory~\cite{mlof} and machine-checked employing the system Agda~\cite{agda}. The corresponding code is public available at:
+
+ \href{github}{https://github.com/ernius/formalmetatheory-nominal}. 
+
+In the subsequent text we give the proofs in English with a considerable level of detail so that they serve for clarifying their formalisation. 
+\\
+
+The structure of the paper is as follows: in section 2 we begin by introducing the syntax of the lambda calculus, swapping operation, basic relation, and substitution properties. Section 3 introduces two new alpha induction principles. In Section 4 we introduce the notion of $\beta$-reduction and prove the Church-Rosser theorem by using the standard method due to Tait and Martin-L\"of which involves the formulation and study of the parallel $\beta$-reduction~\cite{bar:84, takahashi}. The overall conclusions are exposed in section 5.
+
+% Explain that ther exists no previous published formalisation of Church-Rosser applying nominal techniques !!!!, some work claim to prove it but no one present this results. Formalisation in Agda !!
+
+\section{Preliminaries}
+In this section we will address some results form our previous work in~\cite{CopelloTSBF16} that are necessary for a proper comprehension of the material exposed in present work.
+
+\subsection{First Order Nominal Syntax} 
+
+We define the set terms as usual. The variables belong to a denumerable set of names.
+
+ \[ M,N ::= x \mid M N \mid \lam x.M \]
+
+We can constructively define the \emph{fresh} relation certifiying a variable (name) does not occur free in a term.
+\[
+\begin{minipage}{0.15\linewidth}
+\AxiomC{$b \neq a$}  \UnaryInfC{$a \# b$} \DisplayProof
+\end{minipage} \ \ \
+\begin{minipage}{0.35\linewidth}
+\AxiomC{$a \# M$} 
+\AxiomC{$a \# N$}
+\BinaryInfC{$a \# M N$} \DisplayProof
+\end{minipage} \  \
+\begin{minipage}{0.2\linewidth}
+\AxiomC{$a \# M$} 
+\UnaryInfC{$a \# \lam b . M$} \DisplayProof
+\end{minipage} \ \
+\begin{minipage}{0.2\linewidth}
+\AxiomC{$a \# \lam a . M $} \DisplayProof
+\end{minipage}
+\]
+
+To reproduce the BVC convention in the alpha induction principle we will present in next section, we need to define when a variable does not occur in a bound position in a term, for this purpose we present the next relation. Its syntax directed scheme will became very usefull in the proof of the presented induction principle.
+
+\[
+\begin{minipage}{0.4\linewidth}
+   \LeftLabel{\ninb v} \AxiomC{$x \ninb y$} \DisplayProof
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+  \AxiomC{$x \ninb M$} 
+  \AxiomC{$x \ninb N$}
+ % \LeftLabel{(\ninb a)}
+  \BinaryInfC{$x \ninb M N$} \DisplayProof
+\end{minipage}
+\]
+\[
+\begin{minipage}{0.75\linewidth}
+\center
+  \AxiomC{$x \neq y$}
+  \AxiomC{$x \ninb M$}
+%  \LeftLabel{(\ninb \lam)}
+  \BinaryInfC{$x  \ninb  \lambda y M$} \DisplayProof
+\end{minipage}
+\]
+
+Next comes the operation of \emph{swapping} of names. A finite sequence (composition) of name swaps constitutes a (finite) name \emph{permutation} which is the renaming mechanism to be used on terms. The action of  swap is first defined on names themselves:
+
+\[ (a\ b)\ c\ = \left\{
+  \begin{array}{ll}
+    b & $if$\ \ a = b \\
+    a & $if$\ \ b = c \\
+    c & $if$\ \ a \neq b \wedge b \neq c \\ 
+  \end{array} \right.
+\]
+
+The swapping operation is directly extended to terms by swapping all names occuring in a term, including abstraction positions. The \emph{permutation} operation is just the sequential application of a list of swaps, usually denoted as $\pi$, and is denoted by prefixing any term $M$ with a list of swaps, as in $\pi M$.
+
+In figure~\ref{fig:alpha} we introduce a syntax-directed definition of $\alpha$-conversion (\alpsym) based on the swapping operation. 
+This definition departs from classic ones only in the abstraction case: 
+for proving that two abstractions are $\alpha$-equivalent we should be able to prove that the respective bodies are $\alpha$-equivalent when we rename the bound names to any name not free in both abstractions. 
+The freshness condition on the new name is generalised to ``any name not in a given list''.%, yielding an equivalent relation. 
+This condition is harder to prove, but more convenient to use when we assume \alpsym\ to hold, which is more often the case in proofs. 
+In our previous work we prove that this is an equivalence relation, preserved by the swapping operation, what it is usually called in nominal literature as \emph{equivariant}.
+
+\begin{figure}[h]
+\begin{minipage}{0.4\linewidth}
+\AxiomC{$$} \LeftLabel{(\alpsym v)} \UnaryInfC{$x \alpsym x$} \DisplayProof
+\end{minipage}\
+\begin{minipage}{0.4\linewidth}
+\AxiomC{$M \alpsym M'$} 
+\AxiomC{$N \alpsym N'$}
+\LeftLabel{(\alpsym a)}
+\BinaryInfC{$M N \alpsym M' N'$} \DisplayProof
+\end{minipage}
+
+\center
+\AxiomC{$\exists xs, \forall z \not\in xs, (x\ z) M \alpsym (y\ z) N$} 
+\LeftLabel{(\alpsym \lam)}
+\UnaryInfC{$\lam x . M  \alpsym  \lam y . N$} \DisplayProof
+
+\caption{Alpha equivalence relation}
+\label{fig:alpha}
+\end{figure}
+
+
+
+% \subsection{Alpha Induction and Iteration Principles} 
+% The following alpha induction principle for terms with permutations is easily derived from our permutation principle presented in~\cite{CopelloTSBF16}:
+
+% From this, we define an iteration principle $\Lambda${\sl It} over terms which always produces strongly \alp-compatible functions:
+% \[poner el tipo\]
+% For the abstraction case, this principle also allows us to give a list of variables ($xs$) from where the abstractions variables are not to be chosen. This principle is derived from the induction one in a direct manner, just using a trivial constant predicate equivalent to the type $A$. 
+
+%  A very important point in this implementation is that, given the list of names to be avoided, we can and do choose the bounded variable deterministically for each class of $\alpha$-equivalent terms. 
+% Indeed, if we determine this variable as e.g. the first name out of the given list that is fresh in the originally given term, then the result will be one and the same for every term of each $\alpha$-class, since $\alpha$-equivalent terms have the same free variables. In next session we use this property to prove ``for free'' the substitution lemma~\ref{substlemma1}.
+% Hence the representative of each $\alpha$-class chosen by this method will be fixed for each list of names to be avoided, which constitutes a basis for using the method for defining \emph{functions} on the $\alpha$-classes. This will work by associating to (each term of) the class the result of the corresponding computation on the canonically chosen representative.
+
+\subsection{Substitution Operation} 
+
+In~\cite{CopelloTSBF16} we derive induction and iteration principles with stronger hypotheses for the lambda abstraction case, namely  enabling us to choose a bound name  different from the names in a given list $\mathit{xs}$, as in figure~\ref{fig:alphainduction}. One  important point in this implementation is that functions defined using the iteration principle yield the same result for  $\alpha$-equivalent terms. We call these functions \emph{strongly} \alp-compatible.
+
+The susbstitution operation is defined using  the derived  iteration principle, and as a direct consequence of  being defined with our iterator the following lemma is automatically derived.
+
+% \[ 
+% \begin{array}{l}
+% M [ x := N ] = \Lambda It\ (var\ x\ N)\ app\ ([x] \conc fv(N), abs)\ M \\
+% \text{where:} \\
+% \ var\ x\ N\ y= \left\{
+%   \begin{array}{ll}
+%     N & x = y \\
+%     y & x \neq y
+%   \end{array}
+% \right. \\
+% \ app\ M\ N = M N \\
+% \ abs\ x\ M = \lam x.M \\
+% \end{array}
+% \]
+
+\begin{lemma}[Substitution  is a strongly $\alpha$-compatible operation]
+   \label{substlemma1}
+  \[ M \alpsym M' \Rightarrow M [x{:=} N] \equiv M' [x{:=}N] \]
+\end{lemma}
+
+The follwing results are succesfully proved using our induction principles. In general, works on alpha induction principles reach until the next substitution composition lemma.
+
+\begin{lemma}[Substitution  preserves $\alpha$-conversion]
+   \label{substlemma2}
+  \[ N \alpsym N' \Rightarrow M [x {:=} N] \alpsym M [x {:=} N'] \]
+\end{lemma}
+
+\begin{lemma}[Substitution under permutation]
+   \label{substPerm}
+  \[ \pi\ (M [x {:=} N])  \alpsym (\pi\ M) [ \pi\ x  {:=}  \pi\ N ] \]
+\end{lemma}
+
+
+
+Next lemma shows that substitution commutes with abstraction  without any renaming in a na\"\i ve way.
+This is because the freshness hypothesis grants a sufficient fresh binder.
+
+\begin{lemma}%[Naive substitution]
+\hfill \\
+  \label{naivesubst}
+  If $x \neq y \wedge x \# L$, then:
+    \[   (\lam x . M) [y {:=} N]  \alpsym \lam x .(M [y {:=} N])  \]
+\end{lemma}
+
+
+\begin{lemma}[Substitution composition]
+\hfill \\
+  \label{substcomp}
+  If $x \neq y \wedge x\# L$, then:
+    \[   M [x {:=} N] [y {:=} P] \alpsym M [y {:=} P] [x {:=} N [y {:=} P]]  \]
+\end{lemma}
+
+From now on the presented material is original. 
+
+
+\begin{lemma}[Swapping substitution variable]
+\label{pequiv}
+\[ x \# M  \Rightarrow ((x\ y) M) [x{:=}N] \alpsym  M [y{:=} N] \]
+\end{lemma}
+
+\begin{proof} 
+We use the classic alpha induction principle presented in figure~\ref{fig:alphainduction}.
+
+First for  arbitrary names $x,y$\  and term $N$\ we define the following predicate over terms:
+\[ Q(M) \equiv x \# M \Rightarrow  (x\ y) M [x{:=}N] \alpsym  M [y{:=} N] \]
+
+We prove $Q$\ is \alp-compatible, that is, if $M{\alpsym}P$\ and $Q(M)$, then $Q(P)$.
+ We can prove $x \# P$\ as freshness is preserved through \alpsym, and then we can prove $Q(P)$ as follows:
+\[
+\begin{array}{ccl}
+         (( x\ y) P) [ x {:=} N ] &\equiv& \{\text{subst. lemma~\ref{substlemma1}} \}\\
+         ((x\ y) M) [ x {:=}  N ] &\alpsym& \{ Q(M) \ \text{and } x \# M \}\\
+         M [ y {:=} N ] &\equiv& \{\text{subst. lemma~\ref{substlemma1}}\} \\ 
+         P [ y {:=} N ]
+\end{array}
+\]
+Next, we prove the interesting abstraction case of the induction.
+
+We have $x \# \lam z. M$\ and we can choose $z \not\in \{x,y\} \cup fv(N)$.
+
+We need to prove $((x\ y) (\lam z M )) [x{:=} N] \alpsym (\lam z M) [ y {:=}  N]$. As $x \# \lam z. M$\ and $z \not= x$ we get $x \# M$, then we can reason as follows: 
+
+
+    \[ \begin{array}{ccl}
+      ((x\ y) (\lam z. M)) [x {:=} N] &=& \{{\text{def. of swap}}  \}\\
+      (\lam ((x\ y) z). ((x\ y) M)) [x {:=} N] &=& \{ z \not\in \{x,y\}  \}\\
+      (\lam z. ((x\ y) M)) [x {:=} N] &\alpsym& \{ \text{lemma~\ref{naivesubst}} \} \\
+      \lam z. (((x\ y) M) [x {:=} N])  &\alpsym& \{\text{i.h.}\}\\
+      \lam z. (M [y {:=} N])  &\alpsym& \{ \text{lemma~\ref{naivesubst}} \} \\
+      (\lam z. M)  [y {:=} N]
+    \end{array} \]
+    
+
+\end{proof}
+
+The previous proof exemplifies the common informal practice in pen-and-paper proofs, which basically uses BVC convention to assume enough fresh binders from some defined context, allowing us to apply the substitution operation in a na\"\i ve way without any variable capture problem. 
+
+Next result is a direct consequence of previous lemma.
+
+\begin{coro}
+\label{pequivcoro}
+\[ x \# \lam y . M  \Rightarrow ((x\ y) M) [x{:=}N] \alpsym  M [y {:=} N] \]  
+\end{coro}
+
+% Este se usa en el application case de que la paralela preserva freshness
+% The following lemma is also proved using alpha induction principle in a similar manner to last proof.
+
+% \begin{lemma}[Substitution preserves freshness (no capture lemma)]
+% \label{nocapture}
+% \[ x \# \lam y M   \wedge x \# N \Rightarrow x \# M [ y := N] \]
+% \end{lemma}
+
+\section{Alpha Induction Principles}
+
+In this section we introduce two new alpha induction principles. The first one in figure~\ref{fig:alphapermind} is a  version of the previously presented one, where in the hypothesis of the abstraction case a term permutation is allowed. 
+%This principle is derived in a similar way to previous one, but in this case we allow some extra explicit permutation in addition to internal one automatically done to exclude not enough fresh binders. 
+This principle is useful to do induction over terms and to deal with relations which make use of the permutation operation in their premises. 
+We will show an example of this situation in  lemma~\ref{pfresh} of next section.
+
+\begin{figure}[h]
+\[ 
+  \begin{array}{lc}
+    P\ \alpha\text{-compatible} & \wedge \\
+    \forall a, P(a) & \wedge\\
+    \forall M, N,  P(M) \wedge P(N)  \Rightarrow P (M N) & \wedge \\    
+     \forall M, a,  \exists xs, a \not \in xs \wedge \forall \pi, P(\pi\ M)  \Rightarrow P (\lam a . M)  &\\    
+    \hline
+    \forall M, P(M)\\
+  \end{array}
+\]
+  \caption{Alpha permutation induction principle}
+  \label{fig:alphapermind}
+\end{figure}
+
+As in the BVC convention, the second induction principle in figure~\ref{fig:newalphaind} enables us to assume bound variables fresh enough from a given finite list of names $xs$ through the entire induction, and not only for the abstraction case.
+
+\begin{figure}[h]
+\[ 
+  \begin{array}{l@{\hspace{0.2em}}c}
+    P\ \alpha\text{-compatible} & \wedge \\
+    \forall a, P(a) & \wedge\\
+    \forall M\,N, (\forall b \in xs, b \ninb M N) \wedge P(M) \wedge P(N) \Rightarrow P (M N) & \wedge \\    
+    \forall M\ a, (\forall b \in xs, b \ninb \lam a . M) \wedge P(M) \Rightarrow P (\lam a . M) \\
+    \hline
+    \forall M, P(M)\\
+  \end{array}
+\]
+  \caption{New alpha induction principle}
+  \label{fig:newalphaind}
+\end{figure}
+
+
+To derive this principle we introduce the {\sl fresh} function that, given a list of names and a term, returns a term alpha-compatible with the original one, and satsifying that all elements of the given list do not ocurr bound in it. To prove $P(M)$\ for any term $M$, our alpha induction principle  works as follows: given a list of names $xs$, an alpha compatible predicate $P$, and the following proofs:
+%
+\begin{equation}
+  \label{eq:hypothesis}
+  \begin{array}{l}
+    \forall a, P(a) \\
+    \forall M\,N, (\forall b \in xs, b \ninb M N) \wedge P(M) \wedge P(N) \Rightarrow P (M N) \\
+    \forall M\ a, (\forall b \in xs, b \ninb \lam a . M) \wedge P(M) \Rightarrow P (\lam a . M) \\
+  \end{array}
+\end{equation}
+
+\noindent it proves by primitive induction on terms the following predicate $Q$:
+\begin{equation}
+  \label{eq:prop}
+ Q(M) = \left( (\forall x,x  \in xs \Rightarrow x \ninb M) \Rightarrow P(M)  \right)
+\end{equation}
+%
+Then, it uses this predicate $Q$\ on the term {\sl fresh}$(xs,M)$, which has no bound variables in $xs$\ to obtain $P(${\sl fresh}$(xs,M))$. Finally, as $P$\ is alpha-compatible and {\sl fresh}$(xs,M) \alpsym M$\ we can get that $P(M)$\ holds for any $M$.\\
+
+Next, we prove the  predicate $Q$ by primitive induction on $M$.
+
+\begin{proof} \  
+  \begin{itemize}
+  \item var. case: Direct.
+  \item app. case: We need to prove $Q(M N)$\ for any $M,N$, such that $Q(M)$ and $Q(N)$ hold. 
+That is, we have to prove $P(M N)$, given that any variable $x$  in $xs$ satisfies that $x \ninb M N$. 
+Then, by the syntax directed definition of $\ninb$, we directly have  that $x \ninb M$\ and $x \ninb N$, and are able to use the induction hypothesis on $M$\ and $N$\ to get $P(M)$\ and $P(N)$. 
+So, we have all the premises in the second assertion in~(\ref{eq:hypothesis}), and its conclusion $P(M N)$\ is valid.
+  \item abs. case: We must prove $Q(\lam y . M)$, that is, we need to prove $P(\lam y . M)$ knowing that every variable $x$ in $xs$ satisfiies that $x \ninb \lam y. M$.
+By $\ninb$\ definition, we have that $x \not= y$\ and $x \ninb M$. 
+We can apply the last result to the inductive hypothesis $Q(M)$\ to get $P(M)$. Finally, we get the desired result using the third assertion in~(\ref{eq:hypothesis}).
+  \end{itemize}
+\end{proof}
+
+\section{Parallel Beta-reduction}
+\label{sec:parallel}
+
+$\beta$-reduction can be defined as the reflexive, transitive and compatible with the syntactic constructors, clousure of the $\beta$-contraction $(\lam x . M) N \betar M [ x {:=} N ]$. The classic proof of confluence of $\beta$-reduction by Tait and Martin-L\"of rests upon the property of confluence of the so-called parallel reduction, which can apply several $\beta$-contractions in ``parallel'' in one single step.
+We present the definition in figure~\ref{fig:parallel}. 
+
+\begin{figure}[h]
+\center
+\begin{minipage}{0.3\linewidth}
+\AxiomC{$$}   \LeftLabel{(\p v)} \UnaryInfC{$x \p x$} \DisplayProof
+\end{minipage}
+\begin{minipage}{0.5\linewidth}
+\AxiomC{$M \p M'$} 
+\AxiomC{$N \p N'$}
+\LeftLabel{(\p a)}
+\BinaryInfC{$M N \p M' N'$} \DisplayProof
+\end{minipage}
+\vspace{2ex}
+
+\AxiomC{$\exists xs, \forall z \not\in xs, (x\ z) M \p (y\ z) N$} 
+\LeftLabel{(\p \lam)}
+\UnaryInfC{$\lam x . M  \p  \lam y . N$} \DisplayProof
+\vspace{2ex}
+
+\AxiomC{$\lam x . M \p \lam y . P'\ \ \ \ N \p  P''\ \ \ \ P' [y{:=} P''] \alpsym P$}
+\LeftLabel{(\p $\beta$)}
+\UnaryInfC{$(\lam x. M) N  \p P$}
+\DisplayProof
+
+  \caption{Parallel reduction relation}
+  \label{fig:parallel}
+\end{figure}
+
+The first three rules correspond to the ones of the \alp-conversion relation presented in figure~\ref{fig:alpha}, and evidence we are defining a relation over the alpha equivalence classes of terms. 
+The $\beta$-rule needs an \alp-conversion in its premises because our substitution operation changes the bound names in terms,  as a consequence of being defined with our alpha iteration principle. 
+
+Next we prove the parallel reduction relation is equivariant. This is a basic property in nominal settings, establishing that names are intercangeable.
+
+\begin{lemma}[Parallel Reduction is equivariant]
+\label{pequiv}
+\[ M \p N \Rightarrow \pi M \p \pi N \]
+\end{lemma}
+
+\begin{proof}
+By induction on the parallel reduction. The variable and application cases are direct. 
+
+In the abstraction case,  we have to prove $\lam (\pi\ x) . (\pi\ M)  \p  \lam (\pi\ y) . (\pi\ N)$\ with $\lambda x . M  \p  \lambda y . N$ as hypothesis.
+The only rule with an abstraction as an outermost constructor in its conclusions is ($\p\!\!\lam$), so its premise should hold for any $z$\ not in some list of variables $xs$. We can also exclude the domain of the permutation $\pi$\ from the range of variable $z$, and reason as follows: 
+%
+\[
+\begin{array}{l@{\hspace{0.2em}}l}
+  (x\ z) M \p (y\ z) N & \Rightarrow  \{\text{i.h.} \} \\
+  \pi ((x\ z) M) \p \pi ((y\ z) N) & \Rightarrow \{\text{def. of perm.} \}\\
+  ((\pi\,x)\ (\pi\,z)) (\pi\,M) {\p} ((\pi\,y)\ (\pi\,z)) (\pi\,N) & \Rightarrow \{z {\not\in} dom(\pi)\}\\
+  ((\pi\ x)\ z) (\pi\ M) \p ((\pi\ y)\ z) (\pi\ N) & \Rightarrow \{(\p\lam) \text{rule}\}\\
+  \lam (\pi\ x) . (\pi\ M)  \p  \lam (\pi\ y) . (\pi\ N) & \\
+\end{array}
+\]
+
+\noindent In the ($\p\!\!\beta$) case we must prove:
+%
+\[(\lambda (\pi\ x). (\pi\ M)) (\pi\ N)  \p \pi\ P \]
+%
+The hypothesis are: $\lambda x. M \p \lambda y. P'$, $N \p  P''$\ and $P \alpsym P' [y {:=} P'']$. By direct applicaton of the induction hypothesis to the first two premises we directly get:
+%
+\begin{equation}
+  \label{eq:2}
+  \begin{split}
+  \lambda (\pi\ x). (\pi\ M) \p \lambda (\pi\ y). (\pi\ P') \\
+  \text{ and } \pi\ N \p  \pi\ P''
+  \end{split}
+\end{equation}
+
+Then, using the third premise we can reason as follows:
+\[
+\begin{array}{ll}
+  P \alpsym P' [y {:=} P''] & \Rightarrow   \{\alpsym\text{equivariant}\}\\
+  \pi\ P \alpsym \pi\ (P' [y{:=} P'']) & \Rightarrow  \{\text{lemma~\ref{substPerm}}\} \\
+  \pi\ P \alpsym (\pi\ P') [ (\pi\ y) {:=} (\pi\ P'')] & \Rightarrow \{\alpsym\text{symmetric} \}\\
+  (\pi\ P') [ (\pi\ y) {:=} (\pi\ P'')] \alpsym \pi\ P &
+\end{array}
+\]
+
+
+We obtain the desired result using the (\p$\beta$) rule with~(\ref{eq:2}) and the last result as premises.
+\end{proof}
+
+The following lemmas state that our parallel reduction relation is preserved by \alp-equivalence, both results are proved by easy inductions on the parallel reduction relation.
+
+\begin{lemma}[\p\ is right \alp-equivalent]
+\label{prightalpha}
+\[ M \p N \wedge N \alpsym P \Rightarrow M \p P \]
+\end{lemma}
+
+\begin{lemma}[\p\  is left \alp-equivalent]
+\label{pleftalpha}
+\[ M \alpsym N \wedge N \p P \Rightarrow M \p P \]
+\end{lemma}
+
+As the parallel reduction relation basically applies $\beta$-contractions, no free variable should be introduced at any relation step, therefore freshness is preserved. 
+
+\begin{lemma}[\p\   preserves freshness]
+\label{pfresh}
+\[ x \# M \wedge M \p N  \Rightarrow x \# N \]
+\end{lemma}
+
+\begin{proof}
+  We use the alpha induction with permutations principle (fig.~\ref{fig:alphapermind}) on the term $M$. In order to apply this principle we must prove, for any variable $x$, that the following predicate is \alp-compatible.
+
+\[ P(M) = \forall N, x \# M \wedge M \p N \Rightarrow x \# N \]
+
+As the freshness and parallel reduction relations are \alp-compatible, the $P$ predicate is also \alp-compatible. 
+Now we do  induction on  $M$, only showing the interesting abstraction case. 
+We have that $x \# \lam y . M \wedge \lam y . M \p \lam z . N$\ and we must prove $x \# \lam z . N$.  
+The parallel reduction hypothesis, by its syntax directed definition, must be the result of an application of the (\p\lam)\ rule, so we get its premise $\forall w, w \not\in xs, (y\ w) M \p (z\ w) N$. 
+The alpha induction principle allow us to exclude some variables for the abstraction case, so we can also assume $ x\neq y$. 
+Using this inequality and the hypothesis $x \# \lam y . M$\ we get by definition that $x\# M$ holds. 
+Now let $u$\ be a variable such that $u \# N, u \not\in xs$ and $u \neq x$, then $x \# (y\ u) M$\ because $x \neq y,u$ and $x \# M$. We can apply the premise of the (\p\lam)\ rule with $u$, as $u \not\in xs$, and we get $(y\ u) M \p (z\ u) N$. We use the induction hypothesis on $M$ and permutation $(y\ u)$ with the previous two results to get $x\ \# (z\ u) N$. We also have that $\lam u .(z\ u)N \alpsym \lam z. N$\ because $u\ \# N$, then as \alpsym\ preserves freshness, we get the desired result.
+\end{proof}
+
+We have proved that \p\ is well beahaved with respect to \alpsym\  and  permutation.
+We now introduce next lemmas to prove that our relation \p\ implies the classical definition of parallel reduction, of, for instance~\cite{DBLP:books/cu/HindleyS86}, which we note \pp\ in the next lines.\\
+
+
+\begin{minipage}{0.35\linewidth}
+\AxiomC{$$}   %\LeftLabel{\p v} 
+\UnaryInfC{$x \pp x$} \DisplayProof
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+\AxiomC{$M \pp M'$} 
+\AxiomC{$N \pp N'$}
+%\LeftLabel{\p a}
+\BinaryInfC{$M N \pp M' N'$} \DisplayProof
+\end{minipage}\\ \\
+
+\begin{minipage}{0.9\linewidth}
+\center
+\AxiomC{$M \pp M'$} 
+%\LeftLabel{\p \lam}
+\UnaryInfC{$\lam x . M  \pp  \lam x . M'$} \DisplayProof
+\end{minipage}\\ \\
+
+\begin{minipage}{0.9\linewidth}
+\center
+\AxiomC{$\lam x . M \pp \lam x . M'$}
+\AxiomC{$N \pp  N'$}
+%\LeftLabel{$\p \beta$}
+\BinaryInfC{$(\lam x. M) N  \pp M' [ x {:=} N' ]$}
+\DisplayProof
+\end{minipage}\\
+
+
+\begin{lemma}[\p\   \lam-inversion]
+\label{lamelim}
+\begin{equation*} 
+  \begin{split}
+\lam x. M \p M' \Rightarrow 
+\exists M'',  M \p M'' \ \wedge\ M' \alpsym \lam x. M'' \ \wedge\\ \lam x. M \p \lam x.M'' 
+\end{split}
+\end{equation*}
+\end{lemma}
+
+\begin{proof}
+By definition of \p\, it must be the case that $\lam x. M \p M'$\ is a result of an application of ($\p\lam$) rule, then we have that $M'$\ is in an abstraction $\lam y . N$, and there exists a list of variables $xs$\ such that $\forall z \not\in xs, (x\ z)M \p (y\ z) N$. 
+We take $M'' = (x\ y) N$, and prove that $M''$ satisfies the three propeties of the thesis. 
+  \begin{itemize}
+  \item Let $z$\ be a variable  such that $z \not\in xs$\ and $z \#\lam y. M'$. 
+By definition of $\#$, $x \# \lam x M$, and then, as parallel reduction preserves freshness, $x \# \lam y . N$ should also holds. So:
+\[    \begin{array}{lcl}
+       (x\ z)M \p (y\ z) N & \Rightarrow &\text{\{\p\ equivariant\}} \\
+     (x\ z)(x\ z)M \p (x\ z)(y\ z) N & \Rightarrow& \text{\{swap idempotent\}} \\
+     M \p (x\ z)(y\ z) N & \Rightarrow & \text{\{(*)\}} \\
+     M \p (x\ y)N
+\end{array} \]
+
+(*) In the last step of the previous deduction, we applied lemma~\ref{prightalpha} with the premise that $(x\ z)(y\ z) N \alpsym (x\ y) N$. This  swapping cancelation property  is proved in our previous work, and requieres $z$\ and $x$\ to be fresh enough, as it is the case in this case.
+    
+  \item To prove $\lam y.N \alpsym \lam x. (x\ y) N$, as $x$\ is fresh in $\lam y . N$, we can swap $y$\ with $x$\ in this term to get the alpha equivalent term $\lam x .(x\ y) N$, by  lemma~\ref{pequiv}.
+
+  \item  We can apply lemma~\ref{prightalpha} with $\lam x . M \p \lam y .N $\ and the \alp-equivalence obtained above to prove $\lam x . M \p \lam y .(x\ y) N $.
+  \end{itemize}
+\end{proof}
+%
+\begin{lemma}[\p\ \  $\beta$-inversion] 
+\label{betaelim}
+\hfill
+
+If $(\lam x M) N \p P$ is obtained by application of the ($\p\beta$) rule in the following way:\\
+
+\AxiomC{$\lam x . M \p \lam y . M'\ \ \ \ N \p  N'\ \ \ \ M' [y {:=} N'] \alpsym P$}
+\LeftLabel{(\p $\beta$)}
+\UnaryInfC{$(\lam x. M) N  \p P$}
+\DisplayProof
+\hfill
+
+then, $\exists M'', \lam x. M \p \lam x M'' \wedge\  M'' [x {:=} N'] \alpsym P$
+\end{lemma}
+
+\begin{proof}
+  We prove $M'' = (y\ x) M'$\ satisfies the thesis. 
+  \begin{itemize}
+  \item $x \# \lam x . M$\ and $\lam x M \p \lam y M'$\ so by lemma~\ref{pfresh} \ $x \# \lam y M'$.
+We can then swap $y$\ with $x$ in last term, and obtain the alpha equivalent term $\lam x . (y\ x) M'$, using lemma~\ref{pequiv}. Then, by lemma~\ref{prightalpha} we get $\lam x . M \p \lam x. (y\ x)M'$.
+
+  \item For the second condition we reason as follows:
+    \[
+    \begin{array}{ll}
+     ((y\ x) M') [ x{:=}N'] & \ = \ \text{\{swap is conmutative\}} \\
+     ((x\ y) M'))[ x {:=} N'] & \alpsym {\text{\{corollary~\ref{pequivcoro}\}}}\\
+     M' [y {:=} N']  & \alpsym {\text{\{hypothesis\}}} \\
+	P &
+    \end{array}
+    \]
+  \end{itemize}
+\end{proof}
+
+\begin{theo}[\p\ substitution lemma]
+\label{psubst}
+\[ M \p M' \wedge N \p N'  \Rightarrow M [ x {:=} N ] \p M' [ x {:=} N' ] \]
+\end{theo}
+
+The parallel substitution theorem~\ref{psubst} is the crux of Church-Rosser theorem, and where the classic alpha induction principles fails in capturing the BVC convention. The problem appears in the beta application case of an induction over term $M$. For example, we need to prove $((\lam y P) Q) [x {:=} N ] \p R [x {:=} N']$, but as we are in the application case, not the abstraction one, the usual alpha induction principle gives no freshness information about $y$\ variable. While the common use of BVC would allow us to choose $y$\ not equal $x$\ and fresh in N to be able to push the substitution inside the abstraction without any variable capture. Besides the following proof also exemplifies the use of previous elimination lemmas. Next, we use our propused alpha induction principle to prove this result.
+
+\begin{proof}
+Given some $N,N'$\ terms such that $N \p N'$ , and $x$\ atom, we define the following predicate over terms:
+
+\[ P(M) \equiv \forall M', M \p M' \Rightarrow M [ x {:=} N ] \p M' [ x {:=} N' ] \]
+
+We must prove that $P$ is \alp-compatible, that is,  $P(M) \wedge M \alpsym N \Rightarrow P(N)$, which is direct substitution operation is strong \alp-compatible and the parallel reduction is \alp-compatible .
+  
+We can then use the alpha induction principle presented in~\ref{fig:newalphaind} to prove $P$\ by induction over term $M$, excluding the $x$\ variable, and the free variables in $N$\ and $N'$, from the binders in $M$ term. 
+
+We prove next the interesting application and abstraction cases. 
+
+\begin{itemize}
+\item app. case: we have to prove the application case of our induction principle: $\forall P\ Q, (\forall b \in \{x \} \cup fv(N) \cup fv(N'), b \ninb P Q) \wedge P(P) \wedge P(Q)  \Rightarrow P (P Q)$. We have two subcases according to what rule is used in the parallel reduction hypothesis in predicate $P$ .
+  \begin{itemize}
+  \item (\p a) rule subcase: We then have that $P \p P'$\ and $Q \p Q'$\ and we have to prove that $(P Q) [x {:=} N ] \p (P' Q') [x {:=} N']$. The proof is a direct application of ($\p a$) rule to the induction hypothesis results.
+  \item (\p$\beta$) rule subcase: Given $(\lam y P) Q \p R$\ we must prove $((\lam y. P) Q) [x {:=} N ] \p R [x {:=} N']$. We use lemma~\ref{betaelim} to get that exists $P''$\ such that $\lam y .P \p \lam y. P'' \wedge P''[y{:=}Q'] \alpsym R$. Next, like when we use the BVC convention, we can asume the binder $y$\ different fromm $x$\ and also fresh in $N$\ and $N'$, allowing us to reason as follows:
+
+\[
+\begin{array}{ll}
+  \lam y. P \p \lam y. P'' & \Rightarrow \{\text{ind. hyp.}\}\\
+  (\lam y. P)[x{:=}N] \p (\lam y. P'')[x{:=}N'] & \Rightarrow \{\text{lemma~\ref{naivesubst}}\}\\
+  \lam y. (P[x{:=}N]) \p \lam y . ( P''[x{:=}N'])
+\end{array}
+\]
+
+By the induction hypothesis we also know:
+
+\[ Q [x {:=} N] \p Q' [x {:=} N'] \]
+
+So if we prove that:
+
+\begin{equation}
+  \label{eq:eq1}
+P'' [x {:=} N'] [y {:=} Q'[x {:=} N']] \alpsym R [x{:=} N']  
+\end{equation}
+
+
+\noindent we will be able to apply the ($\p\beta$) rule and get that $(\lam y (P [x {:=} N])) (Q [x {:=} N]) \p R [x {:=} N']$. Then we can pull out the substitution operation in the left side of this relation, and using the lemma~\ref{pleftalpha} we will get the desired result.
+
+Only remains to prove~(\ref{eq:eq1}) to end the proof. Again, here the classic informal proofs use the BVC convention. We can mimic this common practice as our induction principle gives us a binder $y$\ distinct form $x$ and fresh in $N'$, so we can succesfully apply the substitution composition lemma~\ref{substcomp} in the following steps.
+\[
+\begin{array}{ll}
+  P'' [x {:=} N'] [y {:=} Q'[x {:=} N']] & \alpsym \{\text{lemma~\ref{substcomp}}\}\\
+  P'' [y {:=} Q'] [x {:=} N'] & \equiv \{\text{lemma~\ref{substlemma1}}\}\\
+  R [x {:=} N']
+\end{array}
+\]
+
+  \end{itemize}
+\item abs. case: we must prove $\forall M\ a,\ (\forall b \in \{x \} \cup fv(N) \cup fv(N'), b \ninb \lam a M) \wedge P M   \Rightarrow P (\lam a M) $. We begin appling lemma~\ref{betaelim} to $\lam y P \p Q$\ hypothesis to get that exists $Q'$\ such that:  $P \p Q'$, $\lam y P \p \lam y Q'$\ and $Q \alpsym \lam y Q'$. Then we can end the proof in the following way:
+
+  \[
+    \begin{array}{ll}
+      P \p Q'& \Rightarrow \{\text{ind. hyp.} \} \\
+      P [x {:=} N] \p Q' [x {:=} N'] & \Rightarrow \{\text{\p equiv.} \} \\
+      (x\ y)(P [x {:=} N]) \p (x\ y)(Q' [x {:=} N']) & \Rightarrow \{\text{(\p\lam) rule} \} \\
+      \lam y . P [x {:=} N] \p \lam y . Q' [x {:=} N'] & \Rightarrow \{\text{lemma~\ref{naivesubst}} \} \\
+      (\lam y P) [x {:=} N] \p (\lam y . Q') [x {:=} N'] & \Rightarrow \{\text{lemma~\ref{substlemma1}} \} \\
+      (\lam y P) [x {:=} N] \p Q [x {:=} N'] &
+    \end{array}
+  \]
+  \end{itemize}
+\end{proof}
+
+Finally, we can prove the diamond property of parallel reduction by a simple induction on term.
+
+
+    \begin{lemma}[Diamond property of parallel reduction]
+    \label{pdiamond}
+
+    \[ M \p N \wedge M \p P \Rightarrow \exists Q, N \p Q \wedge P \p  Q  \]
+
+ %  \begin{center}
+
+ %    \begin{tikzpicture}[>=latex]  
+ %   \node (a) at (2,2) {$M$};
+ %   \node (b) at (1,1) {$N$};
+ %   \node (c) at (3,1) {$P$};
+ %   \node[opacity=0.6] (d) at (2,0) {$Q$};
+
+ %   \draw [->] (a) -- (b) ;
+ %   \draw [->] (a) -- (c) ;
+ %   \draw [dashed,->] (b) -- (d) ;
+ %   \draw [dashed,->] (c) -- (d) ;
+ % \end{tikzpicture}
+ %  \end{center}
+  \end{lemma}
+
+  \begin{proof} By induction on term $M$. We show next the more interesting case, the rest are direct or similar to the detailed case.
+
+    \begin{itemize}
+    \item app. case: We do case analysis in both parallel reductions, the interesting subcase is the combination of ($\p a$)\ and ($\p \beta$) rules, so our hypothesis are:\\
+
+
+          \AxiomC{$\lam x M \p N'$} \AxiomC{$M' \p N''$} \LeftLabel{\p a}
+          \BinaryInfC{$(\lam x M) M' \p  N' N''$} \DisplayProof\\ \\
+
+          \AxiomC{$\lam x M \p \lam y P'$} 
+          \AxiomC{$M' \p P''$}
+          \AxiomC{$ P' [y{:=}P''] \alpsym P$}
+          \LeftLabel{\p $\beta$}
+          \TrinaryInfC{$(\lam x M) M' \p P $} \DisplayProof\\
+
+          And we have to prove:  $\exists Q, N' N'' \p Q \wedge P \p Q$. We can now apply the abstraction elimination lemma~\ref{lamelim} to $\lam x M \p N'$, and the beta elimination~\ref{betaelim} to $(\lam x M) M' \p P $\ to get the following results:
+
+          \[
+            \begin{array}{l}
+              \exists N''', M \p N''' \wedge \lam x M \p \lam x N''' \wedge  N' \alpsym \lam x N''' \\
+              \exists P''', \lam x M \p \lam x P''' \wedge P'''[x{:=}P''] \alpsym P
+            \end{array}
+          \]
+
+          As $\lam x M \p \lam x N'''$\ and $\lam x M \p \lam x P'''$\ by inductive hypothesis we get:
+
+          \begin{equation*}
+            \exists Q, \lam x N''' \p Q \wedge \lam x P''' \p Q
+          \end{equation*}
+
+          Next results are results of the direct applcation of the parallel abstraction elimination lemma~\ref{lamelim} to each element of previous conjunctions.
+
+          \[
+            \begin{array}{l}
+              \exists S', N''' \p S' \wedge \lam x N''' \p \lam x S' \wedge  Q \alpsym \lam x S' \\
+              \exists S'', P''' \p S'' \wedge \lam x P''' \p \lam x S'' \wedge  Q \alpsym \lam x S''
+            \end{array}
+          \]
+
+          By symmetry and transitive properties of \alpsym\ we get $\lam x S' \alpsym \lam x S''$\ from what it can be derived that $S'' \alpsym S'$.
+          
+          We can use the remaining inductive hypothesis with $M' \p P'$\ and $M' \p P''$\ and get:
+
+          \begin{equation*}
+            \exists R, P' \p R \wedge P'' \p R
+          \end{equation*}
+
+          Next we prove that $S' [x{:=}R]$ is the confluent term we are looking for, that is, it satifies the following assertions:
+
+          \begin{align}
+            \label{eq:3}
+            N' N'' \p S' [x{:=}R] \\
+            \label{eq:4}
+             P \p S' [x{:=}R]
+          \end{align}
+
+          For~(\ref{eq:3}),  we have that $\lam x . N'' \p \lam x . S' $\ and $N'' \p R$, and by the reflexivity of \alpsym\ relation $S'[x{:=}R] \alpsym S'[x{:=}R]$, we can apply ($\p\beta$) rule to get $(\lam x N''') N'' \p S' [x{:=}R]$, and using $N' \alpsym \lam x N'''$\ we get the desired result.
+
+          Finally for (\ref{eq:4}), we know $P''' \p S''$\ and $S'' \alpsym S'$ then $P''' \p S'$, we can use the preservation of parallel reduction under substitution, crucial lemma~\ref{psubst}, to get $P'''[x{:=}P''] \p S'[x{:=}R]$, which as $P \alpsym P[x{:=}P'']$\ ends the proof.
+    \end{itemize}
+  \end{proof}
+
+
+\begin{lemma}
+If a reduction relation $R$ is confluent, then so is its reflexive and transitive closure $R^*$.
+\end{lemma}
+
+The proof is standard, by a double induction.
+
+\begin{coro}
+$\p^*$ is confluent.
+\end{coro}
+
+If we now write \breds\ for the reflexive and transitive clousure of the beta-reduction union alpha-reduction relations, we have:
+
+\begin{lemma} $ \breds = \p^* $
+\end{lemma}
+
+\noindent from which we finally arrive at:
+
+\begin{theo}[Church-Rosser]
+Beta-reduction union alpha-reduction relation is confluent.
+\end{theo}
+
+
+%\section{Type System}
+
+\section{Conclusion}
+
+We show the classic alpha induction principle fails in emulating BVC in the proof of parallel reduction relation is preserved by substitution operation. For this, we propouse a novel induction principle that sucesfully overcomes this problem, and succesfully proving Church-Rosser theorem.
+
+As we use a first order named syntax 
+
+
+%\appendix
+%\section{Appendix Title}
+
+%This is the text of the appendix, if you need one.
+
+\acks
+
+The first author work was partially supported by a PhD. scholarship granted by ANII.
+
+% We recommend abbrvnat bibliography style.
+
+\bibliographystyle{abbrvnat}
+
+% The bibliography should be embedded for final submission.
+
+\bibliography{resumen}
+
+% \begin{thebibliography}{}
+% \softraggedright
+
+% \bibitem[Smith et~al.(2009)Smith, Jones]{smith02}
+% P. Q. Smith, and X. Y. Jones. ...reference text...
+
+% \end{thebibliography}
+
+
+\end{document}

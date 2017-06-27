@@ -1,0 +1,1590 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >NaturalProperties</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1"
+      >\begin{code}
+</a
+      ><a name="14" class="Keyword"
+      >module</a
+      ><a name="20"
+      > </a
+      ><a name="21" href="NaturalProperties.html#1" class="Module"
+      >NaturalProperties</a
+      ><a name="38"
+      > </a
+      ><a name="39" class="Keyword"
+      >where</a
+      ><a name="44"
+      >
+
+</a
+      ><a name="46" class="Keyword"
+      >open</a
+      ><a name="50"
+      > </a
+      ><a name="51" class="Keyword"
+      >import</a
+      ><a name="57"
+      > </a
+      ><a name="58" href="Data.Nat.html#1" class="Module"
+      >Data.Nat</a
+      ><a name="66"
+      > </a
+      ><a name="67" class="Symbol"
+      >as</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Module"
+      >Nat</a
+      ><a name="73"
+      >
+</a
+      ><a name="74" class="Keyword"
+      >open</a
+      ><a name="78"
+      > </a
+      ><a name="79" class="Keyword"
+      >import</a
+      ><a name="85"
+      > </a
+      ><a name="86" href="Relation.Binary.PropositionalEquality.html#1" class="Module"
+      >Relation.Binary.PropositionalEquality</a
+      ><a name="123"
+      >
+</a
+      ><a name="124" class="Keyword"
+      >open</a
+      ><a name="128"
+      > </a
+      ><a name="129" class="Keyword"
+      >import</a
+      ><a name="135"
+      > </a
+      ><a name="136" href="Algebra.html#1" class="Module"
+      >Algebra</a
+      ><a name="143"
+      >
+</a
+      ><a name="144" class="Keyword"
+      >open</a
+      ><a name="148"
+      > </a
+      ><a name="149" class="Keyword"
+      >import</a
+      ><a name="155"
+      > </a
+      ><a name="156" href="Data.Empty.html#1" class="Module"
+      >Data.Empty</a
+      ><a name="166"
+      >
+</a
+      ><a name="167" class="Keyword"
+      >open</a
+      ><a name="171"
+      > </a
+      ><a name="172" class="Keyword"
+      >import</a
+      ><a name="178"
+      > </a
+      ><a name="179" href="Algebra.Structures.html#1" class="Module"
+      >Algebra.Structures</a
+      ><a name="197"
+      >
+</a
+      ><a name="198" class="Keyword"
+      >open</a
+      ><a name="202"
+      > </a
+      ><a name="203" class="Keyword"
+      >import</a
+      ><a name="209"
+      > </a
+      ><a name="210" href="Relation.Binary.html#1" class="Module"
+      >Relation.Binary</a
+      ><a name="225"
+      >
+</a
+      ><a name="226" class="Keyword"
+      >open</a
+      ><a name="230"
+      > </a
+      ><a name="231" class="Keyword"
+      >import</a
+      ><a name="237"
+      > </a
+      ><a name="238" href="Data.Nat.Properties.html#1" class="Module"
+      >Data.Nat.Properties</a
+      ><a name="257"
+      >
+</a
+      ><a name="258" class="Keyword"
+      >open</a
+      ><a name="262"
+      > </a
+      ><a name="263" href="Relation.Binary.html#9168" class="Module"
+      >DecTotalOrder</a
+      ><a name="276"
+      > </a
+      ><a name="277" href="Data.Nat.html#4487" class="Function"
+      >Nat.decTotalOrder</a
+      ><a name="294"
+      > </a
+      ><a name="295" class="Keyword"
+      >using</a
+      ><a name="300"
+      > </a
+      ><a name="301" class="Symbol"
+      >()</a
+      ><a name="303"
+      > </a
+      ><a name="304" class="Keyword"
+      >renaming</a
+      ><a name="312"
+      > </a
+      ><a name="313" class="Symbol"
+      >(</a
+      ><a name="314"
+      >refl </a
+      ><a name="319" class="Symbol"
+      >to</a
+      ><a name="321"
+      > &#8804;-refl</a
+      ><a name="328" class="Symbol"
+      >)</a
+      ><a name="329"
+      >
+</a
+      ><a name="330" class="Keyword"
+      >open</a
+      ><a name="334"
+      > </a
+      ><a name="335" href="Data.Nat.html#5720" class="Module"
+      >&#8804;-Reasoning</a
+      ><a name="346"
+      >
+  </a
+      ><a name="349" class="Keyword"
+      >renaming</a
+      ><a name="357"
+      > </a
+      ><a name="358" class="Symbol"
+      >(</a
+      ><a name="359"
+      >begin_ </a
+      ><a name="366" class="Symbol"
+      >to</a
+      ><a name="368"
+      > start_</a
+      ><a name="375" class="Symbol"
+      >;</a
+      ><a name="376"
+      > _&#8718; </a
+      ><a name="380" class="Symbol"
+      >to</a
+      ><a name="382"
+      > _&#9725;</a
+      ><a name="385" class="Symbol"
+      >;</a
+      ><a name="386"
+      > _&#8801;&#10216;_&#10217;_ </a
+      ><a name="394" class="Symbol"
+      >to</a
+      ><a name="396"
+      > _&#8804;&#10216;_&#10217;'_</a
+      ><a name="404" class="Symbol"
+      >)</a
+      ><a name="405"
+      >
+
+</a
+      ><a name="407" href="NaturalProperties.html#407" class="Function"
+      >+-comm</a
+      ><a name="413"
+      > </a
+      ><a name="414" class="Symbol"
+      >=</a
+      ><a name="415"
+      > </a
+      ><a name="416" href="Algebra.Structures.html#1414" class="Field"
+      >IsCommutativeMonoid.comm</a
+      ><a name="440"
+      > </a
+      ><a name="441" class="Symbol"
+      >(</a
+      ><a name="442" href="Algebra.Structures.html#6846" class="Field"
+      >IsCommutativeSemiring.+-isCommutativeMonoid</a
+      ><a name="485"
+      > </a
+      ><a name="486" href="Data.Nat.Properties.html#1086" class="Function"
+      >isCommutativeSemiring</a
+      ><a name="507" class="Symbol"
+      >)</a
+      ><a name="508"
+      >
+</a
+      ><a name="509" class="Comment"
+      >--</a
+      ><a name="511"
+      >
+</a
+      ><a name="512" href="NaturalProperties.html#512" class="Function"
+      >lemmam+sucn&#8801;sucm+n</a
+      ><a name="530"
+      > </a
+      ><a name="531" class="Symbol"
+      >:</a
+      ><a name="532"
+      > </a
+      ><a name="533" class="Symbol"
+      >&#8704;</a
+      ><a name="534"
+      > </a
+      ><a name="535" class="Symbol"
+      >{</a
+      ><a name="536" href="NaturalProperties.html#536" class="Bound"
+      >m</a
+      ><a name="537"
+      > </a
+      ><a name="538" href="NaturalProperties.html#538" class="Bound"
+      >n</a
+      ><a name="539" class="Symbol"
+      >}</a
+      ><a name="540"
+      > </a
+      ><a name="541" class="Symbol"
+      >&#8594;</a
+      ><a name="542"
+      > </a
+      ><a name="543" href="NaturalProperties.html#536" class="Bound"
+      >m</a
+      ><a name="544"
+      > </a
+      ><a name="545" href="Data.Nat.html#2168" class="Primitive Operator"
+      >+</a
+      ><a name="546"
+      > </a
+      ><a name="547" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="550"
+      > </a
+      ><a name="551" href="NaturalProperties.html#538" class="Bound"
+      >n</a
+      ><a name="552"
+      > </a
+      ><a name="553" href="Relation.Binary.Core.html#4603" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="554"
+      > </a
+      ><a name="555" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="558"
+      > </a
+      ><a name="559" class="Symbol"
+      >(</a
+      ><a name="560" href="NaturalProperties.html#536" class="Bound"
+      >m</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="Data.Nat.html#2168" class="Primitive Operator"
+      >+</a
+      ><a name="563"
+      > </a
+      ><a name="564" href="NaturalProperties.html#538" class="Bound"
+      >n</a
+      ><a name="565" class="Symbol"
+      >)</a
+      ><a name="566"
+      >
+</a
+      ><a name="567" href="NaturalProperties.html#512" class="Function"
+      >lemmam+sucn&#8801;sucm+n</a
+      ><a name="585"
+      > </a
+      ><a name="586" class="Symbol"
+      >{</a
+      ><a name="587" href="Data.Nat.html#679" class="InductiveConstructor"
+      >zero</a
+      ><a name="591" class="Symbol"
+      >}</a
+      ><a name="592"
+      >       </a
+      ><a name="599" class="Symbol"
+      >=</a
+      ><a name="600"
+      > </a
+      ><a name="601" href="Relation.Binary.Core.html#4653" class="InductiveConstructor"
+      >refl</a
+      ><a name="605"
+      >
+</a
+      ><a name="606" href="NaturalProperties.html#512" class="Function"
+      >lemmam+sucn&#8801;sucm+n</a
+      ><a name="624"
+      > </a
+      ><a name="625" class="Symbol"
+      >{</a
+      ><a name="626" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="629"
+      > </a
+      ><a name="630" href="NaturalProperties.html#630" class="Bound"
+      >m</a
+      ><a name="631" class="Symbol"
+      >}</a
+      ><a name="632"
+      > </a
+      ><a name="633" class="Symbol"
+      >{</a
+      ><a name="634" href="NaturalProperties.html#634" class="Bound"
+      >n</a
+      ><a name="635" class="Symbol"
+      >}</a
+      ><a name="636"
+      >  </a
+      ><a name="638" class="Symbol"
+      >=</a
+      ><a name="639"
+      > </a
+      ><a name="640" href="Relation.Binary.PropositionalEquality.html#1034" class="Function"
+      >cong</a
+      ><a name="644"
+      > </a
+      ><a name="645" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="648"
+      > </a
+      ><a name="649" class="Symbol"
+      >(</a
+      ><a name="650" href="NaturalProperties.html#512" class="Function"
+      >lemmam+sucn&#8801;sucm+n</a
+      ><a name="668"
+      > </a
+      ><a name="669" class="Symbol"
+      >{</a
+      ><a name="670" href="NaturalProperties.html#630" class="Bound"
+      >m</a
+      ><a name="671" class="Symbol"
+      >}</a
+      ><a name="672"
+      > </a
+      ><a name="673" class="Symbol"
+      >{</a
+      ><a name="674" href="NaturalProperties.html#634" class="Bound"
+      >n</a
+      ><a name="675" class="Symbol"
+      >})</a
+      ><a name="677"
+      >
+
+</a
+      ><a name="679" href="NaturalProperties.html#679" class="Function"
+      >lemmam+sucn&#8804;sucm+n</a
+      ><a name="697"
+      > </a
+      ><a name="698" class="Symbol"
+      >:</a
+      ><a name="699"
+      > </a
+      ><a name="700" class="Symbol"
+      >&#8704;</a
+      ><a name="701"
+      > </a
+      ><a name="702" class="Symbol"
+      >{</a
+      ><a name="703" href="NaturalProperties.html#703" class="Bound"
+      >m</a
+      ><a name="704"
+      > </a
+      ><a name="705" href="NaturalProperties.html#705" class="Bound"
+      >n</a
+      ><a name="706" class="Symbol"
+      >}</a
+      ><a name="707"
+      > </a
+      ><a name="708" class="Symbol"
+      >&#8594;</a
+      ><a name="709"
+      >  </a
+      ><a name="711" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="714"
+      > </a
+      ><a name="715" class="Symbol"
+      >(</a
+      ><a name="716" href="NaturalProperties.html#703" class="Bound"
+      >m</a
+      ><a name="717"
+      > </a
+      ><a name="718" href="Data.Nat.html#2168" class="Primitive Operator"
+      >+</a
+      ><a name="719"
+      > </a
+      ><a name="720" href="NaturalProperties.html#705" class="Bound"
+      >n</a
+      ><a name="721" class="Symbol"
+      >)</a
+      ><a name="722"
+      > </a
+      ><a name="723" href="Data.Nat.html#783" class="Datatype Operator"
+      >&#8804;</a
+      ><a name="724"
+      > </a
+      ><a name="725" href="NaturalProperties.html#703" class="Bound"
+      >m</a
+      ><a name="726"
+      > </a
+      ><a name="727" href="Data.Nat.html#2168" class="Primitive Operator"
+      >+</a
+      ><a name="728"
+      > </a
+      ><a name="729" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="732"
+      > </a
+      ><a name="733" href="NaturalProperties.html#705" class="Bound"
+      >n</a
+      ><a name="734"
+      >
+</a
+      ><a name="735" href="NaturalProperties.html#679" class="Function"
+      >lemmam+sucn&#8804;sucm+n</a
+      ><a name="753"
+      > </a
+      ><a name="754" class="Symbol"
+      >{</a
+      ><a name="755" href="NaturalProperties.html#755" class="Bound"
+      >m</a
+      ><a name="756" class="Symbol"
+      >}</a
+      ><a name="757"
+      > </a
+      ><a name="758" class="Symbol"
+      >{</a
+      ><a name="759" href="NaturalProperties.html#759" class="Bound"
+      >n</a
+      ><a name="760" class="Symbol"
+      >}</a
+      ><a name="761"
+      > </a
+      ><a name="762" class="Keyword"
+      >rewrite</a
+      ><a name="769"
+      > </a
+      ><a name="770" href="NaturalProperties.html#512" class="Function"
+      >lemmam+sucn&#8801;sucm+n</a
+      ><a name="788"
+      > </a
+      ><a name="789" class="Symbol"
+      >{</a
+      ><a name="790" href="NaturalProperties.html#755" class="Bound"
+      >m</a
+      ><a name="791" class="Symbol"
+      >}</a
+      ><a name="792"
+      > </a
+      ><a name="793" class="Symbol"
+      >{</a
+      ><a name="794" href="NaturalProperties.html#759" class="Bound"
+      >n</a
+      ><a name="795" class="Symbol"
+      >}</a
+      ><a name="796"
+      > </a
+      ><a name="797" class="Symbol"
+      >=</a
+      ><a name="798"
+      > </a
+      ><a name="799" href="Relation.Binary.html#1211" class="Function"
+      >&#8804;-refl</a
+      ><a name="805"
+      >
+</a
+      ><a name="806" class="Comment"
+      >--</a
+      ><a name="808"
+      >
+</a
+      ><a name="809" href="NaturalProperties.html#809" class="Function"
+      >lemmam&#8801;n&#8594;m+1&#8804;n+1</a
+      ><a name="825"
+      > </a
+      ><a name="826" class="Symbol"
+      >:</a
+      ><a name="827"
+      > </a
+      ><a name="828" class="Symbol"
+      >{</a
+      ><a name="829" href="NaturalProperties.html#829" class="Bound"
+      >m</a
+      ><a name="830"
+      > </a
+      ><a name="831" href="NaturalProperties.html#831" class="Bound"
+      >n</a
+      ><a name="832"
+      > </a
+      ><a name="833" class="Symbol"
+      >:</a
+      ><a name="834"
+      > </a
+      ><a name="835" href="Data.Nat.html#663" class="Datatype"
+      >&#8469;</a
+      ><a name="836" class="Symbol"
+      >}</a
+      ><a name="837"
+      > </a
+      ><a name="838" class="Symbol"
+      >&#8594;</a
+      ><a name="839"
+      > </a
+      ><a name="840" href="NaturalProperties.html#831" class="Bound"
+      >n</a
+      ><a name="841"
+      > </a
+      ><a name="842" href="Relation.Binary.Core.html#4603" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="843"
+      > </a
+      ><a name="844" href="NaturalProperties.html#829" class="Bound"
+      >m</a
+      ><a name="845"
+      > </a
+      ><a name="846" class="Symbol"
+      >&#8594;</a
+      ><a name="847"
+      > </a
+      ><a name="848" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="851"
+      > </a
+      ><a name="852" href="NaturalProperties.html#829" class="Bound"
+      >m</a
+      ><a name="853"
+      > </a
+      ><a name="854" href="Data.Nat.html#1330" class="Datatype Operator"
+      >&#8804;&#8242;</a
+      ><a name="856"
+      > </a
+      ><a name="857" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="860"
+      > </a
+      ><a name="861" href="NaturalProperties.html#831" class="Bound"
+      >n</a
+      ><a name="862"
+      >
+</a
+      ><a name="863" href="NaturalProperties.html#809" class="Function"
+      >lemmam&#8801;n&#8594;m+1&#8804;n+1</a
+      ><a name="879"
+      > </a
+      ><a name="880" class="Symbol"
+      >{</a
+      ><a name="881" href="NaturalProperties.html#881" class="Bound"
+      >m</a
+      ><a name="882" class="Symbol"
+      >}</a
+      ><a name="883"
+      > </a
+      ><a name="884" class="Symbol"
+      >{</a
+      ><a name="885" class="DottedPattern Symbol"
+      >.</a
+      ><a name="886" href="NaturalProperties.html#881" class="DottedPattern Bound"
+      >m</a
+      ><a name="887" class="Symbol"
+      >}</a
+      ><a name="888"
+      > </a
+      ><a name="889" href="Relation.Binary.Core.html#4653" class="InductiveConstructor"
+      >refl</a
+      ><a name="893"
+      > </a
+      ><a name="894" class="Symbol"
+      >=</a
+      ><a name="895"
+      > </a
+      ><a name="896" href="Data.Nat.html#1361" class="InductiveConstructor"
+      >&#8804;&#8242;-refl</a
+      ><a name="903"
+      >
+</a
+      ><a name="904" class="Comment"
+      >--</a
+      ><a name="906"
+      >
+</a
+      ><a name="907" href="NaturalProperties.html#907" class="Function"
+      >lemmam&gt;0&#8594;n+1&#8804;m+n</a
+      ><a name="923"
+      > </a
+      ><a name="924" class="Symbol"
+      >:</a
+      ><a name="925"
+      > </a
+      ><a name="926" class="Symbol"
+      >{</a
+      ><a name="927" href="NaturalProperties.html#927" class="Bound"
+      >m</a
+      ><a name="928"
+      > </a
+      ><a name="929" href="NaturalProperties.html#929" class="Bound"
+      >n</a
+      ><a name="930"
+      > </a
+      ><a name="931" class="Symbol"
+      >:</a
+      ><a name="932"
+      > </a
+      ><a name="933" href="Data.Nat.html#663" class="Datatype"
+      >&#8469;</a
+      ><a name="934" class="Symbol"
+      >}</a
+      ><a name="935"
+      > </a
+      ><a name="936" class="Symbol"
+      >&#8594;</a
+      ><a name="937"
+      > </a
+      ><a name="938" href="NaturalProperties.html#927" class="Bound"
+      >m</a
+      ><a name="939"
+      > </a
+      ><a name="940" href="Data.Nat.html#981" class="Function Operator"
+      >&gt;</a
+      ><a name="941"
+      > </a
+      ><a name="942" href="Data.Nat.html#679" class="InductiveConstructor"
+      >zero</a
+      ><a name="946"
+      > </a
+      ><a name="947" class="Symbol"
+      >&#8594;</a
+      ><a name="948"
+      > </a
+      ><a name="949" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="952"
+      > </a
+      ><a name="953" href="NaturalProperties.html#929" class="Bound"
+      >n</a
+      ><a name="954"
+      > </a
+      ><a name="955" href="Data.Nat.html#1330" class="Datatype Operator"
+      >&#8804;&#8242;</a
+      ><a name="957"
+      > </a
+      ><a name="958" href="NaturalProperties.html#927" class="Bound"
+      >m</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="Data.Nat.html#2168" class="Primitive Operator"
+      >+</a
+      ><a name="961"
+      > </a
+      ><a name="962" href="NaturalProperties.html#929" class="Bound"
+      >n</a
+      ><a name="963"
+      >
+</a
+      ><a name="964" href="NaturalProperties.html#907" class="Function"
+      >lemmam&gt;0&#8594;n+1&#8804;m+n</a
+      ><a name="980"
+      > </a
+      ><a name="981" class="Symbol"
+      >{</a
+      ><a name="982" class="Number"
+      >0</a
+      ><a name="983" class="Symbol"
+      >}</a
+      ><a name="984"
+      >     </a
+      ><a name="989" class="Symbol"
+      >{</a
+      ><a name="990" href="NaturalProperties.html#990" class="Bound"
+      >n</a
+      ><a name="991" class="Symbol"
+      >}</a
+      ><a name="992"
+      > </a
+      ><a name="993" class="Symbol"
+      >()</a
+      ><a name="995"
+      >
+</a
+      ><a name="996" href="NaturalProperties.html#907" class="Function"
+      >lemmam&gt;0&#8594;n+1&#8804;m+n</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" class="Symbol"
+      >{</a
+      ><a name="1014" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="1017"
+      > </a
+      ><a name="1018" href="NaturalProperties.html#1018" class="Bound"
+      >m</a
+      ><a name="1019" class="Symbol"
+      >}</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" class="Symbol"
+      >{</a
+      ><a name="1022" href="NaturalProperties.html#1022" class="Bound"
+      >n</a
+      ><a name="1023" class="Symbol"
+      >}</a
+      ><a name="1024"
+      > </a
+      ><a name="1025" href="NaturalProperties.html#1025" class="Bound"
+      >1&#8804;m</a
+      ><a name="1028"
+      >
+  </a
+      ><a name="1031" class="Symbol"
+      >=</a
+      ><a name="1032"
+      > </a
+      ><a name="1033" href="Data.Nat.Properties.html#7182" class="Function"
+      >&#8804;&#8658;&#8804;&#8242;</a
+      ><a name="1037"
+      > </a
+      ><a name="1038" class="Symbol"
+      >(</a
+      ><a name="1039" href="Relation.Binary.PreorderReasoning.html#1154" class="Function Operator"
+      >start</a
+      ><a name="1044"
+      >
+            </a
+      ><a name="1057" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="1060"
+      > </a
+      ><a name="1061" href="NaturalProperties.html#1022" class="Bound"
+      >n</a
+      ><a name="1062"
+      >
+            </a
+      ><a name="1075" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#8804;&#10216;</a
+      ><a name="1077"
+      > </a
+      ><a name="1078" href="Data.Nat.html#856" class="InductiveConstructor"
+      >s&#8804;s</a
+      ><a name="1081"
+      > </a
+      ><a name="1082" class="Symbol"
+      >(</a
+      ><a name="1083" href="Data.Nat.Properties.html#7716" class="Function"
+      >n&#8804;m+n</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" href="NaturalProperties.html#1018" class="Bound"
+      >m</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" href="NaturalProperties.html#1022" class="Bound"
+      >n</a
+      ><a name="1092" class="Symbol"
+      >)</a
+      ><a name="1093"
+      > </a
+      ><a name="1094" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#10217;</a
+      ><a name="1095"
+      >
+            </a
+      ><a name="1108" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="1111"
+      > </a
+      ><a name="1112" class="Symbol"
+      >(</a
+      ><a name="1113" href="NaturalProperties.html#1018" class="Bound"
+      >m</a
+      ><a name="1114"
+      > </a
+      ><a name="1115" href="Data.Nat.html#2168" class="Primitive Operator"
+      >+</a
+      ><a name="1116"
+      > </a
+      ><a name="1117" href="NaturalProperties.html#1022" class="Bound"
+      >n</a
+      ><a name="1118" class="Symbol"
+      >)</a
+      ><a name="1119"
+      >
+            </a
+      ><a name="1132" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#8804;&#10216;</a
+      ><a name="1134"
+      > </a
+      ><a name="1135" href="Relation.Binary.html#1211" class="Function"
+      >&#8804;-refl</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#10217;</a
+      ><a name="1143"
+      >
+            </a
+      ><a name="1156" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" href="NaturalProperties.html#1018" class="Bound"
+      >m</a
+      ><a name="1161"
+      > </a
+      ><a name="1162" href="Data.Nat.html#2168" class="Primitive Operator"
+      >+</a
+      ><a name="1163"
+      > </a
+      ><a name="1164" href="NaturalProperties.html#1022" class="Bound"
+      >n</a
+      ><a name="1165"
+      >
+          </a
+      ><a name="1176" href="Relation.Binary.PreorderReasoning.html#1519" class="Function Operator"
+      >&#9725;</a
+      ><a name="1177" class="Symbol"
+      >)</a
+      ><a name="1178"
+      >
+</a
+      ><a name="1179" class="Comment"
+      >--</a
+      ><a name="1181"
+      >
+</a
+      ><a name="1182" href="NaturalProperties.html#1182" class="Function"
+      >lemman&gt;0&#8594;m+1&#8804;m+n</a
+      ><a name="1198"
+      > </a
+      ><a name="1199" class="Symbol"
+      >:</a
+      ><a name="1200"
+      > </a
+      ><a name="1201" class="Symbol"
+      >{</a
+      ><a name="1202" href="NaturalProperties.html#1202" class="Bound"
+      >m</a
+      ><a name="1203"
+      > </a
+      ><a name="1204" href="NaturalProperties.html#1204" class="Bound"
+      >n</a
+      ><a name="1205"
+      > </a
+      ><a name="1206" class="Symbol"
+      >:</a
+      ><a name="1207"
+      > </a
+      ><a name="1208" href="Data.Nat.html#663" class="Datatype"
+      >&#8469;</a
+      ><a name="1209" class="Symbol"
+      >}</a
+      ><a name="1210"
+      > </a
+      ><a name="1211" class="Symbol"
+      >&#8594;</a
+      ><a name="1212"
+      > </a
+      ><a name="1213" href="NaturalProperties.html#1204" class="Bound"
+      >n</a
+      ><a name="1214"
+      > </a
+      ><a name="1215" href="Data.Nat.html#981" class="Function Operator"
+      >&gt;</a
+      ><a name="1216"
+      > </a
+      ><a name="1217" href="Data.Nat.html#679" class="InductiveConstructor"
+      >zero</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" class="Symbol"
+      >&#8594;</a
+      ><a name="1223"
+      > </a
+      ><a name="1224" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="1227"
+      > </a
+      ><a name="1228" href="NaturalProperties.html#1202" class="Bound"
+      >m</a
+      ><a name="1229"
+      > </a
+      ><a name="1230" href="Data.Nat.html#1330" class="Datatype Operator"
+      >&#8804;&#8242;</a
+      ><a name="1232"
+      > </a
+      ><a name="1233" href="NaturalProperties.html#1202" class="Bound"
+      >m</a
+      ><a name="1234"
+      > </a
+      ><a name="1235" href="Data.Nat.html#2168" class="Primitive Operator"
+      >+</a
+      ><a name="1236"
+      > </a
+      ><a name="1237" href="NaturalProperties.html#1204" class="Bound"
+      >n</a
+      ><a name="1238"
+      >
+</a
+      ><a name="1239" href="NaturalProperties.html#1182" class="Function"
+      >lemman&gt;0&#8594;m+1&#8804;m+n</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" class="Symbol"
+      >{</a
+      ><a name="1257" href="NaturalProperties.html#1257" class="Bound"
+      >m</a
+      ><a name="1258" class="Symbol"
+      >}</a
+      ><a name="1259"
+      > </a
+      ><a name="1260" class="Symbol"
+      >{</a
+      ><a name="1261" href="NaturalProperties.html#1261" class="Bound"
+      >n</a
+      ><a name="1262" class="Symbol"
+      >}</a
+      ><a name="1263"
+      > </a
+      ><a name="1264" href="NaturalProperties.html#1264" class="Bound"
+      >1&#8804;n</a
+      ><a name="1267"
+      > </a
+      ><a name="1268" class="Keyword"
+      >rewrite</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="Relation.Binary.PropositionalEquality.Core.html#565" class="Function"
+      >sym</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" class="Symbol"
+      >(</a
+      ><a name="1281" href="NaturalProperties.html#407" class="Function"
+      >+-comm</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" href="NaturalProperties.html#1261" class="Bound"
+      >n</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" href="NaturalProperties.html#1257" class="Bound"
+      >m</a
+      ><a name="1291" class="Symbol"
+      >)</a
+      ><a name="1292"
+      > </a
+      ><a name="1293" class="Symbol"
+      >=</a
+      ><a name="1294"
+      > </a
+      ><a name="1295" href="NaturalProperties.html#907" class="Function"
+      >lemmam&gt;0&#8594;n+1&#8804;m+n</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" class="Symbol"
+      >{</a
+      ><a name="1313" href="NaturalProperties.html#1261" class="Bound"
+      >n</a
+      ><a name="1314" class="Symbol"
+      >}</a
+      ><a name="1315"
+      > </a
+      ><a name="1316" class="Symbol"
+      >{</a
+      ><a name="1317" href="NaturalProperties.html#1257" class="Bound"
+      >m</a
+      ><a name="1318" class="Symbol"
+      >}</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" href="NaturalProperties.html#1264" class="Bound"
+      >1&#8804;n</a
+      ><a name="1323"
+      >  
+</a
+      ><a name="1326" class="Comment"
+      >--</a
+      ><a name="1328"
+      >
+</a
+      ><a name="1329" href="NaturalProperties.html#1329" class="Function"
+      >lemmam&#8801;n&#8594;m&#8804;n</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" class="Symbol"
+      >:</a
+      ><a name="1343"
+      > </a
+      ><a name="1344" class="Symbol"
+      >{</a
+      ><a name="1345" href="NaturalProperties.html#1345" class="Bound"
+      >m</a
+      ><a name="1346"
+      > </a
+      ><a name="1347" href="NaturalProperties.html#1347" class="Bound"
+      >n</a
+      ><a name="1348"
+      > </a
+      ><a name="1349" class="Symbol"
+      >:</a
+      ><a name="1350"
+      > </a
+      ><a name="1351" href="Data.Nat.html#663" class="Datatype"
+      >&#8469;</a
+      ><a name="1352" class="Symbol"
+      >}</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" class="Symbol"
+      >&#8594;</a
+      ><a name="1355"
+      > </a
+      ><a name="1356" href="NaturalProperties.html#1345" class="Bound"
+      >m</a
+      ><a name="1357"
+      > </a
+      ><a name="1358" href="Relation.Binary.Core.html#4603" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="1359"
+      > </a
+      ><a name="1360" href="NaturalProperties.html#1347" class="Bound"
+      >n</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" class="Symbol"
+      >&#8594;</a
+      ><a name="1363"
+      > </a
+      ><a name="1364" href="NaturalProperties.html#1345" class="Bound"
+      >m</a
+      ><a name="1365"
+      > </a
+      ><a name="1366" href="Data.Nat.html#1330" class="Datatype Operator"
+      >&#8804;&#8242;</a
+      ><a name="1368"
+      > </a
+      ><a name="1369" href="NaturalProperties.html#1347" class="Bound"
+      >n</a
+      ><a name="1370"
+      >
+</a
+      ><a name="1371" href="NaturalProperties.html#1329" class="Function"
+      >lemmam&#8801;n&#8594;m&#8804;n</a
+      ><a name="1383"
+      > </a
+      ><a name="1384" class="Symbol"
+      >{</a
+      ><a name="1385" href="NaturalProperties.html#1385" class="Bound"
+      >m</a
+      ><a name="1386" class="Symbol"
+      >}</a
+      ><a name="1387"
+      > </a
+      ><a name="1388" class="Symbol"
+      >{</a
+      ><a name="1389" class="DottedPattern Symbol"
+      >.</a
+      ><a name="1390" href="NaturalProperties.html#1385" class="DottedPattern Bound"
+      >m</a
+      ><a name="1391" class="Symbol"
+      >}</a
+      ><a name="1392"
+      > </a
+      ><a name="1393" href="Relation.Binary.Core.html#4653" class="InductiveConstructor"
+      >refl</a
+      ><a name="1397"
+      > </a
+      ><a name="1398" class="Symbol"
+      >=</a
+      ><a name="1399"
+      > </a
+      ><a name="1400" href="Data.Nat.html#1361" class="InductiveConstructor"
+      >&#8804;&#8242;-refl</a
+      ><a name="1407"
+      >
+</a
+      ><a name="1408" class="Comment"
+      >--</a
+      ><a name="1410"
+      >
+</a
+      ><a name="1411" href="NaturalProperties.html#1411" class="Function"
+      >lemmam&gt;0&#8743;n&gt;0&#8594;m+n&gt;1</a
+      ><a name="1429"
+      > </a
+      ><a name="1430" class="Symbol"
+      >:</a
+      ><a name="1431"
+      > </a
+      ><a name="1432" class="Symbol"
+      >&#8704;</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" class="Symbol"
+      >{</a
+      ><a name="1435" href="NaturalProperties.html#1435" class="Bound"
+      >m</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" href="NaturalProperties.html#1437" class="Bound"
+      >n</a
+      ><a name="1438" class="Symbol"
+      >}</a
+      ><a name="1439"
+      > </a
+      ><a name="1440" class="Symbol"
+      >&#8594;</a
+      ><a name="1441"
+      > </a
+      ><a name="1442" href="NaturalProperties.html#1435" class="Bound"
+      >m</a
+      ><a name="1443"
+      > </a
+      ><a name="1444" href="Data.Nat.html#981" class="Function Operator"
+      >&gt;</a
+      ><a name="1445"
+      > </a
+      ><a name="1446" class="Number"
+      >0</a
+      ><a name="1447"
+      > </a
+      ><a name="1448" class="Symbol"
+      >&#8594;</a
+      ><a name="1449"
+      > </a
+      ><a name="1450" href="NaturalProperties.html#1437" class="Bound"
+      >n</a
+      ><a name="1451"
+      > </a
+      ><a name="1452" href="Data.Nat.html#981" class="Function Operator"
+      >&gt;</a
+      ><a name="1453"
+      > </a
+      ><a name="1454" class="Number"
+      >0</a
+      ><a name="1455"
+      > </a
+      ><a name="1456" class="Symbol"
+      >&#8594;</a
+      ><a name="1457"
+      > </a
+      ><a name="1458" href="NaturalProperties.html#1435" class="Bound"
+      >m</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" href="Data.Nat.html#2168" class="Primitive Operator"
+      >+</a
+      ><a name="1461"
+      > </a
+      ><a name="1462" href="NaturalProperties.html#1437" class="Bound"
+      >n</a
+      ><a name="1463"
+      > </a
+      ><a name="1464" href="Data.Nat.html#981" class="Function Operator"
+      >&gt;</a
+      ><a name="1465"
+      > </a
+      ><a name="1466" class="Number"
+      >1</a
+      ><a name="1467"
+      >
+</a
+      ><a name="1468" href="NaturalProperties.html#1411" class="Function"
+      >lemmam&gt;0&#8743;n&gt;0&#8594;m+n&gt;1</a
+      ><a name="1486"
+      > </a
+      ><a name="1487" class="Symbol"
+      >{</a
+      ><a name="1488" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="1491"
+      > </a
+      ><a name="1492" href="NaturalProperties.html#1492" class="Bound"
+      >m</a
+      ><a name="1493" class="Symbol"
+      >}</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" class="Symbol"
+      >{</a
+      ><a name="1496" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" href="NaturalProperties.html#1500" class="Bound"
+      >n</a
+      ><a name="1501" class="Symbol"
+      >}</a
+      ><a name="1502"
+      > </a
+      ><a name="1503" class="Symbol"
+      >(</a
+      ><a name="1504" href="Data.Nat.html#856" class="InductiveConstructor"
+      >s&#8804;s</a
+      ><a name="1507"
+      > </a
+      ><a name="1508" class="Symbol"
+      >_)</a
+      ><a name="1510"
+      > </a
+      ><a name="1511" class="Symbol"
+      >(</a
+      ><a name="1512" href="Data.Nat.html#856" class="InductiveConstructor"
+      >s&#8804;s</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" class="Symbol"
+      >_)</a
+      ><a name="1518"
+      > </a
+      ><a name="1519" class="Symbol"
+      >=</a
+      ><a name="1520"
+      >  </a
+      ><a name="1522" href="Relation.Binary.PreorderReasoning.html#1154" class="Function Operator"
+      >start</a
+      ><a name="1527"
+      > 
+                                                        </a
+      ><a name="1585" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="1588"
+      > </a
+      ><a name="1589" class="Symbol"
+      >(</a
+      ><a name="1590" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" href="Data.Nat.html#679" class="InductiveConstructor"
+      >zero</a
+      ><a name="1598" class="Symbol"
+      >)</a
+      ><a name="1599"
+      >
+                                                      </a
+      ><a name="1654" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#8804;&#10216;</a
+      ><a name="1656"
+      > </a
+      ><a name="1657" href="Data.Nat.html#856" class="InductiveConstructor"
+      >s&#8804;s</a
+      ><a name="1660"
+      > </a
+      ><a name="1661" class="Symbol"
+      >(</a
+      ><a name="1662" href="Data.Nat.html#856" class="InductiveConstructor"
+      >s&#8804;s</a
+      ><a name="1665"
+      > </a
+      ><a name="1666" class="Symbol"
+      >(</a
+      ><a name="1667" href="Data.Nat.html#814" class="InductiveConstructor"
+      >z&#8804;n</a
+      ><a name="1670" class="Symbol"
+      >))</a
+      ><a name="1672"
+      > </a
+      ><a name="1673" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#10217;</a
+      ><a name="1674"
+      >
+                                                        </a
+      ><a name="1731" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="1734"
+      > </a
+      ><a name="1735" class="Symbol"
+      >(</a
+      ><a name="1736" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="1739"
+      > </a
+      ><a name="1740" class="Symbol"
+      >(</a
+      ><a name="1741" href="NaturalProperties.html#1492" class="Bound"
+      >m</a
+      ><a name="1742"
+      > </a
+      ><a name="1743" href="Data.Nat.html#2168" class="Primitive Operator"
+      >+</a
+      ><a name="1744"
+      > </a
+      ><a name="1745" href="NaturalProperties.html#1500" class="Bound"
+      >n</a
+      ><a name="1746" class="Symbol"
+      >))</a
+      ><a name="1748"
+      >
+                                                      </a
+      ><a name="1803" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#8804;&#10216;</a
+      ><a name="1805"
+      > </a
+      ><a name="1806" href="Data.Nat.html#856" class="InductiveConstructor"
+      >s&#8804;s</a
+      ><a name="1809"
+      > </a
+      ><a name="1810" class="Symbol"
+      >(</a
+      ><a name="1811" href="NaturalProperties.html#679" class="Function"
+      >lemmam+sucn&#8804;sucm+n</a
+      ><a name="1829"
+      > </a
+      ><a name="1830" class="Symbol"
+      >{</a
+      ><a name="1831" href="NaturalProperties.html#1492" class="Bound"
+      >m</a
+      ><a name="1832" class="Symbol"
+      >}</a
+      ><a name="1833"
+      > </a
+      ><a name="1834" class="Symbol"
+      >{</a
+      ><a name="1835" href="NaturalProperties.html#1500" class="Bound"
+      >n</a
+      ><a name="1836" class="Symbol"
+      >})</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#10217;</a
+      ><a name="1840"
+      >                    
+                                                        </a
+      ><a name="1917" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" class="Symbol"
+      >(</a
+      ><a name="1922" href="NaturalProperties.html#1492" class="Bound"
+      >m</a
+      ><a name="1923"
+      > </a
+      ><a name="1924" href="Data.Nat.html#2168" class="Primitive Operator"
+      >+</a
+      ><a name="1925"
+      > </a
+      ><a name="1926" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="1929"
+      > </a
+      ><a name="1930" href="NaturalProperties.html#1500" class="Bound"
+      >n</a
+      ><a name="1931" class="Symbol"
+      >)</a
+      ><a name="1932"
+      >
+                                                      </a
+      ><a name="1987" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#8804;&#10216;</a
+      ><a name="1989"
+      > </a
+      ><a name="1990" href="Relation.Binary.html#1211" class="Function"
+      >&#8804;-refl</a
+      ><a name="1996"
+      > </a
+      ><a name="1997" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#10217;</a
+      ><a name="1998"
+      >                    
+                                                        </a
+      ><a name="2075" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="2078"
+      > </a
+      ><a name="2079" href="NaturalProperties.html#1492" class="Bound"
+      >m</a
+      ><a name="2080"
+      > </a
+      ><a name="2081" href="Data.Nat.html#2168" class="Primitive Operator"
+      >+</a
+      ><a name="2082"
+      > </a
+      ><a name="2083" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="2086"
+      > </a
+      ><a name="2087" href="NaturalProperties.html#1500" class="Bound"
+      >n</a
+      ><a name="2088"
+      >
+                                                      </a
+      ><a name="2143" href="Relation.Binary.PreorderReasoning.html#1519" class="Function Operator"
+      >&#9725;</a
+      ><a name="2144"
+      >
+</a
+      ><a name="2145" class="Comment"
+      >--</a
+      ><a name="2147"
+      >
+</a
+      ><a name="2148" href="NaturalProperties.html#2148" class="Function"
+      >&gt;1&#8594;&#172;&#8804;1</a
+      ><a name="2154"
+      > </a
+      ><a name="2155" class="Symbol"
+      >:</a
+      ><a name="2156"
+      > </a
+      ><a name="2157" class="Symbol"
+      >&#8704;</a
+      ><a name="2158"
+      > </a
+      ><a name="2159" class="Symbol"
+      >{</a
+      ><a name="2160" href="NaturalProperties.html#2160" class="Bound"
+      >n</a
+      ><a name="2161" class="Symbol"
+      >}</a
+      ><a name="2162"
+      > </a
+      ><a name="2163" class="Symbol"
+      >&#8594;</a
+      ><a name="2164"
+      > </a
+      ><a name="2165" href="NaturalProperties.html#2160" class="Bound"
+      >n</a
+      ><a name="2166"
+      > </a
+      ><a name="2167" href="Data.Nat.html#981" class="Function Operator"
+      >&gt;</a
+      ><a name="2168"
+      > </a
+      ><a name="2169" class="Number"
+      >1</a
+      ><a name="2170"
+      > </a
+      ><a name="2171" class="Symbol"
+      >&#8594;</a
+      ><a name="2172"
+      > </a
+      ><a name="2173" href="NaturalProperties.html#2160" class="Bound"
+      >n</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" href="Data.Nat.html#783" class="Datatype Operator"
+      >&#8804;</a
+      ><a name="2176"
+      > </a
+      ><a name="2177" class="Number"
+      >1</a
+      ><a name="2178"
+      > </a
+      ><a name="2179" class="Symbol"
+      >&#8594;</a
+      ><a name="2180"
+      > </a
+      ><a name="2181" href="Data.Empty.html#243" class="Datatype"
+      >&#8869;</a
+      ><a name="2182"
+      >
+</a
+      ><a name="2183" href="NaturalProperties.html#2148" class="Function"
+      >&gt;1&#8594;&#172;&#8804;1</a
+      ><a name="2189"
+      > </a
+      ><a name="2190" class="Symbol"
+      >{</a
+      ><a name="2191" href="NaturalProperties.html#2191" class="Bound"
+      >n</a
+      ><a name="2192" class="Symbol"
+      >}</a
+      ><a name="2193"
+      > </a
+      ><a name="2194" href="NaturalProperties.html#2194" class="Bound"
+      >suc1&#8804;n</a
+      ><a name="2200"
+      > </a
+      ><a name="2201" href="NaturalProperties.html#2201" class="Bound"
+      >n&#8804;1</a
+      ><a name="2204"
+      > </a
+      ><a name="2205" class="Symbol"
+      >=</a
+      ><a name="2206"
+      > </a
+      ><a name="2207" href="Data.Nat.Properties.html#7822" class="Function"
+      >1+n&#8816;n</a
+      ><a name="2212"
+      > </a
+      ><a name="2213" class="Symbol"
+      >{</a
+      ><a name="2214" class="Number"
+      >1</a
+      ><a name="2215" class="Symbol"
+      >}</a
+      ><a name="2216"
+      > </a
+      ><a name="2217" class="Symbol"
+      >(</a
+      ><a name="2218" href="Relation.Binary.PreorderReasoning.html#1154" class="Function Operator"
+      >start</a
+      ><a name="2223"
+      > </a
+      ><a name="2224" href="Data.Nat.html#690" class="InductiveConstructor"
+      >suc</a
+      ><a name="2227"
+      > </a
+      ><a name="2228" class="Number"
+      >1</a
+      ><a name="2229"
+      > </a
+      ><a name="2230" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#8804;&#10216;</a
+      ><a name="2232"
+      > </a
+      ><a name="2233" href="NaturalProperties.html#2194" class="Bound"
+      >suc1&#8804;n</a
+      ><a name="2239"
+      > </a
+      ><a name="2240" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#10217;</a
+      ><a name="2241"
+      > </a
+      ><a name="2242" href="NaturalProperties.html#2191" class="Bound"
+      >n</a
+      ><a name="2243"
+      > </a
+      ><a name="2244" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#8804;&#10216;</a
+      ><a name="2246"
+      > </a
+      ><a name="2247" href="NaturalProperties.html#2201" class="Bound"
+      >n&#8804;1</a
+      ><a name="2250"
+      > </a
+      ><a name="2251" href="Relation.Binary.PreorderReasoning.html#1220" class="Function Operator"
+      >&#10217;</a
+      ><a name="2252"
+      > </a
+      ><a name="2253" class="Number"
+      >1</a
+      ><a name="2254"
+      > </a
+      ><a name="2255" href="Relation.Binary.PreorderReasoning.html#1519" class="Function Operator"
+      >&#9725;</a
+      ><a name="2256" class="Symbol"
+      >)</a
+      ><a name="2257"
+      >
+\end{code}
+</a
+      ></pre
+    ></body
+  ></html
+>

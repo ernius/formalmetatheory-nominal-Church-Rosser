@@ -1,0 +1,23 @@
+import System.Environment (getArgs)
+import System.Exit (exitFailure)
+--import System.FilePath.Posix
+--import System.Process
+import Text.Regex
+
+regex = "[\\]ExecuteMetaData[[](.*).tex]{([^}]*)}"
+
+-- testText = "\\hspace{5px} \\AgdaTarget{Λ} \\hspace{5px}  \\ExecuteMetaData[Term.tex]{caca} \\hspace{5px} pp \\hspace{5px}"
+
+eliminateaux :: String -> Maybe (String, String, String, [String]) --String
+eliminateaux = matchRegexAll (mkRegex regex)
+
+eliminate = print . eliminateaux
+
+main :: IO ()
+main = do args <- getArgs
+          case args of
+            [file] -> readFile file >>= eliminate
+            _      -> do putStrLn "Usage: eliminate <SourceFile>"
+                         exitFailure
+
+

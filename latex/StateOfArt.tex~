@@ -1,0 +1,62 @@
+\documentclass{entcs} 
+\usepackage{entcsmacro}
+
+%math
+\newcommand{\alp}{\ensuremath{\alpha}}
+\newcommand{\lamb}{\ensuremath{\lambda}}
+\newcommand{\alphaeqsym}{\ensuremath{\sim_\alpha}}
+\newcommand{\choice}{\ensuremath{\chi}}
+
+\def\lastname{Bove,  Fernandez ,  Tasistro , Szasz  and Copello}
+
+\begin{document}
+
+\begin{frontmatter}
+  \title{Principles of Recursion and Induction for Nominal Lambda Calculus.}
+  \author{Ana Bove \thanksref{emailB}}
+  \address{Chalmers University of Technology\\
+    Gothenburg, Sweden}
+  \author{Maribel Fernandez \thanksref{emailF}}
+  \address{King's College London\\
+      London, England}
+  \author{\'Alvaro Tasistro \thanksref{emailT}}
+  \author{Nora Szasz \thanksref{emailS}}
+  \author{Ernesto Copello \thanksref{emailC}}
+  \address{Universidad ORT Uruguay\\
+      Montevideo, Uruguay}
+  \thanks[emailB]{Email: \href{mailto:bove@chalmers.se} {\texttt{\normalshape bove@chalmers.se}}}
+  \thanks[emailF]{Email: \href{mailto:Maribel.Fernandez@kcl.ac.uk} {\texttt{\normalshape Maribel.Fernandez@kcl.ac.uk}}}
+  \thanks[emailT]{Email: \href{mailto:tasistro@ort.edu.uy} {\texttt{\normalshape tasistro@ort.edu.uy}}} 
+  \thanks[emailS]{Email: \href{mailto:szasz@ort.edu.uy} {\texttt{\normalshape szasz@ort.edu.uy}}}
+  \thanks[emailC]{Email: \href{mailto:copello@ort.edu.uy} {\texttt{\normalshape copello@ort.edu.uy}}}
+
+\begin{abstract} 
+We formulate principles of induction and recursion for a variant of lambda calculus with bound names where \alp-conversion is based upon name swapping as in nominal abstract syntax. The principles allow to work modulo alpha-conversion and apply the Barendregt variable convention. We derive them all from the simple structural induction principle and apply them to get some fundamental meta-theoretical results, such as the substitution lemma for alpha-conversion and the result of substitution composition. The whole work is implemented in Agda.
+\end{abstract}
+
+\begin{keyword}
+Formal Meta-theory, Lambda Calculus, Constructive Type Theory
+\end{keyword}
+
+\end{frontmatter}
+
+\subsection{Related Work}
+\label{sec:relatedWork}
+
+There exist a continuous line of works, during approximately a decade, formalising inductive/recursion principles over \alp-equivalence classes of \lamb-terms, all of them developed in the Isabelle/HOL proof assistant. In one of the first works in this line, Gordon~\cite{gordon:mechanisation:1993} constructs an induction principle equivalent to one of the developed in this work. Which, in the abstraction case of a proof by induction over \alp-equivalence class of terms, as the Barendregt variable convention (BVC), enable us to choose the abstraction variable fresh enough from the context of the proof. That is, we are able to choose a fresh enough citizen from an arbitrary \alp-equivalence class of terms. Gordon uses a variation of De Bruijn syntax to represent \lamb-terms. This syntax was already suggested by De Bruijn~\cite{deBruijn1972381}, in which ``free variables have names but the bound variables are nameless''. The main property of this syntax is that \alp-convertible terms are syntactically equal. Although, invalid terms appears in this representation, and a well-formed predicate is needed to exclude bad terms from the formalisation. Because of this last issue, every introduced function must be proved to be closed under well-formed terms. On the other hand, the main advantage of this mixed strategy is that theorems can be expressed in conventional form, without De Bruijn encoding, and in spite of this, the renaming of bound variables for fresh ones is still supported in proofs, because syntactical equality is up to \alp-conversion. Although, when a renaming has to be done to pick another witnesses of the \alp-equivalence class, the classic primitive inductive hypothesis does not have any information about the new renamed sub-term, becoming necessary in general to do an induction over the length of terms. In this way, we are able to apply the inductive hypothesis to the renamed sub-term, because its length is strictly decreasing. To overcame this overhead, Gordon introduces a BVC induction principle for decidable predicates, which, as expected, is proved by induction on the length of De Bruijn's terms.
+
+As Gordon point outs, name-carrying syntax up to literal equality would be needed to represent language definitions, such as that of standard ML, for instance, where syntax is not identified up to \alp-conversion. Although, De Bruijn notation has been used to implement several theorem provers, where syntax is internally represented in De Bruijn notation, and for human interacting, a map is given to a more human readable name-carrying syntax. This is different to use this internal notation also at a logic level. However, Gordon manages to hide De Bruijn notation, behind some succinct set of lemmas. As an example of this, substitution lemmas from sections 1.14 and 1.15 of Hindley and Seldin's book~\cite{DBLP:books/cu/HindleyS86} are directly derived using the BVC induction principle, without recourse to theorems about the underlying De Bruijn representation, neither exposing the internal renaming.
+
+In~\cite{DBLP:conf/tphol/GordonM96} Gordon and Melham continues working in previous formalisation problems to introduce new functions without overhead in the model, and presents an iteration principle over \lamb-terms. Previous approach is \emph{first-order} in the sense that the variable-binding operations of the embedded syntax is distinct form the meta variable-binding, at the host proof assistant language level. This work began to explore a kind of \emph{second-order} approach, where a typical abstraction expression $Lam\ x\ u$\ can be obtained from a meta-level abstraction expression $\lambda y . u [x := var\ y]$, using a function $abs : (variables\ names \rightarrow terms) \rightarrow terms$. In this way, any meta-level function from variables to terms represents a \lamb-abstraction in the embedded language. In theirs iteration principle, to define a function $f$ over the case of a typical abstraction of the form $Lam\ x\ u$, the value of $f(Lam\ x\ u)$\ can be determined using the meta-abstraction $\lambda y . f(u [ x := var\ y ])$, not the classic primitive call $f(u)$. If it was the latter, that will allow us to distinguish \alp-equivalent terms in the definition of a function, so theirs iteration principle defines well behaved functions in the sense \alp-equivalent terms should return equal results. The key of their development is the function $abs$, for which they present a model that involves the iteration over the infinite set of possible variables, so they prove the existence of a theoretical model for $abs$\ function, but they do not give explicitely a computable one. We do not know in deep the Isabelle/HOL proof assistant capabilities, and the paper does not give much more information about $abs$\ codification in their formalisation. So this requirement is not easily to evaluate or deduce how feasible is to transfer to a Constructive Type Theory environment. 
+
+Continuing Gordon and Melham's work, Norrish~\cite{Norrish04recursivefunction} try to introduce a method to define functions in a much more familiar way, approximating it to the classics principles of primitive recursion. For this, he uses some ideas of Gabbay-Pitts theory of Fraenkel-Mostowski sets~\cite{GP02:newapproach}, introducing the swapping of names operation as a basics for syntax with binders. The resulting iteration principle have complicated side-conditions to prove about the functions used to instantiate this iteration principle. To use his principle we have to prove, for each function used to define the cases of the \lamb-terms iteration, that: do not create too many fresh variables, and that behave in a linear way through the swapping operation, that is, for any auxiliary function $f$\ used, term $M$ and $x , y$ variables ($swap(x,y,f(M)) \equiv f(swap(x,y,M)$).
+
+Urban and Tasson~\cite{urban05} uses more in deep the Gabbay-Pitts theory to construct an induction principle similar to first introduced by Gordon, but using the concept of \emph{finite support} of nominal sets, and not the free variables function over terms to state the freshness conditions. They abandon the De Bruijn notation to explore a weak HOAS~\cite{DespeyrouxFH95}, which uses functions at the meta-level to encode \lamb-abstractions. As a consequence they loose syntactical equality in \alp-compatible terms, and they have to introduce an \alp-compatible relation. Besides, they have to define the substitution operation because weak HOAS does not use meta-level substitution one. Although, they have a induction principle for ``free'' over theirs syntax. They prove the composition of substitution lemma (lemma 1.15 (c) of~\cite{DBLP:books/cu/HindleyS86}) as an example of use of theirs induction principle. Our work is much more in the line of this one, we do not have syntactical equality of \alp-compatible terms, but we keep using a name-carrying syntax and not a variation of HOAS as them.
+
+% ~\cite{Norrish:mechanisinglambda} no ponemos no me gusta, es un raconto solamente
+
+
+\bibliographystyle{plain}% the recommended bibstyle
+\bibliography{resumen}
+
+\end{document}

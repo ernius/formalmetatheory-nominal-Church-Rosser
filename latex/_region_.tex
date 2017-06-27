@@ -1,0 +1,394 @@
+\message{ !name(ParallelResumen.tex)}\documentclass{article} 
+
+
+\usepackage[hidelinks]{hyperref}
+\usepackage[references,links]{agda}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{textgreek}
+\usepackage{catchfilebetweentags}
+\usepackage{tipa}
+\usepackage{graphicx}
+\usepackage{bussproofs}
+
+%math
+\newcommand{\alp}{\ensuremath{\alpha}}
+\newcommand{\lamb}{\ensuremath{\lambda}}
+\newcommand{\alpsym}{\ensuremath{\sim_\alpha}}
+\newcommand{\choice}{\ensuremath{\chi}}
+\newcommand{\p}{\ensuremath{\rightrightarrows}}
+
+%Agda
+\newcommand{\freshin}[2]{\ensuremath{#1 \mathbin{\AgdaDatatype{\#}} #2}}
+\newcommand{\lambAg}[2]{\ensuremath{\AgdaInductiveConstructor{ƛ}\, #1\, #2}}
+\newcommand{\inAg}{\ensuremath{\mathbin{\AgdaFunction{∈}}}}
+\newcommand{\ninAg}{\ensuremath{\mathbin{\AgdaFunction{∉}}}}
+\newcommand{\neqAg}{\ensuremath{\mathbin{\AgdaInductiveConstructor{≢}}}}
+\newcommand{\ap}[2]{#1 \ensuremath{\mathbin{\AgdaInductiveConstructorFunction{·}} #2}}
+\newcommand{\var}[1]{\ensuremath{\AgdaInductiveConstructorFunction{v}\, #1}}
+\newcommand{\fv}{\ensuremath{{\AgdaFunction{fv}}\,}}
+\newcommand{\perm}{\ensuremath{\mathbin{\AgdaFunction{∙}}}}
+\newcommand{\perma}{\ensuremath{\mathbin{\AgdaFunction{∙}_a}}}
+\newcommand{\free}{\ensuremath{\mathbin{\AgdaFunction{*}}}}
+\newcommand{\choiceAg}{\ensuremath{\AgdaFunction{χ}\,}}
+\newcommand{\choiceAgaux}{\ensuremath{\AgdaFunction{χ'}\,}}
+\newcommand{\alpeqAg}{\ensuremath{\mathbin{\AgdaDatatype{∼α}}}}
+\newcommand{\swap}[3]{\ensuremath{(#1 \mathbin{\AgdaFunction{∙}} #2)\, #3}}
+
+\newcommand{\betaalpha}{\ensuremath{\rightarrow_\alpha}}
+\newcommand{\betaaster}{\ensuremath{\rightarrow_\beta^*}}
+\newcommand{\lam}{\ensuremath{\lambda}}
+\newcommand{\conc}{\ensuremath{\mathop{+\!\!+}}}
+
+
+% \newcommand{\agdaf}[1]{\ensuremath{\AgdaFunction{#1}\,}}
+% \newcommand{\agdaD}[1]{\ensuremath{\AgdaDatatype{#1}\,}}
+% \newcommand{\agdav}[1]{\ensuremath{\AgdaBound{#1}\,}}
+
+\DeclareUnicodeCharacter{411}{\textipa{\textcrlambda}}
+\DeclareUnicodeCharacter{65288}{(}
+\DeclareUnicodeCharacter{65289}{)}
+\DeclareUnicodeCharacter{8788}{\ensuremath{\coloneqq}}
+\DeclareUnicodeCharacter{8336}{\ensuremath{_a}}
+\DeclareUnicodeCharacter{8799}{\ensuremath{\overset{?}{=}}}
+\DeclareUnicodeCharacter{8759}{\ensuremath{\dblcolon}}
+\DeclareUnicodeCharacter{8718}{\ensuremath{\square}}
+
+\newtheorem{lem}{Lemma}
+
+\begin{document}
+
+\message{ !name(ParallelResumen.tex) !offset(-1) }
+alpha}
+
+\begin{minipage}{0.2\linewidth}
+  \AxiomC{$$} \LeftLabel{\alpsym v} \UnaryInfC{$x \alpsym x$} \DisplayProof
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+  \AxiomC{$M \alpsym M'$} 
+  \AxiomC{$N \alpsym N'$}
+  \LeftLabel{\alpsym a}
+  \BinaryInfC{$M N \alpsym M' N'$} \DisplayProof
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+  \AxiomC{$\exists xs, \forall z \not\in xs, (x\ z) M \alpsym (y\ z) N$} 
+    \LeftLabel{\alpsym \lam}
+  \UnaryInfC{$\lambda x M  \alpsym  \lambda y N$} \DisplayProof
+\end{minipage}
+
+
+\section{Parallel Reduction}\label{parallel}
+
+
+\begin{minipage}{0.2\linewidth}
+  \AxiomC{$$}   \LeftLabel{\p v} \UnaryInfC{$x \p x$} \DisplayProof
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+  \AxiomC{$M \p M'$} 
+  \AxiomC{$N \p N'$}
+  \LeftLabel{\p a}
+  \BinaryInfC{$M N \p M' N'$} \DisplayProof
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+  \AxiomC{$\exists xs, \forall z \not\in xs, (x\ z) M \p (y\ z) N$} 
+  \LeftLabel{\p \lam}
+  \UnaryInfC{$\lambda x M  \p  \lambda y N$} \DisplayProof
+\end{minipage}
+
+\begin{center}
+  \AxiomC{$\lambda x M \p \lambda y P'$}
+  \AxiomC{$N \p  P''$}
+  \AxiomC{$P \alpsym P' [y := P'']$}
+  \LeftLabel{$\p \beta$}
+  \TrinaryInfC{$(\lambda x M) N  \p P$}
+  \DisplayProof
+\end{center}
+
+\begin{lem}[Parallel is equivariant]
+\label{pequiv}
+\[ M \p N \Rightarrow \pi M \p \pi N \]
+\end{lem}
+
+\begin{proof}
+Induction on the parallel relation.
+
+\begin{itemize}
+   \item[var. rule:] Direct.
+   \item[app. rule:] Direct.
+   \item[\lam\ rule:] 
+\begin{minipage}{0.2\linewidth}
+     Hypotheses:
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+  \AxiomC{$\exists xs, \forall z \not\in xs, (x\ z) M \p (y\ z) N$} 
+  \LeftLabel{\p \lam}
+  \UnaryInfC{$\lambda x M  \p  \lambda y N$} \DisplayProof
+\end{minipage}
+
+Thesis:  $\lambda (\pi\ x) (\pi\ M)  \p  \lambda (\pi\ y) (\pi\ N)$
+
+Proof:
+
+
+  \AxiomC{$\exists xs, \forall z \not\in xs, (x\ z) M \p (y\ z) N$} 
+  \UnaryInfC{$\forall z \not\in xs \conc dom(\Gamma), (x\ z) M \p (y\ z) N$} 
+  \LeftLabel{ih}
+  \UnaryInfC{$\forall z \not\in xs \conc dom(\Gamma), \pi ((x\ z) M) \p \pi ((y\ z) N)$} 
+  \UnaryInfC{$\forall z \not\in xs \conc dom(\Gamma),  ((\pi\ x)\ (\pi\ z)) (\pi\ M) \p  ((\pi\ y)\ (\pi\ z)) (\pi\ N)$} 
+  \LeftLabel{$(\pi\ z) \equiv z\ as\ z \not\in dom(\Gamma) $}
+  \UnaryInfC{$ \forall z \not\in xs \conc dom(\Gamma), ((\pi\ x)\ z) (\pi\ M) \p ((\pi\ y)\ z) (\pi\ N)$} 
+  \LeftLabel{\p \lam}
+  \UnaryInfC{$\lambda (\pi\ x) (\pi\ M)  \p  \lambda (\pi\ y) (\pi\ N)$} \DisplayProof
+
+
+   \item[$\beta$\ rule:]
+\begin{minipage}{0.2\linewidth}
+     Hypotheses:
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+  \AxiomC{$\lambda x M \p \lambda y P'$}
+  \AxiomC{$N \p  P''$}
+  \AxiomC{$P \alpsym P' [y := P'']$}
+  \LeftLabel{$\p \beta$}
+  \TrinaryInfC{$(\lambda x M) N  \p P$}
+  \DisplayProof
+\end{minipage}
+
+Thesis:  $(\lambda (\pi\ x) (\pi\ M)) (\pi\ N)  \p \pi\ P$
+
+Proof:
+
+
+  \AxiomC{$\lambda x M \p \lambda y P'$}
+  \LeftLabel{ih}
+  \UnaryInfC{$\lambda (\pi\ x) (\pi\ M) \p \lambda (\pi\ y) (\pi\ P')$}
+  \AxiomC{$N \p  P''$}
+  \LeftLabel{ih}
+  \UnaryInfC{$\pi\ N \p  \pi\ P''$}
+  \AxiomC{$ P \alpsym P' [y := P'']$}
+  \LeftLabel{\alp\ equiv.}
+  \UnaryInfC{$\pi\ P \alpsym \pi\ (P' [y := P''])$}
+  \LeftLabel{\alp\ ind.}
+  \UnaryInfC{$\pi\ P \alpsym (\pi\ P') [ (\pi\ y) := (\pi\ P'')]$}
+  \LeftLabel{$\p \beta$}
+  \TrinaryInfC{$(\lambda (\pi\ x) (\pi\ M)) (\pi\ N)  \p \pi\ P$}
+  \DisplayProof
+\end{itemize}
+\end{proof}
+
+\begin{lem}[Parallel is right \alp-equivalent]
+\label{prightalpha}
+\[ M \p N \wedge N \alpsym P \Rightarrow M \p P \]
+\end{lem}
+
+\begin{proof}
+Trivial induction on the parallel relation.
+
+\begin{itemize}
+   \item[var. rule:] Direct.
+   \item[app. rule:] Direct.
+   \item[\lam\ rule:] 
+
+     Hypotheses: 
+
+\begin{minipage}{0.5\linewidth}
+  \AxiomC{$\exists xs, \forall z \not\in xs, (x\ z) M \p (y\ z) N$} 
+  \LeftLabel{\p \lam}
+  \UnaryInfC{$\lambda x M  \p  \lambda y N$} \DisplayProof
+\end{minipage}
+\begin{minipage}{0.5\linewidth}
+  \AxiomC{$\exists ys, \forall w \not\in xs, (y\ w) N \alpsym (z\ w) P$} 
+  \LeftLabel{\alpsym a}
+  \UnaryInfC{$\lambda y N  \alpsym   \lambda z P$} \DisplayProof
+\end{minipage}
+
+Thesis:  $\lambda x M  \p  \lambda z P$
+
+Proof:
+  \AxiomC{$\forall w \not\in xs \conc ys, (x\ w) M \p (y\ w) N$} 
+  \AxiomC{$\forall w \not\in xs \conc ys, (y\ w) N \alpsym (z\ w) P$} 
+  \LeftLabel{ih}
+  \BinaryInfC{$\forall w \not\in xs \conc ys, (x\ w) M \p (z\ w) P$} 
+  \LeftLabel{\p \lam}
+  \UnaryInfC{$\lambda x M  \p  \lambda z P$} \DisplayProof
+
+
+   \item[$\beta$\ rule:]
+\begin{minipage}{0.2\linewidth}
+     Hypotheses: 
+\end{minipage}
+
+\begin{minipage}{0.8\linewidth}
+  \AxiomC{$\lambda x M \p \lambda y P'$}
+  \AxiomC{$N \p  P''$}
+  \AxiomC{$P \alpsym P' [y := P'']$}
+  \LeftLabel{$\p \beta$}
+  \TrinaryInfC{$(\lambda x M) N  \p P$}
+  \DisplayProof
+\end{minipage}
+\begin{minipage}{0.1\linewidth}
+  \[ P \alpsym Q  \]
+\end{minipage}
+
+Thesis:  $(\lambda x M) N \p Q$
+
+Proof:
+
+  \AxiomC{$\lambda x M \p \lambda y P'$}
+  \AxiomC{$N \p  P''$}
+  \AxiomC{$Q \alpsym P \alpsym P' [y := P'']$}
+  \UnaryInfC{$Q \alpsym P' [y := P'']$}
+  \LeftLabel{$\p \beta$}
+  \TrinaryInfC{$(\lambda x M) N  \p P$}
+  \DisplayProof
+\end{itemize}
+\end{proof}
+
+\begin{lem}[Parallel is left \alp-equivalent]
+\label{pleftalpha}
+\[ M \alpsym N \wedge N \p P \Rightarrow M \p P \]
+\end{lem}
+
+\begin{proof}
+Trivial induction on the parallel relation, analog to previous one as rules are symetric except from the $\beta$ rule that we discuss next.
+
+\begin{itemize}
+
+   \item[$\beta$\ rule:]
+\begin{minipage}{0.2\linewidth}
+     Hypotheses: 
+\end{minipage}
+
+\begin{minipage}{0.22\linewidth}
+  \[ Q \alpsym (\lambda x M) N \]
+\end{minipage}
+\begin{minipage}{0.78\linewidth}
+  \AxiomC{$\lambda x M \p \lambda y P'$}
+  \AxiomC{$N \p  P''$}
+  \AxiomC{$P \alpsym P' [y := P'']$}
+  \LeftLabel{$\p \beta$}
+  \TrinaryInfC{$(\lambda x M) N  \p P$}
+  \DisplayProof
+\end{minipage}
+
+Thesis:  $Q \p P$
+
+Proof:
+
+  \[ Q \alpsym (\lambda x M) N  \Rightarrow Q \equiv(\lam y Q') Q'' \wedge \lam z Q' \alpsym \lambda x M \wedge Q'' \alpsym  N\]
+
+  \AxiomC{$\lam z Q' \alpsym \lambda x M$}
+  \AxiomC{$\lambda x M \p \lambda y P'$}
+  \LeftLabel{hi}
+  \BinaryInfC{$\lam z Q'  \p  \lambda y P'$}
+
+  \AxiomC{$Q'' \alpsym N$}
+  \AxiomC{$N \p P''$}
+  \LeftLabel{hi}
+  \BinaryInfC{$Q'' \p P''$}
+
+  \AxiomC{$P \alpsym P' [y := P'']$}
+  \LeftLabel{$\p \beta$}
+  \TrinaryInfC{$Q \p P$}
+  \DisplayProof
+\end{itemize}
+\end{proof}
+
+\begin{lem}[Parallel relation preserves freshness]
+\label{pfresh}
+\[ x \# M \wedge M \p N  \Rightarrow x \# N \]
+\end{lem}
+
+
+\begin{lem}[Parallel relation \lam-elimination]
+\label{lamelim}
+\[ \lam x M \p M' \Rightarrow (\exists M'')(M \p M'' , \lam x M \p \lam x M'' , M' \alpsym \lam x M'') \]
+\end{lem}
+
+\begin{proof}
+We prove that $M'' = (y\ x) M'$\  satifies all conjunction assertions in the thesis.
+
+As $\lam x M \p M'$\ by parallel elimination we know:
+\begin{itemize}
+\item $M' = \lam y M'$
+\item $\exists xs, \forall z \not\in xs, (x\ z)M \p (y\ z) M'$
+\end{itemize}
+
+Next prove the thesis conjunctions:
+
+\begin{itemize}
+\item
+  \AxiomC{be $z \not\in xs \cup fv (\lam y M')$}
+  \AxiomC{$\forall z \not\in xs, (x\ z)M \p (y\ z) M'$}
+  \BinaryInfC{$(x\ z) M \p (y\ z) M'$}
+  \LeftLabel{\p\ equiv.}
+  \UnaryInfC{$(x\ z) (x\ z) M \p (x\ z) (y\ z) M'$}
+  \LeftLabel{swap idem.}
+  \UnaryInfC{$ M \p (x\ z) (y\ z) M'$}
+  \AxiomC{$x \# \lam y M'$}
+  \AxiomC{$z \not\in fv (\lam y M')$}
+  \UnaryInfC{$z \# \lam y M'$}
+  \BinaryInfC{$(x\ z) (y\ z) M' \alpsym (x\ y) M'$}   
+  \LeftLabel{lem.\ref{prightalpha}}
+  \BinaryInfC{$M \p (x\ y) M'$}   
+  \DisplayProof
+
+\item
+  \AxiomC{$\lam x M \p \lam y M'$}
+  \AxiomC{$\lam y M' \alpsym \lam x ((x\ y) M')$}
+  \LeftLabel{lem.\ref{prightalpha}}
+  \BinaryInfC{$\lam x M \p \lam x ((x\ y) M')$}   
+  \DisplayProof
+
+\item
+  \AxiomC{$x \# \lam x M$}
+  \AxiomC{$\lam x M \p \lam y M'$}
+  \LeftLabel{lem.\ref{pfresh}}
+  \BinaryInfC{$x \# \lam y M'$}
+  \UnaryInfC{$\lam y M' \alpsym \lam x ((y\ x) M')$}
+  \DisplayProof
+
+\end{itemize}
+\end{proof}
+
+\begin{lem}[Parallel relation $\beta$-elimination]
+\label{betaelim}
+\[ \lam x M \p \lam y M' , N \p N' , M' [ y := N' ] \alpsym P \Rightarrow (\exists M'')( \lam x M \p \lam x M'' , M'' [x := N'] \alpsym P) \]
+\end{lem}
+
+\begin{proof}
+We prove that $M'' = (y\ x) M'$\  satifies both conjunction assertions in the thesis:
+
+\begin{itemize}
+\item 
+  \AxiomC{$\lam x M \p \lam y M'$}
+  \AxiomC{$x \# \lam x M$}
+  \AxiomC{$\lam x M \p \lam y M'$}
+  \LeftLabel{lem.\ref{pfresh}}
+  \BinaryInfC{$x \# \lam y M'$}
+  \UnaryInfC{$\lam y M' \alpsym \lam x ((x\ y) M')$}
+  \LeftLabel{lem.\ref{prightalpha}}
+  \BinaryInfC{$\lam x M \p \lam x ((y\ x) M')$}   
+  \DisplayProof
+\item
+
+\[ \begin{array}{lcl}
+      ((y\ x) M') [x := N'] &\alpsym& \text{} \\
+      ((x\ y) M') [x := N'] &\alpsym& \text{lemma proved by alpha induction} \\
+      M' [y := N'] &\alpsym& \text{hypothesis} \\
+      P
+   \end{array} \]
+
+\end{itemize}
+\end{proof}
+
+\section{Other alpha primitive induction principle}
+\label{sec:alphaprinciple}
+
+\[
+  \begin{array}{}
+    P \alpha-
+\message{ !name(ParallelResumen.tex) !offset(39) }
+
+\end{document}

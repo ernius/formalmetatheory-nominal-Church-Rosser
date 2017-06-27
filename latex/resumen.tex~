@@ -1,0 +1,28 @@
+\documentclass{article}
+
+    % When using XeLaTeX, the following should be used instead:
+    % \documentclass[xetex, mathserif, serif]{beamer}
+    %
+    % The default font in XeLaTeX doesn’t have the default bullet character, so 
+    % either change the font:
+    % \setmainfont{XITS}
+    % \setmathfont{XITS Math}
+    %
+    % Or change the character:
+    %\setbeamertemplate{itemize items}{•}
+
+%\usepackage[bw,references]{latex/agda}
+%\usepackage[conor,references]{latex/agda}
+\usepackage[hidelinks]{hyperref}
+\usepackage[references,links]{agda}
+\usepackage{catchfilebetweentags}
+
+\begin{document}
+
+%\AgdaTarget{Λ}
+
+
+\ExecuteMetaData[Term.tex]{term}
+
+% Addition (\AgdaFunction{\_+\_})''''''````''/][;.,,
+\end{document}

@@ -1,0 +1,64 @@
+\documentclass{article} 
+
+% no margen
+%\usepackage[margin=0.1in]{geometry}
+\usepackage{graphicx}
+
+%\usepackage[bw,references]{latex/agda}
+%\usepackage[conor,references]{latex/agda}
+\usepackage[hidelinks]{hyperref}
+\usepackage[references,links]{agda}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{textgreek}
+\usepackage{catchfilebetweentags}
+\usepackage{tipa}
+
+%math
+\newcommand{\alp}{\ensuremath{\alpha}}
+\newcommand{\alpequivalence}{\ensuremath{\alpha}-equivalence}
+\newcommand{\lamb}{\ensuremath{\lambda}}
+\newcommand{\alphaeqsym}{\ensuremath{\sim_\alpha}}
+\newcommand{\choice}{\ensuremath{\chi}}
+
+%Agda
+\newcommand{\freshin}[2]{\ensuremath{#1 \mathbin{\AgdaDatatype{\#}} #2}}
+\newcommand{\lambAg}[2]{\ensuremath{\AgdaInductiveConstructor{ƛ}\, #1\, #2}}
+\newcommand{\inAg}{\ensuremath{\mathbin{\AgdaFunction{∈}}}}
+\newcommand{\ninAg}{\ensuremath{\mathbin{\AgdaFunction{∉}}}}
+\newcommand{\neqAg}{\ensuremath{\mathbin{\AgdaInductiveConstructor{≢}}}}
+\newcommand{\ap}[2]{#1 \ensuremath{\mathbin{\AgdaInductiveConstructorFunction{·}} #2}}
+\newcommand{\var}[1]{\ensuremath{\AgdaInductiveConstructorFunction{v}\, #1}}
+\newcommand{\fv}{\ensuremath{{\AgdaFunction{fv}}\,}}
+\newcommand{\perm}{\ensuremath{\mathbin{\AgdaFunction{∙}}}}
+\newcommand{\perma}{\ensuremath{\mathbin{\AgdaFunction{∙}_a}}}
+\newcommand{\free}{\ensuremath{\mathbin{\AgdaFunction{*}}}}
+\newcommand{\choiceAg}{\ensuremath{\AgdaFunction{χ}\,}}
+\newcommand{\choiceAgaux}{\ensuremath{\AgdaFunction{χ'}\,}}
+\newcommand{\alpeqAg}{\ensuremath{\mathbin{\AgdaDatatype{∼α}}}}
+\newcommand{\swap}[3]{\ensuremath{(#1 \mathbin{\AgdaFunction{∙}} #2)\, #3}}
+
+% \newcommand{\agdaf}[1]{\ensuremath{\AgdaFunction{#1}\,}}
+% \newcommand{\agdaD}[1]{\ensuremath{\AgdaDatatype{#1}\,}}
+% \newcommand{\agdav}[1]{\ensuremath{\AgdaBound{#1}\,}}
+
+\DeclareUnicodeCharacter{411}{\textipa{\textcrlambda}}
+\DeclareUnicodeCharacter{65288}{(}
+\DeclareUnicodeCharacter{65289}{)}
+\DeclareUnicodeCharacter{8788}{\ensuremath{\coloneqq}}
+\DeclareUnicodeCharacter{8336}{\ensuremath{_a}}
+\DeclareUnicodeCharacter{8799}{\ensuremath{\overset{?}{=}}}
+\DeclareUnicodeCharacter{8759}{\ensuremath{\dblcolon}}
+\DeclareUnicodeCharacter{8718}{\ensuremath{\square}}
+\DeclareUnicodeCharacter{9657}{\ensuremath{\triangleright}}
+
+\begin{document}
+
+Gabbay-Pitts~\cite{GP02:newapproach} introduces the \emph{nominal approach} as a general framework to deal with issues of bound names and \alpequivalence\ classes in any abstract syntax. This theory considers constructions and properties that are invariant with respect to permutating names, giving recursion and induction principles over the \alpequivalence\ classes defined by any abstract syntax binding. At the base of their theory is the notion of \emph{finite supported} mathematical objects, which gives a well-behaved way, in terms of name-permutations, to express the fact that names are fresh for mathematical objects. This notion enable us to extend the concept of \emph{fresh names} from finite objects (as abstract syntax trees) to infinite ones, as infinite sets and functions. In the latter case, a function $f : X \rightarrow Y$, where $X,Y$ are nominal sets, is finitely supported if there exists a finite set of names $A$\ such that for all names $a,b \not\in A$\ and any $c ∈ X$,  $ (a\ b) (f ((a\ b) c)) = f (c)$, where $(a\ b)e$\ denotes the \emph{swapping} operation that exchanges in the expression $e$\ the occurrences of $a$\ with $b$\ and vice versa. As Pitts points out in~\cite{Pitts2}, it remains an open question if a useful theory of finite support can be developed in constructive rather than classical mathematics. 
+
+Our development diverges from the nominal theory in the choice $\chi' : 2^\text{V} \rightarrow \text{V}$\ function. We use this function to select a fresh variable not belonging to some finite set of variables. Variables are represented by an infinite enumeration, and the returned fresh variable is determined by choosing the first variable in the enumeration not in the given set. Next, we show that there no exists such fixed set of variables $A$\ such that, for any given set of variables, swapping some variables in it, applying our choice function $\chi'$, and finally applying again the same swapping has no effect in the result. Suppose any finite set of variables $A$\ then let be $x = \displaystyle\min_{w} \{ w : w \not\in A \}$, $y = \displaystyle\min_{w} \{ w : w \not\in A \cup \{ x \} \}$, and $z$\ such that $z \not\in A \cup \{ x , y \}$, these three distinct variables exists since there exists infinite variables outside $A$. So $\chi' (\{ x \} \cup A) = y$, but it can be seen that $(z\ x)(\chi' ((z\ x) (\{ x \} \cup A))) = z$. So the result of $\chi'$\ function is not preserved by swapping operation for any finite set $A$, and then $\chi'$\ is not \emph{finite supported} as nominal theory requires.
+
+\bibliographystyle{plain}
+\bibliography{resumen}
+
+\end{document}

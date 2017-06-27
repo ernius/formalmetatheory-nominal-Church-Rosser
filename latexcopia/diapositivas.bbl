@@ -1,0 +1,11 @@
+\begin{thebibliography}{1}
+
+\bibitem{Aydemir08}
+Brian Aydemir, Arthur Chargu{\'e}raud, Benjamin~C. Pierce, Randy Pollack, and
+  Stephanie Weirich.
+\newblock Engineering formal metatheory.
+\newblock In {\em Proceedings of the 35th Annual ACM SIGPLAN-SIGACT Symposium
+  on Principles of Programming Languages}, POPL '08, pages 3--15, New York, NY,
+  USA, 2008. ACM.
+
+\end{thebibliography}

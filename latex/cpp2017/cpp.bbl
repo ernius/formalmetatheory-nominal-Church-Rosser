@@ -1,0 +1,148 @@
+\begin{thebibliography}{17}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Aydemir et~al.(2008)Aydemir, Chargu{\'e}raud, Pierce, Pollack, and
+  Weirich]{aydemir08}
+B.~Aydemir, A.~Chargu{\'e}raud, B.~C. Pierce, R.~Pollack, and S.~Weirich.
+\newblock Engineering formal metatheory.
+\newblock In \emph{Proceedings of the 35th Annual ACM SIGPLAN-SIGACT Symposium
+  on Principles of Programming Languages}, POPL '08, pages 3--15, New York, NY,
+  USA, 2008. ACM.
+\newblock ISBN 978-1-59593-689-9.
+\newblock \doi{10.1145/1328438.1328443}.
+\newblock URL \url{http://doi.acm.org/10.1145/1328438.1328443}.
+
+\bibitem[Aydemir et~al.(2005)Aydemir, Bohannon, Fairbairn, Foster, Pierce,
+  Sewell, Vytiniotis, Washburn, Weirich, and Zdancewic]{Aydemir2005}
+B.~E. Aydemir, A.~Bohannon, M.~Fairbairn, J.~N. Foster, B.~C. Pierce,
+  P.~Sewell, D.~Vytiniotis, G.~Washburn, S.~Weirich, and S.~Zdancewic.
+\newblock \emph{Mechanized Metatheory for the Masses: The PoplMark Challenge},
+  pages 50--65.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2005.
+\newblock ISBN 978-3-540-31820-0.
+\newblock \doi{10.1007/11541868\_4}.
+\newblock URL \url{http://dx.doi.org/10.1007/11541868\_4}.
+
+\bibitem[Barendregt(1985)]{bar84:lambda}
+H.~Barendregt.
+\newblock \emph{The Lambda Calculus: Its Syntax and Semantics}.
+\newblock Studies in Logic and the Foundations of Mathematics. Elsevier
+  Science, 1985.
+\newblock ISBN 9780080933757.
+
+\bibitem[Barendregt(1984)]{bar:84}
+H.~P. Barendregt.
+\newblock \emph{The Lambda Calculus Its Syntax and Semantics}, volume 103 of
+  \emph{Studies in Logic and the Foundations of Mathematics}.
+\newblock North Holland, revised edition, 1984.
+\newblock ISBN 9780080933757.
+
+\bibitem[Chargu{\'{e}}raud(2012)]{chargueraud12}
+A.~Chargu{\'{e}}raud.
+\newblock The locally nameless representation.
+\newblock \emph{J. Autom. Reasoning}, 49\penalty0 (3):\penalty0 363--408, 2012.
+\newblock \doi{10.1007/s10817-011-9225-2}.
+\newblock URL \url{http://dx.doi.org/10.1007/s10817-011-9225-2}.
+
+\bibitem[Copello et~al.(2016)Copello, Tasistro, Szasz, Bove, and
+  Fern{\'{a}}ndez]{CopelloTSBF16}
+E.~Copello, A.~Tasistro, N.~Szasz, A.~Bove, and M.~Fern{\'{a}}ndez.
+\newblock Alpha-structural induction and recursion for the lambda calculus in
+  constructive type theory.
+\newblock \emph{Electr. Notes Theor. Comput. Sci.}, 323:\penalty0 109--124,
+  2016.
+\newblock \doi{10.1016/j.entcs.2016.06.008}.
+\newblock URL \url{http://dx.doi.org/10.1016/j.entcs.2016.06.008}.
+
+\bibitem[de~Bruijn(1972)]{deBruijn1972}
+N.~G. de~Bruijn.
+\newblock Lambda calculus notation with nameless dummies, a tool for automatic
+  formula manipulation, with applications to the church-rosser theorem.
+\newblock \emph{Indagationes Mathematicae (Koninglijke Nederlandse Akademie van
+  Wetenschappen)}, 34\penalty0 (5):\penalty0 381--392, 1972.
+\newblock http://www.win.tue.nl/automath/archive/pdf/aut029.pdfElectronic
+  Edition.
+
+\bibitem[Despeyroux et~al.(1995)Despeyroux, Felty, and
+  Hirschowitz]{DespeyrouxFH95}
+J.~Despeyroux, A.~P. Felty, and A.~Hirschowitz.
+\newblock Higher-order abstract syntax in coq.
+\newblock In M.~Dezani-Ciancaglini and G.~D. Plotkin, editors, \emph{TLCA},
+  volume 902 of \emph{Lecture Notes in Computer Science}, pages 124--138.
+  Springer, 1995.
+\newblock ISBN 3-540-59048-X.
+\newblock URL
+  \url{http://dblp.uni-trier.de/db/conf/tlca/tlca95.html#DespeyrouxFH95}.
+
+\bibitem[Gabbay and Pitts(2002)]{GP02:newapproach}
+M.~J. Gabbay and A.~M. Pitts.
+\newblock {A New Approach to Abstract Syntax with Variable Binding}.
+\newblock \emph{Formal Aspects of Computing}, 13\penalty0 (3-5):\penalty0
+  341--363, 2002.
+\newblock ISSN 0934-5043.
+\newblock \doi{10.1007/s001650200016}.
+\newblock URL \url{http://dx.doi.org/10.1007/s001650200016}.
+
+\bibitem[Gordon(1993)]{gordon:mechanisation:1993}
+A.~D. Gordon.
+\newblock {A Mechanisation of Name Carrying Syntax up to Alpha Conversion}.
+\newblock In \emph{Proceedings of Higher Order Logic Theorem Proving and its
+  Applications}, Lecture Notes in Computer Science, pages 414--426, 1993.
+
+\bibitem[Gordon and Melham(1996)]{DBLP:conf/tphol/GordonM96}
+A.~D. Gordon and T.~F. Melham.
+\newblock Five axioms of alpha-conversion.
+\newblock In J.~von Wright, J.~Grundy, and J.~Harrison, editors, \emph{Theorem
+  Proving in Higher Order Logics, 9th International Conference, TPHOLs'96,
+  Turku, Finland, August 26-30, 1996, Proceedings}, volume 1125 of
+  \emph{Lecture Notes in Computer Science}, pages 173--190. Springer, 1996.
+\newblock ISBN 3-540-61587-3.
+\newblock \doi{10.1007/BFb0105404}.
+\newblock URL \url{http://dx.doi.org/10.1007/BFb0105404}.
+
+\bibitem[Hindley and Seldin(1986)]{DBLP:books/cu/HindleyS86}
+J.~R. Hindley and J.~P. Seldin.
+\newblock \emph{Introduction to Combinators and Lambda-Calculus}.
+\newblock Cambridge University Press, 1986.
+
+\bibitem[Martin-L{\"o}f and Sambin(1984)]{mlof}
+P.~Martin-L{\"o}f and G.~Sambin.
+\newblock \emph{Intuitionistic type theory}.
+\newblock Studies in Proof Theory. Bibliopolis, 1984.
+\newblock URL \url{http://books.google.com.uy/books?id=\_D0ZAQAAIAAJ}.
+
+\bibitem[Norell(2007)]{agda}
+U.~Norell.
+\newblock \emph{Towards a practical programming language based on dependent
+  type theory}.
+\newblock PhD thesis, Department of Computer Science and Engineering, Chalmers
+  University of Technology, SE-412 96 G\"{o}teborg, Sweden, September 2007.
+
+\bibitem[Norrish(2004)]{Norrish04recursivefunction}
+M.~Norrish.
+\newblock Recursive function definition for types with binders.
+\newblock In \emph{In Seventeenth International Conference on Theorem Proving
+  in Higher Order Logics}, pages 241--256, 2004.
+
+\bibitem[Takahashi(1995)]{takahashi}
+M.~Takahashi.
+\newblock Parallel reductions in λ-calculus.
+\newblock \emph{Information and Computation}, 118\penalty0 (1):\penalty0 120 --
+  127, 1995.
+\newblock ISSN 0890-5401.
+
+\bibitem[Urban and Tasson(2005)]{urban05}
+C.~Urban and C.~Tasson.
+\newblock Nominal techniques in isabelle/hol.
+\newblock In R.~Nieuwenhuis, editor, \emph{Automated Deduction – CADE-20},
+  volume 3632 of \emph{Lecture Notes in Computer Science}, pages 38--53.
+  Springer Berlin Heidelberg, 2005.
+\newblock ISBN 978-3-540-28005-7.
+\newblock \doi{10.1007/11532231_4}.
+\newblock URL \url{http://dx.doi.org/10.1007/11532231_4}.
+
+\end{thebibliography}

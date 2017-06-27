@@ -1,0 +1,647 @@
+@Inbook{Aydemir2005,
+author="Aydemir, Brian E. and Bohannon, Aaron and Fairbairn, Matthew and Foster, J. Nathan and Pierce, Benjamin C. and Sewell, Peter and Vytiniotis, Dimitrios and Washburn, Geoffrey and Weirich, Stephanie and Zdancewic, Steve",
+title="Mechanized Metatheory for the Masses: The PoplMark Challenge",
+bookTitle="Theorem Proving in Higher Order Logics: 18th International Conference, TPHOLs 2005, Oxford, UK, August 22-25, 2005. Proceedings",
+year="2005",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="50--65",
+isbn="978-3-540-31820-0",
+doi="10.1007/11541868\_4",
+url="http://dx.doi.org/10.1007/11541868\_4"
+}
+
+
+@article{CopelloTSBF16,
+  author    = {Ernesto Copello and
+               Alvaro Tasistro and
+               Nora Szasz and
+               Ana Bove and
+               Maribel Fern{\'{a}}ndez},
+  title     = {Alpha-Structural Induction and Recursion for the Lambda Calculus in
+               Constructive Type Theory},
+  journal   = {Electr. Notes Theor. Comput. Sci.},
+  volume    = {323},
+  pages     = {109--124},
+  year      = {2016},
+  url       = {http://dx.doi.org/10.1016/j.entcs.2016.06.008},
+  doi       = {10.1016/j.entcs.2016.06.008},
+  timestamp = {Tue, 26 Jul 2016 16:47:42 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/entcs/CopelloTSBF16},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{nos,
+title = "Formalisation in Constructive Type Theory of Stoughton's Substitution for the Lambda Calculus ",
+journal = "Electronic Notes in Theoretical Computer Science ",
+volume = "312",
+number = "0",
+pages = "215 - 230",
+year = "2015",
+note = "Ninth Workshop on Logical and Semantic Frameworks, with Applications (LSFA 2014) ",
+issn = "1571-0661",
+doi = "http://dx.doi.org/10.1016/j.entcs.2015.04.013",
+url = "http://www.sciencedirect.com/science/article/pii/S1571066115000171",
+author = "Álvaro Tasistro and Ernesto Copello and Nora Szasz",
+keywords = "Formal Metatheory",
+keywords = "Lambda Calculus",
+keywords = "Constructive Type Theory ",
+abstract = "Abstract In [Stoughton, A., Substitution revisited, Theor. Comput. Sci. 59 (1988), pp. 317–325], Alley Stoughton proposed a notion of (simultaneous) substitution for the Lambda calculus as formulated in its original syntax – i.e. with only one sort of symbols (names) for variables – and without identifying α-convertible terms. According to such formulation, the action of substitution on terms is defined by simple structural recursion and an interesting theory arises concerning the connection to α-conversion. In this paper we present a formalisation of Stoughton's work in Constructive Type Theory using the language Agda, which reaches up to the Substitution Lemma for α-conversion. The development has been quite inexpensive e.g. in labour cost, and we are able to formulate some improvements over the original presentation. For instance, our definition of α-conversion is just syntax directed and we prove it to be an equivalence relation in an easy way, whereas in [Stoughton, A., Substitution revisited, Theor. Comput. Sci. 59 (1988), pp. 317–325] the latter was included as part of the definition and then proven to be equivalent to an only nearly structural definition as corollary of a lengthier development. As a result of this work we are inclined to assert that Stoughton's is the right way to formulate the Lambda calculus in its original, conventional syntax and that it is a formulation amenable to fully formal treatment. "
+}
+
+@inproceedings{DespeyrouxFH95,
+  added-at = {2003-01-07T00:00:00.000+0100},
+  author = {Despeyroux, Joëlle and Felty, Amy P. and Hirschowitz, André},
+  biburl = {http://www.bibsonomy.org/bibtex/210ab3b83760badbda53f80c9de1d6035/dblp},
+  booktitle = {TLCA},
+  date = {2003-01-07},
+  description = {dblp},
+  editor = {Dezani-Ciancaglini, Mariangiola and Plotkin, Gordon D.},
+  interhash = {b03a26125f493b01a3185dab83fbc028},
+  intrahash = {10ab3b83760badbda53f80c9de1d6035},
+  isbn = {3-540-59048-X},
+  keywords = {dblp},
+  pages = {124-138},
+  publisher = {Springer},
+  series = {Lecture Notes in Computer Science},
+  timestamp = {2003-01-07T00:00:00.000+0100},
+  title = {Higher-Order Abstract Syntax in Coq.},
+  url = {http://dblp.uni-trier.de/db/conf/tlca/tlca95.html#DespeyrouxFH95},
+  volume = 902,
+  year = 1995
+}
+
+@book{DBLP:books/cu/HindleyS86,
+  author    = {J. Roger Hindley and
+               Jonathan P. Seldin},
+  title     = {Introduction to Combinators and Lambda-Calculus},
+  publisher = {Cambridge University Press},
+  year      = {1986},
+  timestamp = {Thu, 03 Jan 2002 11:51:13 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/books/cu/HindleyS86},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{GP02:newapproach,
+author={Gabbay, Murdoch J. and Pitts, Andrew M.},
+title={{A New Approach to Abstract Syntax with Variable Binding}},
+journal={Formal Aspects of Computing},
+volume={13},
+number={3-5},
+pages={341-363},
+year={2002},
+doi={10.1007/s001650200016},
+url={http://dx.doi.org/10.1007/s001650200016},
+publisher={Springer-Verlag},
+keywords={Keywords: Abstract syntax; Alpha-conversion; Permutation actions; Set theory; Structural induction},
+language={English},
+issn={0934-5043},
+}
+
+@article{UPG04:nominalunification,
+  author = {Christian Urban and Andrew M. Pitts and Murdoch Gabbay},
+  title = {{Nominal Unification}},
+  journal = {Theoretical Computer Science},
+  year = {2004},
+  volume = {323},
+  number = {1-3},
+  pages = {473-497},
+  doi = {http://dx.doi.org/10.1016/j.tcs.2004.06.016}
+}
+
+@article{deBruijn1972,
+  author = {N. G. de Bruijn},
+  title = {Lambda Calculus Notation with Nameless Dummies, A Tool for Automatic Formula Manipulation, With Applications to the Church-Rosser Theorem},
+  journal = {Indagationes Mathematicae (Koninglijke Nederlandse Akademie van Wetenschappen)},
+  year = {1972},
+  volume = {34},
+  number = {5},
+  pages = {381--392},
+  note = {http://www.win.tue.nl/automath/archive/pdf/aut029.pdfElectronic Edition}
+}
+
+
+@article{chargueraud12,
+  author    = {Arthur Chargu{\'{e}}raud},
+  title     = {The Locally Nameless Representation},
+  journal   = {J. Autom. Reasoning},
+  year      = {2012},
+  volume    = {49},
+  number    = {3},
+  pages     = {363--408},
+  url       = {http://dx.doi.org/10.1007/s10817-011-9225-2},
+  doi       = {10.1007/s10817-011-9225-2},
+  timestamp = {Mon, 06 Oct 2014 14:52:53 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/jar/Chargueraud12},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{aydemir08,
+ author = {Aydemir, Brian and Chargu{\'e}raud, Arthur and Pierce, Benjamin C. and Pollack, Randy and Weirich, Stephanie},
+ title = {Engineering Formal Metatheory},
+ booktitle = {Proceedings of the 35th Annual ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages},
+ series = {POPL '08},
+ year = {2008},
+ isbn = {978-1-59593-689-9},
+ location = {San Francisco, California, USA},
+ pages = {3--15},
+ numpages = {13},
+ url = {http://doi.acm.org/10.1145/1328438.1328443},
+ doi = {10.1145/1328438.1328443},
+ acmid = {1328443},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {binding, coq, locally nameless},
+} 
+
+@article{aydemir,
+ author = {Aydemir, Brian and Bohannon, Aaron and Weirich, Stephanie},
+ title = {Nominal Reasoning Techniques in {C}oq},
+ journal = {Electron. Notes Theor. Comput. Sci.},
+ issue_date = {June, 2007},
+ volume = {174},
+ number = {5},
+ month = jun,
+ year = {2007},
+ issn = {1571-0661},
+ pages = {69--77},
+ numpages = {9},
+ url = {http://dx.doi.org/10.1016/j.entcs.2007.01.028},
+ doi = {10.1016/j.entcs.2007.01.028},
+ acmid = {1248304},
+ publisher = {Elsevier Science Publishers B. V.},
+ address = {Amsterdam, The Netherlands, The Netherlands},
+ keywords = {Coq, nominal reasoning techniques, variable binding},
+} 
+
+@inproceedings{UN05:formaltreatment,
+  author    = {Christian Urban and Michael Norrish},
+  title     = {A Formal Treatment of the Barendregt Variable Convention in Rule Inductions},
+  booktitle = {{ACM} {SIGPLAN} International Conference on Functional Programming, 
+               Workshop on Mechanized reasoning about languages with variable binding,
+               {MERLIN} 2005, Tallinn, Estonia, September 30, 2005},
+  year      = {2005},
+  pages     = {25--32},
+  crossref  = {DBLP:conf/icfp/2005merlin},
+  url       = {http://doi.acm.org/10.1145/1088454.1088458},
+  doi       = {10.1145/1088454.1088458},
+  timestamp = {Mon, 13 Oct 2014 14:42:24 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/icfp/UrbanN05},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@INPROCEEDINGS{Norrish04recursivefunction,
+    author = {Michael Norrish},
+    title = {Recursive function definition for types with binders},
+    booktitle = {In Seventeenth International Conference on Theorem Proving in Higher Order Logics},
+    year = {2004},
+    pages = {241--256}
+}
+
+@article{Norrish:mechanisinglambda,
+year={2006},
+issn={1388-3690},
+journal={Higher-Order and Symbolic Computation},
+volume={19},
+number={2-3},
+doi={10.1007/s10990-006-8745-7},
+title={Mechanising λ-calculus using a classical first order theory of terms with permutations},
+url={http://dx.doi.org/10.1007/s10990-006-8745-7},
+publisher={Kluwer Academic Publishers},
+author={Norrish, Michael},
+pages={169-195},
+language={English}
+}
+
+
+@proceedings{DBLP:conf/icfp/2005merlin,
+  editor    = {Randy Pollack},
+  title     = {{ACM} {SIGPLAN} International Conference on Functional Programming,
+               Workshop on Mechanized reasoning about languages with variable binding,
+               {MERLIN} 2005, Tallinn, Estonia, September 30, 2005},
+  year      = {2005},
+  publisher = {{ACM}},
+  timestamp = {Mon, 13 Oct 2014 14:42:24 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/icfp/2005merlin},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{deBruijn1972381,
+title = "Lambda calculus notation with nameless dummies, a tool for automatic formula manipulation, with application to the Church-Rosser theorem ",
+journal = "Indagationes Mathematicae (Proceedings) ",
+volume = "75",
+number = "5",
+pages = "381 - 392",
+year = "1972",
+note = "",
+issn = "1385-7258",
+doi = "http://dx.doi.org/10.1016/1385-7258(72)90034-0",
+url = "http://www.sciencedirect.com/science/article/pii/1385725872900340",
+author = "N.G de Bruijn",
+abstract = "In ordinary lambda calculus the occurrences of a bound variable are made recognizable by the use of one and the same (otherwise irrelevant) name at all occurrences. This convention is known to cause considerable trouble in cases of substitution. In the present paper a different notational system is developed, where occurrences of variables are indicated by integers giving the “distance” to the binding λ instead of a name attached to that λ. The system is claimed to be efficient for automatic formula manipulation as well as for metalingual discussion. As an example the most essential part of a proof of the Church-Rosser theorem is presented in this namefree calculus. "
+}
+
+
+@incollection{urban05,
+year={2005},
+isbn={978-3-540-28005-7},
+booktitle={Automated Deduction – CADE-20},
+volume={3632},
+series={Lecture Notes in Computer Science},
+editor={Nieuwenhuis, Robert},
+doi={10.1007/11532231_4},
+title={Nominal Techniques in Isabelle/HOL},
+url={http://dx.doi.org/10.1007/11532231_4},
+publisher={Springer Berlin Heidelberg},
+keywords={Lambda-calculus; nominal logic; structural induction; theorem-assistants},
+author={Urban, Christian and Tasson, Christine},
+pages={38-53},
+language={English}
+}
+
+
+@ARTICLE{mcKP99:somelambda,
+  AUTHOR = {J. McKinna and R. Pollack},
+  TITLE = {Some Lambda Calculus and Type Theory Formalized},
+  JOURNAL = {Journal of Automated Reasoning},
+  YEAR = 1999,
+  VOLUME = 23,
+  NUMBER = {3--4},
+  MONTH = NOV,
+  URL = {http://homepages.inf.ed.ac.uk/rpollack/export/McKinnaPollack99.ps.gz}
+}
+
+
+@article{chargueraud12locallynameless,
+  author    = {Arthur Chargu{\'{e}}raud},
+  title     = {The Locally Nameless Representation},
+  journal   = {J. Autom. Reasoning},
+  year      = {2012},
+  volume    = {49},
+  number    = {3},
+  pages     = {363--408},
+  url       = {http://dx.doi.org/10.1007/s10817-011-9225-2},
+  doi       = {10.1007/s10817-011-9225-2},
+  timestamp = {Mon, 06 Oct 2014 14:52:53 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/jar/Chargueraud12},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@book{mlof,
+  title={Intuitionistic type theory},
+  author={Martin-L{\"o}f, P. and Sambin, G.},
+  series={Studies in Proof Theory},
+  url={http://books.google.com.uy/books?id=\_D0ZAQAAIAAJ},
+  year={1984},
+  publisher={Bibliopolis}
+}
+
+@book{mlof90,
+    abstract = {{In recent years several formalisms for program construction have been introduced. One such formalism is the type theory developed by Per Martin-L¨of. It is well suited as a theory for program construction since it is possible to express both specifications and programs within the same formalism. Furthermore, the proof rules can be used to derive a correct program from a specification as well as to verify that a given program has a certain property. This book contains an introduction to type theory as a theory for program construction.}},
+    author = {Nordstrom, Bengt and Petersson, Kent and Smith, Jan M.},
+    citeulike-article-id = {2310446},
+    citeulike-linkout-0 = {http://www.cs.chalmers.se/Cs/Research/Logic/book/},
+    citeulike-linkout-1 = {http://www.amazon.ca/exec/obidos/redirect?tag=citeulike09-20\&amp;path=ASIN/0198538146},
+    citeulike-linkout-10 = {http://www.librarything.com/isbn/0198538146},
+    citeulike-linkout-2 = {http://www.amazon.de/exec/obidos/redirect?tag=citeulike01-21\&amp;path=ASIN/0198538146},
+    citeulike-linkout-3 = {http://www.amazon.fr/exec/obidos/redirect?tag=citeulike06-21\&amp;path=ASIN/0198538146},
+    citeulike-linkout-4 = {http://www.amazon.jp/exec/obidos/ASIN/0198538146},
+    citeulike-linkout-5 = {http://www.amazon.co.uk/exec/obidos/ASIN/0198538146/citeulike00-21},
+    citeulike-linkout-6 = {http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20\&path=ASIN/0198538146},
+    citeulike-linkout-7 = {http://www.worldcat.org/isbn/0198538146},
+    citeulike-linkout-8 = {http://books.google.com/books?vid=ISBN0198538146},
+    citeulike-linkout-9 = {http://www.amazon.com/gp/search?keywords=0198538146\&index=books\&linkCode=qs},
+    day = {19},
+    edition = {0},
+    howpublished = {Hardcover},
+    isbn = {0198538146},
+    keywords = {book, dependent-types, introduction, martin-lof, type-theory},
+    month = jul,
+    posted-at = {2008-01-31 10:05:06},
+    priority = {2},
+    publisher = {Oxford University Press, USA},
+    title = {{Programming in Martin-L\"{o}f's Type Theory: An Introduction}},
+    url = {http://www.cs.chalmers.se/Cs/Research/Logic/book/},
+    year = {1990}
+}
+
+
+@misc{agdawiki,
+    author = {{The Agda Team}},
+    citeulike-article-id = {3514394},
+    howpublished = {Available at http://appserv.cs.chalmers.se/users/ulfn/wiki/agda.php},
+    keywords = {agda},
+    posted-at = {2008-11-14 16:21:51},
+    priority = {2},
+    title = {{The Agda Wiki}}
+}
+
+@article{landin66:next700,
+ author = {Landin, P. J.},
+ title = {The Next 700 Programming Languages},
+ journal = {Commun. ACM},
+ issue_date = {March 1966},
+ volume = {9},
+ number = {3},
+ month = mar,
+ year = {1966},
+ issn = {0001-0782},
+ pages = {157--166},
+ numpages = {10},
+ url = {http://doi.acm.org/10.1145/365230.365257},
+ doi = {10.1145/365230.365257},
+ acmid = {365257},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+} 
+
+@article{fordM01:pvs,
+  author    = {Jonathan M. Ford and Ian A. Mason},
+  title     = {Operational Techniques in {PVS} - {A} Preliminary Evaluation},
+  journal   = {Electr. Notes Theor. Comput. Sci.},
+  year      = {2001},
+  volume    = {42},
+  pages     = {124--142},
+  url       = {http://dx.doi.org/10.1016/S1571-0661(04)80882-X},
+  doi       = {10.1016/S1571-0661(04)80882-X},
+  timestamp = {Mon, 06 Oct 2014 05:11:57 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/tcs/FordM01},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@INPROCEEDINGS{homeier01:ChRHOL,
+    author = {Peter V. Homeier},
+    title = {A Proof of the Church-Rosser Theorem for the Lambda Calculus in Higher Order Logic},
+    booktitle = {TPHOLs’01: Supplemental Proceedings},
+    year = {2001},
+    pages = {207--222}
+}
+
+@book{bar84:lambda,
+  title={The Lambda Calculus: Its Syntax and Semantics},
+  author={Barendregt, H.P.},
+  isbn={9780080933757},
+  series={Studies in Logic and the Foundations of Mathematics},
+  year={1985},
+  publisher={Elsevier Science}
+}
+
+
+@article{stoughton,
+  author    = {A. Stoughton},
+  title     = {Substitution Revisited},
+  journal   = {Theor. Comput. Sci.},
+  volume    = {59},
+  year      = {1988},
+  pages     = {317-325},
+  ee        = {http://dx.doi.org/10.1016/0304-3975(88)90149-1},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@article{church32,
+  author = {A. Church},
+  title = {A Set of Postulates for the Foundation of Logic Part I},
+  journal = {Annals of Mathematics},
+  year = {1932},
+  volume = {33},
+  number = {2},
+  pages = {346--366},
+  note = {http://www.jstor.org/stable/1968702Electronic Edition},
+  url = {http://www.jstor.org/stable/1968702}
+}
+
+@book{curry58:combinatory,
+  author = {H. B. Curry and R. Feys},
+  title = {Combinatory Logic, Volume I},
+  publisher = {North-Holland},
+  year = {1958},
+  pages = {xvi+417},
+  note = {Second printing 1968}
+}
+
+
+@book{frege79:begriffsschrift,
+  author = {G. Frege},
+  title = {Begriffsschrift, eine der Arithmetischen Nachgebildete Formelsprache des Reinen Denkens},
+  publisher = {Halle},
+  year = {1879},
+  note = {English translation in From Frege to Gödel, a Source Book in Mathematical Logic (J. van Heijenoort, Editor), Harvard University Press, Cambridge, 1967, pp. 1--82}
+}
+
+@book{gentzen69:collected,
+ author		= {Gentzen, Gerhard},
+ title		= {The Collected Papers of {G}erhard {G}entzen},
+ publisher	= {North-Holland},
+ series		= {Studies in Logic and the Foundations of Mathematics},
+ year		= 1969,
+ note		= {Edited by M. E. Szabo}}
+
+@book{prawitz65:naturaldeduction,
+ author		= {Prawitz, Dag},
+ title		= {Natural Deduction: a Proof-Theoretical Study},
+ publisher	= {Almquist and Wiskell},
+ series		= {Stockholm Studies in Philosophy},
+ number		= 3,
+ year		= 1965}
+
+@misc{lee,
+  author = {Gyesik Lee},
+  title  = {Proof Pearl: Substitution Revisited, Again},
+  note   = {Hankyong National University, Korea, Available from: http://formal.hknu.ac.kr/Publi/Stoughton.pdf}
+}
+
+@book{krivine93:lambdacalculus,
+  author    = {Jean{-}Louis Krivine},
+  title     = {Lambda-calculus, types and models},
+  series    = {Ellis Horwood series in computers and their applications},
+  year      = {1993},
+  publisher = {Masson},
+  isbn      = {978-0-13-062407-9},
+  timestamp = {Mon, 20 Oct 2014 04:23:49 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/books/daglib/0071545},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@phdthesis{agda,
+  author  = {Ulf Norell},
+  title	  = {Towards a practical programming language based on dependent type
+	     theory},
+  school  = {Department of Computer Science and Engineering, Chalmers University of Technology},
+  year	  = 2007,
+  month	  = {September},
+  address = {SE-412 96 G\"{o}teborg, Sweden}
+}
+
+
+@other{coq,
+  title = {The Coq Proof Assistant},
+  url = {http://coq.inria.fr/}
+}
+
+@Manual{Coq:manual,
+  title =        {The Coq proof assistant reference manual},
+  author =       {\mbox{The Coq development team}},
+  organization = {LogiCal Project},
+  note =         {Version 8.0},
+  year =         {2012},
+  url =          "http://coq.inria.fr"
+}
+
+@incollection{coquand91:conversion,
+  AUTHOR = {T. Coquand},
+  TITLE = {An Algorithm for Testing Conversion in Type Theory},
+  YEAR = 1991,
+  BOOKTITLE = {Logical Frameworks},
+  EDITOR = {G. Huet and G. Plotkin},
+  PUBLISHER = {Cambridge University Press},
+  ADDRESS = {Cambridge},
+  PAGES = {255-279},
+  KEYWORDS = {}}
+
+@article{vestergaard91:confluence,
+  author    = {Ren{\'e} Vestergaard and James Brotherston},
+  title     = {A formalised first-order confluence proof for the $\lambda$-calculus 
+               using one-sorted variable names},
+  journal   = {Inf. Comput.},
+  volume    = {183},
+  number    = {2},
+  year      = {2003},
+  pages     = {212-244},
+  ee        = {http://dx.doi.org/10.1016/S0890-5401(03)00023-3},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@book{ebbinghaus94:mathematicallogic,
+  author    = {Heinz{-}Dieter Ebbinghaus and J{\"{o}}rg Flum and Wolfgang Thomas},
+  title     = {Mathematical logic {(2.} ed.)},
+  series    = {Undergraduate texts in mathematics},
+  year      = {1994},
+  publisher = {Springer},
+  isbn      = {978-3-540-94258-0},
+  timestamp = {Mon, 20 Oct 2014 04:48:57 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/books/daglib/0080659},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{DBLP:conf/tphol/GordonM96,
+  author    = {Andrew D. Gordon and
+               Thomas F. Melham},
+  title     = {Five Axioms of Alpha-Conversion},
+  booktitle = {Theorem Proving in Higher Order Logics, 9th International Conference,
+               TPHOLs'96, Turku, Finland, August 26-30, 1996, Proceedings},
+  pages     = {173--190},
+  year      = {1996},
+  crossref  = {DBLP:conf/tphol/1996},
+  url       = {http://dx.doi.org/10.1007/BFb0105404},
+  doi       = {10.1007/BFb0105404},
+  timestamp = {Tue, 29 Sep 2009 11:07:49 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/tphol/GordonM96},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{gordon:mechanisation:1993,
+    author = {Gordon, Andrew D.},
+    booktitle = {Proceedings of Higher Order Logic Theorem Proving and its Applications},
+    citeulike-article-id = {6016280},
+    keywords = {file-import-09-10-27},
+    pages = {414--426},
+    posted-at = {2009-10-27 16:20:43},
+    priority = {2},
+    series = {Lecture Notes in Computer Science},
+    title = {{A Mechanisation of Name Carrying Syntax up to Alpha Conversion}},
+    year = {1993}
+}
+
+@proceedings{DBLP:conf/tphol/1996,
+  editor    = {Joakim von Wright and
+               Jim Grundy and
+               John Harrison},
+  title     = {Theorem Proving in Higher Order Logics, 9th International Conference,
+               TPHOLs'96, Turku, Finland, August 26-30, 1996, Proceedings},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {1125},
+  publisher = {Springer},
+  year      = {1996},
+  isbn      = {3-540-61587-3},
+  timestamp = {Thu, 03 Jan 2002 12:10:28 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/tphol/1996},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+
+
+@article{revesz85:axioms,
+  author    = {Gy{\"{o}}rgy E. R{\'{e}}v{\'{e}}sz},
+  title     = {Axioms for the Theory of Lambda-Conversion},
+  journal   = {{SIAM} J. Comput.},
+  year      = {1985},
+  volume    = {14},
+  number    = {2},
+  pages     = {373--382},
+  url       = {http://dx.doi.org/10.1137/0214028},
+  doi       = {10.1137/0214028},
+  timestamp = {Mon, 20 Oct 2014 04:52:07 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/siamcomp/Revesz85},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@MISC{sato,
+    author = {Masahiko Sato, Randy Pollack, Helmut Schwichtenberg and Takafumi Sakurai},
+    title = {Viewing Lambda-terms Through Maps},
+    note =  {Available from http://homepages.inf.ed.ac.uk/rpollack/export/Maps\_SatoPollackSchwichtenbergSakurai.pdf},
+    year = {2013}
+}
+
+@article{Gabbay,
+author = {Murdoch J. Gabbay and Andrew M. Pitts},
+title = {\href{http://www.gabbay.org.uk/papers.html\#newaas-jv}{A New Approach to Abstract Syntax with Variable Binding}},
+journal = {Formal Aspects of Computing},
+year = {2001},
+month = {July},
+volume = {13},
+number = {3—5},
+pages = {341—363},
+doi = {10.1007/s001650200016},
+pdf = {http://www.gabbay.org.uk/papers/newaas-jv.pdf}
+}
+
+
+@article{Pitts1,
+title = "Nominal logic, a first order theory of names and binding ",
+journal = "Information and Computation ",
+volume = "186",
+number = "2",
+pages = "165 - 193",
+year = "2003",
+note = "Theoretical Aspects of Computer Software (TACS 2001) ",
+issn = "0890-5401",
+doi = "http://dx.doi.org/10.1016/S0890-5401(03)00138-X",
+url = "http://www.sciencedirect.com/science/article/pii/S089054010300138X",
+author = "Andrew M. Pitts",
+keywords = "Abstract syntax",
+keywords = "Variable binding",
+keywords = "Permutation",
+keywords = "Fresh names "
+}
+
+@article{Pitts2,
+ author = {Pitts, Andrew M.},
+ title = {Alpha-structural Recursion and Induction},
+ journal = {J. ACM},
+ issue_date = {May 2006},
+ volume = {53},
+ number = {3},
+ month = may,
+ year = {2006},
+ issn = {0004-5411},
+ pages = {459--506},
+ numpages = {48},
+ url = {http://doi.acm.org/10.1145/1147954.1147961},
+ doi = {10.1145/1147954.1147961},
+ acmid = {1147961},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Abstract syntax, binders, induction, names, recursion},
+} 
+
