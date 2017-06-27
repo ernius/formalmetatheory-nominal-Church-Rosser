@@ -1,0 +1,14 @@
+*.agdai
+*.*~
+*.log
+*.aux
+*.out
+*.ptb
+*.pdf
+*.bbl
+*.blg
+*.nav
+*.snm
+*.toc
+*.bcf
+*~
