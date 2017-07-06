@@ -8,8 +8,8 @@ We here show one successful application of the principles, namely a complete pro
 The Church-Rosser theorem is in the file *Diamond.agda* file, while the Subject Reduction theorem is in the file *Types.lagda*.
 
 The entire code can be browsed in html format here:
-* https://github.com/ernius/formalmetatheory-nominal-Church-Rosser/tree/master/html/Diamond.html
-* https://github.com/ernius/formalmetatheory-nominal-Church-Rosser/tree/master/html/Types.html
+* https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/Diamond.html
+* https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/Types.html
 
 # Authors
 
