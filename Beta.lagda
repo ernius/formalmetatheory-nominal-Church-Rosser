@@ -42,52 +42,6 @@ data _▹_ : Λ → Λ → Set where
 
 Beta contraction preserves typing judge.
 
--- %<*typebeta>
--- \begin{code}
--- lemma⊢▹  :  {Γ : Cxt}{α : Type}{M N : Λ} 
---          →  Γ ⊢ M ∶ α → M ▹ N → Γ ⊢ N ∶ α
--- \end{code}
--- %</typebeta>
-
--- %<*typebetaproof>
--- \begin{code}
--- lemma⊢▹ {Γ} (⊢· .{M = ƛ x M} {N} (⊢ƛ {x} {α} {β} {M} Γ,x:α⊢M:β) Γ⊢N:α) ▹β 
---   = lemma⊢σM  {ι ≺+ (x , N)} {Γ ‚ x ∶ α} {Γ} {M} 
---               Γ,x:α⊢M:β
---               (lemma⇀ (lemmaι≺+⇀ Γ⊢N:α))
--- \end{code}
--- %</typebetaproof>
-
--- %<*typeiota>
--- \begin{code}
--- lemma⊢ι  :  {Γ : Cxt}{α : Type}{M : Λ} 
---          →  Γ ⊢ M ∙ ι ∶ α → Γ ⊢ M ∶ α
--- lemma⊢ι {M = v x}    Γ⊢x:α     = Γ⊢x:α
--- lemma⊢ι {M = M · N}  (⊢· Γ⊢Mι:α⟶β Γ⊢Nι:α) 
---   = ⊢· (lemma⊢ι Γ⊢Mι:α⟶β) (lemma⊢ι Γ⊢Nι:α)
--- lemma⊢ι {M = ƛ x M}  (⊢ƛ Γ,y:α⊢Mι≺+x,y:α)  
---   with lemma⊢σM Γ,y:α⊢Mι≺+x,y:α (lemmaι≺+⇀y {x = x} {χ (ι , ƛ x M)} {M})
--- ... | Γ,x:α⊢Mι≺+x,yι≺y,x:β rewrite lemma≺+ι (lemma-χι (ƛ x M))
---   = ⊢ƛ (lemma⊢ι Γ,x:α⊢Mι≺+x,yι≺y,x:β)
--- \end{code}
--- %</typeiota>
-
--- %<*typealpha>
--- \begin{code}
--- lemma⊢α  :  {Γ : Cxt}{α : Type}{M N : Λ} 
---          → Γ ⊢ M ∶ α → M ∼α N → Γ ⊢ N ∶ α
--- \end{code}
--- %</typealpha>
-
--- %<*typealphaproof>
--- \begin{code}
--- lemma⊢α {M = M} {N = N} Γ⊢M M∼N 
---   with M ∙ ι    | lemma⊢σM Γ⊢M (lemma⇀ lemmaι⇀)  | lemmaM∼M'→Mσ≡M'σ {σ = ι} M∼N 
--- ... | .(N ∙ ι)  | Γ⊢N∙ι                 | refl 
---   = lemma⊢ι Γ⊢N∙ι
--- \end{code}
--- %</typealphaproof>
-
 Context clousure of beta contraction.
 
 \end{code}
@@ -106,16 +60,6 @@ _→β_ = ctx _▹_
 \end{code}
 %</beta>
 
--- \begin{code}
--- lemma⊢→β :  {Γ : Cxt}{α : Type}{M N : Λ} 
---             → Γ ⊢ M ∶ α → M →β N → Γ ⊢ N ∶ α
--- lemma⊢→β Γ⊢M:α               (ctxinj  M▹N)    = lemma⊢▹ Γ⊢M:α M▹N
--- lemma⊢→β (⊢· Γ⊢M:α→β Γ⊢N:α)  (ctx·l   M→βM')  = ⊢· (lemma⊢→β Γ⊢M:α→β M→βM') Γ⊢N:α
--- lemma⊢→β (⊢· Γ⊢M:α→β Γ⊢N:α)  (ctx·r   N→βN')  = ⊢· Γ⊢M:α→β (lemma⊢→β Γ⊢N:α N→βN')
--- lemma⊢→β (⊢ƛ Γ,x:α⊢M:α)      (ctxƛ    M→βN)   = ⊢ƛ (lemma⊢→β Γ,x:α⊢M:α M→βN)
-
-
--- \end{code}
 
 %<*alphabeta>
 \begin{code}
@@ -124,15 +68,6 @@ _→α_ : Rel
 _→α_ = _→β_ ∪ _∼α_
 \end{code}
 %</alphabeta>
-
--- \begin{code}
--- lemma⊢→α :  {Γ : Cxt}{α : Type}{M N : Λ} 
---             → Γ ⊢ M ∶ α → M →α N → Γ ⊢ N ∶ α
--- lemma⊢→α Γ⊢M:α (inj₁ M→βN)  = lemma⊢→β Γ⊢M:α M→βN
--- lemma⊢→α Γ⊢M:α (inj₂ M~N)   = lemma⊢α Γ⊢M:α M~N
-
-
--- \end{code}
 
 %<*asteralphabeta>
 \begin{code}

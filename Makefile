@@ -1,10 +1,10 @@
 # name of agda compiler name
-AGDA = agda-2.4.2.5  
+AGDA = agda
 
 LATEX = pdflatex
 
 # agda library location
-AGDALIBRARYFLAGS = -i . -i ~/Documents/NewAgda/agda-stdlib-0.9/src/
+#AGDALIBRARYFLAGS = -i . -i ~/Documents/NewAgda/agda-stdlib-0.9/src/
 # AGDALIBRARYFLAGS = -i . -i /nix/store/fdif0nwphfy56zd16qlkyk0wg54bcqlz-agda-stdlib-2.4.2.3/share/agda
 
 # agda html
@@ -32,7 +32,8 @@ FreeVariables : FreeVariables.lagda
 	$(AGDA) $(AGDALIBRARYFLAGS) Substitution.lagda
 
 html : *.lagda
-	$(AGDA) $(AGDAHTMLFLAGS) $(AGDALIBRARYFLAGS) Substitution.lagda; cp -rf html/ ../gh-pages/formalmetatheory-nominal/
+	$(AGDA) $(AGDAHTMLFLAGS) $(AGDALIBRARYFLAGS) Diamond.agda
+	$(AGDA) $(AGDAHTMLFLAGS) $(AGDALIBRARYFLAGS) Types.lagda
 
 clean :
 	rm *.agdai

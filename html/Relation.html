@@ -1,0 +1,4509 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >Relation</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Comment"
+      >%include lhs2TeX.fmt
+\long\def\ignore#1{}
+
+\begin{document}
+
+\section{Reflexive and Transitve Clousure of a Relation}
+
+\ignore{
+</a
+      ><a name="129"
+      >\begin{code}
+</a
+      ><a name="142" class="Keyword"
+      >open</a
+      ><a name="146"
+      > </a
+      ><a name="147" class="Keyword"
+      >import</a
+      ><a name="153"
+      > </a
+      ><a name="154" href="Level.html#1" class="Module"
+      >Level</a
+      ><a name="159"
+      > </a
+      ><a name="160" class="Keyword"
+      >hiding</a
+      ><a name="166"
+      > </a
+      ><a name="167" class="Symbol"
+      >(</a
+      ><a name="168" href="Agda.Primitive.html#609" class="Primitive"
+      >zero</a
+      ><a name="172" class="Symbol"
+      >)</a
+      ><a name="173"
+      >
+</a
+      ><a name="174" class="Keyword"
+      >module</a
+      ><a name="180"
+      > </a
+      ><a name="181" href="Relation.html#1" class="Module"
+      >Relation</a
+      ><a name="189"
+      > </a
+      ><a name="190" class="Symbol"
+      >{</a
+      ><a name="191" href="Relation.html#191" class="Bound"
+      >l</a
+      ><a name="192"
+      > </a
+      ><a name="193" class="Symbol"
+      >:</a
+      ><a name="194"
+      > </a
+      ><a name="195" href="Agda.Primitive.html#408" class="Postulate"
+      >Level</a
+      ><a name="200" class="Symbol"
+      >}</a
+      ><a name="201"
+      > </a
+      ><a name="202" class="Symbol"
+      >(</a
+      ><a name="203" href="Relation.html#203" class="Bound"
+      >A</a
+      ><a name="204"
+      > </a
+      ><a name="205" class="Symbol"
+      >:</a
+      ><a name="206"
+      > </a
+      ><a name="207" class="PrimitiveType"
+      >Set</a
+      ><a name="210"
+      > </a
+      ><a name="211" href="Relation.html#191" class="Bound"
+      >l</a
+      ><a name="212" class="Symbol"
+      >)</a
+      ><a name="213"
+      > </a
+      ><a name="214" class="Keyword"
+      >where</a
+      ><a name="219"
+      >  
+
+  </a
+      ><a name="225" class="Keyword"
+      >open</a
+      ><a name="229"
+      > </a
+      ><a name="230" class="Keyword"
+      >import</a
+      ><a name="236"
+      > </a
+      ><a name="237" href="Relation.Nullary.html#1" class="Module"
+      >Relation.Nullary</a
+      ><a name="253"
+      >
+  </a
+      ><a name="256" class="Keyword"
+      >import</a
+      ><a name="262"
+      > </a
+      ><a name="263" href="Relation.Binary.html#1" class="Module"
+      >Relation.Binary</a
+      ><a name="278"
+      > </a
+      ><a name="279" class="Symbol"
+      >as</a
+      ><a name="281"
+      > </a
+      ><a name="282" class="Module"
+      >RB</a
+      ><a name="284"
+      >
+  </a
+      ><a name="287" class="Keyword"
+      >import</a
+      ><a name="293"
+      > </a
+      ><a name="294" href="Relation.Unary.html#1" class="Module"
+      >Relation.Unary</a
+      ><a name="308"
+      > </a
+      ><a name="309" class="Symbol"
+      >as</a
+      ><a name="311"
+      > </a
+      ><a name="312" class="Module"
+      >RU</a
+      ><a name="314"
+      >
+  </a
+      ><a name="317" class="Keyword"
+      >open</a
+      ><a name="321"
+      > </a
+      ><a name="322" class="Keyword"
+      >import</a
+      ><a name="328"
+      > </a
+      ><a name="329" href="Data.Product.html#1" class="Module"
+      >Data.Product</a
+      ><a name="341"
+      >
+  </a
+      ><a name="344" class="Keyword"
+      >open</a
+      ><a name="348"
+      > </a
+      ><a name="349" class="Keyword"
+      >import</a
+      ><a name="355"
+      > </a
+      ><a name="356" href="Data.Sum.html#1" class="Module"
+      >Data.Sum</a
+      ><a name="364"
+      >
+  </a
+      ><a name="367" class="Keyword"
+      >open</a
+      ><a name="371"
+      > </a
+      ><a name="372" class="Keyword"
+      >import</a
+      ><a name="378"
+      > </a
+      ><a name="379" href="Relation.Binary.PropositionalEquality.html#1" class="Module"
+      >Relation.Binary.PropositionalEquality</a
+      ><a name="416"
+      > </a
+      ><a name="417" class="Symbol"
+      >as</a
+      ><a name="419"
+      > </a
+      ><a name="420" class="Module"
+      >PropEq</a
+      ><a name="426"
+      > </a
+      ><a name="427" class="Keyword"
+      >renaming</a
+      ><a name="435"
+      > </a
+      ><a name="436" class="Symbol"
+      >(</a
+      ><a name="437" href="Relation.Binary.PropositionalEquality.html#5124" class="InductiveConstructor Operator"
+      >[_]</a
+      ><a name="440"
+      > </a
+      ><a name="441" class="Symbol"
+      >to</a
+      ><a name="443"
+      > </a
+      ><a name="444" href="Relation.Binary.PropositionalEquality.html#5124" class="InductiveConstructor Operator"
+      >[_]&#7522;</a
+      ><a name="448" class="Symbol"
+      >)</a
+      ><a name="449"
+      > </a
+      ><a name="450" class="Keyword"
+      >hiding</a
+      ><a name="456"
+      > </a
+      ><a name="457" class="Symbol"
+      >(</a
+      ><a name="458" href="Relation.Binary.PropositionalEquality.Core.html#632" class="Function"
+      >trans</a
+      ><a name="463" class="Symbol"
+      >)</a
+      ><a name="464"
+      >
+\end{code}
+</a
+      ><a name="476" class="Comment"
+      >}
+
+\ignore{
+</a
+      ><a name="488"
+      >\begin{code}
+  </a
+      ><a name="503" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="506"
+      > </a
+      ><a name="507" class="Symbol"
+      >:</a
+      ><a name="508"
+      > </a
+      ><a name="509" class="PrimitiveType"
+      >Set</a
+      ><a name="512"
+      > </a
+      ><a name="513" class="Symbol"
+      >(</a
+      ><a name="514" href="Agda.Primitive.html#625" class="Primitive"
+      >suc</a
+      ><a name="517"
+      > </a
+      ><a name="518" href="Relation.html#191" class="Bound"
+      >l</a
+      ><a name="519" class="Symbol"
+      >)</a
+      ><a name="520"
+      >
+  </a
+      ><a name="523" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="526"
+      > </a
+      ><a name="527" class="Symbol"
+      >=</a
+      ><a name="528"
+      > </a
+      ><a name="529" href="Relation.Binary.Core.html#740" class="Function"
+      >RB.Rel</a
+      ><a name="535"
+      > </a
+      ><a name="536" href="Relation.html#203" class="Bound"
+      >A</a
+      ><a name="537"
+      > </a
+      ><a name="538" href="Relation.html#191" class="Bound"
+      >l</a
+      ><a name="539"
+      > 
+\end{code}
+</a
+      ><a name="552" class="Comment"
+      >
+</a
+      ><a name="553"
+      >\begin{code}
+  </a
+      ><a name="568" href="Relation.html#568" class="Function"
+      >Pred</a
+      ><a name="572"
+      > </a
+      ><a name="573" class="Symbol"
+      >:</a
+      ><a name="574"
+      > </a
+      ><a name="575" class="PrimitiveType"
+      >Set</a
+      ><a name="578"
+      > </a
+      ><a name="579" class="Symbol"
+      >(</a
+      ><a name="580" href="Agda.Primitive.html#625" class="Primitive"
+      >suc</a
+      ><a name="583"
+      > </a
+      ><a name="584" href="Relation.html#191" class="Bound"
+      >l</a
+      ><a name="585" class="Symbol"
+      >)</a
+      ><a name="586"
+      >
+  </a
+      ><a name="589" href="Relation.html#568" class="Function"
+      >Pred</a
+      ><a name="593"
+      > </a
+      ><a name="594" class="Symbol"
+      >=</a
+      ><a name="595"
+      > </a
+      ><a name="596" href="Relation.Unary.html#541" class="Function"
+      >RU.Pred</a
+      ><a name="603"
+      > </a
+      ><a name="604" href="Relation.html#203" class="Bound"
+      >A</a
+      ><a name="605"
+      > </a
+      ><a name="606" href="Relation.html#191" class="Bound"
+      >l</a
+      ><a name="607"
+      >
+
+  </a
+      ><a name="611" class="Keyword"
+      >infix</a
+      ><a name="616"
+      > </a
+      ><a name="617" class="Number"
+      >2</a
+      ><a name="618"
+      > </a
+      ><a name="619" href="Relation.html#636" class="Function Operator"
+      >_preserved-by_</a
+      ><a name="633"
+      >
+  </a
+      ><a name="636" href="Relation.html#636" class="Function Operator"
+      >_preserved-by_</a
+      ><a name="650"
+      > </a
+      ><a name="651" class="Symbol"
+      >:</a
+      ><a name="652"
+      > </a
+      ><a name="653" href="Relation.html#568" class="Function"
+      >Pred</a
+      ><a name="657"
+      > </a
+      ><a name="658" class="Symbol"
+      >&#8594;</a
+      ><a name="659"
+      > </a
+      ><a name="660" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="663"
+      > </a
+      ><a name="664" class="Symbol"
+      >&#8594;</a
+      ><a name="665"
+      > </a
+      ><a name="666" class="PrimitiveType"
+      >Set</a
+      ><a name="669"
+      > </a
+      ><a name="670" href="Relation.html#191" class="Bound"
+      >l</a
+      ><a name="671"
+      >
+  </a
+      ><a name="674" href="Relation.html#674" class="Bound"
+      >P</a
+      ><a name="675"
+      > </a
+      ><a name="676" href="Relation.html#636" class="Function Operator"
+      >preserved-by</a
+      ><a name="688"
+      > </a
+      ><a name="689" href="Relation.html#689" class="Bound"
+      >R</a
+      ><a name="690"
+      > </a
+      ><a name="691" class="Symbol"
+      >=</a
+      ><a name="692"
+      > </a
+      ><a name="693" class="Symbol"
+      >&#8704;</a
+      ><a name="694"
+      > </a
+      ><a name="695" class="Symbol"
+      >{</a
+      ><a name="696" href="Relation.html#696" class="Bound"
+      >M</a
+      ><a name="697"
+      > </a
+      ><a name="698" href="Relation.html#698" class="Bound"
+      >N</a
+      ><a name="699"
+      > </a
+      ><a name="700" class="Symbol"
+      >:</a
+      ><a name="701"
+      > </a
+      ><a name="702" href="Relation.html#203" class="Bound"
+      >A</a
+      ><a name="703" class="Symbol"
+      >}</a
+      ><a name="704"
+      > </a
+      ><a name="705" class="Symbol"
+      >&#8594;</a
+      ><a name="706"
+      > </a
+      ><a name="707" href="Relation.html#674" class="Bound"
+      >P</a
+      ><a name="708"
+      > </a
+      ><a name="709" href="Relation.html#696" class="Bound"
+      >M</a
+      ><a name="710"
+      > </a
+      ><a name="711" class="Symbol"
+      >&#8594;</a
+      ><a name="712"
+      > </a
+      ><a name="713" href="Relation.html#689" class="Bound"
+      >R</a
+      ><a name="714"
+      > </a
+      ><a name="715" href="Relation.html#696" class="Bound"
+      >M</a
+      ><a name="716"
+      > </a
+      ><a name="717" href="Relation.html#698" class="Bound"
+      >N</a
+      ><a name="718"
+      > </a
+      ><a name="719" class="Symbol"
+      >&#8594;</a
+      ><a name="720"
+      > </a
+      ><a name="721" href="Relation.html#674" class="Bound"
+      >P</a
+      ><a name="722"
+      > </a
+      ><a name="723" href="Relation.html#698" class="Bound"
+      >N</a
+      ><a name="724"
+      >
+\end{code}
+</a
+      ><a name="736" class="Comment"
+      >
+
+The dual $R^{\mathit{op}}$ of a relation $R$ is defined by swapping the pairs.
+
+</a
+      ><a name="818"
+      >\begin{code}
+  </a
+      ><a name="833" href="Relation.html#833" class="Function"
+      >dual</a
+      ><a name="837"
+      > </a
+      ><a name="838" class="Symbol"
+      >:</a
+      ><a name="839"
+      > </a
+      ><a name="840" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="843"
+      > </a
+      ><a name="844" class="Symbol"
+      >&#8594;</a
+      ><a name="845"
+      > </a
+      ><a name="846" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="849"
+      >
+  </a
+      ><a name="852" href="Relation.html#833" class="Function"
+      >dual</a
+      ><a name="856"
+      > </a
+      ><a name="857" href="Relation.html#857" class="Bound"
+      >R</a
+      ><a name="858"
+      > </a
+      ><a name="859" href="Relation.html#859" class="Bound"
+      >m</a
+      ><a name="860"
+      > </a
+      ><a name="861" href="Relation.html#861" class="Bound"
+      >n</a
+      ><a name="862"
+      > </a
+      ><a name="863" class="Symbol"
+      >=</a
+      ><a name="864"
+      > </a
+      ><a name="865" href="Relation.html#857" class="Bound"
+      >R</a
+      ><a name="866"
+      > </a
+      ><a name="867" href="Relation.html#861" class="Bound"
+      >n</a
+      ><a name="868"
+      > </a
+      ><a name="869" href="Relation.html#859" class="Bound"
+      >m</a
+      ><a name="870"
+      >
+
+  </a
+      ><a name="874" class="Comment"
+      >-- dual-idem : (R : Rel) &#8594; dual (dual R) &#8801; R</a
+      ><a name="918"
+      >
+  </a
+      ><a name="921" class="Comment"
+      >-- dual-idem R = {! refl!}</a
+      ><a name="947"
+      >
+\end{code}
+</a
+      ><a name="959" class="Comment"
+      >
+Given two relations $R$ and $S$ over $A$ we can take their union.
+
+</a
+      ><a name="1027"
+      >\begin{code}
+  </a
+      ><a name="1042" class="Keyword"
+      >infix</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" class="Number"
+      >5</a
+      ><a name="1049"
+      > </a
+      ><a name="1050" href="Relation.html#1059" class="Function Operator"
+      >_&#8746;_</a
+      ><a name="1053"
+      >   
+  </a
+      ><a name="1059" href="Relation.html#1059" class="Function Operator"
+      >_&#8746;_</a
+      ><a name="1062"
+      >  </a
+      ><a name="1064" class="Symbol"
+      >:</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" class="Symbol"
+      >(</a
+      ><a name="1067" href="Relation.html#1067" class="Bound"
+      >R</a
+      ><a name="1068"
+      > </a
+      ><a name="1069" href="Relation.html#1069" class="Bound"
+      >S</a
+      ><a name="1070"
+      > </a
+      ><a name="1071" class="Symbol"
+      >:</a
+      ><a name="1072"
+      > </a
+      ><a name="1073" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="1076" class="Symbol"
+      >)</a
+      ><a name="1077"
+      > </a
+      ><a name="1078" class="Symbol"
+      >&#8594;</a
+      ><a name="1079"
+      > </a
+      ><a name="1080" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="1083"
+      > 
+  </a
+      ><a name="1087" href="Relation.html#1059" class="Function Operator"
+      >_&#8746;_</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" href="Relation.html#1091" class="Bound"
+      >R</a
+      ><a name="1092"
+      > </a
+      ><a name="1093" href="Relation.html#1093" class="Bound"
+      >S</a
+      ><a name="1094"
+      > </a
+      ><a name="1095" href="Relation.html#1095" class="Bound"
+      >a</a
+      ><a name="1096"
+      > </a
+      ><a name="1097" href="Relation.html#1097" class="Bound"
+      >b</a
+      ><a name="1098"
+      > </a
+      ><a name="1099" class="Symbol"
+      >=</a
+      ><a name="1100"
+      > </a
+      ><a name="1101" href="Relation.html#1091" class="Bound"
+      >R</a
+      ><a name="1102"
+      > </a
+      ><a name="1103" href="Relation.html#1095" class="Bound"
+      >a</a
+      ><a name="1104"
+      > </a
+      ><a name="1105" href="Relation.html#1097" class="Bound"
+      >b</a
+      ><a name="1106"
+      > </a
+      ><a name="1107" href="Data.Sum.html#433" class="Datatype Operator"
+      >&#8846;</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" href="Relation.html#1093" class="Bound"
+      >S</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" href="Relation.html#1095" class="Bound"
+      >a</a
+      ><a name="1112"
+      > </a
+      ><a name="1113" href="Relation.html#1097" class="Bound"
+      >b</a
+      ><a name="1114"
+      >
+\end{code}
+</a
+      ><a name="1126" class="Comment"
+      >
+Binary relations can be pre-ordered by inclusion, $R$ is less than or
+equal to $S$ when $a\,R\,b$ implies $a\,S\,b$; as usual we write $R
+\subseteq S$. 
+
+</a
+      ><a name="1281"
+      >\begin{code}
+  </a
+      ><a name="1296" href="Relation.html#1296" class="Function Operator"
+      >_&#8838;_</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" class="Symbol"
+      >:</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="1305"
+      > </a
+      ><a name="1306" class="Symbol"
+      >&#8594;</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" class="Symbol"
+      >&#8594;</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" class="PrimitiveType"
+      >Set</a
+      ><a name="1317"
+      > </a
+      ><a name="1318" href="Relation.html#191" class="Bound"
+      >l</a
+      ><a name="1319"
+      >
+  </a
+      ><a name="1322" href="Relation.html#1322" class="Bound"
+      >R</a
+      ><a name="1323"
+      > </a
+      ><a name="1324" href="Relation.html#1296" class="Function Operator"
+      >&#8838;</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" href="Relation.html#1326" class="Bound"
+      >S</a
+      ><a name="1327"
+      > </a
+      ><a name="1328" class="Symbol"
+      >=</a
+      ><a name="1329"
+      > </a
+      ><a name="1330" href="Relation.Binary.Core.html#1004" class="Function Operator"
+      >RB._&#8658;_</a
+      ><a name="1336"
+      > </a
+      ><a name="1337" href="Relation.html#1322" class="Bound"
+      >R</a
+      ><a name="1338"
+      > </a
+      ><a name="1339" href="Relation.html#1326" class="Bound"
+      >S</a
+      ><a name="1340"
+      >
+
+  </a
+      ><a name="1344" href="Relation.html#1344" class="Function"
+      >refl-&#8838;</a
+      ><a name="1350"
+      > </a
+      ><a name="1351" class="Symbol"
+      >:</a
+      ><a name="1352"
+      > </a
+      ><a name="1353" class="Symbol"
+      >{</a
+      ><a name="1354" href="Relation.html#1354" class="Bound"
+      >R</a
+      ><a name="1355"
+      > </a
+      ><a name="1356" class="Symbol"
+      >:</a
+      ><a name="1357"
+      > </a
+      ><a name="1358" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="1361" class="Symbol"
+      >}</a
+      ><a name="1362"
+      > </a
+      ><a name="1363" class="Symbol"
+      >&#8594;</a
+      ><a name="1364"
+      > </a
+      ><a name="1365" href="Relation.html#1354" class="Bound"
+      >R</a
+      ><a name="1366"
+      > </a
+      ><a name="1367" href="Relation.html#1296" class="Function Operator"
+      >&#8838;</a
+      ><a name="1368"
+      > </a
+      ><a name="1369" href="Relation.html#1354" class="Bound"
+      >R</a
+      ><a name="1370"
+      >
+  </a
+      ><a name="1373" href="Relation.html#1344" class="Function"
+      >refl-&#8838;</a
+      ><a name="1379"
+      > </a
+      ><a name="1380" href="Relation.html#1380" class="Bound"
+      >aRb</a
+      ><a name="1383"
+      > </a
+      ><a name="1384" class="Symbol"
+      >=</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" href="Relation.html#1380" class="Bound"
+      >aRb</a
+      ><a name="1389"
+      >
+
+  </a
+      ><a name="1393" href="Relation.html#1393" class="Function"
+      >trans-&#8838;</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" class="Symbol"
+      >:</a
+      ><a name="1402"
+      > </a
+      ><a name="1403" class="Symbol"
+      >{</a
+      ><a name="1404" href="Relation.html#1404" class="Bound"
+      >R</a
+      ><a name="1405"
+      > </a
+      ><a name="1406" href="Relation.html#1406" class="Bound"
+      >S</a
+      ><a name="1407"
+      > </a
+      ><a name="1408" href="Relation.html#1408" class="Bound"
+      >T</a
+      ><a name="1409"
+      > </a
+      ><a name="1410" class="Symbol"
+      >:</a
+      ><a name="1411"
+      > </a
+      ><a name="1412" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="1415" class="Symbol"
+      >}</a
+      ><a name="1416"
+      > </a
+      ><a name="1417" class="Symbol"
+      >&#8594;</a
+      ><a name="1418"
+      > </a
+      ><a name="1419" href="Relation.html#1404" class="Bound"
+      >R</a
+      ><a name="1420"
+      > </a
+      ><a name="1421" href="Relation.html#1296" class="Function Operator"
+      >&#8838;</a
+      ><a name="1422"
+      > </a
+      ><a name="1423" href="Relation.html#1406" class="Bound"
+      >S</a
+      ><a name="1424"
+      > </a
+      ><a name="1425" class="Symbol"
+      >&#8594;</a
+      ><a name="1426"
+      > </a
+      ><a name="1427" href="Relation.html#1406" class="Bound"
+      >S</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" href="Relation.html#1296" class="Function Operator"
+      >&#8838;</a
+      ><a name="1430"
+      > </a
+      ><a name="1431" href="Relation.html#1408" class="Bound"
+      >T</a
+      ><a name="1432"
+      > </a
+      ><a name="1433" class="Symbol"
+      >&#8594;</a
+      ><a name="1434"
+      > </a
+      ><a name="1435" href="Relation.html#1404" class="Bound"
+      >R</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" href="Relation.html#1296" class="Function Operator"
+      >&#8838;</a
+      ><a name="1438"
+      > </a
+      ><a name="1439" href="Relation.html#1408" class="Bound"
+      >T</a
+      ><a name="1440"
+      >
+  </a
+      ><a name="1443" href="Relation.html#1393" class="Function"
+      >trans-&#8838;</a
+      ><a name="1450"
+      > </a
+      ><a name="1451" href="Relation.html#1451" class="Bound"
+      >R&#8838;S</a
+      ><a name="1454"
+      > </a
+      ><a name="1455" href="Relation.html#1455" class="Bound"
+      >S&#8838;T</a
+      ><a name="1458"
+      > </a
+      ><a name="1459" href="Relation.html#1459" class="Bound"
+      >aRb</a
+      ><a name="1462"
+      > </a
+      ><a name="1463" class="Symbol"
+      >=</a
+      ><a name="1464"
+      > </a
+      ><a name="1465" href="Relation.html#1455" class="Bound"
+      >S&#8838;T</a
+      ><a name="1468"
+      > </a
+      ><a name="1469" class="Symbol"
+      >(</a
+      ><a name="1470" href="Relation.html#1451" class="Bound"
+      >R&#8838;S</a
+      ><a name="1473"
+      > </a
+      ><a name="1474" href="Relation.html#1459" class="Bound"
+      >aRb</a
+      ><a name="1477" class="Symbol"
+      >)</a
+      ><a name="1478"
+      >
+\end{code}
+</a
+      ><a name="1490" class="Comment"
+      >}
+
+The reflexive and transitive closure of a relation is more naturally
+introduced by allowing more than one steps in the transitive clause.
+Some immediate facts about the transitive closure of an operation is
+that it is monotone and idempotent (besides these two properties one
+asks that the closure of $R$ contains $R$, but this is immediate from
+the definition). From these two properties we prove that $R \subseteq
+\transclos S$ implies $\transclos R \subseteq \transclos S$
+(alternatively one can proceed by induction on $a\,\transclos R\,b$); it is
+straightforward to prove the other
+
+</a
+      ><a name="2081"
+      >\begin{code}
+  </a
+      ><a name="2096" class="Keyword"
+      >data</a
+      ><a name="2100"
+      > </a
+      ><a name="2101" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2105"
+      > </a
+      ><a name="2106" class="Symbol"
+      >(</a
+      ><a name="2107" href="Relation.html#2107" class="Bound"
+      >&#10239;</a
+      ><a name="2108"
+      > </a
+      ><a name="2109" class="Symbol"
+      >:</a
+      ><a name="2110"
+      > </a
+      ><a name="2111" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="2114" class="Symbol"
+      >)</a
+      ><a name="2115"
+      > </a
+      ><a name="2116" class="Symbol"
+      >:</a
+      ><a name="2117"
+      > </a
+      ><a name="2118" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="2121"
+      > </a
+      ><a name="2122" class="Keyword"
+      >where</a
+      ><a name="2127"
+      >
+    </a
+      ><a name="2132" href="Relation.html#2132" class="InductiveConstructor"
+      >refl</a
+      ><a name="2136"
+      > </a
+      ><a name="2137" class="Symbol"
+      >:</a
+      ><a name="2138"
+      > </a
+      ><a name="2139" class="Symbol"
+      >&#8704;</a
+      ><a name="2140"
+      > </a
+      ><a name="2141" class="Symbol"
+      >{</a
+      ><a name="2142" href="Relation.html#2142" class="Bound"
+      >a</a
+      ><a name="2143" class="Symbol"
+      >}</a
+      ><a name="2144"
+      > </a
+      ><a name="2145" class="Symbol"
+      >&#8594;</a
+      ><a name="2146"
+      > </a
+      ><a name="2147" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2151"
+      > </a
+      ><a name="2152" href="Relation.html#2107" class="Bound"
+      >&#10239;</a
+      ><a name="2153"
+      > </a
+      ><a name="2154" href="Relation.html#2142" class="Bound"
+      >a</a
+      ><a name="2155"
+      > </a
+      ><a name="2156" href="Relation.html#2142" class="Bound"
+      >a</a
+      ><a name="2157"
+      >
+    </a
+      ><a name="2162" href="Relation.html#2162" class="InductiveConstructor"
+      >just</a
+      ><a name="2166"
+      > </a
+      ><a name="2167" class="Symbol"
+      >:</a
+      ><a name="2168"
+      > </a
+      ><a name="2169" class="Symbol"
+      >&#8704;</a
+      ><a name="2170"
+      > </a
+      ><a name="2171" class="Symbol"
+      >{</a
+      ><a name="2172" href="Relation.html#2172" class="Bound"
+      >a</a
+      ><a name="2173"
+      > </a
+      ><a name="2174" href="Relation.html#2174" class="Bound"
+      >b</a
+      ><a name="2175" class="Symbol"
+      >}</a
+      ><a name="2176"
+      > </a
+      ><a name="2177" class="Symbol"
+      >&#8594;</a
+      ><a name="2178"
+      > </a
+      ><a name="2179" href="Relation.html#2107" class="Bound"
+      >&#10239;</a
+      ><a name="2180"
+      > </a
+      ><a name="2181" href="Relation.html#2172" class="Bound"
+      >a</a
+      ><a name="2182"
+      > </a
+      ><a name="2183" href="Relation.html#2174" class="Bound"
+      >b</a
+      ><a name="2184"
+      > </a
+      ><a name="2185" class="Symbol"
+      >&#8594;</a
+      ><a name="2186"
+      > </a
+      ><a name="2187" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" href="Relation.html#2107" class="Bound"
+      >&#10239;</a
+      ><a name="2193"
+      > </a
+      ><a name="2194" href="Relation.html#2172" class="Bound"
+      >a</a
+      ><a name="2195"
+      > </a
+      ><a name="2196" href="Relation.html#2174" class="Bound"
+      >b</a
+      ><a name="2197"
+      >
+    </a
+      ><a name="2202" href="Relation.html#2202" class="InductiveConstructor"
+      >trans</a
+      ><a name="2207"
+      > </a
+      ><a name="2208" class="Symbol"
+      >:</a
+      ><a name="2209"
+      > </a
+      ><a name="2210" class="Symbol"
+      >&#8704;</a
+      ><a name="2211"
+      > </a
+      ><a name="2212" class="Symbol"
+      >{</a
+      ><a name="2213" href="Relation.html#2213" class="Bound"
+      >a</a
+      ><a name="2214"
+      > </a
+      ><a name="2215" href="Relation.html#2215" class="Bound"
+      >b</a
+      ><a name="2216"
+      > </a
+      ><a name="2217" href="Relation.html#2217" class="Bound"
+      >c</a
+      ><a name="2218"
+      > </a
+      ><a name="2219" class="Symbol"
+      >}</a
+      ><a name="2220"
+      > </a
+      ><a name="2221" class="Symbol"
+      >&#8594;</a
+      ><a name="2222"
+      > </a
+      ><a name="2223" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2227"
+      > </a
+      ><a name="2228" href="Relation.html#2107" class="Bound"
+      >&#10239;</a
+      ><a name="2229"
+      > </a
+      ><a name="2230" href="Relation.html#2213" class="Bound"
+      >a</a
+      ><a name="2231"
+      > </a
+      ><a name="2232" href="Relation.html#2215" class="Bound"
+      >b</a
+      ><a name="2233"
+      > </a
+      ><a name="2234" class="Symbol"
+      >&#8594;</a
+      ><a name="2235"
+      > </a
+      ><a name="2236" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2240"
+      > </a
+      ><a name="2241" href="Relation.html#2107" class="Bound"
+      >&#10239;</a
+      ><a name="2242"
+      > </a
+      ><a name="2243" href="Relation.html#2215" class="Bound"
+      >b</a
+      ><a name="2244"
+      > </a
+      ><a name="2245" href="Relation.html#2217" class="Bound"
+      >c</a
+      ><a name="2246"
+      > </a
+      ><a name="2247" class="Symbol"
+      >&#8594;</a
+      ><a name="2248"
+      > </a
+      ><a name="2249" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2253"
+      > </a
+      ><a name="2254" href="Relation.html#2107" class="Bound"
+      >&#10239;</a
+      ><a name="2255"
+      > </a
+      ><a name="2256" href="Relation.html#2213" class="Bound"
+      >a</a
+      ><a name="2257"
+      > </a
+      ><a name="2258" href="Relation.html#2217" class="Bound"
+      >c</a
+      ><a name="2259"
+      >
+
+  </a
+      ><a name="2263" href="Relation.html#2263" class="Function"
+      >mon-star</a
+      ><a name="2271"
+      > </a
+      ><a name="2272" class="Symbol"
+      >:</a
+      ><a name="2273"
+      > </a
+      ><a name="2274" class="Symbol"
+      >{</a
+      ><a name="2275" href="Relation.html#2275" class="Bound"
+      >R</a
+      ><a name="2276"
+      > </a
+      ><a name="2277" href="Relation.html#2277" class="Bound"
+      >S</a
+      ><a name="2278"
+      > </a
+      ><a name="2279" class="Symbol"
+      >:</a
+      ><a name="2280"
+      > </a
+      ><a name="2281" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="2284" class="Symbol"
+      >}</a
+      ><a name="2285"
+      > </a
+      ><a name="2286" class="Symbol"
+      >&#8594;</a
+      ><a name="2287"
+      > </a
+      ><a name="2288" href="Relation.html#2275" class="Bound"
+      >R</a
+      ><a name="2289"
+      > </a
+      ><a name="2290" href="Relation.html#1296" class="Function Operator"
+      >&#8838;</a
+      ><a name="2291"
+      > </a
+      ><a name="2292" href="Relation.html#2277" class="Bound"
+      >S</a
+      ><a name="2293"
+      > </a
+      ><a name="2294" class="Symbol"
+      >&#8594;</a
+      ><a name="2295"
+      > </a
+      ><a name="2296" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2300"
+      > </a
+      ><a name="2301" href="Relation.html#2275" class="Bound"
+      >R</a
+      ><a name="2302"
+      > </a
+      ><a name="2303" href="Relation.html#1296" class="Function Operator"
+      >&#8838;</a
+      ><a name="2304"
+      > </a
+      ><a name="2305" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2309"
+      > </a
+      ><a name="2310" href="Relation.html#2277" class="Bound"
+      >S</a
+      ><a name="2311"
+      >
+  </a
+      ><a name="2314" href="Relation.html#2263" class="Function"
+      >mon-star</a
+      ><a name="2322"
+      > </a
+      ><a name="2323" href="Relation.html#2323" class="Bound"
+      >R&#8838;S</a
+      ><a name="2326"
+      > </a
+      ><a name="2327" href="Relation.html#2132" class="InductiveConstructor"
+      >refl</a
+      ><a name="2331"
+      > </a
+      ><a name="2332" class="Symbol"
+      >=</a
+      ><a name="2333"
+      > </a
+      ><a name="2334" href="Relation.html#2132" class="InductiveConstructor"
+      >refl</a
+      ><a name="2338"
+      >
+  </a
+      ><a name="2341" href="Relation.html#2263" class="Function"
+      >mon-star</a
+      ><a name="2349"
+      > </a
+      ><a name="2350" href="Relation.html#2350" class="Bound"
+      >R&#8838;S</a
+      ><a name="2353"
+      > </a
+      ><a name="2354" class="Symbol"
+      >(</a
+      ><a name="2355" href="Relation.html#2162" class="InductiveConstructor"
+      >just</a
+      ><a name="2359"
+      > </a
+      ><a name="2360" href="Relation.html#2360" class="Bound"
+      >aRb</a
+      ><a name="2363" class="Symbol"
+      >)</a
+      ><a name="2364"
+      > </a
+      ><a name="2365" class="Symbol"
+      >=</a
+      ><a name="2366"
+      > </a
+      ><a name="2367" href="Relation.html#2162" class="InductiveConstructor"
+      >just</a
+      ><a name="2371"
+      > </a
+      ><a name="2372" class="Symbol"
+      >(</a
+      ><a name="2373" href="Relation.html#2350" class="Bound"
+      >R&#8838;S</a
+      ><a name="2376"
+      > </a
+      ><a name="2377" href="Relation.html#2360" class="Bound"
+      >aRb</a
+      ><a name="2380" class="Symbol"
+      >)</a
+      ><a name="2381"
+      >
+  </a
+      ><a name="2384" href="Relation.html#2263" class="Function"
+      >mon-star</a
+      ><a name="2392"
+      > </a
+      ><a name="2393" href="Relation.html#2393" class="Bound"
+      >R&#8838;S</a
+      ><a name="2396"
+      > </a
+      ><a name="2397" class="Symbol"
+      >(</a
+      ><a name="2398" href="Relation.html#2202" class="InductiveConstructor"
+      >trans</a
+      ><a name="2403"
+      > </a
+      ><a name="2404" href="Relation.html#2404" class="Bound"
+      >aR&#8902;b</a
+      ><a name="2408"
+      > </a
+      ><a name="2409" href="Relation.html#2409" class="Bound"
+      >bR&#8902;c</a
+      ><a name="2413" class="Symbol"
+      >)</a
+      ><a name="2414"
+      > 
+    </a
+      ><a name="2420" class="Symbol"
+      >=</a
+      ><a name="2421"
+      > </a
+      ><a name="2422" href="Relation.html#2202" class="InductiveConstructor"
+      >trans</a
+      ><a name="2427"
+      > </a
+      ><a name="2428" class="Symbol"
+      >(</a
+      ><a name="2429" href="Relation.html#2263" class="Function"
+      >mon-star</a
+      ><a name="2437"
+      > </a
+      ><a name="2438" href="Relation.html#2393" class="Bound"
+      >R&#8838;S</a
+      ><a name="2441"
+      > </a
+      ><a name="2442" href="Relation.html#2404" class="Bound"
+      >aR&#8902;b</a
+      ><a name="2446" class="Symbol"
+      >)</a
+      ><a name="2447"
+      > </a
+      ><a name="2448" class="Symbol"
+      >(</a
+      ><a name="2449" href="Relation.html#2263" class="Function"
+      >mon-star</a
+      ><a name="2457"
+      > </a
+      ><a name="2458" href="Relation.html#2393" class="Bound"
+      >R&#8838;S</a
+      ><a name="2461"
+      > </a
+      ><a name="2462" href="Relation.html#2409" class="Bound"
+      >bR&#8902;c</a
+      ><a name="2466" class="Symbol"
+      >)</a
+      ><a name="2467"
+      >
+  
+  </a
+      ><a name="2473" href="Relation.html#2473" class="Function"
+      >idem-star</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" class="Symbol"
+      >:</a
+      ><a name="2484"
+      > </a
+      ><a name="2485" class="Symbol"
+      >{</a
+      ><a name="2486" href="Relation.html#2486" class="Bound"
+      >R</a
+      ><a name="2487"
+      > </a
+      ><a name="2488" class="Symbol"
+      >:</a
+      ><a name="2489"
+      > </a
+      ><a name="2490" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="2493" class="Symbol"
+      >}</a
+      ><a name="2494"
+      > </a
+      ><a name="2495" class="Symbol"
+      >&#8594;</a
+      ><a name="2496"
+      > </a
+      ><a name="2497" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2501"
+      > </a
+      ><a name="2502" class="Symbol"
+      >(</a
+      ><a name="2503" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2507"
+      > </a
+      ><a name="2508" href="Relation.html#2486" class="Bound"
+      >R</a
+      ><a name="2509" class="Symbol"
+      >)</a
+      ><a name="2510"
+      > </a
+      ><a name="2511" href="Relation.html#1296" class="Function Operator"
+      >&#8838;</a
+      ><a name="2512"
+      > </a
+      ><a name="2513" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2517"
+      > </a
+      ><a name="2518" href="Relation.html#2486" class="Bound"
+      >R</a
+      ><a name="2519"
+      >
+  </a
+      ><a name="2522" href="Relation.html#2473" class="Function"
+      >idem-star</a
+      ><a name="2531"
+      > </a
+      ><a name="2532" href="Relation.html#2132" class="InductiveConstructor"
+      >refl</a
+      ><a name="2536"
+      > </a
+      ><a name="2537" class="Symbol"
+      >=</a
+      ><a name="2538"
+      > </a
+      ><a name="2539" href="Relation.html#2132" class="InductiveConstructor"
+      >refl</a
+      ><a name="2543"
+      >
+  </a
+      ><a name="2546" href="Relation.html#2473" class="Function"
+      >idem-star</a
+      ><a name="2555"
+      > </a
+      ><a name="2556" class="Symbol"
+      >(</a
+      ><a name="2557" href="Relation.html#2162" class="InductiveConstructor"
+      >just</a
+      ><a name="2561"
+      > </a
+      ><a name="2562" href="Relation.html#2562" class="Bound"
+      >aRb</a
+      ><a name="2565" class="Symbol"
+      >)</a
+      ><a name="2566"
+      > </a
+      ><a name="2567" class="Symbol"
+      >=</a
+      ><a name="2568"
+      > </a
+      ><a name="2569" href="Relation.html#2562" class="Bound"
+      >aRb</a
+      ><a name="2572"
+      >
+  </a
+      ><a name="2575" href="Relation.html#2473" class="Function"
+      >idem-star</a
+      ><a name="2584"
+      > </a
+      ><a name="2585" class="Symbol"
+      >(</a
+      ><a name="2586" href="Relation.html#2202" class="InductiveConstructor"
+      >trans</a
+      ><a name="2591"
+      > </a
+      ><a name="2592" href="Relation.html#2592" class="Bound"
+      >aR&#8902;b</a
+      ><a name="2596"
+      > </a
+      ><a name="2597" href="Relation.html#2597" class="Bound"
+      >bR&#8902;c</a
+      ><a name="2601" class="Symbol"
+      >)</a
+      ><a name="2602"
+      > </a
+      ><a name="2603" class="Symbol"
+      >=</a
+      ><a name="2604"
+      > </a
+      ><a name="2605" href="Relation.html#2202" class="InductiveConstructor"
+      >trans</a
+      ><a name="2610"
+      > </a
+      ><a name="2611" class="Symbol"
+      >(</a
+      ><a name="2612" href="Relation.html#2473" class="Function"
+      >idem-star</a
+      ><a name="2621"
+      > </a
+      ><a name="2622" href="Relation.html#2592" class="Bound"
+      >aR&#8902;b</a
+      ><a name="2626" class="Symbol"
+      >)</a
+      ><a name="2627"
+      > </a
+      ><a name="2628" class="Symbol"
+      >(</a
+      ><a name="2629" href="Relation.html#2473" class="Function"
+      >idem-star</a
+      ><a name="2638"
+      > </a
+      ><a name="2639" href="Relation.html#2597" class="Bound"
+      >bR&#8902;c</a
+      ><a name="2643" class="Symbol"
+      >)</a
+      ><a name="2644"
+      >
+
+  </a
+      ><a name="2648" href="Relation.html#2648" class="Function"
+      >trans-&#8838;-star</a
+      ><a name="2660"
+      > </a
+      ><a name="2661" class="Symbol"
+      >:</a
+      ><a name="2662"
+      > </a
+      ><a name="2663" class="Symbol"
+      >{</a
+      ><a name="2664" href="Relation.html#2664" class="Bound"
+      >R</a
+      ><a name="2665"
+      > </a
+      ><a name="2666" href="Relation.html#2666" class="Bound"
+      >S</a
+      ><a name="2667"
+      > </a
+      ><a name="2668" class="Symbol"
+      >:</a
+      ><a name="2669"
+      > </a
+      ><a name="2670" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="2673" class="Symbol"
+      >}</a
+      ><a name="2674"
+      > </a
+      ><a name="2675" class="Symbol"
+      >&#8594;</a
+      ><a name="2676"
+      > </a
+      ><a name="2677" href="Relation.html#2664" class="Bound"
+      >R</a
+      ><a name="2678"
+      > </a
+      ><a name="2679" href="Relation.html#1296" class="Function Operator"
+      >&#8838;</a
+      ><a name="2680"
+      > </a
+      ><a name="2681" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2685"
+      > </a
+      ><a name="2686" href="Relation.html#2666" class="Bound"
+      >S</a
+      ><a name="2687"
+      > </a
+      ><a name="2688" class="Symbol"
+      >&#8594;</a
+      ><a name="2689"
+      > </a
+      ><a name="2690" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2694"
+      > </a
+      ><a name="2695" href="Relation.html#2664" class="Bound"
+      >R</a
+      ><a name="2696"
+      > </a
+      ><a name="2697" href="Relation.html#1296" class="Function Operator"
+      >&#8838;</a
+      ><a name="2698"
+      > </a
+      ><a name="2699" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2703"
+      > </a
+      ><a name="2704" href="Relation.html#2666" class="Bound"
+      >S</a
+      ><a name="2705"
+      >
+  </a
+      ><a name="2708" href="Relation.html#2648" class="Function"
+      >trans-&#8838;-star</a
+      ><a name="2720"
+      > </a
+      ><a name="2721" class="Symbol"
+      >{</a
+      ><a name="2722" href="Relation.html#2722" class="Bound"
+      >R</a
+      ><a name="2723" class="Symbol"
+      >}</a
+      ><a name="2724"
+      > </a
+      ><a name="2725" class="Symbol"
+      >{</a
+      ><a name="2726" href="Relation.html#2726" class="Bound"
+      >S</a
+      ><a name="2727" class="Symbol"
+      >}</a
+      ><a name="2728"
+      > </a
+      ><a name="2729" href="Relation.html#2729" class="Bound"
+      >R&#8838;S&#8902;</a
+      ><a name="2733"
+      > 
+    </a
+      ><a name="2739" class="Symbol"
+      >=</a
+      ><a name="2740"
+      > </a
+      ><a name="2741" href="Relation.html#1393" class="Function"
+      >trans-&#8838;</a
+      ><a name="2748"
+      >  </a
+      ><a name="2750" class="Symbol"
+      >{</a
+      ><a name="2751" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2755"
+      > </a
+      ><a name="2756" href="Relation.html#2722" class="Bound"
+      >R</a
+      ><a name="2757" class="Symbol"
+      >}</a
+      ><a name="2758"
+      > </a
+      ><a name="2759" class="Symbol"
+      >{</a
+      ><a name="2760" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2764"
+      > </a
+      ><a name="2765" class="Symbol"
+      >(</a
+      ><a name="2766" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2770"
+      > </a
+      ><a name="2771" href="Relation.html#2726" class="Bound"
+      >S</a
+      ><a name="2772" class="Symbol"
+      >)}</a
+      ><a name="2774"
+      > </a
+      ><a name="2775" class="Symbol"
+      >{</a
+      ><a name="2776" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="2780"
+      > </a
+      ><a name="2781" href="Relation.html#2726" class="Bound"
+      >S</a
+      ><a name="2782" class="Symbol"
+      >}</a
+      ><a name="2783"
+      > 
+               </a
+      ><a name="2800" class="Symbol"
+      >(</a
+      ><a name="2801" href="Relation.html#2263" class="Function"
+      >mon-star</a
+      ><a name="2809"
+      > </a
+      ><a name="2810" href="Relation.html#2729" class="Bound"
+      >R&#8838;S&#8902;</a
+      ><a name="2814" class="Symbol"
+      >)</a
+      ><a name="2815"
+      > 
+               </a
+      ><a name="2832" href="Relation.html#2473" class="Function"
+      >idem-star</a
+      ><a name="2841"
+      >
+\end{code}
+</a
+      ><a name="2853" class="Comment"
+      >
+Our next goal is to prove that the diamond property implies
+Church-Rosser; for this it turns out that dealing with the usual
+definition of the reflexive transitive closure is not convenient,
+because the termination checker is not convinced about the use of the
+inductive hypothesis in one case. In order to bypass this obstacle we
+present another formalisation of the reflexive and transitive closure
+of a relation $R^\omega = \bigcup_{n\in \mathbb N} R^n$; although
+these two notions are not isomorphic (when passing from $\transclos R$ to
+$R^{\omega}$ we lane all the single steps to the left), they are
+equivalent.
+
+</a
+      ><a name="3473"
+      >\begin{code}
+  </a
+      ><a name="3488" class="Keyword"
+      >data</a
+      ><a name="3492"
+      > </a
+      ><a name="3493" href="Relation.html#3493" class="Datatype"
+      >steps</a
+      ><a name="3498"
+      > </a
+      ><a name="3499" class="Symbol"
+      >(</a
+      ><a name="3500" href="Relation.html#3500" class="Bound"
+      >&#10239;</a
+      ><a name="3501"
+      > </a
+      ><a name="3502" class="Symbol"
+      >:</a
+      ><a name="3503"
+      > </a
+      ><a name="3504" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="3507" class="Symbol"
+      >)</a
+      ><a name="3508"
+      > </a
+      ><a name="3509" class="Symbol"
+      >:</a
+      ><a name="3510"
+      > </a
+      ><a name="3511" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="3514"
+      > </a
+      ><a name="3515" class="Keyword"
+      >where</a
+      ><a name="3520"
+      >
+    </a
+      ><a name="3525" href="Relation.html#3525" class="InductiveConstructor"
+      >zero</a
+      ><a name="3529"
+      >  </a
+      ><a name="3531" class="Symbol"
+      >:</a
+      ><a name="3532"
+      > </a
+      ><a name="3533" class="Symbol"
+      >&#8704;</a
+      ><a name="3534"
+      > </a
+      ><a name="3535" class="Symbol"
+      >{</a
+      ><a name="3536" href="Relation.html#3536" class="Bound"
+      >a</a
+      ><a name="3537" class="Symbol"
+      >}</a
+      ><a name="3538"
+      >                               </a
+      ><a name="3569" class="Symbol"
+      >&#8594;</a
+      ><a name="3570"
+      > </a
+      ><a name="3571" href="Relation.html#3493" class="Datatype"
+      >steps</a
+      ><a name="3576"
+      > </a
+      ><a name="3577" href="Relation.html#3500" class="Bound"
+      >&#10239;</a
+      ><a name="3578"
+      > </a
+      ><a name="3579" href="Relation.html#3536" class="Bound"
+      >a</a
+      ><a name="3580"
+      > </a
+      ><a name="3581" href="Relation.html#3536" class="Bound"
+      >a</a
+      ><a name="3582"
+      >
+    </a
+      ><a name="3587" href="Relation.html#3587" class="InductiveConstructor"
+      >one</a
+      ><a name="3590"
+      >   </a
+      ><a name="3593" class="Symbol"
+      >:</a
+      ><a name="3594"
+      > </a
+      ><a name="3595" class="Symbol"
+      >&#8704;</a
+      ><a name="3596"
+      > </a
+      ><a name="3597" class="Symbol"
+      >{</a
+      ><a name="3598" href="Relation.html#3598" class="Bound"
+      >a</a
+      ><a name="3599"
+      > </a
+      ><a name="3600" href="Relation.html#3600" class="Bound"
+      >b</a
+      ><a name="3601" class="Symbol"
+      >}</a
+      ><a name="3602"
+      >    </a
+      ><a name="3606" class="Symbol"
+      >&#8594;</a
+      ><a name="3607"
+      > </a
+      ><a name="3608" href="Relation.html#3500" class="Bound"
+      >&#10239;</a
+      ><a name="3609"
+      > </a
+      ><a name="3610" href="Relation.html#3598" class="Bound"
+      >a</a
+      ><a name="3611"
+      > </a
+      ><a name="3612" href="Relation.html#3600" class="Bound"
+      >b</a
+      ><a name="3613"
+      >                 </a
+      ><a name="3630" class="Symbol"
+      >&#8594;</a
+      ><a name="3631"
+      > </a
+      ><a name="3632" href="Relation.html#3493" class="Datatype"
+      >steps</a
+      ><a name="3637"
+      > </a
+      ><a name="3638" href="Relation.html#3500" class="Bound"
+      >&#10239;</a
+      ><a name="3639"
+      > </a
+      ><a name="3640" href="Relation.html#3598" class="Bound"
+      >a</a
+      ><a name="3641"
+      > </a
+      ><a name="3642" href="Relation.html#3600" class="Bound"
+      >b</a
+      ><a name="3643"
+      >
+    </a
+      ><a name="3648" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="3652"
+      >  </a
+      ><a name="3654" class="Symbol"
+      >:</a
+      ><a name="3655"
+      > </a
+      ><a name="3656" class="Symbol"
+      >&#8704;</a
+      ><a name="3657"
+      > </a
+      ><a name="3658" class="Symbol"
+      >{</a
+      ><a name="3659" href="Relation.html#3659" class="Bound"
+      >a</a
+      ><a name="3660"
+      > </a
+      ><a name="3661" href="Relation.html#3661" class="Bound"
+      >b</a
+      ><a name="3662"
+      > </a
+      ><a name="3663" href="Relation.html#3663" class="Bound"
+      >c</a
+      ><a name="3664" class="Symbol"
+      >}</a
+      ><a name="3665"
+      >  </a
+      ><a name="3667" class="Symbol"
+      >&#8594;</a
+      ><a name="3668"
+      > </a
+      ><a name="3669" href="Relation.html#3500" class="Bound"
+      >&#10239;</a
+      ><a name="3670"
+      > </a
+      ><a name="3671" href="Relation.html#3659" class="Bound"
+      >a</a
+      ><a name="3672"
+      > </a
+      ><a name="3673" href="Relation.html#3661" class="Bound"
+      >b</a
+      ><a name="3674"
+      > </a
+      ><a name="3675" class="Symbol"
+      >&#8594;</a
+      ><a name="3676"
+      > </a
+      ><a name="3677" href="Relation.html#3493" class="Datatype"
+      >steps</a
+      ><a name="3682"
+      > </a
+      ><a name="3683" href="Relation.html#3500" class="Bound"
+      >&#10239;</a
+      ><a name="3684"
+      > </a
+      ><a name="3685" href="Relation.html#3661" class="Bound"
+      >b</a
+      ><a name="3686"
+      > </a
+      ><a name="3687" href="Relation.html#3663" class="Bound"
+      >c</a
+      ><a name="3688"
+      >  </a
+      ><a name="3690" class="Symbol"
+      >&#8594;</a
+      ><a name="3691"
+      > </a
+      ><a name="3692" href="Relation.html#3493" class="Datatype"
+      >steps</a
+      ><a name="3697"
+      > </a
+      ><a name="3698" href="Relation.html#3500" class="Bound"
+      >&#10239;</a
+      ><a name="3699"
+      > </a
+      ><a name="3700" href="Relation.html#3659" class="Bound"
+      >a</a
+      ><a name="3701"
+      > </a
+      ><a name="3702" href="Relation.html#3663" class="Bound"
+      >c</a
+      ><a name="3703"
+      >
+
+  </a
+      ><a name="3707" href="Relation.html#3707" class="Function Operator"
+      >_++_</a
+      ><a name="3711"
+      > </a
+      ><a name="3712" class="Symbol"
+      >:</a
+      ><a name="3713"
+      >  </a
+      ><a name="3715" class="Symbol"
+      >{</a
+      ><a name="3716" href="Relation.html#3716" class="Bound"
+      >&#10239;</a
+      ><a name="3717"
+      > </a
+      ><a name="3718" class="Symbol"
+      >:</a
+      ><a name="3719"
+      > </a
+      ><a name="3720" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="3723" class="Symbol"
+      >}</a
+      ><a name="3724"
+      > </a
+      ><a name="3725" class="Symbol"
+      >{</a
+      ><a name="3726" href="Relation.html#3726" class="Bound"
+      >a</a
+      ><a name="3727"
+      > </a
+      ><a name="3728" href="Relation.html#3728" class="Bound"
+      >b</a
+      ><a name="3729"
+      > </a
+      ><a name="3730" href="Relation.html#3730" class="Bound"
+      >c</a
+      ><a name="3731"
+      > </a
+      ><a name="3732" class="Symbol"
+      >:</a
+      ><a name="3733"
+      > </a
+      ><a name="3734" href="Relation.html#203" class="Bound"
+      >A</a
+      ><a name="3735" class="Symbol"
+      >}</a
+      ><a name="3736"
+      > 
+          </a
+      ><a name="3748" class="Symbol"
+      >&#8594;</a
+      ><a name="3749"
+      > </a
+      ><a name="3750" href="Relation.html#3493" class="Datatype"
+      >steps</a
+      ><a name="3755"
+      > </a
+      ><a name="3756" href="Relation.html#3716" class="Bound"
+      >&#10239;</a
+      ><a name="3757"
+      > </a
+      ><a name="3758" href="Relation.html#3726" class="Bound"
+      >a</a
+      ><a name="3759"
+      > </a
+      ><a name="3760" href="Relation.html#3728" class="Bound"
+      >b</a
+      ><a name="3761"
+      > </a
+      ><a name="3762" class="Symbol"
+      >&#8594;</a
+      ><a name="3763"
+      > </a
+      ><a name="3764" href="Relation.html#3493" class="Datatype"
+      >steps</a
+      ><a name="3769"
+      > </a
+      ><a name="3770" href="Relation.html#3716" class="Bound"
+      >&#10239;</a
+      ><a name="3771"
+      > </a
+      ><a name="3772" href="Relation.html#3728" class="Bound"
+      >b</a
+      ><a name="3773"
+      > </a
+      ><a name="3774" href="Relation.html#3730" class="Bound"
+      >c</a
+      ><a name="3775"
+      > </a
+      ><a name="3776" class="Symbol"
+      >&#8594;</a
+      ><a name="3777"
+      > </a
+      ><a name="3778" href="Relation.html#3493" class="Datatype"
+      >steps</a
+      ><a name="3783"
+      > </a
+      ><a name="3784" href="Relation.html#3716" class="Bound"
+      >&#10239;</a
+      ><a name="3785"
+      > </a
+      ><a name="3786" href="Relation.html#3726" class="Bound"
+      >a</a
+      ><a name="3787"
+      > </a
+      ><a name="3788" href="Relation.html#3730" class="Bound"
+      >c</a
+      ><a name="3789"
+      >
+  </a
+      ><a name="3792" href="Relation.html#3525" class="InductiveConstructor"
+      >zero</a
+      ><a name="3796"
+      > </a
+      ><a name="3797" href="Relation.html#3707" class="Function Operator"
+      >++</a
+      ><a name="3799"
+      > </a
+      ><a name="3800" href="Relation.html#3800" class="Bound"
+      >s'</a
+      ><a name="3802"
+      > </a
+      ><a name="3803" class="Symbol"
+      >=</a
+      ><a name="3804"
+      > </a
+      ><a name="3805" href="Relation.html#3800" class="Bound"
+      >s'</a
+      ><a name="3807"
+      >
+  </a
+      ><a name="3810" href="Relation.html#3587" class="InductiveConstructor"
+      >one</a
+      ><a name="3813"
+      > </a
+      ><a name="3814" href="Relation.html#3814" class="Bound"
+      >a&#10239;b</a
+      ><a name="3817"
+      > </a
+      ><a name="3818" href="Relation.html#3707" class="Function Operator"
+      >++</a
+      ><a name="3820"
+      > </a
+      ><a name="3821" href="Relation.html#3821" class="Bound"
+      >b&#10239;*c</a
+      ><a name="3825"
+      > </a
+      ><a name="3826" class="Symbol"
+      >=</a
+      ><a name="3827"
+      > </a
+      ><a name="3828" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="3832"
+      > </a
+      ><a name="3833" href="Relation.html#3814" class="Bound"
+      >a&#10239;b</a
+      ><a name="3836"
+      > </a
+      ><a name="3837" href="Relation.html#3821" class="Bound"
+      >b&#10239;*c</a
+      ><a name="3841"
+      >
+  </a
+      ><a name="3844" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="3848"
+      > </a
+      ><a name="3849" href="Relation.html#3849" class="Bound"
+      >a&#10239;b</a
+      ><a name="3852"
+      > </a
+      ><a name="3853" href="Relation.html#3853" class="Bound"
+      >b&#10239;*c</a
+      ><a name="3857"
+      > </a
+      ><a name="3858" href="Relation.html#3707" class="Function Operator"
+      >++</a
+      ><a name="3860"
+      > </a
+      ><a name="3861" href="Relation.html#3861" class="Bound"
+      >c&#10239;*d</a
+      ><a name="3865"
+      > </a
+      ><a name="3866" class="Symbol"
+      >=</a
+      ><a name="3867"
+      > </a
+      ><a name="3868" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="3872"
+      > </a
+      ><a name="3873" href="Relation.html#3849" class="Bound"
+      >a&#10239;b</a
+      ><a name="3876"
+      > </a
+      ><a name="3877" class="Symbol"
+      >(</a
+      ><a name="3878" href="Relation.html#3853" class="Bound"
+      >b&#10239;*c</a
+      ><a name="3882"
+      > </a
+      ><a name="3883" href="Relation.html#3707" class="Function Operator"
+      >++</a
+      ><a name="3885"
+      > </a
+      ><a name="3886" href="Relation.html#3861" class="Bound"
+      >c&#10239;*d</a
+      ><a name="3890" class="Symbol"
+      >)</a
+      ><a name="3891"
+      >
+  
+  </a
+      ><a name="3897" href="Relation.html#3897" class="Function"
+      >&#8902;-to-&#969;</a
+      ><a name="3903"
+      > </a
+      ><a name="3904" class="Symbol"
+      >:</a
+      ><a name="3905"
+      > </a
+      ><a name="3906" class="Symbol"
+      >&#8704;</a
+      ><a name="3907"
+      > </a
+      ><a name="3908" class="Symbol"
+      >{</a
+      ><a name="3909" href="Relation.html#3909" class="Bound"
+      >a</a
+      ><a name="3910"
+      > </a
+      ><a name="3911" href="Relation.html#3911" class="Bound"
+      >b</a
+      ><a name="3912"
+      > </a
+      ><a name="3913" href="Relation.html#3913" class="Bound"
+      >&#10239;</a
+      ><a name="3914" class="Symbol"
+      >}</a
+      ><a name="3915"
+      > </a
+      ><a name="3916" class="Symbol"
+      >&#8594;</a
+      ><a name="3917"
+      > </a
+      ><a name="3918" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="3922"
+      > </a
+      ><a name="3923" href="Relation.html#3913" class="Bound"
+      >&#10239;</a
+      ><a name="3924"
+      > </a
+      ><a name="3925" href="Relation.html#3909" class="Bound"
+      >a</a
+      ><a name="3926"
+      > </a
+      ><a name="3927" href="Relation.html#3911" class="Bound"
+      >b</a
+      ><a name="3928"
+      > </a
+      ><a name="3929" class="Symbol"
+      >&#8594;</a
+      ><a name="3930"
+      > </a
+      ><a name="3931" href="Relation.html#3493" class="Datatype"
+      >steps</a
+      ><a name="3936"
+      > </a
+      ><a name="3937" href="Relation.html#3913" class="Bound"
+      >&#10239;</a
+      ><a name="3938"
+      > </a
+      ><a name="3939" href="Relation.html#3909" class="Bound"
+      >a</a
+      ><a name="3940"
+      > </a
+      ><a name="3941" href="Relation.html#3911" class="Bound"
+      >b</a
+      ><a name="3942"
+      >
+  </a
+      ><a name="3945" href="Relation.html#3897" class="Function"
+      >&#8902;-to-&#969;</a
+      ><a name="3951"
+      > </a
+      ><a name="3952" href="Relation.html#2132" class="InductiveConstructor"
+      >refl</a
+      ><a name="3956"
+      > </a
+      ><a name="3957" class="Symbol"
+      >=</a
+      ><a name="3958"
+      > </a
+      ><a name="3959" href="Relation.html#3525" class="InductiveConstructor"
+      >zero</a
+      ><a name="3963"
+      >
+  </a
+      ><a name="3966" href="Relation.html#3897" class="Function"
+      >&#8902;-to-&#969;</a
+      ><a name="3972"
+      > </a
+      ><a name="3973" class="Symbol"
+      >(</a
+      ><a name="3974" href="Relation.html#2162" class="InductiveConstructor"
+      >just</a
+      ><a name="3978"
+      > </a
+      ><a name="3979" href="Relation.html#3979" class="Bound"
+      >a&#10239;b</a
+      ><a name="3982" class="Symbol"
+      >)</a
+      ><a name="3983"
+      > </a
+      ><a name="3984" class="Symbol"
+      >=</a
+      ><a name="3985"
+      > </a
+      ><a name="3986" href="Relation.html#3587" class="InductiveConstructor"
+      >one</a
+      ><a name="3989"
+      > </a
+      ><a name="3990" href="Relation.html#3979" class="Bound"
+      >a&#10239;b</a
+      ><a name="3993"
+      >
+  </a
+      ><a name="3996" href="Relation.html#3897" class="Function"
+      >&#8902;-to-&#969;</a
+      ><a name="4002"
+      > </a
+      ><a name="4003" class="Symbol"
+      >(</a
+      ><a name="4004" href="Relation.html#2202" class="InductiveConstructor"
+      >trans</a
+      ><a name="4009"
+      > </a
+      ><a name="4010" href="Relation.html#4010" class="Bound"
+      >a&#10239;*b</a
+      ><a name="4014"
+      > </a
+      ><a name="4015" href="Relation.html#4015" class="Bound"
+      >b&#10239;*c</a
+      ><a name="4019" class="Symbol"
+      >)</a
+      ><a name="4020"
+      > </a
+      ><a name="4021" class="Symbol"
+      >=</a
+      ><a name="4022"
+      > </a
+      ><a name="4023" href="Relation.html#3897" class="Function"
+      >&#8902;-to-&#969;</a
+      ><a name="4029"
+      > </a
+      ><a name="4030" href="Relation.html#4010" class="Bound"
+      >a&#10239;*b</a
+      ><a name="4034"
+      > </a
+      ><a name="4035" href="Relation.html#3707" class="Function Operator"
+      >++</a
+      ><a name="4037"
+      > </a
+      ><a name="4038" href="Relation.html#3897" class="Function"
+      >&#8902;-to-&#969;</a
+      ><a name="4044"
+      > </a
+      ><a name="4045" href="Relation.html#4015" class="Bound"
+      >b&#10239;*c</a
+      ><a name="4049"
+      >
+
+  </a
+      ><a name="4053" href="Relation.html#4053" class="Function"
+      >&#969;-to-&#8902;</a
+      ><a name="4059"
+      > </a
+      ><a name="4060" class="Symbol"
+      >:</a
+      ><a name="4061"
+      > </a
+      ><a name="4062" class="Symbol"
+      >&#8704;</a
+      ><a name="4063"
+      > </a
+      ><a name="4064" class="Symbol"
+      >{</a
+      ><a name="4065" href="Relation.html#4065" class="Bound"
+      >a</a
+      ><a name="4066"
+      > </a
+      ><a name="4067" href="Relation.html#4067" class="Bound"
+      >b</a
+      ><a name="4068"
+      > </a
+      ><a name="4069" href="Relation.html#4069" class="Bound"
+      >&#10239;</a
+      ><a name="4070" class="Symbol"
+      >}</a
+      ><a name="4071"
+      > </a
+      ><a name="4072" class="Symbol"
+      >&#8594;</a
+      ><a name="4073"
+      > </a
+      ><a name="4074" href="Relation.html#3493" class="Datatype"
+      >steps</a
+      ><a name="4079"
+      > </a
+      ><a name="4080" href="Relation.html#4069" class="Bound"
+      >&#10239;</a
+      ><a name="4081"
+      > </a
+      ><a name="4082" href="Relation.html#4065" class="Bound"
+      >a</a
+      ><a name="4083"
+      > </a
+      ><a name="4084" href="Relation.html#4067" class="Bound"
+      >b</a
+      ><a name="4085"
+      > </a
+      ><a name="4086" class="Symbol"
+      >&#8594;</a
+      ><a name="4087"
+      > </a
+      ><a name="4088" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="4092"
+      > </a
+      ><a name="4093" href="Relation.html#4069" class="Bound"
+      >&#10239;</a
+      ><a name="4094"
+      > </a
+      ><a name="4095" href="Relation.html#4065" class="Bound"
+      >a</a
+      ><a name="4096"
+      > </a
+      ><a name="4097" href="Relation.html#4067" class="Bound"
+      >b</a
+      ><a name="4098"
+      >
+  </a
+      ><a name="4101" href="Relation.html#4053" class="Function"
+      >&#969;-to-&#8902;</a
+      ><a name="4107"
+      > </a
+      ><a name="4108" href="Relation.html#3525" class="InductiveConstructor"
+      >zero</a
+      ><a name="4112"
+      > </a
+      ><a name="4113" class="Symbol"
+      >=</a
+      ><a name="4114"
+      > </a
+      ><a name="4115" href="Relation.html#2132" class="InductiveConstructor"
+      >refl</a
+      ><a name="4119"
+      >
+  </a
+      ><a name="4122" href="Relation.html#4053" class="Function"
+      >&#969;-to-&#8902;</a
+      ><a name="4128"
+      > </a
+      ><a name="4129" class="Symbol"
+      >(</a
+      ><a name="4130" href="Relation.html#3587" class="InductiveConstructor"
+      >one</a
+      ><a name="4133"
+      > </a
+      ><a name="4134" href="Relation.html#4134" class="Bound"
+      >a&#10239;b</a
+      ><a name="4137" class="Symbol"
+      >)</a
+      ><a name="4138"
+      > </a
+      ><a name="4139" class="Symbol"
+      >=</a
+      ><a name="4140"
+      > </a
+      ><a name="4141" href="Relation.html#2162" class="InductiveConstructor"
+      >just</a
+      ><a name="4145"
+      > </a
+      ><a name="4146" href="Relation.html#4134" class="Bound"
+      >a&#10239;b</a
+      ><a name="4149"
+      >
+  </a
+      ><a name="4152" href="Relation.html#4053" class="Function"
+      >&#969;-to-&#8902;</a
+      ><a name="4158"
+      > </a
+      ><a name="4159" class="Symbol"
+      >(</a
+      ><a name="4160" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="4164"
+      > </a
+      ><a name="4165" href="Relation.html#4165" class="Bound"
+      >a&#10239;b</a
+      ><a name="4168"
+      > </a
+      ><a name="4169" href="Relation.html#4169" class="Bound"
+      >b&#10239;*c</a
+      ><a name="4173" class="Symbol"
+      >)</a
+      ><a name="4174"
+      > </a
+      ><a name="4175" class="Symbol"
+      >=</a
+      ><a name="4176"
+      > </a
+      ><a name="4177" href="Relation.html#2202" class="InductiveConstructor"
+      >trans</a
+      ><a name="4182"
+      > </a
+      ><a name="4183" class="Symbol"
+      >(</a
+      ><a name="4184" href="Relation.html#2162" class="InductiveConstructor"
+      >just</a
+      ><a name="4188"
+      > </a
+      ><a name="4189" href="Relation.html#4165" class="Bound"
+      >a&#10239;b</a
+      ><a name="4192" class="Symbol"
+      >)</a
+      ><a name="4193"
+      > </a
+      ><a name="4194" class="Symbol"
+      >(</a
+      ><a name="4195" href="Relation.html#4053" class="Function"
+      >&#969;-to-&#8902;</a
+      ><a name="4201"
+      > </a
+      ><a name="4202" href="Relation.html#4169" class="Bound"
+      >b&#10239;*c</a
+      ><a name="4206" class="Symbol"
+      >)</a
+      ><a name="4207"
+      >
+\end{code}
+</a
+      ><a name="4219" class="Comment"
+      >
+A relation $R$ is said to have the \emph{diamond} property if whenever
+$a\,R\,b$ and $a\,R\,c$, there is a $d$ such that $b\,R\,d$ and
+$c\,R\,d$; we will say that $R$ is \emph{diamantine} if it satisfies
+the diamond property.
+
+\begin{minipage}{0.7\textwidth}
+</a
+      ><a name="4479"
+      >\begin{code}
+  </a
+      ><a name="4494" href="Relation.html#4494" class="Function"
+      >diamond</a
+      ><a name="4501"
+      > </a
+      ><a name="4502" class="Symbol"
+      >:</a
+      ><a name="4503"
+      > </a
+      ><a name="4504" class="Symbol"
+      >(</a
+      ><a name="4505" href="Relation.html#4505" class="Bound Operator"
+      >_&#10239;_</a
+      ><a name="4508"
+      > </a
+      ><a name="4509" class="Symbol"
+      >:</a
+      ><a name="4510"
+      > </a
+      ><a name="4511" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="4514" class="Symbol"
+      >)</a
+      ><a name="4515"
+      > </a
+      ><a name="4516" class="Symbol"
+      >&#8594;</a
+      ><a name="4517"
+      > </a
+      ><a name="4518" class="PrimitiveType"
+      >Set</a
+      ><a name="4521"
+      > </a
+      ><a name="4522" href="Relation.html#191" class="Bound"
+      >l</a
+      ><a name="4523"
+      >
+  </a
+      ><a name="4526" href="Relation.html#4494" class="Function"
+      >diamond</a
+      ><a name="4533"
+      > </a
+      ><a name="4534" href="Relation.html#4534" class="Bound Operator"
+      >_&#10239;_</a
+      ><a name="4537"
+      > </a
+      ><a name="4538" class="Symbol"
+      >=</a
+      ><a name="4539"
+      >  </a
+      ><a name="4541" class="Symbol"
+      >{</a
+      ><a name="4542" href="Relation.html#4542" class="Bound"
+      >a</a
+      ><a name="4543"
+      > </a
+      ><a name="4544" href="Relation.html#4544" class="Bound"
+      >b</a
+      ><a name="4545"
+      > </a
+      ><a name="4546" href="Relation.html#4546" class="Bound"
+      >c</a
+      ><a name="4547"
+      > </a
+      ><a name="4548" class="Symbol"
+      >:</a
+      ><a name="4549"
+      > </a
+      ><a name="4550" href="Relation.html#203" class="Bound"
+      >A</a
+      ><a name="4551" class="Symbol"
+      >}</a
+      ><a name="4552"
+      > 
+                  </a
+      ><a name="4572" class="Symbol"
+      >&#8594;</a
+      ><a name="4573"
+      > </a
+      ><a name="4574" href="Relation.html#4542" class="Bound"
+      >a</a
+      ><a name="4575"
+      > </a
+      ><a name="4576" href="Relation.html#4534" class="Bound Operator"
+      >&#10239;</a
+      ><a name="4577"
+      > </a
+      ><a name="4578" href="Relation.html#4544" class="Bound"
+      >b</a
+      ><a name="4579"
+      > </a
+      ><a name="4580" class="Symbol"
+      >&#8594;</a
+      ><a name="4581"
+      > </a
+      ><a name="4582" href="Relation.html#4542" class="Bound"
+      >a</a
+      ><a name="4583"
+      > </a
+      ><a name="4584" href="Relation.html#4534" class="Bound Operator"
+      >&#10239;</a
+      ><a name="4585"
+      > </a
+      ><a name="4586" href="Relation.html#4546" class="Bound"
+      >c</a
+      ><a name="4587"
+      > </a
+      ><a name="4588" class="Symbol"
+      >&#8594;</a
+      ><a name="4589"
+      >
+                  </a
+      ><a name="4608" href="Data.Product.html#823" class="Function"
+      >&#8707;</a
+      ><a name="4609"
+      > </a
+      ><a name="4610" class="Symbol"
+      >(&#955;</a
+      ><a name="4612"
+      > </a
+      ><a name="4613" href="Relation.html#4613" class="Bound"
+      >d</a
+      ><a name="4614"
+      > </a
+      ><a name="4615" class="Symbol"
+      >&#8594;</a
+      ><a name="4616"
+      > </a
+      ><a name="4617" href="Relation.html#4544" class="Bound"
+      >b</a
+      ><a name="4618"
+      > </a
+      ><a name="4619" href="Relation.html#4534" class="Bound Operator"
+      >&#10239;</a
+      ><a name="4620"
+      > </a
+      ><a name="4621" href="Relation.html#4613" class="Bound"
+      >d</a
+      ><a name="4622"
+      > </a
+      ><a name="4623" href="Data.Product.html#1073" class="Function Operator"
+      >&#215;</a
+      ><a name="4624"
+      > </a
+      ><a name="4625" href="Relation.html#4546" class="Bound"
+      >c</a
+      ><a name="4626"
+      > </a
+      ><a name="4627" href="Relation.html#4534" class="Bound Operator"
+      >&#10239;</a
+      ><a name="4628"
+      > </a
+      ><a name="4629" href="Relation.html#4613" class="Bound"
+      >d</a
+      ><a name="4630" class="Symbol"
+      >)</a
+      ><a name="4631"
+      >
+\end{code}
+</a
+      ><a name="4643" class="Comment"
+      >\end{minipage}
+\begin{minipage}{0.3\textwidth}
+\begin{tikzpicture}[&gt;=latex]
+   \node (a) at (2,2) {$a$};
+   \node (b) at (1,1) {$b$};
+   \node (c) at (3,1) {$c$};
+   \node (d) at (2,0) {$d$};
+
+   \draw [-&gt;] (a) -- (b) ;
+   \draw [-&gt;] (a) -- (c) ;
+   \draw[dashed,-&gt;] (b) -- (d) ;
+   \draw[dashed,-&gt;] (c) -&gt; (d) ;
+\end{tikzpicture}
+\end{minipage}
+
+A relation $R$ is \emph{Church-Rosser} if its transitive closure is
+diamantine; as we have already mentioned it is easier to deal with the
+statement of Church-Rosser for the $n$-fold version of the transitive
+closure.
+
+</a
+      ><a name="5209"
+      >\begin{code}
+  </a
+      ><a name="5224" href="Relation.html#5224" class="Function"
+      >cr</a
+      ><a name="5226"
+      > </a
+      ><a name="5227" class="Symbol"
+      >:</a
+      ><a name="5228"
+      > </a
+      ><a name="5229" class="Symbol"
+      >(</a
+      ><a name="5230" href="Relation.html#5230" class="Bound"
+      >&#10239;</a
+      ><a name="5231"
+      > </a
+      ><a name="5232" class="Symbol"
+      >:</a
+      ><a name="5233"
+      > </a
+      ><a name="5234" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="5237" class="Symbol"
+      >)</a
+      ><a name="5238"
+      > </a
+      ><a name="5239" class="Symbol"
+      >&#8594;</a
+      ><a name="5240"
+      > </a
+      ><a name="5241" class="PrimitiveType"
+      >Set</a
+      ><a name="5244"
+      > </a
+      ><a name="5245" href="Relation.html#191" class="Bound"
+      >l</a
+      ><a name="5246"
+      >
+  </a
+      ><a name="5249" href="Relation.html#5224" class="Function"
+      >cr</a
+      ><a name="5251"
+      > </a
+      ><a name="5252" href="Relation.html#5252" class="Bound"
+      >&#10239;</a
+      ><a name="5253"
+      > </a
+      ><a name="5254" class="Symbol"
+      >=</a
+      ><a name="5255"
+      > </a
+      ><a name="5256" href="Relation.html#4494" class="Function"
+      >diamond</a
+      ><a name="5263"
+      > </a
+      ><a name="5264" class="Symbol"
+      >(</a
+      ><a name="5265" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="5269"
+      > </a
+      ><a name="5270" href="Relation.html#5252" class="Bound"
+      >&#10239;</a
+      ><a name="5271" class="Symbol"
+      >)</a
+      ><a name="5272"
+      >
+
+  </a
+      ><a name="5276" href="Relation.html#5276" class="Function"
+      >cr-steps</a
+      ><a name="5284"
+      > </a
+      ><a name="5285" class="Symbol"
+      >:</a
+      ><a name="5286"
+      > </a
+      ><a name="5287" class="Symbol"
+      >(</a
+      ><a name="5288" href="Relation.html#5288" class="Bound"
+      >&#10239;</a
+      ><a name="5289"
+      > </a
+      ><a name="5290" class="Symbol"
+      >:</a
+      ><a name="5291"
+      > </a
+      ><a name="5292" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="5295" class="Symbol"
+      >)</a
+      ><a name="5296"
+      > </a
+      ><a name="5297" class="Symbol"
+      >&#8594;</a
+      ><a name="5298"
+      > </a
+      ><a name="5299" class="PrimitiveType"
+      >Set</a
+      ><a name="5302"
+      > </a
+      ><a name="5303" href="Relation.html#191" class="Bound"
+      >l</a
+      ><a name="5304"
+      >
+  </a
+      ><a name="5307" href="Relation.html#5276" class="Function"
+      >cr-steps</a
+      ><a name="5315"
+      > </a
+      ><a name="5316" href="Relation.html#5316" class="Bound"
+      >&#10239;</a
+      ><a name="5317"
+      > </a
+      ><a name="5318" class="Symbol"
+      >=</a
+      ><a name="5319"
+      > </a
+      ><a name="5320" href="Relation.html#4494" class="Function"
+      >diamond</a
+      ><a name="5327"
+      > </a
+      ><a name="5328" class="Symbol"
+      >(</a
+      ><a name="5329" href="Relation.html#3493" class="Datatype"
+      >steps</a
+      ><a name="5334"
+      > </a
+      ><a name="5335" href="Relation.html#5316" class="Bound"
+      >&#10239;</a
+      ><a name="5336" class="Symbol"
+      >)</a
+      ><a name="5337"
+      >
+
+  </a
+      ><a name="5341" href="Relation.html#5341" class="Function"
+      >cr-steps-to-cr</a
+      ><a name="5355"
+      > </a
+      ><a name="5356" class="Symbol"
+      >:</a
+      ><a name="5357"
+      > </a
+      ><a name="5358" class="Symbol"
+      >{</a
+      ><a name="5359" href="Relation.html#5359" class="Bound"
+      >&#10239;</a
+      ><a name="5360"
+      > </a
+      ><a name="5361" class="Symbol"
+      >:</a
+      ><a name="5362"
+      > </a
+      ><a name="5363" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="5366" class="Symbol"
+      >}</a
+      ><a name="5367"
+      > </a
+      ><a name="5368" class="Symbol"
+      >&#8594;</a
+      ><a name="5369"
+      > </a
+      ><a name="5370" href="Relation.html#5276" class="Function"
+      >cr-steps</a
+      ><a name="5378"
+      > </a
+      ><a name="5379" href="Relation.html#5359" class="Bound"
+      >&#10239;</a
+      ><a name="5380"
+      > </a
+      ><a name="5381" class="Symbol"
+      >&#8594;</a
+      ><a name="5382"
+      > </a
+      ><a name="5383" href="Relation.html#5224" class="Function"
+      >cr</a
+      ><a name="5385"
+      > </a
+      ><a name="5386" href="Relation.html#5359" class="Bound"
+      >&#10239;</a
+      ><a name="5387"
+      >
+  </a
+      ><a name="5390" href="Relation.html#5341" class="Function"
+      >cr-steps-to-cr</a
+      ><a name="5404"
+      > </a
+      ><a name="5405" href="Relation.html#5405" class="Bound"
+      >cr</a
+      ><a name="5407"
+      > </a
+      ><a name="5408" href="Relation.html#5408" class="Bound"
+      >a&#10239;*b</a
+      ><a name="5412"
+      > </a
+      ><a name="5413" href="Relation.html#5413" class="Bound"
+      >a&#10239;*c</a
+      ><a name="5417"
+      > 
+    </a
+      ><a name="5423" class="Keyword"
+      >with</a
+      ><a name="5427"
+      > </a
+      ><a name="5428" href="Relation.html#5405" class="Bound"
+      >cr</a
+      ><a name="5430"
+      > </a
+      ><a name="5431" class="Symbol"
+      >(</a
+      ><a name="5432" href="Relation.html#3897" class="Function"
+      >&#8902;-to-&#969;</a
+      ><a name="5438"
+      > </a
+      ><a name="5439" href="Relation.html#5408" class="Bound"
+      >a&#10239;*b</a
+      ><a name="5443" class="Symbol"
+      >)</a
+      ><a name="5444"
+      > </a
+      ><a name="5445" class="Symbol"
+      >(</a
+      ><a name="5446" href="Relation.html#3897" class="Function"
+      >&#8902;-to-&#969;</a
+      ><a name="5452"
+      > </a
+      ><a name="5453" href="Relation.html#5413" class="Bound"
+      >a&#10239;*c</a
+      ><a name="5457" class="Symbol"
+      >)</a
+      ><a name="5458"
+      >
+  </a
+      ><a name="5461" class="Symbol"
+      >...</a
+      ><a name="5464"
+      > </a
+      ><a name="5465" class="Symbol"
+      >|</a
+      ><a name="5466"
+      > </a
+      ><a name="5467" href="Relation.html#5467" class="Bound"
+      >d</a
+      ><a name="5468"
+      > </a
+      ><a name="5469" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5470"
+      > </a
+      ><a name="5471" href="Relation.html#5471" class="Bound"
+      >b&#10239;*d</a
+      ><a name="5475"
+      > </a
+      ><a name="5476" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5477"
+      > </a
+      ><a name="5478" href="Relation.html#5478" class="Bound"
+      >c&#10239;*d</a
+      ><a name="5482"
+      > </a
+      ><a name="5483" class="Symbol"
+      >=</a
+      ><a name="5484"
+      > </a
+      ><a name="5485" href="Relation.html#5467" class="Bound"
+      >d</a
+      ><a name="5486"
+      > </a
+      ><a name="5487" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5488"
+      > </a
+      ><a name="5489" href="Relation.html#4053" class="Function"
+      >&#969;-to-&#8902;</a
+      ><a name="5495"
+      > </a
+      ><a name="5496" href="Relation.html#5471" class="Bound"
+      >b&#10239;*d</a
+      ><a name="5500"
+      > </a
+      ><a name="5501" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5502"
+      > </a
+      ><a name="5503" href="Relation.html#4053" class="Function"
+      >&#969;-to-&#8902;</a
+      ><a name="5509"
+      > </a
+      ><a name="5510" href="Relation.html#5478" class="Bound"
+      >c&#10239;*d</a
+      ><a name="5514"
+      >
+\end{code}
+</a
+      ><a name="5526" class="Comment"
+      >
+\begin{lemma}
+Let $\reduction$ have the diamond property; if there is a reduction
+$\reduces a b$ and also a reduction $\reducesn a c$, then there exists
+$d$ such that $\reducesn b d$ and $\reduces c d$.
+\end{lemma}
+\begin{proof}
+The proof is by induction in the length of $\reduces a c$:
+
+\begin{tikzpicture}[&gt;=latex,baseline]
+   \node (a) at (2,2) {$a$};
+   \node (b) at (1,1) {$b$};
+   \node (c) at (3,1) {$a$};
+   \node (d) at (2,0) {$b$};
+
+   \draw [-&gt;] (a) -- (b) ;
+   \draw [double] (a) -- (c) ;
+   \draw [double] (b) -- (d) ;
+   \draw[-&gt;] (c) -&gt; (d) ;
+\end{tikzpicture} 
+\quad
+\begin{tikzpicture}[&gt;=latex,baseline]
+   \node (a) at (2,2) {$a$};
+   \node (b) at (1,1) {$b$};
+   \node (c) at (3,1) {$c$};
+   \node (d) at (2,0) {$d$};
+   \node (diamond) at (2,1) {$\diamond$} ;
+
+   \draw [-&gt;] (a) -- (b) ;
+   \draw [-&gt;] (a) -- (c) ;
+   \draw [-&gt;] (b) -- (d) ;
+   \draw[-&gt;] (c) -&gt; (d) ;
+\end{tikzpicture} 
+\quad
+\begin{tikzpicture}[&gt;=latex,baseline]
+   \node (a) at (2,2) {$a$};
+   \node (b) at (1,1) {$b$};
+   \node (c1) at (3,1) {$c$};
+   \node (cn) at (5,-1) {$c_n$};
+   \node (d1) at (2,0) {$d_1$};
+   \node (dn) at (4,-2) {$d_n$};
+   \node (diamond) at (2,1) {$\diamond$} ;
+   \node (ih) at (3,0) {i.h.};
+
+   \draw [-&gt;] (a) -- (b) ;
+   \draw [-&gt;] (a) -- (c1) ;
+   \draw [-&gt;] (c1) -- (cn) ;
+   \draw[-&gt;] (c1) -&gt; (d1) ;
+   \draw[-&gt;] (b) -&gt; (d1) ;
+   \draw[-&gt;] (d1) -&gt; (dn) ;
+   \draw[-&gt;] (cn) -&gt; (dn) ;
+\end{tikzpicture}
+
+\end{proof}
+
+</a
+      ><a name="6967"
+      >\begin{code}
+  </a
+      ><a name="6982" href="Relation.html#6982" class="Function"
+      >leg</a
+      ><a name="6985"
+      > </a
+      ><a name="6986" class="Symbol"
+      >:</a
+      ><a name="6987"
+      >  </a
+      ><a name="6989" class="Symbol"
+      >&#8704;</a
+      ><a name="6990"
+      > </a
+      ><a name="6991" class="Symbol"
+      >{</a
+      ><a name="6992" href="Relation.html#6992" class="Bound"
+      >a</a
+      ><a name="6993"
+      > </a
+      ><a name="6994" href="Relation.html#6994" class="Bound"
+      >b</a
+      ><a name="6995"
+      > </a
+      ><a name="6996" href="Relation.html#6996" class="Bound"
+      >c</a
+      ><a name="6997"
+      > </a
+      ><a name="6998" href="Relation.html#6998" class="Bound"
+      >&#10239;</a
+      ><a name="6999" class="Symbol"
+      >}</a
+      ><a name="7000"
+      > 
+         </a
+      ><a name="7011" class="Symbol"
+      >&#8594;</a
+      ><a name="7012"
+      > </a
+      ><a name="7013" href="Relation.html#4494" class="Function"
+      >diamond</a
+      ><a name="7020"
+      > </a
+      ><a name="7021" href="Relation.html#6998" class="Bound"
+      >&#10239;</a
+      ><a name="7022"
+      > 
+         </a
+      ><a name="7033" class="Symbol"
+      >&#8594;</a
+      ><a name="7034"
+      > </a
+      ><a name="7035" href="Relation.html#6998" class="Bound"
+      >&#10239;</a
+      ><a name="7036"
+      > </a
+      ><a name="7037" href="Relation.html#6992" class="Bound"
+      >a</a
+      ><a name="7038"
+      > </a
+      ><a name="7039" href="Relation.html#6994" class="Bound"
+      >b</a
+      ><a name="7040"
+      > 
+         </a
+      ><a name="7051" class="Symbol"
+      >&#8594;</a
+      ><a name="7052"
+      > </a
+      ><a name="7053" href="Relation.html#3493" class="Datatype"
+      >steps</a
+      ><a name="7058"
+      > </a
+      ><a name="7059" href="Relation.html#6998" class="Bound"
+      >&#10239;</a
+      ><a name="7060"
+      > </a
+      ><a name="7061" href="Relation.html#6992" class="Bound"
+      >a</a
+      ><a name="7062"
+      > </a
+      ><a name="7063" href="Relation.html#6996" class="Bound"
+      >c</a
+      ><a name="7064"
+      > 
+         </a
+      ><a name="7075" class="Symbol"
+      >&#8594;</a
+      ><a name="7076"
+      > </a
+      ><a name="7077" href="Data.Product.html#823" class="Function"
+      >&#8707;</a
+      ><a name="7078"
+      > </a
+      ><a name="7079" class="Symbol"
+      >(&#955;</a
+      ><a name="7081"
+      > </a
+      ><a name="7082" href="Relation.html#7082" class="Bound"
+      >d</a
+      ><a name="7083"
+      > </a
+      ><a name="7084" class="Symbol"
+      >&#8594;</a
+      ><a name="7085"
+      > </a
+      ><a name="7086" href="Relation.html#3493" class="Datatype"
+      >steps</a
+      ><a name="7091"
+      > </a
+      ><a name="7092" href="Relation.html#6998" class="Bound"
+      >&#10239;</a
+      ><a name="7093"
+      > </a
+      ><a name="7094" href="Relation.html#6994" class="Bound"
+      >b</a
+      ><a name="7095"
+      > </a
+      ><a name="7096" href="Relation.html#7082" class="Bound"
+      >d</a
+      ><a name="7097"
+      > </a
+      ><a name="7098" href="Data.Product.html#1073" class="Function Operator"
+      >&#215;</a
+      ><a name="7099"
+      > </a
+      ><a name="7100" href="Relation.html#6998" class="Bound"
+      >&#10239;</a
+      ><a name="7101"
+      > </a
+      ><a name="7102" href="Relation.html#6996" class="Bound"
+      >c</a
+      ><a name="7103"
+      > </a
+      ><a name="7104" href="Relation.html#7082" class="Bound"
+      >d</a
+      ><a name="7105" class="Symbol"
+      >)</a
+      ><a name="7106"
+      > 
+  </a
+      ><a name="7110" href="Relation.html#6982" class="Function"
+      >leg</a
+      ><a name="7113"
+      > </a
+      ><a name="7114" class="Symbol"
+      >{</a
+      ><a name="7115" href="Relation.html#7115" class="Bound"
+      >a</a
+      ><a name="7116" class="Symbol"
+      >}</a
+      ><a name="7117"
+      > </a
+      ><a name="7118" class="Symbol"
+      >{</a
+      ><a name="7119" href="Relation.html#7119" class="Bound"
+      >b</a
+      ><a name="7120" class="Symbol"
+      >}</a
+      ><a name="7121"
+      > </a
+      ><a name="7122" href="Relation.html#7122" class="Bound"
+      >&#9826;</a
+      ><a name="7123"
+      > </a
+      ><a name="7124" href="Relation.html#7124" class="Bound"
+      >a&#10239;b</a
+      ><a name="7127"
+      > </a
+      ><a name="7128" href="Relation.html#3525" class="InductiveConstructor"
+      >zero</a
+      ><a name="7132"
+      >    </a
+      ><a name="7136" class="Symbol"
+      >=</a
+      ><a name="7137"
+      > </a
+      ><a name="7138" href="Relation.html#7119" class="Bound"
+      >b</a
+      ><a name="7139"
+      > </a
+      ><a name="7140" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="7141"
+      > </a
+      ><a name="7142" href="Relation.html#3525" class="InductiveConstructor"
+      >zero</a
+      ><a name="7146"
+      > </a
+      ><a name="7147" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="7148"
+      > </a
+      ><a name="7149" href="Relation.html#7124" class="Bound"
+      >a&#10239;b</a
+      ><a name="7152"
+      > 
+  </a
+      ><a name="7156" href="Relation.html#6982" class="Function"
+      >leg</a
+      ><a name="7159"
+      > </a
+      ><a name="7160" class="Symbol"
+      >{</a
+      ><a name="7161" href="Relation.html#7161" class="Bound"
+      >a</a
+      ><a name="7162" class="Symbol"
+      >}</a
+      ><a name="7163"
+      > </a
+      ><a name="7164" class="Symbol"
+      >{</a
+      ><a name="7165" href="Relation.html#7165" class="Bound"
+      >b</a
+      ><a name="7166" class="Symbol"
+      >}</a
+      ><a name="7167"
+      > </a
+      ><a name="7168" class="Symbol"
+      >{</a
+      ><a name="7169" href="Relation.html#7169" class="Bound"
+      >c</a
+      ><a name="7170" class="Symbol"
+      >}</a
+      ><a name="7171"
+      > </a
+      ><a name="7172" href="Relation.html#7172" class="Bound"
+      >&#9826;</a
+      ><a name="7173"
+      > </a
+      ><a name="7174" href="Relation.html#7174" class="Bound"
+      >a&#10239;b</a
+      ><a name="7177"
+      > </a
+      ><a name="7178" class="Symbol"
+      >(</a
+      ><a name="7179" href="Relation.html#3587" class="InductiveConstructor"
+      >one</a
+      ><a name="7182"
+      > </a
+      ><a name="7183" href="Relation.html#7183" class="Bound"
+      >a&#10239;c</a
+      ><a name="7186" class="Symbol"
+      >)</a
+      ><a name="7187"
+      > 
+    </a
+      ><a name="7193" class="Keyword"
+      >with</a
+      ><a name="7197"
+      > </a
+      ><a name="7198" href="Relation.html#7172" class="Bound"
+      >&#9826;</a
+      ><a name="7199"
+      > </a
+      ><a name="7200" href="Relation.html#7174" class="Bound"
+      >a&#10239;b</a
+      ><a name="7203"
+      > </a
+      ><a name="7204" href="Relation.html#7183" class="Bound"
+      >a&#10239;c</a
+      ><a name="7207"
+      >
+  </a
+      ><a name="7210" class="Symbol"
+      >...</a
+      ><a name="7213"
+      > </a
+      ><a name="7214" class="Symbol"
+      >|</a
+      ><a name="7215"
+      > </a
+      ><a name="7216" href="Relation.html#7216" class="Bound"
+      >d</a
+      ><a name="7217"
+      > </a
+      ><a name="7218" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="7219"
+      > </a
+      ><a name="7220" href="Relation.html#7220" class="Bound"
+      >b&#10239;d</a
+      ><a name="7223"
+      > </a
+      ><a name="7224" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="7225"
+      > </a
+      ><a name="7226" href="Relation.html#7226" class="Bound"
+      >c&#10239;d</a
+      ><a name="7229"
+      >      </a
+      ><a name="7235" class="Symbol"
+      >=</a
+      ><a name="7236"
+      > </a
+      ><a name="7237" href="Relation.html#7216" class="Bound"
+      >d</a
+      ><a name="7238"
+      > </a
+      ><a name="7239" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="7240"
+      > </a
+      ><a name="7241" href="Relation.html#3587" class="InductiveConstructor"
+      >one</a
+      ><a name="7244"
+      > </a
+      ><a name="7245" href="Relation.html#7220" class="Bound"
+      >b&#10239;d</a
+      ><a name="7248"
+      > </a
+      ><a name="7249" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="7250"
+      > </a
+      ><a name="7251" href="Relation.html#7226" class="Bound"
+      >c&#10239;d</a
+      ><a name="7254"
+      >
+  </a
+      ><a name="7257" href="Relation.html#6982" class="Function"
+      >leg</a
+      ><a name="7260"
+      > </a
+      ><a name="7261" href="Relation.html#7261" class="Bound"
+      >&#9826;</a
+      ><a name="7262"
+      > </a
+      ><a name="7263" href="Relation.html#7263" class="Bound"
+      >a&#10239;b</a
+      ><a name="7266"
+      > </a
+      ><a name="7267" class="Symbol"
+      >(</a
+      ><a name="7268" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="7272"
+      > </a
+      ><a name="7273" href="Relation.html#7273" class="Bound"
+      >a&#10239;c</a
+      ><a name="7276"
+      > </a
+      ><a name="7277" href="Relation.html#7277" class="Bound"
+      >c&#10239;*d&#8345;</a
+      ><a name="7282" class="Symbol"
+      >)</a
+      ><a name="7283"
+      > 
+    </a
+      ><a name="7289" class="Keyword"
+      >with</a
+      ><a name="7293"
+      > </a
+      ><a name="7294" href="Relation.html#7261" class="Bound"
+      >&#9826;</a
+      ><a name="7295"
+      > </a
+      ><a name="7296" href="Relation.html#7263" class="Bound"
+      >a&#10239;b</a
+      ><a name="7299"
+      > </a
+      ><a name="7300" href="Relation.html#7273" class="Bound"
+      >a&#10239;c</a
+      ><a name="7303"
+      >
+  </a
+      ><a name="7306" class="Symbol"
+      >...</a
+      ><a name="7309"
+      > </a
+      ><a name="7310" class="Symbol"
+      >|</a
+      ><a name="7311"
+      > </a
+      ><a name="7312" href="Relation.html#7312" class="Bound"
+      >d&#8321;</a
+      ><a name="7314"
+      > </a
+      ><a name="7315" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="7316"
+      > </a
+      ><a name="7317" href="Relation.html#7317" class="Bound"
+      >b&#10239;d&#8321;</a
+      ><a name="7321"
+      > </a
+      ><a name="7322" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="7323"
+      > </a
+      ><a name="7324" href="Relation.html#7324" class="Bound"
+      >c&#10239;d&#8321;</a
+      ><a name="7328"
+      > 
+    </a
+      ><a name="7334" class="Keyword"
+      >with</a
+      ><a name="7338"
+      > </a
+      ><a name="7339" href="Relation.html#6982" class="Function"
+      >leg</a
+      ><a name="7342"
+      > </a
+      ><a name="7343" href="Relation.html#7261" class="Bound"
+      >&#9826;</a
+      ><a name="7344"
+      > </a
+      ><a name="7345" href="Relation.html#7324" class="Bound"
+      >c&#10239;d&#8321;</a
+      ><a name="7349"
+      > </a
+      ><a name="7350" href="Relation.html#7277" class="Bound"
+      >c&#10239;*d&#8345;</a
+      ><a name="7355"
+      >
+  </a
+      ><a name="7358" class="Symbol"
+      >...</a
+      ><a name="7361"
+      > </a
+      ><a name="7362" class="Symbol"
+      >|</a
+      ><a name="7363"
+      > </a
+      ><a name="7364" href="Relation.html#7364" class="Bound"
+      >d&#8345;</a
+      ><a name="7366"
+      > </a
+      ><a name="7367" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="7368"
+      > </a
+      ><a name="7369" href="Relation.html#7369" class="Bound"
+      >e&#10239;*d&#8345;</a
+      ><a name="7374"
+      > </a
+      ><a name="7375" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="7376"
+      > </a
+      ><a name="7377" href="Relation.html#7377" class="Bound"
+      >d&#10239;d&#8345;</a
+      ><a name="7381"
+      >  </a
+      ><a name="7383" class="Symbol"
+      >=</a
+      ><a name="7384"
+      > </a
+      ><a name="7385" href="Relation.html#7364" class="Bound"
+      >d&#8345;</a
+      ><a name="7387"
+      > </a
+      ><a name="7388" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="7389"
+      > </a
+      ><a name="7390" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="7394"
+      > </a
+      ><a name="7395" href="Relation.html#7317" class="Bound"
+      >b&#10239;d&#8321;</a
+      ><a name="7399"
+      > </a
+      ><a name="7400" href="Relation.html#7369" class="Bound"
+      >e&#10239;*d&#8345;</a
+      ><a name="7405"
+      > </a
+      ><a name="7406" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="7407"
+      > </a
+      ><a name="7408" href="Relation.html#7377" class="Bound"
+      >d&#10239;d&#8345;</a
+      ><a name="7412"
+      >
+\end{code}
+</a
+      ><a name="7424" class="Comment"
+      >
+With this result at hand is easy to prove that the diamond property
+implies Church-Rosser for the $n$-fold composition of the relation.
+\begin{lemma}
+Let $\reduction$ be diamantine, then it satisfies Church-Rosser for the
+$n$-fold closure.
+\end{lemma}
+\begin{proof}
+The proof is by induction on the second reduction and cases in the first one, using previous result all the non trivial cases. There exists another two cases symmetrical to the first two diagrams, so we omit them.
+
+% base case
+\noindent\begin{tikzpicture}[&gt;=latex,baseline,scale=0.8]
+   \node (a) at (2,2) {$a$};
+   \node (b) at (1,1) {$a$};
+   \node (c) at (4,0) {$c$};
+   \node (d) at (3,-1) {$c$};
+
+   \draw [double] (a) -- (b) ;
+   \draw [-&gt;] (a) -- (c) ;
+   \draw[-&gt;] (b) -&gt; (d) ;
+   \draw[double] (c) -&gt; (d) ;
+\end{tikzpicture} 
+% one reduction
+\begin{tikzpicture}[&gt;=latex,baseline,scale=0.8]
+   \node (a) at (2,2) {$a$};
+   \node (b) at (1,1) {$b$};
+   \node (cn) at (4,0) {$c_n$};
+   \node (dn) at (3,-1) {$d$};
+   \node (ih) at (2,1) {leg};
+
+   \draw [-&gt;] (a) -- (b) ;
+   \draw [-&gt;] (a) -- (cn) ;
+   \draw[-&gt;] (b) -&gt; (dn) ;
+   \draw[-&gt;] (cn) -&gt; (dn) ;
+\end{tikzpicture} 
+% more steps in both sides
+\begin{tikzpicture}[&gt;=latex,baseline,scale=0.8]
+   \node (a) at (2,2) {$a$};
+   \node (b1) at (1,1) {$b_1$};
+   \node (c1) at (3,1) {$c_1$};
+   \node (bn) at (-1,-1) {$b_n$};
+   \node (cn) at (5,-1) {$c_n$};
+   \node (d1) at (0,-2) {$d_1$};
+   \node (dn) at (2,-4) {$d_n$};
+   \node (leg) at (1,0) {leg} ;
+   \node (ih) at (3,-1) {i.h.};
+
+   \draw [-&gt;] (a) -- (b1) ;
+   \draw [-&gt;] (a) -- (c1) ;
+   \draw [-&gt;] (b1) -- (bn) ;
+   \draw [-&gt;] (c1) -- (cn) ;
+   \draw[-&gt;] (c1) -&gt; (d1) ;
+   \draw[-&gt;] (bn) -&gt; (d1) ;
+   \draw[-&gt;] (d1) -&gt; (dn) ;
+   \draw[-&gt;] (cn) -&gt; (dn) ;
+\end{tikzpicture}
+\end{proof}
+
+</a
+      ><a name="9194"
+      >\begin{code}
+  </a
+      ><a name="9209" href="Relation.html#9209" class="Function"
+      >diamond-cr-steps</a
+      ><a name="9225"
+      > </a
+      ><a name="9226" class="Symbol"
+      >:</a
+      ><a name="9227"
+      > </a
+      ><a name="9228" class="Symbol"
+      >{</a
+      ><a name="9229" href="Relation.html#9229" class="Bound"
+      >&#10239;</a
+      ><a name="9230"
+      > </a
+      ><a name="9231" class="Symbol"
+      >:</a
+      ><a name="9232"
+      > </a
+      ><a name="9233" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="9236" class="Symbol"
+      >}</a
+      ><a name="9237"
+      > </a
+      ><a name="9238" class="Symbol"
+      >&#8594;</a
+      ><a name="9239"
+      > </a
+      ><a name="9240" href="Relation.html#4494" class="Function"
+      >diamond</a
+      ><a name="9247"
+      > </a
+      ><a name="9248" href="Relation.html#9229" class="Bound"
+      >&#10239;</a
+      ><a name="9249"
+      > </a
+      ><a name="9250" class="Symbol"
+      >&#8594;</a
+      ><a name="9251"
+      > </a
+      ><a name="9252" href="Relation.html#5276" class="Function"
+      >cr-steps</a
+      ><a name="9260"
+      > </a
+      ><a name="9261" href="Relation.html#9229" class="Bound"
+      >&#10239;</a
+      ><a name="9262"
+      >
+  </a
+      ><a name="9265" href="Relation.html#9209" class="Function"
+      >diamond-cr-steps</a
+      ><a name="9281"
+      > </a
+      ><a name="9282" href="Relation.html#9282" class="Bound"
+      >&#9826;</a
+      ><a name="9283"
+      > </a
+      ><a name="9284" class="Symbol"
+      >{</a
+      ><a name="9285" href="Relation.html#9285" class="Bound"
+      >a</a
+      ><a name="9286" class="Symbol"
+      >}</a
+      ><a name="9287"
+      > </a
+      ><a name="9288" class="Symbol"
+      >{</a
+      ><a name="9289" class="DottedPattern Symbol"
+      >.</a
+      ><a name="9290" href="Relation.html#9285" class="DottedPattern Bound"
+      >a</a
+      ><a name="9291" class="Symbol"
+      >}</a
+      ><a name="9292"
+      > </a
+      ><a name="9293" class="Symbol"
+      >{</a
+      ><a name="9294" href="Relation.html#9294" class="Bound"
+      >c</a
+      ><a name="9295" class="Symbol"
+      >}</a
+      ><a name="9296"
+      >   </a
+      ><a name="9299" href="Relation.html#3525" class="InductiveConstructor"
+      >zero</a
+      ><a name="9303"
+      >                  </a
+      ><a name="9321" href="Relation.html#9321" class="Bound"
+      >a&#10239;*c</a
+      ><a name="9325"
+      >  
+    </a
+      ><a name="9332" class="Symbol"
+      >=</a
+      ><a name="9333"
+      > </a
+      ><a name="9334" href="Relation.html#9294" class="Bound"
+      >c</a
+      ><a name="9335"
+      > </a
+      ><a name="9336" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9337"
+      > </a
+      ><a name="9338" href="Relation.html#9321" class="Bound"
+      >a&#10239;*c</a
+      ><a name="9342"
+      > </a
+      ><a name="9343" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9344"
+      > </a
+      ><a name="9345" href="Relation.html#3525" class="InductiveConstructor"
+      >zero</a
+      ><a name="9349"
+      >
+  </a
+      ><a name="9352" href="Relation.html#9209" class="Function"
+      >diamond-cr-steps</a
+      ><a name="9368"
+      > </a
+      ><a name="9369" href="Relation.html#9369" class="Bound"
+      >&#9826;</a
+      ><a name="9370"
+      >                </a
+      ><a name="9386" class="Symbol"
+      >(</a
+      ><a name="9387" href="Relation.html#3587" class="InductiveConstructor"
+      >one</a
+      ><a name="9390"
+      > </a
+      ><a name="9391" href="Relation.html#9391" class="Bound"
+      >a&#10239;b</a
+      ><a name="9394" class="Symbol"
+      >)</a
+      ><a name="9395"
+      >            </a
+      ><a name="9407" href="Relation.html#9407" class="Bound"
+      >a&#10239;*c</a
+      ><a name="9411"
+      > 
+    </a
+      ><a name="9417" class="Keyword"
+      >with</a
+      ><a name="9421"
+      > </a
+      ><a name="9422" href="Relation.html#6982" class="Function"
+      >leg</a
+      ><a name="9425"
+      > </a
+      ><a name="9426" href="Relation.html#9369" class="Bound"
+      >&#9826;</a
+      ><a name="9427"
+      > </a
+      ><a name="9428" href="Relation.html#9391" class="Bound"
+      >a&#10239;b</a
+      ><a name="9431"
+      > </a
+      ><a name="9432" href="Relation.html#9407" class="Bound"
+      >a&#10239;*c</a
+      ><a name="9436"
+      >
+  </a
+      ><a name="9439" class="Symbol"
+      >...</a
+      ><a name="9442"
+      > </a
+      ><a name="9443" class="Symbol"
+      >|</a
+      ><a name="9444"
+      > </a
+      ><a name="9445" href="Relation.html#9445" class="Bound"
+      >d</a
+      ><a name="9446"
+      > </a
+      ><a name="9447" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9448"
+      > </a
+      ><a name="9449" href="Relation.html#9449" class="Bound"
+      >b&#10239;*d</a
+      ><a name="9453"
+      > </a
+      ><a name="9454" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9455"
+      > </a
+      ><a name="9456" href="Relation.html#9456" class="Bound"
+      >c&#10239;d</a
+      ><a name="9459"
+      > </a
+      ><a name="9460" class="Symbol"
+      >=</a
+      ><a name="9461"
+      > </a
+      ><a name="9462" href="Relation.html#9445" class="Bound"
+      >d</a
+      ><a name="9463"
+      > </a
+      ><a name="9464" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9465"
+      > </a
+      ><a name="9466" href="Relation.html#9449" class="Bound"
+      >b&#10239;*d</a
+      ><a name="9470"
+      > </a
+      ><a name="9471" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9472"
+      > </a
+      ><a name="9473" href="Relation.html#3587" class="InductiveConstructor"
+      >one</a
+      ><a name="9476"
+      > </a
+      ><a name="9477" href="Relation.html#9456" class="Bound"
+      >c&#10239;d</a
+      ><a name="9480"
+      >
+  </a
+      ><a name="9483" href="Relation.html#9209" class="Function"
+      >diamond-cr-steps</a
+      ><a name="9499"
+      > </a
+      ><a name="9500" href="Relation.html#9500" class="Bound"
+      >&#9826;</a
+      ><a name="9501"
+      > </a
+      ><a name="9502" class="Symbol"
+      >{</a
+      ><a name="9503" href="Relation.html#9503" class="Bound"
+      >a</a
+      ><a name="9504" class="Symbol"
+      >}</a
+      ><a name="9505"
+      > </a
+      ><a name="9506" class="Symbol"
+      >{</a
+      ><a name="9507" href="Relation.html#9507" class="Bound"
+      >b&#8345;</a
+      ><a name="9509" class="Symbol"
+      >}</a
+      ><a name="9510"
+      > </a
+      ><a name="9511" class="Symbol"
+      >{</a
+      ><a name="9512" class="DottedPattern Symbol"
+      >.</a
+      ><a name="9513" href="Relation.html#9503" class="DottedPattern Bound"
+      >a</a
+      ><a name="9514" class="Symbol"
+      >}</a
+      ><a name="9515"
+      >  </a
+      ><a name="9517" class="Symbol"
+      >(</a
+      ><a name="9518" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="9522"
+      > </a
+      ><a name="9523" href="Relation.html#9523" class="Bound"
+      >a&#10239;b&#8321;</a
+      ><a name="9527"
+      > </a
+      ><a name="9528" href="Relation.html#9528" class="Bound"
+      >b&#8321;&#10239;*b&#8345;</a
+      ><a name="9534" class="Symbol"
+      >)</a
+      ><a name="9535"
+      >  </a
+      ><a name="9537" href="Relation.html#3525" class="InductiveConstructor"
+      >zero</a
+      ><a name="9541"
+      > 
+    </a
+      ><a name="9547" class="Symbol"
+      >=</a
+      ><a name="9548"
+      > </a
+      ><a name="9549" href="Relation.html#9507" class="Bound"
+      >b&#8345;</a
+      ><a name="9551"
+      > </a
+      ><a name="9552" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9553"
+      > </a
+      ><a name="9554" href="Relation.html#3525" class="InductiveConstructor"
+      >zero</a
+      ><a name="9558"
+      > </a
+      ><a name="9559" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9560"
+      > </a
+      ><a name="9561" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="9565"
+      > </a
+      ><a name="9566" href="Relation.html#9523" class="Bound"
+      >a&#10239;b&#8321;</a
+      ><a name="9570"
+      > </a
+      ><a name="9571" href="Relation.html#9528" class="Bound"
+      >b&#8321;&#10239;*b&#8345;</a
+      ><a name="9577"
+      >
+  </a
+      ><a name="9580" href="Relation.html#9209" class="Function"
+      >diamond-cr-steps</a
+      ><a name="9596"
+      > </a
+      ><a name="9597" href="Relation.html#9597" class="Bound"
+      >&#9826;</a
+      ><a name="9598"
+      >                </a
+      ><a name="9614" class="Symbol"
+      >(</a
+      ><a name="9615" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="9619"
+      > </a
+      ><a name="9620" href="Relation.html#9620" class="Bound"
+      >a&#10239;b&#8321;</a
+      ><a name="9624"
+      > </a
+      ><a name="9625" href="Relation.html#9625" class="Bound"
+      >b&#8321;&#10239;*b&#8345;</a
+      ><a name="9631" class="Symbol"
+      >)</a
+      ><a name="9632"
+      >  </a
+      ><a name="9634" class="Symbol"
+      >(</a
+      ><a name="9635" href="Relation.html#3587" class="InductiveConstructor"
+      >one</a
+      ><a name="9638"
+      > </a
+      ><a name="9639" href="Relation.html#9639" class="Bound"
+      >a&#10239;c</a
+      ><a name="9642" class="Symbol"
+      >)</a
+      ><a name="9643"
+      >
+    </a
+      ><a name="9648" class="Keyword"
+      >with</a
+      ><a name="9652"
+      > </a
+      ><a name="9653" href="Relation.html#6982" class="Function"
+      >leg</a
+      ><a name="9656"
+      > </a
+      ><a name="9657" href="Relation.html#9597" class="Bound"
+      >&#9826;</a
+      ><a name="9658"
+      > </a
+      ><a name="9659" href="Relation.html#9639" class="Bound"
+      >a&#10239;c</a
+      ><a name="9662"
+      > </a
+      ><a name="9663" class="Symbol"
+      >(</a
+      ><a name="9664" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="9668"
+      > </a
+      ><a name="9669" href="Relation.html#9620" class="Bound"
+      >a&#10239;b&#8321;</a
+      ><a name="9673"
+      > </a
+      ><a name="9674" href="Relation.html#9625" class="Bound"
+      >b&#8321;&#10239;*b&#8345;</a
+      ><a name="9680" class="Symbol"
+      >)</a
+      ><a name="9681"
+      >
+  </a
+      ><a name="9684" class="Symbol"
+      >...</a
+      ><a name="9687"
+      > </a
+      ><a name="9688" class="Symbol"
+      >|</a
+      ><a name="9689"
+      > </a
+      ><a name="9690" href="Relation.html#9690" class="Bound"
+      >d</a
+      ><a name="9691"
+      > </a
+      ><a name="9692" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9693"
+      > </a
+      ><a name="9694" href="Relation.html#9694" class="Bound"
+      >c&#10239;*d</a
+      ><a name="9698"
+      > </a
+      ><a name="9699" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9700"
+      > </a
+      ><a name="9701" href="Relation.html#9701" class="Bound"
+      >b&#8345;&#10239;d</a
+      ><a name="9705"
+      > </a
+      ><a name="9706" class="Symbol"
+      >=</a
+      ><a name="9707"
+      > </a
+      ><a name="9708" href="Relation.html#9690" class="Bound"
+      >d</a
+      ><a name="9709"
+      > </a
+      ><a name="9710" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9711"
+      > </a
+      ><a name="9712" href="Relation.html#3587" class="InductiveConstructor"
+      >one</a
+      ><a name="9715"
+      > </a
+      ><a name="9716" href="Relation.html#9701" class="Bound"
+      >b&#8345;&#10239;d</a
+      ><a name="9720"
+      > </a
+      ><a name="9721" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9722"
+      > </a
+      ><a name="9723" href="Relation.html#9694" class="Bound"
+      >c&#10239;*d</a
+      ><a name="9727"
+      >
+  </a
+      ><a name="9730" href="Relation.html#9209" class="Function"
+      >diamond-cr-steps</a
+      ><a name="9746"
+      > </a
+      ><a name="9747" href="Relation.html#9747" class="Bound"
+      >&#9826;</a
+      ><a name="9748"
+      >                </a
+      ><a name="9764" class="Symbol"
+      >(</a
+      ><a name="9765" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="9769"
+      > </a
+      ><a name="9770" href="Relation.html#9770" class="Bound"
+      >a&#10239;b&#8321;</a
+      ><a name="9774"
+      > </a
+      ><a name="9775" href="Relation.html#9775" class="Bound"
+      >b&#8321;&#10239;*b&#8345;</a
+      ><a name="9781" class="Symbol"
+      >)</a
+      ><a name="9782"
+      >  </a
+      ><a name="9784" class="Symbol"
+      >(</a
+      ><a name="9785" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="9789"
+      > </a
+      ><a name="9790" href="Relation.html#9790" class="Bound"
+      >a&#10239;c&#8321;</a
+      ><a name="9794"
+      > </a
+      ><a name="9795" href="Relation.html#9795" class="Bound"
+      >c&#8321;&#10239;*c&#8345;</a
+      ><a name="9801" class="Symbol"
+      >)</a
+      ><a name="9802"
+      >
+    </a
+      ><a name="9807" class="Keyword"
+      >with</a
+      ><a name="9811"
+      > </a
+      ><a name="9812" href="Relation.html#6982" class="Function"
+      >leg</a
+      ><a name="9815"
+      > </a
+      ><a name="9816" href="Relation.html#9747" class="Bound"
+      >&#9826;</a
+      ><a name="9817"
+      > </a
+      ><a name="9818" href="Relation.html#9790" class="Bound"
+      >a&#10239;c&#8321;</a
+      ><a name="9822"
+      > </a
+      ><a name="9823" class="Symbol"
+      >(</a
+      ><a name="9824" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="9828"
+      > </a
+      ><a name="9829" href="Relation.html#9770" class="Bound"
+      >a&#10239;b&#8321;</a
+      ><a name="9833"
+      > </a
+      ><a name="9834" href="Relation.html#9775" class="Bound"
+      >b&#8321;&#10239;*b&#8345;</a
+      ><a name="9840" class="Symbol"
+      >)</a
+      ><a name="9841"
+      >
+  </a
+      ><a name="9844" class="Symbol"
+      >...</a
+      ><a name="9847"
+      > </a
+      ><a name="9848" class="Symbol"
+      >|</a
+      ><a name="9849"
+      > </a
+      ><a name="9850" href="Relation.html#9850" class="Bound"
+      >d&#8321;</a
+      ><a name="9852"
+      > </a
+      ><a name="9853" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9854"
+      > </a
+      ><a name="9855" href="Relation.html#9855" class="Bound"
+      >c&#8321;&#10239;*d&#8321;</a
+      ><a name="9861"
+      > </a
+      ><a name="9862" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9863"
+      > </a
+      ><a name="9864" href="Relation.html#9864" class="Bound"
+      >b&#8345;&#10239;d&#8321;</a
+      ><a name="9869"
+      > 
+    </a
+      ><a name="9875" class="Keyword"
+      >with</a
+      ><a name="9879"
+      > </a
+      ><a name="9880" href="Relation.html#9209" class="Function"
+      >diamond-cr-steps</a
+      ><a name="9896"
+      > </a
+      ><a name="9897" href="Relation.html#9747" class="Bound"
+      >&#9826;</a
+      ><a name="9898"
+      > </a
+      ><a name="9899" href="Relation.html#9855" class="Bound"
+      >c&#8321;&#10239;*d&#8321;</a
+      ><a name="9905"
+      > </a
+      ><a name="9906" href="Relation.html#9795" class="Bound"
+      >c&#8321;&#10239;*c&#8345;</a
+      ><a name="9912"
+      >
+  </a
+      ><a name="9915" class="Symbol"
+      >...</a
+      ><a name="9918"
+      > </a
+      ><a name="9919" class="Symbol"
+      >|</a
+      ><a name="9920"
+      > </a
+      ><a name="9921" href="Relation.html#9921" class="Bound"
+      >d&#8345;</a
+      ><a name="9923"
+      > </a
+      ><a name="9924" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9925"
+      > </a
+      ><a name="9926" href="Relation.html#9926" class="Bound"
+      >d&#8321;&#10239;*d&#8345;</a
+      ><a name="9932"
+      > </a
+      ><a name="9933" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9934"
+      > </a
+      ><a name="9935" href="Relation.html#9935" class="Bound"
+      >c&#8345;&#10239;*d&#8345;</a
+      ><a name="9941"
+      >  
+    </a
+      ><a name="9948" class="Symbol"
+      >=</a
+      ><a name="9949"
+      > </a
+      ><a name="9950" href="Relation.html#9921" class="Bound"
+      >d&#8345;</a
+      ><a name="9952"
+      > </a
+      ><a name="9953" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9954"
+      > </a
+      ><a name="9955" href="Relation.html#3648" class="InductiveConstructor"
+      >more</a
+      ><a name="9959"
+      > </a
+      ><a name="9960" href="Relation.html#9864" class="Bound"
+      >b&#8345;&#10239;d&#8321;</a
+      ><a name="9965"
+      >  </a
+      ><a name="9967" href="Relation.html#9926" class="Bound"
+      >d&#8321;&#10239;*d&#8345;</a
+      ><a name="9973"
+      > </a
+      ><a name="9974" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="9975"
+      > </a
+      ><a name="9976" href="Relation.html#9935" class="Bound"
+      >c&#8345;&#10239;*d&#8345;</a
+      ><a name="9982"
+      >
+\end{code}
+</a
+      ><a name="9994" class="Comment"
+      >
+Since both statements of the transitive closure are equivalent,
+from cr-steps we can deduce church-rosser for any relation having
+the diamond property.
+
+</a
+      ><a name="10148"
+      >\begin{code}
+  </a
+      ><a name="10163" href="Relation.html#10163" class="Function"
+      >diamond-cr</a
+      ><a name="10173"
+      > </a
+      ><a name="10174" class="Symbol"
+      >:</a
+      ><a name="10175"
+      > </a
+      ><a name="10176" class="Symbol"
+      >{</a
+      ><a name="10177" href="Relation.html#10177" class="Bound"
+      >&#10239;</a
+      ><a name="10178"
+      > </a
+      ><a name="10179" class="Symbol"
+      >:</a
+      ><a name="10180"
+      > </a
+      ><a name="10181" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="10184" class="Symbol"
+      >}</a
+      ><a name="10185"
+      > </a
+      ><a name="10186" class="Symbol"
+      >&#8594;</a
+      ><a name="10187"
+      > </a
+      ><a name="10188" href="Relation.html#4494" class="Function"
+      >diamond</a
+      ><a name="10195"
+      > </a
+      ><a name="10196" href="Relation.html#10177" class="Bound"
+      >&#10239;</a
+      ><a name="10197"
+      > </a
+      ><a name="10198" class="Symbol"
+      >&#8594;</a
+      ><a name="10199"
+      > </a
+      ><a name="10200" href="Relation.html#5224" class="Function"
+      >cr</a
+      ><a name="10202"
+      > </a
+      ><a name="10203" href="Relation.html#10177" class="Bound"
+      >&#10239;</a
+      ><a name="10204"
+      >
+  </a
+      ><a name="10207" href="Relation.html#10163" class="Function"
+      >diamond-cr</a
+      ><a name="10217"
+      > </a
+      ><a name="10218" href="Relation.html#10218" class="Bound"
+      >&#9826;</a
+      ><a name="10219"
+      > </a
+      ><a name="10220" class="Symbol"
+      >=</a
+      ><a name="10221"
+      > </a
+      ><a name="10222" href="Relation.html#5341" class="Function"
+      >cr-steps-to-cr</a
+      ><a name="10236"
+      > </a
+      ><a name="10237" class="Symbol"
+      >(</a
+      ><a name="10238" href="Relation.html#9209" class="Function"
+      >diamond-cr-steps</a
+      ><a name="10254"
+      > </a
+      ><a name="10255" href="Relation.html#10218" class="Bound"
+      >&#9826;</a
+      ><a name="10256" class="Symbol"
+      >)</a
+      ><a name="10257"
+      >
+\end{code}
+</a
+      ><a name="10269" class="Comment"
+      >
+\begin{lemma} 
+Let $R$ and $S$ be two relations such that $S\subseteq R$ and $\transclos R\subseteq S$, if
+$R$ is Church-Rosser, then $S$ is also.
+\end{lemma}
+\begin{proof}
+The proof is immediate: let $a\,\transclos S\,b$ and $a\,\transclos S\,c$, by the first hypothesis and $mon-star$\ lemma
+we know both $a\,\transclos R\,b$ and $a\,\transclos R\,c$. By Church-Rosser for $R$ we get an element
+$d$ with proofs of $b\,\transclos R\,d$ and $c\,\transclos R\,d$; by the second hypothesis and $trans-&#8838;-star$\ lemma we conclude
+$b\,\transclos S\,d$ and $c\,\transclos S\,d$.
+\end{proof}
+
+</a
+      ><a name="10856"
+      >\begin{code}
+  </a
+      ><a name="10871" href="Relation.html#10871" class="Function"
+      >cr-&#8838;</a
+      ><a name="10875"
+      > </a
+      ><a name="10876" class="Symbol"
+      >:</a
+      ><a name="10877"
+      > </a
+      ><a name="10878" class="Symbol"
+      >{</a
+      ><a name="10879" href="Relation.html#10879" class="Bound"
+      >R</a
+      ><a name="10880"
+      > </a
+      ><a name="10881" href="Relation.html#10881" class="Bound"
+      >S</a
+      ><a name="10882"
+      > </a
+      ><a name="10883" class="Symbol"
+      >:</a
+      ><a name="10884"
+      > </a
+      ><a name="10885" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="10888" class="Symbol"
+      >}</a
+      ><a name="10889"
+      > </a
+      ><a name="10890" class="Symbol"
+      >&#8594;</a
+      ><a name="10891"
+      > </a
+      ><a name="10892" href="Relation.html#10881" class="Bound"
+      >S</a
+      ><a name="10893"
+      > </a
+      ><a name="10894" href="Relation.html#1296" class="Function Operator"
+      >&#8838;</a
+      ><a name="10895"
+      > </a
+      ><a name="10896" href="Relation.html#10879" class="Bound"
+      >R</a
+      ><a name="10897"
+      > </a
+      ><a name="10898" class="Symbol"
+      >&#8594;</a
+      ><a name="10899"
+      > </a
+      ><a name="10900" href="Relation.html#10879" class="Bound"
+      >R</a
+      ><a name="10901"
+      > </a
+      ><a name="10902" href="Relation.html#1296" class="Function Operator"
+      >&#8838;</a
+      ><a name="10903"
+      > </a
+      ><a name="10904" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="10908"
+      > </a
+      ><a name="10909" href="Relation.html#10881" class="Bound"
+      >S</a
+      ><a name="10910"
+      > </a
+      ><a name="10911" class="Symbol"
+      >&#8594;</a
+      ><a name="10912"
+      > </a
+      ><a name="10913" href="Relation.html#5224" class="Function"
+      >cr</a
+      ><a name="10915"
+      > </a
+      ><a name="10916" href="Relation.html#10879" class="Bound"
+      >R</a
+      ><a name="10917"
+      > </a
+      ><a name="10918" class="Symbol"
+      >&#8594;</a
+      ><a name="10919"
+      > </a
+      ><a name="10920" href="Relation.html#5224" class="Function"
+      >cr</a
+      ><a name="10922"
+      > </a
+      ><a name="10923" href="Relation.html#10881" class="Bound"
+      >S</a
+      ><a name="10924"
+      >
+  </a
+      ><a name="10927" href="Relation.html#10871" class="Function"
+      >cr-&#8838;</a
+      ><a name="10931"
+      > </a
+      ><a name="10932" href="Relation.html#10932" class="Bound"
+      >S&#8838;R</a
+      ><a name="10935"
+      > </a
+      ><a name="10936" href="Relation.html#10936" class="Bound"
+      >R&#8838;S&#8902;</a
+      ><a name="10940"
+      > </a
+      ><a name="10941" href="Relation.html#10941" class="Bound"
+      >cr</a
+      ><a name="10943"
+      > </a
+      ><a name="10944" href="Relation.html#10944" class="Bound"
+      >aR&#8902;b</a
+      ><a name="10948"
+      > </a
+      ><a name="10949" href="Relation.html#10949" class="Bound"
+      >aR&#8902;c</a
+      ><a name="10953"
+      >
+    </a
+      ><a name="10958" class="Keyword"
+      >with</a
+      ><a name="10962"
+      > </a
+      ><a name="10963" href="Relation.html#10941" class="Bound"
+      >cr</a
+      ><a name="10965"
+      > </a
+      ><a name="10966" class="Symbol"
+      >(</a
+      ><a name="10967" href="Relation.html#2263" class="Function"
+      >mon-star</a
+      ><a name="10975"
+      > </a
+      ><a name="10976" href="Relation.html#10932" class="Bound"
+      >S&#8838;R</a
+      ><a name="10979"
+      > </a
+      ><a name="10980" href="Relation.html#10944" class="Bound"
+      >aR&#8902;b</a
+      ><a name="10984" class="Symbol"
+      >)</a
+      ><a name="10985"
+      > </a
+      ><a name="10986" class="Symbol"
+      >(</a
+      ><a name="10987" href="Relation.html#2263" class="Function"
+      >mon-star</a
+      ><a name="10995"
+      > </a
+      ><a name="10996" href="Relation.html#10932" class="Bound"
+      >S&#8838;R</a
+      ><a name="10999"
+      > </a
+      ><a name="11000" href="Relation.html#10949" class="Bound"
+      >aR&#8902;c</a
+      ><a name="11004" class="Symbol"
+      >)</a
+      ><a name="11005"
+      >
+  </a
+      ><a name="11008" class="Symbol"
+      >...</a
+      ><a name="11011"
+      > </a
+      ><a name="11012" class="Symbol"
+      >|</a
+      ><a name="11013"
+      > </a
+      ><a name="11014" href="Relation.html#11014" class="Bound"
+      >d</a
+      ><a name="11015"
+      > </a
+      ><a name="11016" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="11017"
+      > </a
+      ><a name="11018" href="Relation.html#11018" class="Bound"
+      >bR&#8902;d</a
+      ><a name="11022"
+      > </a
+      ><a name="11023" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="11024"
+      > </a
+      ><a name="11025" href="Relation.html#11025" class="Bound"
+      >cR&#8902;d</a
+      ><a name="11029"
+      > 
+    </a
+      ><a name="11035" class="Symbol"
+      >=</a
+      ><a name="11036"
+      >  </a
+      ><a name="11038" href="Relation.html#11014" class="Bound"
+      >d</a
+      ><a name="11039"
+      >                       </a
+      ><a name="11062" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="11063"
+      >  
+       </a
+      ><a name="11073" href="Relation.html#2648" class="Function"
+      >trans-&#8838;-star</a
+      ><a name="11085"
+      > </a
+      ><a name="11086" href="Relation.html#10936" class="Bound"
+      >R&#8838;S&#8902;</a
+      ><a name="11090"
+      > </a
+      ><a name="11091" href="Relation.html#11018" class="Bound"
+      >bR&#8902;d</a
+      ><a name="11095"
+      >  </a
+      ><a name="11097" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="11098"
+      > 
+       </a
+      ><a name="11107" href="Relation.html#2648" class="Function"
+      >trans-&#8838;-star</a
+      ><a name="11119"
+      > </a
+      ><a name="11120" href="Relation.html#10936" class="Bound"
+      >R&#8838;S&#8902;</a
+      ><a name="11124"
+      > </a
+      ><a name="11125" href="Relation.html#11025" class="Bound"
+      >cR&#8902;d</a
+      ><a name="11129"
+      > 
+\end{code}
+</a
+      ><a name="11142" class="Comment"
+      >%&lt;/Relation&gt;
+
+\end{document}
+</a
+      ></pre
+    ></body
+  ></html
+>

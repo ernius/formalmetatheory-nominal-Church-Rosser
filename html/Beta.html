@@ -1,0 +1,2962 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >Beta</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1"
+      >\begin{code}
+</a
+      ><a name="14" class="Keyword"
+      >module</a
+      ><a name="20"
+      > </a
+      ><a name="21" href="Beta.html#1" class="Module"
+      >Beta</a
+      ><a name="25"
+      > </a
+      ><a name="26" class="Keyword"
+      >where</a
+      ><a name="31"
+      >
+
+</a
+      ><a name="33" class="Keyword"
+      >open</a
+      ><a name="37"
+      > </a
+      ><a name="38" class="Keyword"
+      >import</a
+      ><a name="44"
+      > </a
+      ><a name="45" href="Atom.html#1" class="Module"
+      >Atom</a
+      ><a name="49"
+      >
+</a
+      ><a name="50" class="Keyword"
+      >open</a
+      ><a name="54"
+      > </a
+      ><a name="55" class="Keyword"
+      >import</a
+      ><a name="61"
+      > </a
+      ><a name="62" href="Chi.html#1" class="Module"
+      >Chi</a
+      ><a name="65"
+      >
+</a
+      ><a name="66" class="Keyword"
+      >open</a
+      ><a name="70"
+      > </a
+      ><a name="71" class="Keyword"
+      >import</a
+      ><a name="77"
+      > </a
+      ><a name="78" href="Term.html#1" class="Module"
+      >Term</a
+      ><a name="82"
+      >
+</a
+      ><a name="83" class="Keyword"
+      >open</a
+      ><a name="87"
+      > </a
+      ><a name="88" class="Keyword"
+      >import</a
+      ><a name="94"
+      > </a
+      ><a name="95" href="Substitution.html#1" class="Module"
+      >Substitution</a
+      ><a name="107"
+      >
+</a
+      ><a name="108" class="Keyword"
+      >open</a
+      ><a name="112"
+      > </a
+      ><a name="113" class="Keyword"
+      >import</a
+      ><a name="119"
+      > </a
+      ><a name="120" href="Alpha.html#1" class="Module"
+      >Alpha</a
+      ><a name="125"
+      >
+</a
+      ><a name="126" class="Keyword"
+      >open</a
+      ><a name="130"
+      > </a
+      ><a name="131" class="Keyword"
+      >import</a
+      ><a name="137"
+      > </a
+      ><a name="138" href="Relation.html#1" class="Module"
+      >Relation</a
+      ><a name="146"
+      > </a
+      ><a name="147" href="Term.html#990" class="Datatype"
+      >&#923;</a
+      ><a name="148"
+      > </a
+      ><a name="149" class="Keyword"
+      >hiding</a
+      ><a name="155"
+      > </a
+      ><a name="156" class="Symbol"
+      >(</a
+      ><a name="157"
+      >_++_</a
+      ><a name="161" class="Symbol"
+      >)</a
+      ><a name="162"
+      > </a
+      ><a name="163" class="Keyword"
+      >renaming</a
+      ><a name="171"
+      > </a
+      ><a name="172" class="Symbol"
+      >(</a
+      ><a name="173"
+      >_&#8838;_ </a
+      ><a name="177" class="Symbol"
+      >to</a
+      ><a name="179"
+      > _&#8838;R_</a
+      ><a name="184" class="Symbol"
+      >)</a
+      ><a name="185"
+      >
+</a
+      ><a name="186" class="Keyword"
+      >open</a
+      ><a name="190"
+      > </a
+      ><a name="191" class="Keyword"
+      >import</a
+      ><a name="197"
+      > </a
+      ><a name="198" href="NaturalProperties.html#1" class="Module"
+      >NaturalProperties</a
+      ><a name="215"
+      >
+
+</a
+      ><a name="217" class="Keyword"
+      >open</a
+      ><a name="221"
+      > </a
+      ><a name="222" class="Keyword"
+      >import</a
+      ><a name="228"
+      > </a
+      ><a name="229" href="ListProperties.html#1" class="Module"
+      >ListProperties</a
+      ><a name="243"
+      >
+
+</a
+      ><a name="245" class="Keyword"
+      >open</a
+      ><a name="249"
+      > </a
+      ><a name="250" class="Keyword"
+      >import</a
+      ><a name="256"
+      > </a
+      ><a name="257" href="Data.Empty.html#1" class="Module"
+      >Data.Empty</a
+      ><a name="267"
+      >
+</a
+      ><a name="268" class="Keyword"
+      >open</a
+      ><a name="272"
+      > </a
+      ><a name="273" class="Keyword"
+      >import</a
+      ><a name="279"
+      > </a
+      ><a name="280" href="Data.Sum.html#1" class="Module"
+      >Data.Sum</a
+      ><a name="288"
+      >
+</a
+      ><a name="289" class="Keyword"
+      >open</a
+      ><a name="293"
+      > </a
+      ><a name="294" class="Keyword"
+      >import</a
+      ><a name="300"
+      > </a
+      ><a name="301" href="Data.Nat.html#1" class="Module"
+      >Data.Nat</a
+      ><a name="309"
+      > </a
+      ><a name="310" class="Keyword"
+      >hiding</a
+      ><a name="316"
+      > </a
+      ><a name="317" class="Symbol"
+      >(</a
+      ><a name="318" href="Agda.Builtin.Nat.html#433" class="Primitive Operator"
+      >_*_</a
+      ><a name="321" class="Symbol"
+      >)</a
+      ><a name="322"
+      >
+</a
+      ><a name="323" class="Keyword"
+      >open</a
+      ><a name="327"
+      > </a
+      ><a name="328" class="Keyword"
+      >import</a
+      ><a name="334"
+      > </a
+      ><a name="335" href="Relation.Nullary.html#1" class="Module"
+      >Relation.Nullary</a
+      ><a name="351"
+      >
+</a
+      ><a name="352" class="Keyword"
+      >open</a
+      ><a name="356"
+      > </a
+      ><a name="357" class="Keyword"
+      >import</a
+      ><a name="363"
+      > </a
+      ><a name="364" href="Relation.Binary.html#1" class="Module"
+      >Relation.Binary</a
+      ><a name="379"
+      > </a
+      ><a name="380" class="Keyword"
+      >hiding</a
+      ><a name="386"
+      > </a
+      ><a name="387" class="Symbol"
+      >(</a
+      ><a name="388" href="Relation.Binary.Core.html#740" class="Function"
+      >Rel</a
+      ><a name="391" class="Symbol"
+      >)</a
+      ><a name="392"
+      >
+</a
+      ><a name="393" class="Keyword"
+      >open</a
+      ><a name="397"
+      > </a
+      ><a name="398" class="Keyword"
+      >import</a
+      ><a name="404"
+      > </a
+      ><a name="405" href="Function.html#1" class="Module"
+      >Function</a
+      ><a name="413"
+      > </a
+      ><a name="414" class="Keyword"
+      >hiding</a
+      ><a name="420"
+      > </a
+      ><a name="421" class="Symbol"
+      >(</a
+      ><a name="422" href="Function.html#713" class="Function Operator"
+      >_&#8728;_</a
+      ><a name="425" class="Symbol"
+      >)</a
+      ><a name="426"
+      >
+</a
+      ><a name="427" class="Keyword"
+      >open</a
+      ><a name="431"
+      > </a
+      ><a name="432" class="Keyword"
+      >import</a
+      ><a name="438"
+      > </a
+      ><a name="439" href="Data.Product.html#1" class="Module"
+      >Data.Product</a
+      ><a name="451"
+      > </a
+      ><a name="452" class="Keyword"
+      >renaming</a
+      ><a name="460"
+      > </a
+      ><a name="461" class="Symbol"
+      >(</a
+      ><a name="462" href="Data.Product.html#439" class="Record"
+      >&#931;</a
+      ><a name="463"
+      > </a
+      ><a name="464" class="Symbol"
+      >to</a
+      ><a name="466"
+      > </a
+      ><a name="467" href="Data.Product.html#439" class="Record"
+      >&#931;&#8339;</a
+      ><a name="469" class="Symbol"
+      >)</a
+      ><a name="470"
+      >
+</a
+      ><a name="471" class="Keyword"
+      >open</a
+      ><a name="475"
+      > </a
+      ><a name="476" class="Keyword"
+      >import</a
+      ><a name="482"
+      > </a
+      ><a name="483" href="Relation.Binary.PropositionalEquality.html#1" class="Module"
+      >Relation.Binary.PropositionalEquality</a
+      ><a name="520"
+      > </a
+      ><a name="521" class="Symbol"
+      >as</a
+      ><a name="523"
+      > </a
+      ><a name="524" class="Module"
+      >PropEq</a
+      ><a name="530"
+      >
+  </a
+      ><a name="533" class="Keyword"
+      >using</a
+      ><a name="538"
+      > </a
+      ><a name="539" class="Symbol"
+      >(</a
+      ><a name="540" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >_&#8801;_</a
+      ><a name="543" class="Symbol"
+      >;</a
+      ><a name="544"
+      > </a
+      ><a name="545" href="Relation.Binary.Core.html#4493" class="Function Operator"
+      >_&#8802;_</a
+      ><a name="548" class="Symbol"
+      >;</a
+      ><a name="549"
+      > </a
+      ><a name="550" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="554" class="Symbol"
+      >;</a
+      ><a name="555"
+      > </a
+      ><a name="556" href="Relation.Binary.PropositionalEquality.Core.html#565" class="Function"
+      >sym</a
+      ><a name="559" class="Symbol"
+      >;</a
+      ><a name="560"
+      > </a
+      ><a name="561" href="Relation.Binary.PropositionalEquality.html#1036" class="Function"
+      >cong</a
+      ><a name="565" class="Symbol"
+      >;</a
+      ><a name="566"
+      > </a
+      ><a name="567" href="Relation.Binary.PropositionalEquality.html#1274" class="Function"
+      >cong&#8322;</a
+      ><a name="572" class="Symbol"
+      >;</a
+      ><a name="573"
+      > </a
+      ><a name="574" href="Relation.Binary.PropositionalEquality.html#1526" class="Function"
+      >setoid</a
+      ><a name="580" class="Symbol"
+      >)</a
+      ><a name="581"
+      >
+</a
+      ><a name="582" class="Keyword"
+      >open</a
+      ><a name="586"
+      > </a
+      ><a name="587" href="Relation.Binary.PropositionalEquality.html#243" class="Module"
+      >PropEq.</a
+      ><a name="594" href="Relation.Binary.PropositionalEquality.html#5706" class="Module"
+      >&#8801;-Reasoning</a
+      ><a name="605"
+      > </a
+      ><a name="606" class="Keyword"
+      >renaming</a
+      ><a name="614"
+      > </a
+      ><a name="615" class="Symbol"
+      >(</a
+      ><a name="616" href="Relation.Binary.PropositionalEquality.html#5807" class="Function Operator"
+      >begin_</a
+      ><a name="622"
+      > </a
+      ><a name="623" class="Symbol"
+      >to</a
+      ><a name="625"
+      > </a
+      ><a name="626" href="Relation.Binary.PropositionalEquality.html#5807" class="Function Operator"
+      >begin&#8801;_</a
+      ><a name="633" class="Symbol"
+      >;</a
+      ><a name="634" href="Relation.Binary.PropositionalEquality.html#6105" class="Function Operator"
+      >_&#8718;</a
+      ><a name="636"
+      > </a
+      ><a name="637" class="Symbol"
+      >to</a
+      ><a name="639"
+      > </a
+      ><a name="640" href="Relation.Binary.PropositionalEquality.html#6105" class="Function Operator"
+      >_&#9723;</a
+      ><a name="642" class="Symbol"
+      >)</a
+      ><a name="643"
+      >
+</a
+      ><a name="644" class="Keyword"
+      >open</a
+      ><a name="648"
+      > </a
+      ><a name="649" class="Keyword"
+      >import</a
+      ><a name="655"
+      > </a
+      ><a name="656" href="Data.List.html#1" class="Module"
+      >Data.List</a
+      ><a name="665"
+      > </a
+      ><a name="666" class="Keyword"
+      >hiding</a
+      ><a name="672"
+      > </a
+      ><a name="673" class="Symbol"
+      >(</a
+      ><a name="674" href="Data.List.Base.html#2518" class="Function"
+      >any</a
+      ><a name="677" class="Symbol"
+      >)</a
+      ><a name="678"
+      > </a
+      ><a name="679" class="Keyword"
+      >renaming</a
+      ><a name="687"
+      > </a
+      ><a name="688" class="Symbol"
+      >(</a
+      ><a name="689" href="Data.List.Base.html#2745" class="Function"
+      >length</a
+      ><a name="695"
+      > </a
+      ><a name="696" class="Symbol"
+      >to</a
+      ><a name="698"
+      > </a
+      ><a name="699" href="Data.List.Base.html#2745" class="Function"
+      >length'</a
+      ><a name="706" class="Symbol"
+      >)</a
+      ><a name="707"
+      > 
+</a
+      ><a name="709" class="Keyword"
+      >open</a
+      ><a name="713"
+      > </a
+      ><a name="714" class="Keyword"
+      >import</a
+      ><a name="720"
+      > </a
+      ><a name="721" href="Data.List.Properties.html#1" class="Module"
+      >Data.List.Properties</a
+      ><a name="741"
+      >
+</a
+      ><a name="742" class="Keyword"
+      >open</a
+      ><a name="746"
+      > </a
+      ><a name="747" class="Keyword"
+      >import</a
+      ><a name="753"
+      > </a
+      ><a name="754" href="Data.List.Any.html#1" class="Module"
+      >Data.List.Any</a
+      ><a name="767"
+      > </a
+      ><a name="768" class="Symbol"
+      >as</a
+      ><a name="770"
+      > </a
+      ><a name="771" class="Module"
+      >Any</a
+      ><a name="774"
+      > </a
+      ><a name="775" class="Keyword"
+      >hiding</a
+      ><a name="781"
+      > </a
+      ><a name="782" class="Symbol"
+      >(</a
+      ><a name="783" href="Data.List.Any.html#1288" class="Function"
+      >map</a
+      ><a name="786" class="Symbol"
+      >)</a
+      ><a name="787"
+      >
+</a
+      ><a name="788" class="Keyword"
+      >open</a
+      ><a name="792"
+      > </a
+      ><a name="793" class="Keyword"
+      >import</a
+      ><a name="799"
+      > </a
+      ><a name="800" href="Data.List.Any.Membership.html#1" class="Module"
+      >Data.List.Any.Membership</a
+      ><a name="824"
+      >
+</a
+      ><a name="825" class="Keyword"
+      >open</a
+      ><a name="829"
+      > </a
+      ><a name="830" href="Data.List.Any.html#260" class="Module"
+      >Any.</a
+      ><a name="834" href="Data.List.Any.html#4582" class="Module"
+      >Membership-&#8801;</a
+      ><a name="846"
+      > </a
+      ><a name="847" class="Keyword"
+      >hiding</a
+      ><a name="853"
+      > </a
+      ><a name="854" class="Symbol"
+      >(</a
+      ><a name="855" href="Data.List.Any.html#3056" class="Function Operator"
+      >_&#8838;_</a
+      ><a name="858" class="Symbol"
+      >)</a
+      ><a name="859"
+      >
+
+</a
+      ><a name="861" class="Keyword"
+      >infix</a
+      ><a name="866"
+      >   </a
+      ><a name="869" class="Number"
+      >1</a
+      ><a name="870"
+      > </a
+      ><a name="871" href="Beta.html#944" class="Datatype Operator"
+      >_&#9657;_</a
+      ><a name="874"
+      > 
+\end{code}
+</a
+      ><a name="887" class="Comment"
+      >
+Beta contraction
+
+%&lt;*betacontraction&gt;
+</a
+      ><a name="926"
+      >\begin{code}
+</a
+      ><a name="939" class="Keyword"
+      >data</a
+      ><a name="943"
+      > </a
+      ><a name="944" href="Beta.html#944" class="Datatype Operator"
+      >_&#9657;_</a
+      ><a name="947"
+      > </a
+      ><a name="948" class="Symbol"
+      >:</a
+      ><a name="949"
+      > </a
+      ><a name="950" href="Term.html#990" class="Datatype"
+      >&#923;</a
+      ><a name="951"
+      > </a
+      ><a name="952" class="Symbol"
+      >&#8594;</a
+      ><a name="953"
+      > </a
+      ><a name="954" href="Term.html#990" class="Datatype"
+      >&#923;</a
+      ><a name="955"
+      > </a
+      ><a name="956" class="Symbol"
+      >&#8594;</a
+      ><a name="957"
+      > </a
+      ><a name="958" class="PrimitiveType"
+      >Set</a
+      ><a name="961"
+      > </a
+      ><a name="962" class="Keyword"
+      >where</a
+      ><a name="967"
+      >
+  </a
+      ><a name="970" href="Beta.html#970" class="InductiveConstructor"
+      >&#9657;&#946;</a
+      ><a name="972"
+      >  </a
+      ><a name="974" class="Symbol"
+      >:</a
+      ><a name="975"
+      >  </a
+      ><a name="977" class="Symbol"
+      >{</a
+      ><a name="978" href="Beta.html#978" class="Bound"
+      >M</a
+      ><a name="979"
+      > </a
+      ><a name="980" href="Beta.html#980" class="Bound"
+      >N</a
+      ><a name="981"
+      > </a
+      ><a name="982" class="Symbol"
+      >:</a
+      ><a name="983"
+      > </a
+      ><a name="984" href="Term.html#990" class="Datatype"
+      >&#923;</a
+      ><a name="985" class="Symbol"
+      >}{</a
+      ><a name="987" href="Beta.html#987" class="Bound"
+      >x</a
+      ><a name="988"
+      > </a
+      ><a name="989" class="Symbol"
+      >:</a
+      ><a name="990"
+      > </a
+      ><a name="991" href="Atom.html#340" class="Function"
+      >Atom</a
+      ><a name="995" class="Symbol"
+      >}</a
+      ><a name="996"
+      > 
+      </a
+      ><a name="1004" class="Symbol"
+      >&#8594;</a
+      ><a name="1005"
+      >  </a
+      ><a name="1007" href="Term.html#1045" class="InductiveConstructor"
+      >&#411;</a
+      ><a name="1008"
+      > </a
+      ><a name="1009" href="Beta.html#987" class="Bound"
+      >x</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" href="Beta.html#978" class="Bound"
+      >M</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="1014"
+      > </a
+      ><a name="1015" href="Beta.html#980" class="Bound"
+      >N</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" href="Beta.html#944" class="Datatype Operator"
+      >&#9657;</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" href="Beta.html#978" class="Bound"
+      >M</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" href="Substitution.html#898" class="Function Operator"
+      >[</a
+      ><a name="1022"
+      > </a
+      ><a name="1023" href="Beta.html#987" class="Bound"
+      >x</a
+      ><a name="1024"
+      > </a
+      ><a name="1025" href="Substitution.html#898" class="Function Operator"
+      >&#8788;</a
+      ><a name="1026"
+      > </a
+      ><a name="1027" href="Beta.html#980" class="Bound"
+      >N</a
+      ><a name="1028"
+      > </a
+      ><a name="1029" href="Substitution.html#898" class="Function Operator"
+      >]</a
+      ><a name="1030"
+      >
+\end{code}
+</a
+      ><a name="1042" class="Comment"
+      >%&lt;/betacontraction&gt;
+
+Beta contraction preserves typing judge.
+
+Context clousure of beta contraction.
+
+\end{code}
+
+%&lt;*beta&gt;
+</a
+      ><a name="1165"
+      >\begin{code}
+</a
+      ><a name="1178" class="Keyword"
+      >data</a
+      ><a name="1182"
+      > </a
+      ><a name="1183" href="Beta.html#1183" class="Datatype"
+      >ctx</a
+      ><a name="1186"
+      > </a
+      ><a name="1187" class="Symbol"
+      >(</a
+      ><a name="1188" href="Beta.html#1188" class="Bound"
+      >r</a
+      ><a name="1189"
+      > </a
+      ><a name="1190" class="Symbol"
+      >:</a
+      ><a name="1191"
+      > </a
+      ><a name="1192" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="1195" class="Symbol"
+      >)</a
+      ><a name="1196"
+      > </a
+      ><a name="1197" class="Symbol"
+      >:</a
+      ><a name="1198"
+      > </a
+      ><a name="1199" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="1202"
+      > </a
+      ><a name="1203" class="Keyword"
+      >where</a
+      ><a name="1208"
+      >
+  </a
+      ><a name="1211" href="Beta.html#1211" class="InductiveConstructor"
+      >ctxinj</a
+      ><a name="1217"
+      > </a
+      ><a name="1218" class="Symbol"
+      >:</a
+      ><a name="1219"
+      > </a
+      ><a name="1220" class="Symbol"
+      >&#8704;</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" class="Symbol"
+      >{</a
+      ><a name="1223" href="Beta.html#1223" class="Bound"
+      >t</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" href="Beta.html#1225" class="Bound"
+      >t'</a
+      ><a name="1227" class="Symbol"
+      >}</a
+      ><a name="1228"
+      >       </a
+      ><a name="1235" class="Symbol"
+      >&#8594;</a
+      ><a name="1236"
+      > </a
+      ><a name="1237" href="Beta.html#1188" class="Bound"
+      >r</a
+      ><a name="1238"
+      > </a
+      ><a name="1239" href="Beta.html#1223" class="Bound"
+      >t</a
+      ><a name="1240"
+      > </a
+      ><a name="1241" href="Beta.html#1225" class="Bound"
+      >t'</a
+      ><a name="1243"
+      >        </a
+      ><a name="1251" class="Symbol"
+      >&#8594;</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" href="Beta.html#1183" class="Datatype"
+      >ctx</a
+      ><a name="1256"
+      > </a
+      ><a name="1257" href="Beta.html#1188" class="Bound"
+      >r</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" href="Beta.html#1223" class="Bound"
+      >t</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" href="Beta.html#1225" class="Bound"
+      >t'</a
+      ><a name="1263"
+      >
+  </a
+      ><a name="1266" href="Beta.html#1266" class="InductiveConstructor"
+      >ctx&#183;l</a
+      ><a name="1271"
+      >  </a
+      ><a name="1273" class="Symbol"
+      >:</a
+      ><a name="1274"
+      > </a
+      ><a name="1275" class="Symbol"
+      >&#8704;</a
+      ><a name="1276"
+      > </a
+      ><a name="1277" class="Symbol"
+      >{</a
+      ><a name="1278" href="Beta.html#1278" class="Bound"
+      >t&#8321;</a
+      ><a name="1280"
+      > </a
+      ><a name="1281" href="Beta.html#1281" class="Bound"
+      >t&#8321;'</a
+      ><a name="1284"
+      > </a
+      ><a name="1285" href="Beta.html#1285" class="Bound"
+      >t&#8322;</a
+      ><a name="1287" class="Symbol"
+      >}</a
+      ><a name="1288"
+      >  </a
+      ><a name="1290" class="Symbol"
+      >&#8594;</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" href="Beta.html#1183" class="Datatype"
+      >ctx</a
+      ><a name="1295"
+      > </a
+      ><a name="1296" href="Beta.html#1188" class="Bound"
+      >r</a
+      ><a name="1297"
+      > </a
+      ><a name="1298" href="Beta.html#1278" class="Bound"
+      >t&#8321;</a
+      ><a name="1300"
+      > </a
+      ><a name="1301" href="Beta.html#1281" class="Bound"
+      >t&#8321;'</a
+      ><a name="1304"
+      >  </a
+      ><a name="1306" class="Symbol"
+      >&#8594;</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="Beta.html#1183" class="Datatype"
+      >ctx</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" href="Beta.html#1188" class="Bound"
+      >r</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" class="Symbol"
+      >(</a
+      ><a name="1315" href="Beta.html#1278" class="Bound"
+      >t&#8321;</a
+      ><a name="1317"
+      > </a
+      ><a name="1318" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" href="Beta.html#1285" class="Bound"
+      >t&#8322;</a
+      ><a name="1322" class="Symbol"
+      >)</a
+      ><a name="1323"
+      > </a
+      ><a name="1324" class="Symbol"
+      >(</a
+      ><a name="1325" href="Beta.html#1281" class="Bound"
+      >t&#8321;'</a
+      ><a name="1328"
+      > </a
+      ><a name="1329" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" href="Beta.html#1285" class="Bound"
+      >t&#8322;</a
+      ><a name="1333" class="Symbol"
+      >)</a
+      ><a name="1334"
+      >
+  </a
+      ><a name="1337" href="Beta.html#1337" class="InductiveConstructor"
+      >ctx&#183;r</a
+      ><a name="1342"
+      >  </a
+      ><a name="1344" class="Symbol"
+      >:</a
+      ><a name="1345"
+      > </a
+      ><a name="1346" class="Symbol"
+      >&#8704;</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" class="Symbol"
+      >{</a
+      ><a name="1349" href="Beta.html#1349" class="Bound"
+      >t&#8321;</a
+      ><a name="1351"
+      > </a
+      ><a name="1352" href="Beta.html#1352" class="Bound"
+      >t&#8322;</a
+      ><a name="1354"
+      > </a
+      ><a name="1355" href="Beta.html#1355" class="Bound"
+      >t&#8322;'</a
+      ><a name="1358" class="Symbol"
+      >}</a
+      ><a name="1359"
+      >  </a
+      ><a name="1361" class="Symbol"
+      >&#8594;</a
+      ><a name="1362"
+      > </a
+      ><a name="1363" href="Beta.html#1183" class="Datatype"
+      >ctx</a
+      ><a name="1366"
+      > </a
+      ><a name="1367" href="Beta.html#1188" class="Bound"
+      >r</a
+      ><a name="1368"
+      > </a
+      ><a name="1369" href="Beta.html#1352" class="Bound"
+      >t&#8322;</a
+      ><a name="1371"
+      > </a
+      ><a name="1372" href="Beta.html#1355" class="Bound"
+      >t&#8322;'</a
+      ><a name="1375"
+      >  </a
+      ><a name="1377" class="Symbol"
+      >&#8594;</a
+      ><a name="1378"
+      > </a
+      ><a name="1379" href="Beta.html#1183" class="Datatype"
+      >ctx</a
+      ><a name="1382"
+      > </a
+      ><a name="1383" href="Beta.html#1188" class="Bound"
+      >r</a
+      ><a name="1384"
+      > </a
+      ><a name="1385" class="Symbol"
+      >(</a
+      ><a name="1386" href="Beta.html#1349" class="Bound"
+      >t&#8321;</a
+      ><a name="1388"
+      > </a
+      ><a name="1389" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="1390"
+      > </a
+      ><a name="1391" href="Beta.html#1352" class="Bound"
+      >t&#8322;</a
+      ><a name="1393" class="Symbol"
+      >)</a
+      ><a name="1394"
+      > </a
+      ><a name="1395" class="Symbol"
+      >(</a
+      ><a name="1396" href="Beta.html#1349" class="Bound"
+      >t&#8321;</a
+      ><a name="1398"
+      > </a
+      ><a name="1399" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" href="Beta.html#1355" class="Bound"
+      >t&#8322;'</a
+      ><a name="1404" class="Symbol"
+      >)</a
+      ><a name="1405"
+      >
+  </a
+      ><a name="1408" href="Beta.html#1408" class="InductiveConstructor"
+      >ctx&#411;</a
+      ><a name="1412"
+      >   </a
+      ><a name="1415" class="Symbol"
+      >:</a
+      ><a name="1416"
+      > </a
+      ><a name="1417" class="Symbol"
+      >&#8704;</a
+      ><a name="1418"
+      > </a
+      ><a name="1419" class="Symbol"
+      >{</a
+      ><a name="1420" href="Beta.html#1420" class="Bound"
+      >x</a
+      ><a name="1421"
+      > </a
+      ><a name="1422" href="Beta.html#1422" class="Bound"
+      >t&#8321;</a
+      ><a name="1424"
+      > </a
+      ><a name="1425" href="Beta.html#1425" class="Bound"
+      >t&#8321;'</a
+      ><a name="1428" class="Symbol"
+      >}</a
+      ><a name="1429"
+      >   </a
+      ><a name="1432" class="Symbol"
+      >&#8594;</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" href="Beta.html#1183" class="Datatype"
+      >ctx</a
+      ><a name="1437"
+      > </a
+      ><a name="1438" href="Beta.html#1188" class="Bound"
+      >r</a
+      ><a name="1439"
+      > </a
+      ><a name="1440" href="Beta.html#1422" class="Bound"
+      >t&#8321;</a
+      ><a name="1442"
+      > </a
+      ><a name="1443" href="Beta.html#1425" class="Bound"
+      >t&#8321;'</a
+      ><a name="1446"
+      >  </a
+      ><a name="1448" class="Symbol"
+      >&#8594;</a
+      ><a name="1449"
+      > </a
+      ><a name="1450" href="Beta.html#1183" class="Datatype"
+      >ctx</a
+      ><a name="1453"
+      > </a
+      ><a name="1454" href="Beta.html#1188" class="Bound"
+      >r</a
+      ><a name="1455"
+      > </a
+      ><a name="1456" class="Symbol"
+      >(</a
+      ><a name="1457" href="Term.html#1045" class="InductiveConstructor"
+      >&#411;</a
+      ><a name="1458"
+      > </a
+      ><a name="1459" href="Beta.html#1420" class="Bound"
+      >x</a
+      ><a name="1460"
+      > </a
+      ><a name="1461" href="Beta.html#1422" class="Bound"
+      >t&#8321;</a
+      ><a name="1463" class="Symbol"
+      >)</a
+      ><a name="1464"
+      > </a
+      ><a name="1465" class="Symbol"
+      >(</a
+      ><a name="1466" href="Term.html#1045" class="InductiveConstructor"
+      >&#411;</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" href="Beta.html#1420" class="Bound"
+      >x</a
+      ><a name="1469"
+      > </a
+      ><a name="1470" href="Beta.html#1425" class="Bound"
+      >t&#8321;'</a
+      ><a name="1473" class="Symbol"
+      >)</a
+      ><a name="1474"
+      >
+
+</a
+      ><a name="1476" class="Keyword"
+      >infix</a
+      ><a name="1481"
+      > </a
+      ><a name="1482" class="Number"
+      >4</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" href="Beta.html#1489" class="Function Operator"
+      >_&#8594;&#946;_</a
+      ><a name="1488"
+      >
+</a
+      ><a name="1489" href="Beta.html#1489" class="Function Operator"
+      >_&#8594;&#946;_</a
+      ><a name="1493"
+      > </a
+      ><a name="1494" class="Symbol"
+      >:</a
+      ><a name="1495"
+      > </a
+      ><a name="1496" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="1499"
+      >
+</a
+      ><a name="1500" href="Beta.html#1489" class="Function Operator"
+      >_&#8594;&#946;_</a
+      ><a name="1504"
+      > </a
+      ><a name="1505" class="Symbol"
+      >=</a
+      ><a name="1506"
+      > </a
+      ><a name="1507" href="Beta.html#1183" class="Datatype"
+      >ctx</a
+      ><a name="1510"
+      > </a
+      ><a name="1511" href="Beta.html#944" class="Datatype Operator"
+      >_&#9657;_</a
+      ><a name="1514"
+      >
+\end{code}
+</a
+      ><a name="1526" class="Comment"
+      >%&lt;/beta&gt;
+
+
+%&lt;*alphabeta&gt;
+</a
+      ><a name="1551"
+      >\begin{code}
+</a
+      ><a name="1564" class="Keyword"
+      >infix</a
+      ><a name="1569"
+      > </a
+      ><a name="1570" class="Number"
+      >4</a
+      ><a name="1571"
+      > </a
+      ><a name="1572" href="Beta.html#1578" class="Function Operator"
+      >_&#8594;&#945;_</a
+      ><a name="1576"
+      > 
+</a
+      ><a name="1578" href="Beta.html#1578" class="Function Operator"
+      >_&#8594;&#945;_</a
+      ><a name="1582"
+      > </a
+      ><a name="1583" class="Symbol"
+      >:</a
+      ><a name="1584"
+      > </a
+      ><a name="1585" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="1588"
+      >
+</a
+      ><a name="1589" href="Beta.html#1578" class="Function Operator"
+      >_&#8594;&#945;_</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" class="Symbol"
+      >=</a
+      ><a name="1595"
+      > </a
+      ><a name="1596" href="Beta.html#1489" class="Function Operator"
+      >_&#8594;&#946;_</a
+      ><a name="1600"
+      > </a
+      ><a name="1601" href="Relation.html#1059" class="Function Operator"
+      >&#8746;</a
+      ><a name="1602"
+      > </a
+      ><a name="1603" href="Alpha.html#644" class="Datatype Operator"
+      >_&#8764;&#945;_</a
+      ><a name="1607"
+      >
+\end{code}
+</a
+      ><a name="1619" class="Comment"
+      >%&lt;/alphabeta&gt;
+
+%&lt;*asteralphabeta&gt;
+</a
+      ><a name="1653"
+      >\begin{code}
+</a
+      ><a name="1666" class="Keyword"
+      >infix</a
+      ><a name="1671"
+      > </a
+      ><a name="1672" class="Number"
+      >4</a
+      ><a name="1673"
+      > </a
+      ><a name="1674" href="Beta.html#1680" class="Function Operator"
+      >_&#8594;&#945;*_</a
+      ><a name="1679"
+      >
+</a
+      ><a name="1680" href="Beta.html#1680" class="Function Operator"
+      >_&#8594;&#945;*_</a
+      ><a name="1685"
+      > </a
+      ><a name="1686" class="Symbol"
+      >:</a
+      ><a name="1687"
+      > </a
+      ><a name="1688" href="Relation.html#503" class="Function"
+      >Rel</a
+      ><a name="1691"
+      >
+</a
+      ><a name="1692" href="Beta.html#1680" class="Function Operator"
+      >_&#8594;&#945;*_</a
+      ><a name="1697"
+      > </a
+      ><a name="1698" class="Symbol"
+      >=</a
+      ><a name="1699"
+      > </a
+      ><a name="1700" href="Relation.html#2101" class="Datatype"
+      >star</a
+      ><a name="1704"
+      > </a
+      ><a name="1705" href="Beta.html#1578" class="Function Operator"
+      >_&#8594;&#945;_</a
+      ><a name="1709"
+      >
+\end{code}
+</a
+      ><a name="1721" class="Comment"
+      >%&lt;/asteralphabeta&gt;
+
+</a
+      ><a name="1741"
+      >\begin{code}
+</a
+      ><a name="1754" href="Beta.html#1754" class="Function"
+      >abs-step</a
+      ><a name="1762"
+      > </a
+      ><a name="1763" class="Symbol"
+      >:</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" class="Symbol"
+      >&#8704;</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" class="Symbol"
+      >{</a
+      ><a name="1768" href="Beta.html#1768" class="Bound"
+      >x</a
+      ><a name="1769"
+      > </a
+      ><a name="1770" href="Beta.html#1770" class="Bound"
+      >t</a
+      ><a name="1771"
+      > </a
+      ><a name="1772" href="Beta.html#1772" class="Bound"
+      >t'</a
+      ><a name="1774" class="Symbol"
+      >}</a
+      ><a name="1775"
+      > </a
+      ><a name="1776" class="Symbol"
+      >&#8594;</a
+      ><a name="1777"
+      > </a
+      ><a name="1778" href="Beta.html#1770" class="Bound"
+      >t</a
+      ><a name="1779"
+      > </a
+      ><a name="1780" href="Beta.html#1578" class="Function Operator"
+      >&#8594;&#945;</a
+      ><a name="1782"
+      > </a
+      ><a name="1783" href="Beta.html#1772" class="Bound"
+      >t'</a
+      ><a name="1785"
+      > </a
+      ><a name="1786" class="Symbol"
+      >&#8594;</a
+      ><a name="1787"
+      > </a
+      ><a name="1788" href="Term.html#1045" class="InductiveConstructor"
+      >&#411;</a
+      ><a name="1789"
+      > </a
+      ><a name="1790" href="Beta.html#1768" class="Bound"
+      >x</a
+      ><a name="1791"
+      > </a
+      ><a name="1792" href="Beta.html#1770" class="Bound"
+      >t</a
+      ><a name="1793"
+      > </a
+      ><a name="1794" href="Beta.html#1578" class="Function Operator"
+      >&#8594;&#945;</a
+      ><a name="1796"
+      > </a
+      ><a name="1797" href="Term.html#1045" class="InductiveConstructor"
+      >&#411;</a
+      ><a name="1798"
+      > </a
+      ><a name="1799" href="Beta.html#1768" class="Bound"
+      >x</a
+      ><a name="1800"
+      > </a
+      ><a name="1801" href="Beta.html#1772" class="Bound"
+      >t'</a
+      ><a name="1803"
+      >
+</a
+      ><a name="1804" href="Beta.html#1754" class="Function"
+      >abs-step</a
+      ><a name="1812"
+      > </a
+      ><a name="1813" class="Symbol"
+      >(</a
+      ><a name="1814" href="Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="1818"
+      > </a
+      ><a name="1819" href="Beta.html#1819" class="Bound"
+      >M&#8594;&#946;N</a
+      ><a name="1823" class="Symbol"
+      >)</a
+      ><a name="1824"
+      > </a
+      ><a name="1825" class="Symbol"
+      >=</a
+      ><a name="1826"
+      > </a
+      ><a name="1827" href="Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="1831"
+      > </a
+      ><a name="1832" class="Symbol"
+      >(</a
+      ><a name="1833" href="Beta.html#1408" class="InductiveConstructor"
+      >ctx&#411;</a
+      ><a name="1837"
+      > </a
+      ><a name="1838" href="Beta.html#1819" class="Bound"
+      >M&#8594;&#946;N</a
+      ><a name="1842" class="Symbol"
+      >)</a
+      ><a name="1843"
+      >
+</a
+      ><a name="1844" href="Beta.html#1754" class="Function"
+      >abs-step</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" class="Symbol"
+      >(</a
+      ><a name="1854" href="Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="1858"
+      > </a
+      ><a name="1859" href="Beta.html#1859" class="Bound"
+      >M&#8764;N</a
+      ><a name="1862" class="Symbol"
+      >)</a
+      ><a name="1863"
+      >  </a
+      ><a name="1865" class="Symbol"
+      >=</a
+      ><a name="1866"
+      > </a
+      ><a name="1867" href="Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="1871"
+      > </a
+      ><a name="1872" class="Symbol"
+      >(</a
+      ><a name="1873" href="Alpha.html#2758" class="Function"
+      >lemma&#8764;&#945;&#411;</a
+      ><a name="1881"
+      > </a
+      ><a name="1882" href="Beta.html#1859" class="Bound"
+      >M&#8764;N</a
+      ><a name="1885" class="Symbol"
+      >)</a
+      ><a name="1886"
+      > 
+
+</a
+      ><a name="1889" href="Beta.html#1889" class="Function"
+      >abs-star</a
+      ><a name="1897"
+      > </a
+      ><a name="1898" class="Symbol"
+      >:</a
+      ><a name="1899"
+      > </a
+      ><a name="1900" class="Symbol"
+      >&#8704;</a
+      ><a name="1901"
+      > </a
+      ><a name="1902" class="Symbol"
+      >{</a
+      ><a name="1903" href="Beta.html#1903" class="Bound"
+      >x</a
+      ><a name="1904"
+      > </a
+      ><a name="1905" href="Beta.html#1905" class="Bound"
+      >M</a
+      ><a name="1906"
+      > </a
+      ><a name="1907" href="Beta.html#1907" class="Bound"
+      >N</a
+      ><a name="1908" class="Symbol"
+      >}</a
+      ><a name="1909"
+      > </a
+      ><a name="1910" class="Symbol"
+      >&#8594;</a
+      ><a name="1911"
+      > </a
+      ><a name="1912" href="Beta.html#1905" class="Bound"
+      >M</a
+      ><a name="1913"
+      > </a
+      ><a name="1914" href="Beta.html#1680" class="Function Operator"
+      >&#8594;&#945;*</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" href="Beta.html#1907" class="Bound"
+      >N</a
+      ><a name="1919"
+      > </a
+      ><a name="1920" class="Symbol"
+      >&#8594;</a
+      ><a name="1921"
+      > </a
+      ><a name="1922" href="Term.html#1045" class="InductiveConstructor"
+      >&#411;</a
+      ><a name="1923"
+      > </a
+      ><a name="1924" href="Beta.html#1903" class="Bound"
+      >x</a
+      ><a name="1925"
+      > </a
+      ><a name="1926" href="Beta.html#1905" class="Bound"
+      >M</a
+      ><a name="1927"
+      > </a
+      ><a name="1928" href="Beta.html#1680" class="Function Operator"
+      >&#8594;&#945;*</a
+      ><a name="1931"
+      > </a
+      ><a name="1932" href="Term.html#1045" class="InductiveConstructor"
+      >&#411;</a
+      ><a name="1933"
+      > </a
+      ><a name="1934" href="Beta.html#1903" class="Bound"
+      >x</a
+      ><a name="1935"
+      > </a
+      ><a name="1936" href="Beta.html#1907" class="Bound"
+      >N</a
+      ><a name="1937"
+      >
+</a
+      ><a name="1938" href="Beta.html#1889" class="Function"
+      >abs-star</a
+      ><a name="1946"
+      > </a
+      ><a name="1947" href="Relation.html#2132" class="InductiveConstructor"
+      >refl</a
+      ><a name="1951"
+      >                 </a
+      ><a name="1968" class="Symbol"
+      >=</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" href="Relation.html#2132" class="InductiveConstructor"
+      >refl</a
+      ><a name="1974"
+      >
+</a
+      ><a name="1975" href="Beta.html#1889" class="Function"
+      >abs-star</a
+      ><a name="1983"
+      > </a
+      ><a name="1984" class="Symbol"
+      >(</a
+      ><a name="1985" href="Relation.html#2162" class="InductiveConstructor"
+      >just</a
+      ><a name="1989"
+      > </a
+      ><a name="1990" href="Beta.html#1990" class="Bound"
+      >M&#8594;&#945;N</a
+      ><a name="1994" class="Symbol"
+      >)</a
+      ><a name="1995"
+      >          </a
+      ><a name="2005" class="Symbol"
+      >=</a
+      ><a name="2006"
+      > </a
+      ><a name="2007" href="Relation.html#2162" class="InductiveConstructor"
+      >just</a
+      ><a name="2011"
+      >   </a
+      ><a name="2014" class="Symbol"
+      >(</a
+      ><a name="2015" href="Beta.html#1754" class="Function"
+      >abs-step</a
+      ><a name="2023"
+      > </a
+      ><a name="2024" href="Beta.html#1990" class="Bound"
+      >M&#8594;&#945;N</a
+      ><a name="2028" class="Symbol"
+      >)</a
+      ><a name="2029"
+      > 
+</a
+      ><a name="2031" href="Beta.html#1889" class="Function"
+      >abs-star</a
+      ><a name="2039"
+      > </a
+      ><a name="2040" class="Symbol"
+      >(</a
+      ><a name="2041" href="Relation.html#2202" class="InductiveConstructor"
+      >trans</a
+      ><a name="2046"
+      > </a
+      ><a name="2047" href="Beta.html#2047" class="Bound"
+      >M&#8594;&#945;*N</a
+      ><a name="2052"
+      > </a
+      ><a name="2053" href="Beta.html#2053" class="Bound"
+      >N&#8594;&#945;*P</a
+      ><a name="2058" class="Symbol"
+      >)</a
+      ><a name="2059"
+      >  </a
+      ><a name="2061" class="Symbol"
+      >=</a
+      ><a name="2062"
+      > </a
+      ><a name="2063" href="Relation.html#2202" class="InductiveConstructor"
+      >trans</a
+      ><a name="2068"
+      >  </a
+      ><a name="2070" class="Symbol"
+      >(</a
+      ><a name="2071" href="Beta.html#1889" class="Function"
+      >abs-star</a
+      ><a name="2079"
+      > </a
+      ><a name="2080" href="Beta.html#2047" class="Bound"
+      >M&#8594;&#945;*N</a
+      ><a name="2085" class="Symbol"
+      >)</a
+      ><a name="2086"
+      > </a
+      ><a name="2087" class="Symbol"
+      >(</a
+      ><a name="2088" href="Beta.html#1889" class="Function"
+      >abs-star</a
+      ><a name="2096"
+      > </a
+      ><a name="2097" href="Beta.html#2053" class="Bound"
+      >N&#8594;&#945;*P</a
+      ><a name="2102" class="Symbol"
+      >)</a
+      ><a name="2103"
+      >
+
+</a
+      ><a name="2105" href="Beta.html#2105" class="Function"
+      >app-step-l</a
+      ><a name="2115"
+      > </a
+      ><a name="2116" class="Symbol"
+      >:</a
+      ><a name="2117"
+      > </a
+      ><a name="2118" class="Symbol"
+      >&#8704;</a
+      ><a name="2119"
+      > </a
+      ><a name="2120" class="Symbol"
+      >{</a
+      ><a name="2121" href="Beta.html#2121" class="Bound"
+      >M</a
+      ><a name="2122"
+      > </a
+      ><a name="2123" href="Beta.html#2123" class="Bound"
+      >N</a
+      ><a name="2124"
+      > </a
+      ><a name="2125" href="Beta.html#2125" class="Bound"
+      >P</a
+      ><a name="2126" class="Symbol"
+      >}</a
+      ><a name="2127"
+      > </a
+      ><a name="2128" class="Symbol"
+      >&#8594;</a
+      ><a name="2129"
+      > </a
+      ><a name="2130" href="Beta.html#2121" class="Bound"
+      >M</a
+      ><a name="2131"
+      > </a
+      ><a name="2132" href="Beta.html#1578" class="Function Operator"
+      >&#8594;&#945;</a
+      ><a name="2134"
+      > </a
+      ><a name="2135" href="Beta.html#2125" class="Bound"
+      >P</a
+      ><a name="2136"
+      >  </a
+      ><a name="2138" class="Symbol"
+      >&#8594;</a
+      ><a name="2139"
+      > </a
+      ><a name="2140" href="Beta.html#2121" class="Bound"
+      >M</a
+      ><a name="2141"
+      > </a
+      ><a name="2142" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="2143"
+      > </a
+      ><a name="2144" href="Beta.html#2123" class="Bound"
+      >N</a
+      ><a name="2145"
+      > </a
+      ><a name="2146" href="Beta.html#1578" class="Function Operator"
+      >&#8594;&#945;</a
+      ><a name="2148"
+      > </a
+      ><a name="2149" href="Beta.html#2125" class="Bound"
+      >P</a
+      ><a name="2150"
+      > </a
+      ><a name="2151" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="2152"
+      > </a
+      ><a name="2153" href="Beta.html#2123" class="Bound"
+      >N</a
+      ><a name="2154"
+      >
+</a
+      ><a name="2155" href="Beta.html#2105" class="Function"
+      >app-step-l</a
+      ><a name="2165"
+      > </a
+      ><a name="2166" class="Symbol"
+      >(</a
+      ><a name="2167" href="Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="2171"
+      > </a
+      ><a name="2172" href="Beta.html#2172" class="Bound"
+      >t&#8594;t'</a
+      ><a name="2176" class="Symbol"
+      >)</a
+      ><a name="2177"
+      > </a
+      ><a name="2178" class="Symbol"
+      >=</a
+      ><a name="2179"
+      > </a
+      ><a name="2180" href="Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="2184"
+      > </a
+      ><a name="2185" class="Symbol"
+      >(</a
+      ><a name="2186" href="Beta.html#1266" class="InductiveConstructor"
+      >ctx&#183;l</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" href="Beta.html#2172" class="Bound"
+      >t&#8594;t'</a
+      ><a name="2196" class="Symbol"
+      >)</a
+      ><a name="2197"
+      >
+</a
+      ><a name="2198" href="Beta.html#2105" class="Function"
+      >app-step-l</a
+      ><a name="2208"
+      > </a
+      ><a name="2209" class="Symbol"
+      >(</a
+      ><a name="2210" href="Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="2214"
+      > </a
+      ><a name="2215" href="Beta.html#2215" class="Bound"
+      >t&#8764;t'</a
+      ><a name="2219" class="Symbol"
+      >)</a
+      ><a name="2220"
+      > </a
+      ><a name="2221" class="Symbol"
+      >=</a
+      ><a name="2222"
+      > </a
+      ><a name="2223" href="Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="2227"
+      > </a
+      ><a name="2228" class="Symbol"
+      >(</a
+      ><a name="2229" href="Alpha.html#704" class="InductiveConstructor"
+      >&#8764;&#945;&#183;</a
+      ><a name="2232"
+      > </a
+      ><a name="2233" href="Beta.html#2215" class="Bound"
+      >t&#8764;t'</a
+      ><a name="2237"
+      > </a
+      ><a name="2238" href="Alpha.html#3230" class="Function"
+      >&#961;</a
+      ><a name="2239" class="Symbol"
+      >)</a
+      ><a name="2240"
+      >
+
+</a
+      ><a name="2242" href="Beta.html#2242" class="Function"
+      >app-step-r</a
+      ><a name="2252"
+      > </a
+      ><a name="2253" class="Symbol"
+      >:</a
+      ><a name="2254"
+      > </a
+      ><a name="2255" class="Symbol"
+      >&#8704;</a
+      ><a name="2256"
+      > </a
+      ><a name="2257" class="Symbol"
+      >{</a
+      ><a name="2258" href="Beta.html#2258" class="Bound"
+      >M</a
+      ><a name="2259"
+      > </a
+      ><a name="2260" href="Beta.html#2260" class="Bound"
+      >N</a
+      ><a name="2261"
+      > </a
+      ><a name="2262" href="Beta.html#2262" class="Bound"
+      >P</a
+      ><a name="2263" class="Symbol"
+      >}</a
+      ><a name="2264"
+      > </a
+      ><a name="2265" class="Symbol"
+      >&#8594;</a
+      ><a name="2266"
+      > </a
+      ><a name="2267" href="Beta.html#2260" class="Bound"
+      >N</a
+      ><a name="2268"
+      > </a
+      ><a name="2269" href="Beta.html#1578" class="Function Operator"
+      >&#8594;&#945;</a
+      ><a name="2271"
+      > </a
+      ><a name="2272" href="Beta.html#2262" class="Bound"
+      >P</a
+      ><a name="2273"
+      > </a
+      ><a name="2274" class="Symbol"
+      >&#8594;</a
+      ><a name="2275"
+      > </a
+      ><a name="2276" href="Beta.html#2258" class="Bound"
+      >M</a
+      ><a name="2277"
+      > </a
+      ><a name="2278" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="2279"
+      > </a
+      ><a name="2280" href="Beta.html#2260" class="Bound"
+      >N</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" href="Beta.html#1578" class="Function Operator"
+      >&#8594;&#945;</a
+      ><a name="2284"
+      > </a
+      ><a name="2285" href="Beta.html#2258" class="Bound"
+      >M</a
+      ><a name="2286"
+      > </a
+      ><a name="2287" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="2288"
+      > </a
+      ><a name="2289" href="Beta.html#2262" class="Bound"
+      >P</a
+      ><a name="2290"
+      >
+</a
+      ><a name="2291" href="Beta.html#2242" class="Function"
+      >app-step-r</a
+      ><a name="2301"
+      > </a
+      ><a name="2302" class="Symbol"
+      >(</a
+      ><a name="2303" href="Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="2307"
+      > </a
+      ><a name="2308" href="Beta.html#2308" class="Bound"
+      >t&#8594;t'</a
+      ><a name="2312" class="Symbol"
+      >)</a
+      ><a name="2313"
+      > </a
+      ><a name="2314" class="Symbol"
+      >=</a
+      ><a name="2315"
+      > </a
+      ><a name="2316" href="Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="2320"
+      > </a
+      ><a name="2321" class="Symbol"
+      >(</a
+      ><a name="2322" href="Beta.html#1337" class="InductiveConstructor"
+      >ctx&#183;r</a
+      ><a name="2327"
+      > </a
+      ><a name="2328" href="Beta.html#2308" class="Bound"
+      >t&#8594;t'</a
+      ><a name="2332" class="Symbol"
+      >)</a
+      ><a name="2333"
+      >
+</a
+      ><a name="2334" href="Beta.html#2242" class="Function"
+      >app-step-r</a
+      ><a name="2344"
+      > </a
+      ><a name="2345" class="Symbol"
+      >(</a
+      ><a name="2346" href="Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="2350"
+      > </a
+      ><a name="2351" href="Beta.html#2351" class="Bound"
+      >t&#8764;t'</a
+      ><a name="2355" class="Symbol"
+      >)</a
+      ><a name="2356"
+      > </a
+      ><a name="2357" class="Symbol"
+      >=</a
+      ><a name="2358"
+      > </a
+      ><a name="2359" href="Data.Sum.html#514" class="InductiveConstructor"
+      >inj&#8322;</a
+      ><a name="2363"
+      > </a
+      ><a name="2364" class="Symbol"
+      >(</a
+      ><a name="2365" href="Alpha.html#704" class="InductiveConstructor"
+      >&#8764;&#945;&#183;</a
+      ><a name="2368"
+      > </a
+      ><a name="2369" href="Alpha.html#3230" class="Function"
+      >&#961;</a
+      ><a name="2370"
+      > </a
+      ><a name="2371" href="Beta.html#2351" class="Bound"
+      >t&#8764;t'</a
+      ><a name="2375" class="Symbol"
+      >)</a
+      ><a name="2376"
+      >
+
+</a
+      ><a name="2378" href="Beta.html#2378" class="Function"
+      >app-star-l</a
+      ><a name="2388"
+      > </a
+      ><a name="2389" class="Symbol"
+      >:</a
+      ><a name="2390"
+      > </a
+      ><a name="2391" class="Symbol"
+      >&#8704;</a
+      ><a name="2392"
+      > </a
+      ><a name="2393" class="Symbol"
+      >{</a
+      ><a name="2394" href="Beta.html#2394" class="Bound"
+      >M</a
+      ><a name="2395"
+      > </a
+      ><a name="2396" href="Beta.html#2396" class="Bound"
+      >N</a
+      ><a name="2397"
+      > </a
+      ><a name="2398" href="Beta.html#2398" class="Bound"
+      >P</a
+      ><a name="2399" class="Symbol"
+      >}</a
+      ><a name="2400"
+      > </a
+      ><a name="2401" class="Symbol"
+      >&#8594;</a
+      ><a name="2402"
+      > </a
+      ><a name="2403" href="Beta.html#2394" class="Bound"
+      >M</a
+      ><a name="2404"
+      > </a
+      ><a name="2405" href="Beta.html#1680" class="Function Operator"
+      >&#8594;&#945;*</a
+      ><a name="2408"
+      > </a
+      ><a name="2409" href="Beta.html#2398" class="Bound"
+      >P</a
+      ><a name="2410"
+      > </a
+      ><a name="2411" class="Symbol"
+      >&#8594;</a
+      ><a name="2412"
+      > </a
+      ><a name="2413" href="Beta.html#2394" class="Bound"
+      >M</a
+      ><a name="2414"
+      > </a
+      ><a name="2415" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="2416"
+      > </a
+      ><a name="2417" href="Beta.html#2396" class="Bound"
+      >N</a
+      ><a name="2418"
+      > </a
+      ><a name="2419" href="Beta.html#1680" class="Function Operator"
+      >&#8594;&#945;*</a
+      ><a name="2422"
+      > </a
+      ><a name="2423" href="Beta.html#2398" class="Bound"
+      >P</a
+      ><a name="2424"
+      > </a
+      ><a name="2425" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="2426"
+      > </a
+      ><a name="2427" href="Beta.html#2396" class="Bound"
+      >N</a
+      ><a name="2428"
+      >
+</a
+      ><a name="2429" href="Beta.html#2378" class="Function"
+      >app-star-l</a
+      ><a name="2439"
+      > </a
+      ><a name="2440" href="Relation.html#2132" class="InductiveConstructor"
+      >refl</a
+      ><a name="2444"
+      >                     </a
+      ><a name="2465" class="Symbol"
+      >=</a
+      ><a name="2466"
+      > </a
+      ><a name="2467" href="Relation.html#2132" class="InductiveConstructor"
+      >refl</a
+      ><a name="2471"
+      >
+</a
+      ><a name="2472" href="Beta.html#2378" class="Function"
+      >app-star-l</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" class="Symbol"
+      >(</a
+      ><a name="2484" href="Relation.html#2162" class="InductiveConstructor"
+      >just</a
+      ><a name="2488"
+      > </a
+      ><a name="2489" href="Beta.html#2489" class="Bound"
+      >x</a
+      ><a name="2490" class="Symbol"
+      >)</a
+      ><a name="2491"
+      >                 </a
+      ><a name="2508" class="Symbol"
+      >=</a
+      ><a name="2509"
+      > </a
+      ><a name="2510" href="Relation.html#2162" class="InductiveConstructor"
+      >just</a
+      ><a name="2514"
+      > </a
+      ><a name="2515" class="Symbol"
+      >(</a
+      ><a name="2516" href="Beta.html#2105" class="Function"
+      >app-step-l</a
+      ><a name="2526"
+      > </a
+      ><a name="2527" href="Beta.html#2489" class="Bound"
+      >x</a
+      ><a name="2528" class="Symbol"
+      >)</a
+      ><a name="2529"
+      >
+</a
+      ><a name="2530" href="Beta.html#2378" class="Function"
+      >app-star-l</a
+      ><a name="2540"
+      > </a
+      ><a name="2541" class="Symbol"
+      >(</a
+      ><a name="2542" href="Relation.html#2202" class="InductiveConstructor"
+      >trans</a
+      ><a name="2547"
+      > </a
+      ><a name="2548" href="Beta.html#2548" class="Bound"
+      >t&#8594;&#945;*t'</a
+      ><a name="2554"
+      > </a
+      ><a name="2555" href="Beta.html#2555" class="Bound"
+      >t'&#8594;&#945;*t''</a
+      ><a name="2563" class="Symbol"
+      >)</a
+      ><a name="2564"
+      >  </a
+      ><a name="2566" class="Symbol"
+      >=</a
+      ><a name="2567"
+      > </a
+      ><a name="2568" href="Relation.html#2202" class="InductiveConstructor"
+      >trans</a
+      ><a name="2573"
+      > </a
+      ><a name="2574" class="Symbol"
+      >(</a
+      ><a name="2575" href="Beta.html#2378" class="Function"
+      >app-star-l</a
+      ><a name="2585"
+      > </a
+      ><a name="2586" href="Beta.html#2548" class="Bound"
+      >t&#8594;&#945;*t'</a
+      ><a name="2592" class="Symbol"
+      >)</a
+      ><a name="2593"
+      > </a
+      ><a name="2594" class="Symbol"
+      >(</a
+      ><a name="2595" href="Beta.html#2378" class="Function"
+      >app-star-l</a
+      ><a name="2605"
+      > </a
+      ><a name="2606" href="Beta.html#2555" class="Bound"
+      >t'&#8594;&#945;*t''</a
+      ><a name="2614" class="Symbol"
+      >)</a
+      ><a name="2615"
+      >
+
+</a
+      ><a name="2617" href="Beta.html#2617" class="Function"
+      >app-star-r</a
+      ><a name="2627"
+      > </a
+      ><a name="2628" class="Symbol"
+      >:</a
+      ><a name="2629"
+      > </a
+      ><a name="2630" class="Symbol"
+      >&#8704;</a
+      ><a name="2631"
+      > </a
+      ><a name="2632" class="Symbol"
+      >{</a
+      ><a name="2633" href="Beta.html#2633" class="Bound"
+      >M</a
+      ><a name="2634"
+      > </a
+      ><a name="2635" href="Beta.html#2635" class="Bound"
+      >N</a
+      ><a name="2636"
+      > </a
+      ><a name="2637" href="Beta.html#2637" class="Bound"
+      >P</a
+      ><a name="2638" class="Symbol"
+      >}</a
+      ><a name="2639"
+      > </a
+      ><a name="2640" class="Symbol"
+      >&#8594;</a
+      ><a name="2641"
+      > </a
+      ><a name="2642" href="Beta.html#2635" class="Bound"
+      >N</a
+      ><a name="2643"
+      > </a
+      ><a name="2644" href="Beta.html#1680" class="Function Operator"
+      >&#8594;&#945;*</a
+      ><a name="2647"
+      > </a
+      ><a name="2648" href="Beta.html#2637" class="Bound"
+      >P</a
+      ><a name="2649"
+      > </a
+      ><a name="2650" class="Symbol"
+      >&#8594;</a
+      ><a name="2651"
+      > </a
+      ><a name="2652" href="Beta.html#2633" class="Bound"
+      >M</a
+      ><a name="2653"
+      > </a
+      ><a name="2654" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="2655"
+      > </a
+      ><a name="2656" href="Beta.html#2635" class="Bound"
+      >N</a
+      ><a name="2657"
+      > </a
+      ><a name="2658" href="Beta.html#1680" class="Function Operator"
+      >&#8594;&#945;*</a
+      ><a name="2661"
+      > </a
+      ><a name="2662" href="Beta.html#2633" class="Bound"
+      >M</a
+      ><a name="2663"
+      > </a
+      ><a name="2664" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="2665"
+      > </a
+      ><a name="2666" href="Beta.html#2637" class="Bound"
+      >P</a
+      ><a name="2667"
+      >
+</a
+      ><a name="2668" href="Beta.html#2617" class="Function"
+      >app-star-r</a
+      ><a name="2678"
+      > </a
+      ><a name="2679" href="Relation.html#2132" class="InductiveConstructor"
+      >refl</a
+      ><a name="2683"
+      >                     </a
+      ><a name="2704" class="Symbol"
+      >=</a
+      ><a name="2705"
+      > </a
+      ><a name="2706" href="Relation.html#2132" class="InductiveConstructor"
+      >refl</a
+      ><a name="2710"
+      >
+</a
+      ><a name="2711" href="Beta.html#2617" class="Function"
+      >app-star-r</a
+      ><a name="2721"
+      > </a
+      ><a name="2722" class="Symbol"
+      >(</a
+      ><a name="2723" href="Relation.html#2162" class="InductiveConstructor"
+      >just</a
+      ><a name="2727"
+      > </a
+      ><a name="2728" href="Beta.html#2728" class="Bound"
+      >t&#8594;&#945;*t'</a
+      ><a name="2734" class="Symbol"
+      >)</a
+      ><a name="2735"
+      >            </a
+      ><a name="2747" class="Symbol"
+      >=</a
+      ><a name="2748"
+      > </a
+      ><a name="2749" href="Relation.html#2162" class="InductiveConstructor"
+      >just</a
+      ><a name="2753"
+      > </a
+      ><a name="2754" class="Symbol"
+      >(</a
+      ><a name="2755" href="Beta.html#2242" class="Function"
+      >app-step-r</a
+      ><a name="2765"
+      > </a
+      ><a name="2766" href="Beta.html#2728" class="Bound"
+      >t&#8594;&#945;*t'</a
+      ><a name="2772" class="Symbol"
+      >)</a
+      ><a name="2773"
+      >
+</a
+      ><a name="2774" href="Beta.html#2617" class="Function"
+      >app-star-r</a
+      ><a name="2784"
+      > </a
+      ><a name="2785" class="Symbol"
+      >(</a
+      ><a name="2786" href="Relation.html#2202" class="InductiveConstructor"
+      >trans</a
+      ><a name="2791"
+      > </a
+      ><a name="2792" href="Beta.html#2792" class="Bound"
+      >t&#8594;&#945;*t'</a
+      ><a name="2798"
+      > </a
+      ><a name="2799" href="Beta.html#2799" class="Bound"
+      >t'&#8594;&#945;*t''</a
+      ><a name="2807" class="Symbol"
+      >)</a
+      ><a name="2808"
+      >  </a
+      ><a name="2810" class="Symbol"
+      >=</a
+      ><a name="2811"
+      > </a
+      ><a name="2812" href="Relation.html#2202" class="InductiveConstructor"
+      >trans</a
+      ><a name="2817"
+      > </a
+      ><a name="2818" class="Symbol"
+      >(</a
+      ><a name="2819" href="Beta.html#2617" class="Function"
+      >app-star-r</a
+      ><a name="2829"
+      > </a
+      ><a name="2830" href="Beta.html#2792" class="Bound"
+      >t&#8594;&#945;*t'</a
+      ><a name="2836" class="Symbol"
+      >)</a
+      ><a name="2837"
+      > </a
+      ><a name="2838" class="Symbol"
+      >(</a
+      ><a name="2839" href="Beta.html#2617" class="Function"
+      >app-star-r</a
+      ><a name="2849"
+      > </a
+      ><a name="2850" href="Beta.html#2799" class="Bound"
+      >t'&#8594;&#945;*t''</a
+      ><a name="2858" class="Symbol"
+      >)</a
+      ><a name="2859"
+      >
+
+</a
+      ><a name="2861" href="Beta.html#2861" class="Function"
+      >app-star</a
+      ><a name="2869"
+      > </a
+      ><a name="2870" class="Symbol"
+      >:</a
+      ><a name="2871"
+      > </a
+      ><a name="2872" class="Symbol"
+      >&#8704;</a
+      ><a name="2873"
+      > </a
+      ><a name="2874" class="Symbol"
+      >{</a
+      ><a name="2875" href="Beta.html#2875" class="Bound"
+      >M</a
+      ><a name="2876"
+      > </a
+      ><a name="2877" href="Beta.html#2877" class="Bound"
+      >M'</a
+      ><a name="2879"
+      > </a
+      ><a name="2880" href="Beta.html#2880" class="Bound"
+      >N</a
+      ><a name="2881"
+      > </a
+      ><a name="2882" href="Beta.html#2882" class="Bound"
+      >N'</a
+      ><a name="2884" class="Symbol"
+      >}</a
+      ><a name="2885"
+      > </a
+      ><a name="2886" class="Symbol"
+      >&#8594;</a
+      ><a name="2887"
+      > </a
+      ><a name="2888" href="Beta.html#2875" class="Bound"
+      >M</a
+      ><a name="2889"
+      > </a
+      ><a name="2890" href="Beta.html#1680" class="Function Operator"
+      >&#8594;&#945;*</a
+      ><a name="2893"
+      > </a
+      ><a name="2894" href="Beta.html#2877" class="Bound"
+      >M'</a
+      ><a name="2896"
+      > </a
+      ><a name="2897" class="Symbol"
+      >&#8594;</a
+      ><a name="2898"
+      > </a
+      ><a name="2899" href="Beta.html#2880" class="Bound"
+      >N</a
+      ><a name="2900"
+      > </a
+      ><a name="2901" href="Beta.html#1680" class="Function Operator"
+      >&#8594;&#945;*</a
+      ><a name="2904"
+      > </a
+      ><a name="2905" href="Beta.html#2882" class="Bound"
+      >N'</a
+      ><a name="2907"
+      > </a
+      ><a name="2908" class="Symbol"
+      >&#8594;</a
+      ><a name="2909"
+      > </a
+      ><a name="2910" href="Beta.html#2875" class="Bound"
+      >M</a
+      ><a name="2911"
+      > </a
+      ><a name="2912" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="2913"
+      > </a
+      ><a name="2914" href="Beta.html#2880" class="Bound"
+      >N</a
+      ><a name="2915"
+      > </a
+      ><a name="2916" href="Beta.html#1680" class="Function Operator"
+      >&#8594;&#945;*</a
+      ><a name="2919"
+      > </a
+      ><a name="2920" href="Beta.html#2877" class="Bound"
+      >M'</a
+      ><a name="2922"
+      > </a
+      ><a name="2923" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="2924"
+      > </a
+      ><a name="2925" href="Beta.html#2882" class="Bound"
+      >N'</a
+      ><a name="2927"
+      >
+</a
+      ><a name="2928" href="Beta.html#2861" class="Function"
+      >app-star</a
+      ><a name="2936"
+      > </a
+      ><a name="2937" href="Beta.html#2937" class="Bound"
+      >M&#8594;&#945;*M'</a
+      ><a name="2943"
+      > </a
+      ><a name="2944" href="Beta.html#2944" class="Bound"
+      >N&#8594;&#945;*N'</a
+      ><a name="2950"
+      > </a
+      ><a name="2951" class="Symbol"
+      >=</a
+      ><a name="2952"
+      > </a
+      ><a name="2953" href="Relation.html#2202" class="InductiveConstructor"
+      >trans</a
+      ><a name="2958"
+      > </a
+      ><a name="2959" class="Symbol"
+      >(</a
+      ><a name="2960" href="Beta.html#2378" class="Function"
+      >app-star-l</a
+      ><a name="2970"
+      > </a
+      ><a name="2971" href="Beta.html#2937" class="Bound"
+      >M&#8594;&#945;*M'</a
+      ><a name="2977" class="Symbol"
+      >)</a
+      ><a name="2978"
+      > </a
+      ><a name="2979" class="Symbol"
+      >(</a
+      ><a name="2980" href="Beta.html#2617" class="Function"
+      >app-star-r</a
+      ><a name="2990"
+      > </a
+      ><a name="2991" href="Beta.html#2944" class="Bound"
+      >N&#8594;&#945;*N'</a
+      ><a name="2997" class="Symbol"
+      >)</a
+      ><a name="2998"
+      >
+\end{code}
+</a
+      ><a name="3010" class="Comment"
+      >
+Reduction is a preorder over terms, hence we can use the combinators of
+the standard library for proving the reduction of a term to another.
+
+</a
+      ><a name="3153"
+      >\begin{code}
+</a
+      ><a name="3166" class="Keyword"
+      >open</a
+      ><a name="3170"
+      > </a
+      ><a name="3171" class="Keyword"
+      >import</a
+      ><a name="3177"
+      > </a
+      ><a name="3178" href="Relation.Nullary.html#1" class="Module"
+      >Relation.Nullary</a
+      ><a name="3194"
+      >
+</a
+      ><a name="3195" class="Keyword"
+      >open</a
+      ><a name="3199"
+      > </a
+      ><a name="3200" class="Keyword"
+      >import</a
+      ><a name="3206"
+      > </a
+      ><a name="3207" href="Relation.Binary.PropositionalEquality.html#1" class="Module"
+      >Relation.Binary.PropositionalEquality</a
+      ><a name="3244"
+      > </a
+      ><a name="3245" class="Keyword"
+      >renaming</a
+      ><a name="3253"
+      > </a
+      ><a name="3254" class="Symbol"
+      >(</a
+      ><a name="3255" href="Relation.Binary.PropositionalEquality.Core.html#565" class="Function"
+      >sym</a
+      ><a name="3258"
+      > </a
+      ><a name="3259" class="Symbol"
+      >to</a
+      ><a name="3261"
+      > </a
+      ><a name="3262" href="Relation.Binary.PropositionalEquality.Core.html#565" class="Function"
+      >sym'</a
+      ><a name="3266" class="Symbol"
+      >;</a
+      ><a name="3267" href="Relation.Binary.PropositionalEquality.Core.html#632" class="Function"
+      >trans</a
+      ><a name="3272"
+      > </a
+      ><a name="3273" class="Symbol"
+      >to</a
+      ><a name="3275"
+      > </a
+      ><a name="3276" href="Relation.Binary.PropositionalEquality.Core.html#632" class="Function"
+      >trans'</a
+      ><a name="3282" class="Symbol"
+      >)</a
+      ><a name="3283"
+      >
+</a
+      ><a name="3284" class="Keyword"
+      >open</a
+      ><a name="3288"
+      > </a
+      ><a name="3289" class="Keyword"
+      >import</a
+      ><a name="3295"
+      > </a
+      ><a name="3296" href="Relation.Binary.html#1" class="Module"
+      >Relation.Binary</a
+      ><a name="3311"
+      > </a
+      ><a name="3312" class="Keyword"
+      >using</a
+      ><a name="3317"
+      > </a
+      ><a name="3318" class="Symbol"
+      >(</a
+      ><a name="3319" href="Relation.Binary.html#1470" class="Record"
+      >Preorder</a
+      ><a name="3327" class="Symbol"
+      >)</a
+      ><a name="3328"
+      >
+</a
+      ><a name="3329" class="Keyword"
+      >import</a
+      ><a name="3335"
+      > </a
+      ><a name="3336" href="Relation.Binary.PreorderReasoning.html#1" class="Module"
+      >Relation.Binary.PreorderReasoning</a
+      ><a name="3369"
+      > </a
+      ><a name="3370" class="Symbol"
+      >as</a
+      ><a name="3372"
+      > </a
+      ><a name="3373" class="Module"
+      >PreR</a
+      ><a name="3377"
+      >    
+
+</a
+      ><a name="3383" href="Beta.html#3383" class="Function"
+      >&#8594;-preorder</a
+      ><a name="3393"
+      > </a
+      ><a name="3394" class="Symbol"
+      >:</a
+      ><a name="3395"
+      > </a
+      ><a name="3396" href="Relation.Binary.html#1470" class="Record"
+      >Preorder</a
+      ><a name="3404"
+      > </a
+      ><a name="3405" class="Symbol"
+      >_</a
+      ><a name="3406"
+      > </a
+      ><a name="3407" class="Symbol"
+      >_</a
+      ><a name="3408"
+      > </a
+      ><a name="3409" class="Symbol"
+      >_</a
+      ><a name="3410"
+      >
+</a
+      ><a name="3411" href="Beta.html#3383" class="Function"
+      >&#8594;-preorder</a
+      ><a name="3421"
+      > </a
+      ><a name="3422" class="Symbol"
+      >=</a
+      ><a name="3423"
+      >  
+    </a
+      ><a name="3430" class="Keyword"
+      >record</a
+      ><a name="3436"
+      > </a
+      ><a name="3437" class="Symbol"
+      >{</a
+      ><a name="3438"
+      > 
+      </a
+      ><a name="3446" class="Field"
+      >Carrier</a
+      ><a name="3453"
+      > </a
+      ><a name="3454" class="Symbol"
+      >=</a
+      ><a name="3455"
+      > </a
+      ><a name="3456" href="Term.html#990" class="Datatype"
+      >&#923;</a
+      ><a name="3457" class="Symbol"
+      >;</a
+      ><a name="3458"
+      >
+      </a
+      ><a name="3465" class="Field Operator"
+      >_&#8776;_</a
+      ><a name="3468"
+      > </a
+      ><a name="3469" class="Symbol"
+      >=</a
+      ><a name="3470"
+      > </a
+      ><a name="3471" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      >_&#8801;_</a
+      ><a name="3474" class="Symbol"
+      >;</a
+      ><a name="3475"
+      >
+      </a
+      ><a name="3482" class="Field Operator"
+      >_&#8764;_</a
+      ><a name="3485"
+      > </a
+      ><a name="3486" class="Symbol"
+      >=</a
+      ><a name="3487"
+      > </a
+      ><a name="3488" href="Beta.html#1680" class="Function Operator"
+      >_&#8594;&#945;*_</a
+      ><a name="3493" class="Symbol"
+      >;</a
+      ><a name="3494"
+      >
+      </a
+      ><a name="3501" class="Field"
+      >isPreorder</a
+      ><a name="3511"
+      > </a
+      ><a name="3512" class="Symbol"
+      >=</a
+      ><a name="3513"
+      >  </a
+      ><a name="3515" class="Keyword"
+      >record</a
+      ><a name="3521"
+      > </a
+      ><a name="3522" class="Symbol"
+      >{</a
+      ><a name="3523"
+      >
+        </a
+      ><a name="3532" class="Field"
+      >isEquivalence</a
+      ><a name="3545"
+      > </a
+      ><a name="3546" class="Symbol"
+      >=</a
+      ><a name="3547"
+      > </a
+      ><a name="3548" href="Relation.Binary.html#2031" class="Field"
+      >Relation.Binary.Setoid.isEquivalence</a
+      ><a name="3584"
+      > </a
+      ><a name="3585" class="Symbol"
+      >(</a
+      ><a name="3586" href="Relation.Binary.PropositionalEquality.html#1526" class="Function"
+      >PropEq.setoid</a
+      ><a name="3599"
+      > </a
+      ><a name="3600" href="Term.html#990" class="Datatype"
+      >&#923;</a
+      ><a name="3601" class="Symbol"
+      >)</a
+      ><a name="3602"
+      > </a
+      ><a name="3603" class="Symbol"
+      >;</a
+      ><a name="3604"
+      >
+        </a
+      ><a name="3613" class="Field"
+      >reflexive</a
+      ><a name="3622"
+      > </a
+      ><a name="3623" class="Symbol"
+      >=</a
+      ><a name="3624"
+      > </a
+      ><a name="3625" class="Symbol"
+      >&#955;</a
+      ><a name="3626"
+      > </a
+      ><a name="3627" class="Symbol"
+      >{</a
+      ><a name="3628"
+      > </a
+      ><a name="3629" class="Symbol"
+      >{</a
+      ><a name="3630" href="Beta.html#3630" class="Bound"
+      >M</a
+      ><a name="3631" class="Symbol"
+      >}</a
+      ><a name="3632"
+      > </a
+      ><a name="3633" class="Symbol"
+      >{</a
+      ><a name="3634" class="DottedPattern Symbol"
+      >.</a
+      ><a name="3635" href="Beta.html#3630" class="DottedPattern Bound"
+      >M</a
+      ><a name="3636" class="Symbol"
+      >}</a
+      ><a name="3637"
+      > </a
+      ><a name="3638" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      >refl</a
+      ><a name="3642"
+      > </a
+      ><a name="3643" class="Symbol"
+      >&#8594;</a
+      ><a name="3644"
+      > </a
+      ><a name="3645" href="Relation.html#2132" class="InductiveConstructor"
+      >refl</a
+      ><a name="3649" class="Symbol"
+      >};</a
+      ><a name="3651"
+      >
+        </a
+      ><a name="3660" class="Field"
+      >trans</a
+      ><a name="3665"
+      > </a
+      ><a name="3666" class="Symbol"
+      >=</a
+      ><a name="3667"
+      > </a
+      ><a name="3668" href="Relation.html#2202" class="InductiveConstructor"
+      >star.trans</a
+      ><a name="3678"
+      > </a
+      ><a name="3679" class="Symbol"
+      >}</a
+      ><a name="3680"
+      > 
+    </a
+      ><a name="3686" class="Symbol"
+      >}</a
+      ><a name="3687"
+      >
+
+</a
+      ><a name="3689" class="Keyword"
+      >open</a
+      ><a name="3693"
+      > </a
+      ><a name="3694" href="Relation.Binary.PreorderReasoning.html#1" class="Module"
+      >PreR</a
+      ><a name="3698"
+      > </a
+      ><a name="3699" href="Beta.html#3383" class="Function"
+      >&#8594;-preorder</a
+      ><a name="3709"
+      > </a
+      ><a name="3710" class="Keyword"
+      >renaming</a
+      ><a name="3718"
+      > </a
+      ><a name="3719" class="Symbol"
+      >(</a
+      ><a name="3720"
+      >begin_ </a
+      ><a name="3727" class="Symbol"
+      >to</a
+      ><a name="3729"
+      > begin&#8594;_</a
+      ><a name="3737" class="Symbol"
+      >;</a
+      ><a name="3738"
+      >_&#8764;&#10216;_&#10217;_ </a
+      ><a name="3745" class="Symbol"
+      >to</a
+      ><a name="3747"
+      > _&#8594;&#10216;_&#10217;_</a
+      ><a name="3754" class="Symbol"
+      >;</a
+      ><a name="3755"
+      >_&#8776;&#10216;_&#10217;_ </a
+      ><a name="3762" class="Symbol"
+      >to</a
+      ><a name="3764"
+      > _=&#10216;_&#10217;_</a
+      ><a name="3771" class="Symbol"
+      >;</a
+      ><a name="3772"
+      >_&#8718; </a
+      ><a name="3775" class="Symbol"
+      >to</a
+      ><a name="3777"
+      > _&#9635;</a
+      ><a name="3780" class="Symbol"
+      >)</a
+      ><a name="3781"
+      > </a
+      ><a name="3782" class="Keyword"
+      >public</a
+      ><a name="3788"
+      >
+\end{code}
+</a
+      ><a name="3800" class="Comment"
+      >
+-- </a
+      ><a name="3804"
+      >\begin{code}
+</a
+      ><a name="3817" class="Comment"
+      >-- lemma&#9657;* : {x : Atom} &#8594; (_*_ x) preserved-by (dual _&#9657;_) </a
+      ><a name="3875"
+      >
+</a
+      ><a name="3876" class="Comment"
+      >-- lemma&#9657;* {x} .{M [ y &#8788; N ]} {&#411; y M &#183; N} x*M[x&#8788;N] &#9657;&#946;</a
+      ><a name="3929"
+      >
+</a
+      ><a name="3930" class="Comment"
+      >--   = {!!}</a
+      ><a name="3941"
+      >
+
+</a
+      ><a name="3943" class="Comment"
+      >-- lemma&#8594;&#945;* : {x : Atom} &#8594; (_*_ x) preserved-by (dual _&#8594;&#946;_) </a
+      ><a name="4003"
+      >
+</a
+      ><a name="4004" class="Comment"
+      >-- lemma&#8594;&#945;* x*N           (ctxinj &#9657;&#946;)   = lemma&#9657;* x*N &#9657;&#946;</a
+      ><a name="4060"
+      >
+</a
+      ><a name="4061" class="Comment"
+      >-- lemma&#8594;&#945;* (*&#183;l x*N)     (ctx&#183;l M&#8594;&#946;N)  = *&#183;l (lemma&#8594;&#945;* x*N M&#8594;&#946;N)</a
+      ><a name="4126"
+      >
+</a
+      ><a name="4127" class="Comment"
+      >-- lemma&#8594;&#945;* (*&#183;r x*N')    (ctx&#183;l M&#8594;&#946;N)  = *&#183;r x*N'</a
+      ><a name="4177"
+      >
+</a
+      ><a name="4178" class="Comment"
+      >-- lemma&#8594;&#945;* (*&#183;l x*N)     (ctx&#183;r M&#8594;&#946;N)  = *&#183;l x*N</a
+      ><a name="4227"
+      >
+</a
+      ><a name="4228" class="Comment"
+      >-- lemma&#8594;&#945;* (*&#183;r x*N')    (ctx&#183;r M&#8594;&#946;N)  = *&#183;r (lemma&#8594;&#945;* x*N' M&#8594;&#946;N)</a
+      ><a name="4294"
+      >
+</a
+      ><a name="4295" class="Comment"
+      >-- lemma&#8594;&#945;* (*&#411; x*N y&#8802;x)  (ctx&#411; M&#8594;&#946;N)   = *&#411; (lemma&#8594;&#945;* x*N M&#8594;&#946;N) y&#8802;x</a
+      ><a name="4363"
+      >
+
+</a
+      ><a name="4365" class="Comment"
+      >-- lemma&#8594;&#946;# : {x : Atom} &#8594; (_#_ x) preserved-by (_&#8594;&#946;_) </a
+      ><a name="4420"
+      >
+</a
+      ><a name="4421" class="Comment"
+      >-- lemma&#8594;&#946;# = {!!} --dual-*-# lemma&#8594;&#945;*</a
+      ><a name="4459"
+      >
+
+</a
+      ><a name="4461" class="Comment"
+      >-- lemma&#8594;&#945;# : {x : Atom} &#8594; (_#_ x) preserved-by (_&#8594;&#945;_) </a
+      ><a name="4516"
+      >
+</a
+      ><a name="4517" class="Comment"
+      >-- lemma&#8594;&#945;#      x#M (inj&#8321; M&#8594;&#946;N)  = lemma&#8594;&#946;# x#M M&#8594;&#946;N</a
+      ><a name="4570"
+      >
+</a
+      ><a name="4571" class="Comment"
+      >-- lemma&#8594;&#945;# {x}  x#M (inj&#8322; M~N)   = {!!} -- lemmaM&#8764;N# M~N x x#M</a
+      ><a name="4634"
+      >
+
+</a
+      ><a name="4636" class="Comment"
+      >-- lemma&#8594;&#945;*# : {x : Atom} &#8594; (_#_ x) preserved-by (_&#8594;&#945;*_)</a
+      ><a name="4692"
+      >
+</a
+      ><a name="4693" class="Comment"
+      >-- lemma&#8594;&#945;*# x#M refl                 = x#M </a
+      ><a name="4737"
+      >
+</a
+      ><a name="4738" class="Comment"
+      >-- lemma&#8594;&#945;*# x#M (just M&#8594;&#945;N)          = lemma&#8594;&#945;# x#M M&#8594;&#945;N</a
+      ><a name="4795"
+      >
+</a
+      ><a name="4796" class="Comment"
+      >-- lemma&#8594;&#945;*# x#M (trans M&#8594;&#945;*P P&#8594;&#945;*N)  = lemma&#8594;&#945;*# (lemma&#8594;&#945;*# x#M M&#8594;&#945;*P) P&#8594;&#945;*N</a
+      ><a name="4873"
+      >
+</a
+      ><a name="4874" class="Comment"
+      >-- \end{code}</a
+      ><a name="4887"
+      >
+
+</a
+      ><a name="4889" class="Comment"
+      >-- Subject Reduction</a
+      ><a name="4909"
+      >
+
+</a
+      ><a name="4911" class="Comment"
+      >-- \begin{code}</a
+      ><a name="4926"
+      >
+</a
+      ><a name="4927" class="Comment"
+      >-- lemma&#8866;&#8594;&#945;* :  {&#915; : Cxt}{&#945; : Type}{M N : &#923;} </a
+      ><a name="4972"
+      >
+</a
+      ><a name="4973" class="Comment"
+      >--              &#8594; &#915; &#8866; M &#8758; &#945; &#8594; M &#8594;&#945;* N &#8594; &#915; &#8866; N &#8758; &#945;</a
+      ><a name="5022"
+      >
+</a
+      ><a name="5023" class="Comment"
+      >-- lemma&#8866;&#8594;&#945;* &#915;&#8866;M:&#945; refl                  = &#915;&#8866;M:&#945;</a
+      ><a name="5071"
+      >
+</a
+      ><a name="5072" class="Comment"
+      >-- lemma&#8866;&#8594;&#945;* &#915;&#8866;M:&#945; (just M&#8594;&#946;N)           = lemma&#8866;&#8594;&#945; &#915;&#8866;M:&#945; M&#8594;&#946;N</a
+      ><a name="5134"
+      >
+</a
+      ><a name="5135" class="Comment"
+      >-- lemma&#8866;&#8594;&#945;* &#915;&#8866;M:&#945; (trans M&#8594;&#945;*N N&#8594;&#945;*P)   = lemma&#8866;&#8594;&#945;* (lemma&#8866;&#8594;&#945;* &#915;&#8866;M:&#945; M&#8594;&#945;*N) N&#8594;&#945;*P</a
+      ><a name="5217"
+      >
+</a
+      ><a name="5218" class="Comment"
+      >-- \end{code}</a
+      ><a name="5231"
+      >
+
+
+
+
+
+
+
+
+
+</a
+      ></pre
+    ></body
+  ></html
+>

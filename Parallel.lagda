@@ -250,37 +250,6 @@ lemma⇉βrule {M} {M'} {N} {N'} {P} x y ƛxM⇉ƛyM' N⇉N' M'[y≔N']∼P
   x#ƛyM' = lemma⇉# #ƛ≡ ƛxM⇉ƛyM'
 \end{code}
 
--- %<*parallel2>
--- \begin{code}
--- data _⇉2_ : Λ → Λ → Set where
---   ⇉v :  (x : Atom)
---         → v x ⇉2 v x
---   ⇉ƛ :  {M M' : Λ}{x : Atom}
---         → M ⇉2 M'
---         → ƛ x M ⇉2 ƛ x M'
---   ⇉· :  {M M' N N' : Λ}
---         → M ⇉2 M' → N ⇉2 N'
---         → M · N ⇉2 M' · N'
---   ⇉β :  {M M' N N' P : Λ}(x : Atom)
---         → ƛ x M ⇉2 ƛ x M' 
---         → N ⇉2 N'
---         → M' [ x ≔ N' ] ∼α P
---         → ƛ x M · N ⇉2 P
--- \end{code}
--- %</parallel2>
-
-
--- \begin{code}
--- lemma⇉to⇉2 : {M N : Λ} → M ⇉ N → M ⇉2 N
--- lemma⇉to⇉2 (⇉v x)                = ⇉v x
--- lemma⇉to⇉2 (⇉ƛ xs f)
---   with lemma⇉ƛrule (⇉ƛ xs f)
--- ... | M″ , M⇉M″ , _ , ƛyN~ƛxM″
---   = {! ⇉ƛ !}
--- lemma⇉to⇉2 (⇉· M⇉M' N⇉N')        = {!!}
--- lemma⇉to⇉2 (⇉β x y M⇉M' N⇉N' f)  = {!!}
--- \end{code}
-
 \begin{code}
 P⇉[] : {N N' : Λ}(x : Atom) → Λ → Set
 P⇉[] {N} {N'} x M = {M' : Λ} → M ⇉ M' → N ⇉ N' → M [ x ≔ N ] ⇉ M' [ x ≔ N' ]
