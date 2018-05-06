@@ -2,3 +2,4 @@
 *.lagda linguist-language=Agda
 html/* linguist-documentation
 latex/* linguist-documentation
+latexcopia/* linguist-documentation
