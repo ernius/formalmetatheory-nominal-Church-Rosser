@@ -1,0 +1,4 @@
+*.agda linguist-language=Agda
+*.lagda linguist-language=Agda
+html/* linguist-documentation
+latex/* linguist-documentation
