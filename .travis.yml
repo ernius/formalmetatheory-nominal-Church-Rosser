@@ -1,0 +1,16 @@
+sudo: required
+
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - docker pull ecopello/agda:version2.5.2  
+#  - travis_wait 30 docker build -t agda-docker .
+
+#  /home/travis/build/ernius/genericBindingFramework
+script:
+  - wget https://github.com/agda/agda-stdlib/archive/v0.13.tar.gz -O /tmp/v0.13.tar.gz
+  - tar -xzf /tmp/v0.13.tar.gz -C /tmp/
+  - docker run -v $TRAVIS_BUILD_DIR:/tmp/project-build -v /tmp:/tmp/agdalibrary ecopello/agda:version2.5.2 /bin/sh -c 'cd /tmp/project-build; agda --no-libraries -i . -i /tmp/agdalibrary/agda-stdlib-0.13/src Diamond.agda'
