@@ -25,6 +25,9 @@ The principal results are in the following links:
 * Nora Szasz      
 * Álvaro Tasistro 
 
+# Build Status in Travis CI : [![Build Status](https://travis-ci.org/ernius/formalmetatheory-nominal-Church-Rosser.svg?branch=master)](https://travis-ci.org/ernius/formalmetatheory-nominal-Church-Rosser)
+
+Agda compiler version 2.5.2 and standard library version 0.13
 
 
 
