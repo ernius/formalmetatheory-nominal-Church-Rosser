@@ -12,7 +12,6 @@ open import Data.List hiding (any)
 open import Data.List.Properties
 open import Data.List.Any as Any hiding (map)
 open import Data.List.Any.Properties
-open import Data.List.Any.Membership
 open import Relation.Nullary
 open import Relation.Nullary.Decidable
 open import Relation.Binary

@@ -19,7 +19,7 @@ latex/%.tex : %.lagda
 bib : latex/resumen.bib
 	cd latex; pdflatex resumen.tex; bibtex resumen;pdflatex resumen.tex;pdflatex resumen.tex; cd ..;
 
-resumen : latex/resumen.tex latex/Substitution.tex latex/FreeVariables.tex latex/Atom.tex latex/Alpha.tex latex/Chi.tex latex/Equivariant.tex latex/ListProperties.tex latex/NaturalProperties.tex latex/Permutation.tex latex/TermAcc.tex latex/Term.tex latex/TermInduction.tex latex/TermRecursion.tex latex/Norrish.tex latex/Parallel.tex
+resumen : latex/resumen.tex latex/Substitution.tex latex/FreeVariables.tex latex/Atom.tex latex/Alpha.tex latex/Chi.tex latex/Equivariant.tex latex/ListProperties.tex latex/NaturalProperties.tex latex/Permutation.tex latex/TermAcc.tex latex/Term.tex latex/TermInduction.tex latex/TermRecursion.tex latex/Norrish.tex latex/Parallel.tex latex/Types.tex
 	cd latex; $(LATEX) resumen.tex; cd ..;	
 
 diapo : latex/diapositivas.tex latex/Substitution.tex latex/FreeVariables.tex latex/Atom.tex latex/Alpha.tex latex/Chi.tex latex/Equivariant.tex latex/ListProperties.tex latex/NaturalProperties.tex latex/Permutation.tex latex/TermAcc.tex latex/Term.tex latex/TermInduction.tex latex/TermRecursion.tex latex/Norrish.tex 

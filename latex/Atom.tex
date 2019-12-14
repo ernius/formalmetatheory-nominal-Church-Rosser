@@ -5,9 +5,9 @@
 \\
 \>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.Nat}\<%
 \\
-\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.Product} \AgdaKeyword{renaming} \AgdaSymbol{(}\_×\_ \AgdaSymbol{to} \_∧\_\AgdaSymbol{)}\<%
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.Product} \AgdaKeyword{renaming} \AgdaSymbol{(}\AgdaFunction{\_×\_} \AgdaSymbol{to} \AgdaFunction{\_∧\_}\AgdaSymbol{)}\<%
 \\
-\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.Sum} \AgdaKeyword{renaming} \AgdaSymbol{(}\_⊎\_ \AgdaSymbol{to} \_∨\_\AgdaSymbol{)}\<%
+\>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.Sum} \AgdaKeyword{renaming} \AgdaSymbol{(}\AgdaDatatype{\_⊎\_} \AgdaSymbol{to} \AgdaDatatype{\_∨\_}\AgdaSymbol{)}\<%
 \\
 \>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Data.Sum}\<%
 \\
@@ -17,7 +17,7 @@
 \\
 \>\AgdaKeyword{open} \AgdaKeyword{import} \AgdaModule{Relation.Binary.PropositionalEquality} \AgdaSymbol{as} \AgdaModule{PropEq}\<%
 \\
-\>\AgdaKeyword{open} \AgdaModule{PropEq.}\AgdaModule{≡-Reasoning} \AgdaKeyword{renaming} \AgdaSymbol{(}begin\_ \AgdaSymbol{to} begin≡\_\AgdaSymbol{;}\_∎ \AgdaSymbol{to} \_□\AgdaSymbol{)}\<%
+\>\AgdaKeyword{open} \AgdaModule{PropEq.}\AgdaModule{≡-Reasoning} \AgdaKeyword{renaming} \AgdaSymbol{(}\AgdaFunction{begin\_} \AgdaSymbol{to} \AgdaFunction{begin≡\_}\AgdaSymbol{;}\AgdaFunction{\_∎} \AgdaSymbol{to} \AgdaFunction{\_□}\AgdaSymbol{)}\<%
 \\
 %
 \\
@@ -542,7 +542,7 @@
 \>[23]\AgdaBound{b} \<[26]%
 \>[26]\AgdaSymbol{.}\AgdaBound{a} \<[30]%
 \>[30]\AgdaSymbol{.}\AgdaBound{b} \<[34]%
-\>[34]\AgdaSymbol{.}\AgdaBound{a} \AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{a} \AgdaSymbol{|} \AgdaInductiveConstructor{inj₂} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaSymbol{(}\AgdaInductiveConstructor{refl} \AgdaInductiveConstructor{,} \AgdaBound{b≢a} \AgdaInductiveConstructor{,} \AgdaInductiveConstructor{refl}\AgdaSymbol{))} \AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{b} \AgdaSymbol{|} \AgdaInductiveConstructor{inj₁} \AgdaSymbol{(}\AgdaInductiveConstructor{refl} \AgdaInductiveConstructor{,} \AgdaInductiveConstructor{refl}\AgdaSymbol{)} \AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{a} \AgdaSymbol{|} \AgdaInductiveConstructor{inj₂} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaSymbol{(}\AgdaInductiveConstructor{refl} \AgdaInductiveConstructor{,} \AgdaSymbol{\_} \AgdaInductiveConstructor{,} \AgdaInductiveConstructor{refl}\AgdaSymbol{))}\<%
+\>[34]\AgdaSymbol{.}\AgdaBound{b} \AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{a} \AgdaSymbol{|} \AgdaInductiveConstructor{inj₂} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaSymbol{(}\AgdaInductiveConstructor{refl} \AgdaInductiveConstructor{,} \AgdaBound{b≢a} \AgdaInductiveConstructor{,} \AgdaInductiveConstructor{refl}\AgdaSymbol{))} \AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{b} \AgdaSymbol{|} \AgdaInductiveConstructor{inj₁} \AgdaSymbol{(}\AgdaInductiveConstructor{refl} \AgdaInductiveConstructor{,} \AgdaInductiveConstructor{refl}\AgdaSymbol{)} \AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{a} \AgdaSymbol{|} \AgdaInductiveConstructor{inj₂} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaSymbol{(}\AgdaInductiveConstructor{refl} \AgdaInductiveConstructor{,} \AgdaSymbol{\_} \AgdaInductiveConstructor{,} \AgdaInductiveConstructor{refl}\AgdaSymbol{))}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{=} \AgdaFunction{sym} \AgdaSymbol{(}\AgdaFunction{lemma∙ₐ（ab）b≡a} \AgdaSymbol{\{}\AgdaBound{b}\AgdaSymbol{\}} \AgdaSymbol{\{}\AgdaBound{a}\AgdaSymbol{\})}\<%
@@ -843,7 +843,7 @@
 \>[33]\AgdaSymbol{.}\AgdaBound{b} \<[37]%
 \>[37]\AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{b} \AgdaSymbol{|} \AgdaInductiveConstructor{inj₂} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₂} \AgdaSymbol{(\_} \<[59]%
 \>[59]\AgdaInductiveConstructor{,} \AgdaBound{b≢d} \AgdaInductiveConstructor{,} \AgdaInductiveConstructor{refl}\AgdaSymbol{))} \AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{a} \AgdaSymbol{|} \AgdaInductiveConstructor{inj₂} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₁} \AgdaSymbol{(}\AgdaInductiveConstructor{refl} \AgdaInductiveConstructor{,} \AgdaBound{b≢a} \AgdaInductiveConstructor{,} \AgdaInductiveConstructor{refl}\AgdaSymbol{))} \<[114]%
-\>[114]\AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{d} \AgdaSymbol{|} \AgdaInductiveConstructor{inj₁} \AgdaSymbol{(}\AgdaInductiveConstructor{refl} \AgdaInductiveConstructor{,} \AgdaInductiveConstructor{refl}\AgdaSymbol{)}\<%
+\>[114]\AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{b} \AgdaSymbol{|} \AgdaInductiveConstructor{inj₁} \AgdaSymbol{(}\AgdaInductiveConstructor{refl} \AgdaInductiveConstructor{,} \AgdaInductiveConstructor{refl}\AgdaSymbol{)}\<%
 \\
 \>[0]\AgdaIndent{2}{}\<[2]%
 \>[2]\AgdaSymbol{|} \AgdaSymbol{.}\AgdaBound{d} \AgdaSymbol{|} \AgdaInductiveConstructor{inj₂} \AgdaSymbol{(}\AgdaInductiveConstructor{inj₂} \AgdaSymbol{(}\AgdaBound{d≢a} \AgdaInductiveConstructor{,} \AgdaBound{d≢b} \AgdaInductiveConstructor{,} \AgdaInductiveConstructor{refl}\AgdaSymbol{))}\<%
