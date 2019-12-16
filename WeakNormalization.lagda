@@ -66,11 +66,13 @@ M ↓ = ∃ (λ N → M ↓ N)
 
 \begin{code}
 lemma₂var : {x  y : Atom}{N : Λ} → Nf N → (v y) [ x ≔ N ] ↓
-lemma₂var = {!!}
+lemma₂var {x} {y} {N} nfN with (v y) [ x ≔ N ] | lemmahvar {x} {y} {N}
+... | .N     | inj₁ (x≡y ∶ refl) = N   ∶ refl ∶ nfN
+... | .(v y) | inj₂ (x≢y ∶ refl) = v y ∶ refl ∶ ne (v y)
 
-lemma₁ : {α β : Type}{Γ : Cxt}{M N : Λ} → Nf M → Nf N → Γ ⊢ M ∶ α ⟶ β → Γ ⊢ N ∶ α → M · N ↓ 
+lemma₁ : {α β : Type}{Γ : Cxt}{M N : Λ} → Nf M → Nf N → Γ ⊢ M ∶ β ⟶ α → Γ ⊢ N ∶ β → M · N ↓ 
 lemma₂ : {α β : Type}{Γ : Cxt}{x : Atom}{M N : Λ} → Nf M → Nf N → Γ ‚ x ∶ β  ⊢ M ∶ α  →  Γ ⊢ N ∶ β → M [ x ≔ N ] ↓
--- lemma₃ : {x y : Atom}{Γ : Ctx}{α β : Type}{M : Λ} → Ne x M → Γ ‚ x ∶ β ⊢ M ∶ α → Γ ⊢ v y ∶ β  → ∃ (λ z → λ M → Ne z M × M [ x ≔ ] →α* r')
+-- lemma₃ : {α β : Type}{Γ : Cxt}{x : Atom}{M N : Λ} → Ne M → Nf N → Γ ‚ x ∶ β  ⊢ M ∶ α  →  Γ ⊢ N ∶ β → M [ x ≔ N ] ↓
 -- lemma₄ : ∀ {x Γ Δ α β σ} → Acc< β → (r : Λ) → Ne x r → Γ ⊢ r ∶ α → Π σ r β Γ Δ → ¬ isVar (σ x) → r ∙ σ ↓ ∧ α ≤ β 
 
 lemma₁ {M = v x}    {N} _          nfN _               _  = (v x)   · N ∶ refl ∶ ne (v x · nfN)  
@@ -80,13 +82,27 @@ lemma₁ {M = ƛ x M}  {N} (ƛ nfM)    nfN (⊢ƛ Γ,x:β⊢M:α)  Γ⊢N:β
   with lemma₂ nfM nfN Γ,x:β⊢M:α Γ⊢N:β
 ... | P ∶ M[x≔N]→P ∶ nfP = P ∶ trans (just (inj₁ (ctxinj ▹β))) M[x≔N]→P  ∶ nfP
 
+{-# TERMINATING #-}
 lemma₂ {x = x} {v y}   {N} _                nfN _                          _      = lemma₂var {x} nfN
 lemma₂ {x = x} {M · P} {N} (ne (neM · nfP)) nfN (⊢· Γ,x:β⊢M:α→γ Γ,x:β⊢P:α) Γ⊢N:β
   with lemma₂ (ne neM) nfN Γ,x:β⊢M:α→γ Γ⊢N:β | lemma₂ nfP nfN Γ,x:β⊢P:α Γ⊢N:β
 ... | Q ∶ M[x≔N]→Q ∶ nfQ | R ∶ P[x≔N]→R ∶ nfR
-  with lemma₁ nfQ nfR (lemma⊢→α* (lemma⊢[] Γ,x:β⊢M:α→γ Γ⊢N:β) M[x≔N]→Q) (lemma⊢→α* (lemma⊢[] Γ,x:β⊢P:α Γ⊢N:β) P[x≔N]→R)
+  with lemma₁ nfQ nfR (lemma⊢→α* (lemma⊢[] Γ,x:β⊢M:α→γ Γ⊢N:β) M[x≔N]→Q) (lemma⊢→α* (lemma⊢[] Γ,x:β⊢P:α Γ⊢N:β) P[x≔N]→R) -- problematic call
 ... | S ∶ QR→S ∶ nfS = S ∶ trans (app-star M[x≔N]→Q P[x≔N]→R) QR→S ∶ nfS
-lemma₂ {x = x} {ƛ y M} {N} = {!!}
+lemma₂         {M = ƛ y M} (ne ()) _   _                  _
+lemma₂ {α} {β} {Γ} {x} {ƛ y M} {N} (ƛ nfM) nfN (⊢ƛ .{y} {γ} Γ,x:β,y:γ⊢M:α) Γ⊢N:β
+  with χ (x ∷ fv N) (ƛ y M) | χ# (x ∷ fv N) (ƛ y M) | χ∉ (x ∷ fv N) (ƛ y M) | (ƛ y M) [ x ≔ N ] | lemmaSubstƛ x y M N | lemma∼λχ {y} {x ∷ fv N} {M}
+... | z | z#λyM | z∉x∷fvN | .(ƛ z ((（ y ∙ z ） M ) [ x ≔ N ])) | refl | λyM∼λz（yz）M
+  =  ƛ↓ (lemma₂ nf（yz）N nfN type (lemmaWeakening⊢# z#N Γ⊢N:β)) -- problematic call
+  where
+  nf（yz）N : Nf (（ y ∙ z ） M)
+  nf（yz）N = {!!}
+  type : Γ ‚ z ∶ γ ‚ x ∶ β ⊢ （ y ∙ z ） M ∶ α
+  type = {!!}
+  z#N : z # N
+  z#N = {!!}
+  -- weakening : Γ ‚ z ∶ α ⊢ （ x ∙ z ） M ∶ β
+  -- weakening = lemmaWeakening⊢ (lemma（）⊆ z∉domΓ) （xz）Γ,z:α⊢（xz）M:β
 
 wk : {α : Type}{Γ : Cxt}{M : Λ} → Γ ⊢ M ∶ α → M ↓
 wk {M = v x}   _                  = v x ∶ refl ∶ ne (v x)
