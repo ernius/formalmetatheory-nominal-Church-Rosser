@@ -110,7 +110,14 @@ data _⊢_∶_ (Γ : Cxt): Λ → Type → Set where
 \end{code}
 %</type>
 
+
+\begin{code}
+lemma⊢v : {x : V}{α : Type}{Γ : Cxt} → Γ ⊢ v x ∶ α → Σₓ (x ∈ Γ) (λ x∈Γ → Γ ⟨ x∈Γ ⟩ ≡ α)
+lemma⊢v (⊢v x∈Γ) = x∈Γ ∶ refl
+\end{code}
+
 Some type results:
+
 %<*weakening>
 \begin{code}
 lemmaWeakening⊢ :  {Γ Δ : Cxt}{M : Λ}{α : Type}

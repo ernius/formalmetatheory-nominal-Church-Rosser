@@ -107,6 +107,9 @@ app-star-r (trans t→α*t' t'→α*t'')  = trans (app-star-r t→α*t') (app-st
 
 app-star : ∀ {M M' N N'} → M →α* M' → N →α* N' → M · N →α* M' · N'
 app-star M→α*M' N→α*N' = trans (app-star-l M→α*M') (app-star-r N→α*N')
+
+β-star : ∀ {x M N } → ƛ x M · N →α* M [ x ≔ N ]
+β-star = just (inj₁ (ctxinj ▹β))
 \end{code}
 
 Reduction is a preorder over terms, hence we can use the combinators of
