@@ -51,6 +51,9 @@ c∉x∷xs++ys→c∉x∷xs a∉b∷xs++ys (there a∈xs)  = ⊥-elim ((c∉xs++
 c∉x∷xs++ys→c∉x∷ys : {a b : ℕ}{xs ys : List ℕ} → a ∉' (b ∷ (xs ++ ys)) → a ∉' b ∷ ys 
 c∉x∷xs++ys→c∉x∷ys a∉b∷xs++ys (here a≡b)              = ⊥-elim (a∉b∷xs++ys (here a≡b))
 c∉x∷xs++ys→c∉x∷ys {xs = xs} a∉b∷xs++ys (there a∈ys)  = ⊥-elim ((c∉xs++ys→c∉ys {xs = xs} (b∉a∷xs→b∉xs a∉b∷xs++ys)) a∈ys)
+x≢y∧y∉xs→x∉x∷xs : {x y : ℕ}{xs : List ℕ} → x ≢ y → y ∉' xs → y ∉' x ∷ xs
+x≢y∧y∉xs→x∉x∷xs {x} .{x} x≢x _ (here refl) =  ⊥-elim (x≢x refl)
+x≢y∧y∉xs→x∉x∷xs {x} {y} x≢y y∉xs (there y∈xs) = ⊥-elim (y∉xs y∈xs)
 --
 lemmaxs++[]≡xs : {A : Set}(xs : List A) → xs ++ [] ≡ xs
 lemmaxs++[]≡xs []        =  refl

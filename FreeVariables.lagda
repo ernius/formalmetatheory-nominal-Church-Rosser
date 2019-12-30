@@ -342,3 +342,9 @@ lemmafv* {a} {M} = TermαIndPerm (Pfv* a) (αCompatiblePfv* a) lemmav lemma· ([
     b≢a : b ≢ a
     b≢a = λ b≡a → (⊥-elim (b∉[a] (here b≡a)))
 \end{code}
+
+\begin{code}
+postulate
+  #→∉fv : {a : Atom}{M : Λ} → a # M → a ∉ fv M
+-- #→∉fv a#M = {!!}
+\end{code}
