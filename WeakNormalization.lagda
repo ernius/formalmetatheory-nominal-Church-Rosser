@@ -340,7 +340,16 @@ thm-proof {β} {N} {M} (acc accβ) =
 --   --         → thm {x} {γ ⟶ φ} {β} {Γ} {N} (ƛ z M)
 --   -- thm-abs M z (lemma1M ∶ lemma2M) fresh = {!!}
 
-  
+
+-- wk : {α : Type}{Γ : Cxt}{M : Λ} → Γ ⊢ M ∶ α → M ↓
+-- wk {M = v x}   _                  = v x ∶ refl ∶ ne (v x)
+-- wk {M = ƛ x M} (⊢ƛ Γ,x:β⊢M:α)     = ƛ↓ (wk Γ,x:β⊢M:α)
+-- wk {M = M · N} (⊢· {α} Γ⊢M:α→β Γ⊢N:α)
+--   with wk Γ⊢M:α→β | wk Γ⊢N:α
+-- ... | M' ∶ M→M' ∶ nfM' | N' ∶ N→N' ∶ nfN'
+--   with lemma₁ (wf< α) nfM' nfN' (lemma⊢→α* Γ⊢M:α→β M→M') (lemma⊢→α* Γ⊢N:α N→N')
+-- ... | P ∶ M'N'→P ∶ nfP = P ∶ trans (app-star M→M' N→N') M'N'→P ∶ nfP  
+
 \end{code}
 
 
