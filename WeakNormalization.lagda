@@ -11,9 +11,9 @@ open import Beta
 open import Substitution
 open import TermInduction
 open import Permutation
-open import FreeVariables
 open import Alpha renaming (τ to ∼τ)
 open import Types
+open import FreeVariables
 
 open import Induction.WellFounded
 open import Data.Bool hiding (_∨_;_≟_)
@@ -229,12 +229,11 @@ Induction on type β, and inside it a term α-induction on M
 thm-proof : {β : Type}{x : Atom}{N : Λ}{M : Λ} → Acc< β → thm {β} {x} {N} M
 thm-proof {τ}      {x} {N} {M} _          = {!!}
 thm-proof {β ⟶ β'} {x} {N} {M} (acc accβ) =
-  TermαPrimInd2 (thm {β ⟶ β'} {x} {N}) (x ∷ fv N) (thm-αComp {β ⟶ β'} {x} {N}) {!!} thm-app {!!} M -- thm-var thm-app thm-abs
+  TermαPrimInd (thm {β ⟶ β'} {x} {N}) (thm-αComp {β ⟶ β'} {x} {N}) {!!} thm-app (x ∷ fv N ∶ thm-abs) M -- thm-var thm-app 
   where
   lemma1-app : (M Q : Λ) → thm {β ⟶ β'} {x} {N} M → thm {β ⟶ β'} {x} {N} Q
-          → ((z : Atom) → z ∈l x ∷ fv N → z ∉b M · Q)
           → thm-lemma1 {β ⟶ β'} {x} {N} (M · Q)
-  lemma1-app M Q thmM thmQ fresh (⊢· Γ,x:β→β'⊢M:γ→α Γ,x:β→β'⊢Q:γ) Γ⊢N:β→β' (ne {y} (NeyM · NfQ)) N↓
+  lemma1-app M Q thmM thmQ (⊢· Γ,x:β→β'⊢M:γ→α Γ,x:β→β'⊢Q:γ) Γ⊢N:β→β' (ne {y} (NeyM · NfQ)) N↓
     with x ≟ₐ y 
   ... | no x≢y  with (proj₁ thmM) Γ,x:β→β'⊢M:γ→α Γ⊢N:β→β' (ne NeyM) N↓
                    | (proj₁ thmQ) Γ,x:β→β'⊢Q:γ Γ⊢N:β→β' NfQ N↓
@@ -245,7 +244,7 @@ thm-proof {β ⟶ β'} {x} {N} {M} (acc accβ) =
       =  R · S
       ∶  app-star M[x≔N]→R Q[x≔N]→S
       ∶  ne (Nf∧Wne⊂Ne NfR (corollary1 {y} WNeyM[x≔N] (M[x≔N]→R ∶ NfR)) · NfS)
-  lemma1-app M Q thmM thmQ fresh {α} {Γ} (⊢· {γ} Γ,x:β→β'⊢M:γ→α Γ,x:β→β'⊢Q:γ) Γ⊢N:β→β' (ne {x} (NexM · NfQ)) N↓  
+  lemma1-app M Q thmM thmQ {α} {Γ} (⊢· {γ} Γ,x:β→β'⊢M:γ→α Γ,x:β→β'⊢Q:γ) Γ⊢N:β→β' (ne {x} (NexM · NfQ)) N↓  
       | yes refl = lemmaM⟶N∧N↓⟶M↓ (app-star-l M[x≔N]⟶R) RQ[x≔N]↓ 
     where
     -- subordinate induction
@@ -273,17 +272,47 @@ thm-proof {β ⟶ β'} {x} {N} {M} (acc accβ) =
     RQ[x≔N]↓ = (proj₂ (thm-proof {γ} {x} {Q [ x ≔ N ]} {R} (accβ γ γ<β→β'))) Γ⊢R:γ⟶α Γ⊢Q[x≔N]:γ NfR hiQ 
 
   lemma2-app : (M Q : Λ) → thm {β ⟶ β'} {x} {N} M → thm {β ⟶ β'} {x} {N} Q
-          → ((z : Atom) → z ∈l x ∷ fv N → z ∉b M · Q)
           → thm-lemma2 {β ⟶ β'} {x} {N} (M · Q)
-  lemma2-app M Q thmM thmQ fresh Γ,x:β→β'⊢MQ:α Γ⊢N:β→β' (ne {y} NeyMQ) (N' ∶ N→N' ∶ NfN') =
+  lemma2-app M Q thmM thmQ Γ,x:β→β'⊢MQ:α Γ⊢N:β→β' (ne {y} NeyMQ) (N' ∶ N→N' ∶ NfN') =
       (M · Q) · N'
     ∶ app-star-r N→N'
     ∶ ne (NeyMQ · NfN')                    
   thm-app : (M Q : Λ) → thm {β ⟶ β'} {x} {N} M → thm {β ⟶ β'} {x} {N} Q
-          → ((z : Atom) → z ∈l x ∷ fv N → z ∉b M · Q)
           → thm {β ⟶ β'} {x} {N} (M · Q)
-  thm-app M Q thmM thmQ fresh = lemma1-app M Q thmM thmQ fresh ∶ lemma2-app M Q thmM thmQ fresh 
+  thm-app M Q thmM thmQ = lemma1-app M Q thmM thmQ ∶ lemma2-app M Q thmM thmQ
 
+  lemma1-abs : (M : Λ)(y : V)
+    → (y ∉l  x ∷ fv N)
+    → thm {β ⟶ β'} {x} {N} M    
+    → thm-lemma1 {β ⟶ β'} {x} {N} (ƛ y M)
+  lemma1-abs M y y∉x∷fvN thmM Γ‚x∶β⟶β'⊢ƛyM∶α Γ⊢N∶β⟶β' (ne ()) N↓     
+  lemma1-abs M y y∉x∷fvN thmM {γ ⟶ α} {Γ} (⊢ƛ .{y} .{γ} Γ‚x∶β⟶β',y:γ⊢M:α) Γ⊢N∶β⟶β' (ƛ NfM) N↓
+    = ↓αComp (σ （ƛyM）[x≔N]~ƛy（M[x≔N]）) (ƛ↓ hiM) 
+    where
+    x≢y : x ≢ y
+    x≢y = sym≢ (b∉a∷xs→b≢a y∉x∷fvN)
+    y∉fvN : y ∉l fv N
+    y∉fvN = b∉a∷xs→b∉xs y∉x∷fvN
+    Γ,y:γ‚x∶β⟶β'⊢M:α : Γ ‚ y ∶ γ ‚ x ∶ (β ⟶ β') ⊢ M ∶ α 
+    Γ,y:γ‚x∶β⟶β'⊢M:α = lemmaWeakening⊢ (lemma⊆xy x≢y) Γ‚x∶β⟶β',y:γ⊢M:α
+    Γ,y:γ⊢N∶β⟶β' : Γ ‚ y ∶ γ ⊢ N ∶ β ⟶ β'
+    Γ,y:γ⊢N∶β⟶β' = lemmaWeakening⊢# (lemma∉fv→# y∉fvN) Γ⊢N∶β⟶β'
+    hiM : M [ x ≔ N ] ↓
+    hiM = (proj₁ thmM) Γ,y:γ‚x∶β⟶β'⊢M:α Γ,y:γ⊢N∶β⟶β' NfM N↓
+    （ƛyM）[x≔N]~ƛy（M[x≔N]） : (ƛ y M) [ x ≔ N ] ∼α ƛ y (M [ x ≔ N ])
+    （ƛyM）[x≔N]~ƛy（M[x≔N]） = lemmaƛ∼[] M y∉x∷fvN 
+  
+  lemma2-abs :(M : Λ)(y : V)
+    → (y ∉l  x ∷ fv N)
+    → thm {β ⟶ β'} {x} {N} M    
+    → thm-lemma2 {β ⟶ β'} {x} {N} (ƛ y M)
+  lemma2-abs M y y∉x∷fvN thmM = {!!}
+  
+  thm-abs : (M : Λ)(y : V)
+    → (y ∉l  x ∷ fv N)  
+    → thm {β ⟶ β'} {x} {N} M
+    → thm {β ⟶ β'} {x} {N} (ƛ y M)
+  thm-abs M y fresh thmM = lemma1-abs M y fresh thmM ∶ lemma2-abs M y fresh thmM
 
 --   -- where
 --   -- thm-var-lemma1 : (y : Atom) → lemma1 {x} {γ ⟶ φ} {β} {Γ} {N} (v y)
