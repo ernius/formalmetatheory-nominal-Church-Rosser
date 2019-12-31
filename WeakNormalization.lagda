@@ -17,7 +17,6 @@ open import FreeVariables
 
 open import Induction.WellFounded
 open import Data.Bool hiding (_∨_;_≟_)
-open import Data.Product renaming (Σ to Σₓ;map to mapₓ;_,_ to _∶_) public
 open import Data.Sum renaming (_⊎_ to _∨_;map to map+)
 open import Data.Empty
 open import Data.Product renaming (Σ to Σₓ;map to mapₓ;_,_ to _∶_) public
@@ -212,13 +211,6 @@ thm-αComp {β} {N} M~M' (lemma1M ∶ lemma2M) = thm-lemma1-αComp {β} {N} M~M'
 \end{code}
 
 \begin{code}
-lemma1-var : {x  y : Atom}{N : Λ} → N ↓ → (v y) [ x ≔ N ] ↓
-lemma1-var {x} {y} {N} N↓ with (v y) [ x ≔ N ] | lemmahvar {x} {y} {N}
-... | .N     | inj₁ (x≡y ∶ refl) = N↓
-... | .(v y) | inj₂ (x≢y ∶ refl) = v y ∶ refl ∶ ne (v y)
-\end{code}
-
-\begin{code}
 thm-subst : {x : Atom}{M N : Λ} → M  [ x ≔ N ] ↓ → (ƛ x M) · N ↓
 thm-subst (P ∶ M[x≔N]→P ∶ nfP) =  P ∶ trans β-star M[x≔N]→P ∶ nfP
 \end{code}
@@ -228,8 +220,19 @@ Induction on type β, and inside it a term α-induction on M
 \begin{code}
 thm-proof : {β : Type}{N : Λ}{M : Λ} → Acc< β → thm {β} {N} M
 thm-proof {β} {N} {M} (acc accβ) =
-  TermαPrimInd (thm {β} {N}) (thm-αComp {β} {N}) {!!} thm-app (fv N ∶ thm-abs) M -- thm-var
+  TermαPrimInd (thm {β} {N}) (thm-αComp {β} {N}) thm-var thm-app (fv N ∶ thm-abs) M 
   where
+  lemma1-var : (y : V) → thm-lemma1 {β} {N} (v y)
+  lemma1-var y {x} _ _ _ N↓ with (v y) [ x ≔ N ] | lemmahvar {x} {y} {N}
+  ... | .N     | inj₁ (x≡y ∶ refl) = N↓
+  ... | .(v y) | inj₂ (x≢y ∶ refl) = v y ∶ refl ∶ ne (v y)
+  
+  lemma2-var : (y : V) → thm-lemma2 {β} {N} (v y)
+  lemma2-var = {!!}
+
+  thm-var : (y : V) → thm {β} {N} (v y)
+  thm-var y = lemma1-var y ∶ lemma2-var y
+  
   lemma1-app : (M Q : Λ) → thm {β} {N} M → thm {β} {N} Q
           → thm-lemma1 {β} {N} (M · Q)
   lemma1-app M Q  thmM thmQ {x} (⊢· Γ,x:β⊢M:γ→α Γ,x:β⊢Q:γ) Γ⊢N:β (ne {y} (NeyM · NfQ)) N↓
@@ -324,31 +327,21 @@ thm-proof {β} {N} {M} (acc accβ) =
   thm-abs M y fresh thmM = lemma1-abs M y fresh thmM ∶ lemma2-abs M y fresh thmM
 
 --   -- where
---   -- thm-var-lemma1 : (y : Atom) → lemma1 {x} {γ ⟶ φ} {β} {Γ} {N} (v y)
---   -- thm-var-lemma1 y Γ,x:β⊢y:γ→φ Γ⊢N:β N↓ = lemma1-var {x} {y} N↓ 
 --   -- thm-var-lemma2 : (y : Atom) → lemma2 {x} {γ ⟶ φ} {β} {Γ} {N} (v y)
 --   -- thm-var-lemma2 y Γ,x:β⊢y:γ→φ Γ⊢N:β N↓ _     {P}      (y[x≔N]→P ∶ ne neP) {Q}  Γ⊢Q:γ (R ∶ Q→R ∶ nfR)
 --   --   = P · R ∶ app-star-r Q→R ∶ ne (neP · nfR)
 --   -- thm-var-lemma2 y Γ,x:β⊢y:γ→φ Γ⊢N:β N↓ refl  {ƛ z P}  (y[x≔N]→ƛzP ∶ ƛ nfP) {Q}  Γ⊢Q:γ Q↓
 --   --   with lemma⊢→α* (lemma⊢[] Γ,x:β⊢y:γ→φ Γ⊢N:β) y[x≔N]→ƛzP
 --   -- ... | ⊢ƛ Γ,z:γ⊢P:φ = thm-subst (proj₁ (thm-proof {z} {φ} P) Γ,z:γ⊢P:φ Γ⊢Q:γ Q↓)
---   -- thm-var : (y : Atom) → thm {x} {γ ⟶ φ} {β} {Γ} {N} (v y)
---   -- thm-var y = thm-var-lemma1 y ∶ thm-var-lemma2 y
 
---   -- thm-abs : (M : Λ)(z : Atom) → thm {x} {γ ⟶ φ} {β} {Γ} {N} M
---   --         → ((w : Atom) → w ∈l x ∷ fv N ++ dom Γ → w ∉b ƛ z M)
---   --         → thm {x} {γ ⟶ φ} {β} {Γ} {N} (ƛ z M)
---   -- thm-abs M z (lemma1M ∶ lemma2M) fresh = {!!}
-
-
--- wk : {α : Type}{Γ : Cxt}{M : Λ} → Γ ⊢ M ∶ α → M ↓
--- wk {M = v x}   _                  = v x ∶ refl ∶ ne (v x)
--- wk {M = ƛ x M} (⊢ƛ Γ,x:β⊢M:α)     = ƛ↓ (wk Γ,x:β⊢M:α)
--- wk {M = M · N} (⊢· {α} Γ⊢M:α→β Γ⊢N:α)
---   with wk Γ⊢M:α→β | wk Γ⊢N:α
--- ... | M' ∶ M→M' ∶ nfM' | N' ∶ N→N' ∶ nfN'
---   with lemma₁ (wf< α) nfM' nfN' (lemma⊢→α* Γ⊢M:α→β M→M') (lemma⊢→α* Γ⊢N:α N→N')
--- ... | P ∶ M'N'→P ∶ nfP = P ∶ trans (app-star M→M' N→N') M'N'→P ∶ nfP  
+wk : {α : Type}{Γ : Cxt}{M : Λ} → Γ ⊢ M ∶ α → M ↓
+wk {M = v x}   _                  = v x ∶ refl ∶ ne (v x)
+wk {M = ƛ x M} (⊢ƛ Γ,x:β⊢M:α)     = ƛ↓ (wk Γ,x:β⊢M:α)
+wk {M = M · N} (⊢· {α} Γ⊢M:α→β Γ⊢N:α)
+  with wk Γ⊢M:α→β | wk Γ⊢N:α
+... | M' ∶ M→M' ∶ nfM' | N' ∶ N→N' ∶ nfN'
+  with (proj₂ (thm-proof (wf< α))) (lemma⊢→α* Γ⊢M:α→β M→M') (lemma⊢→α* Γ⊢N:α N→N') nfM' (N' ∶ refl ∶ nfN')
+... | P ∶ M'N'→P ∶ nfP = P ∶ trans (app-star M→M' N→N') M'N'→P ∶ nfP  
 
 \end{code}
 
