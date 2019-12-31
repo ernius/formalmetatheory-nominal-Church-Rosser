@@ -2419,532 +2419,647 @@ Context clousure of beta contraction.
       >)</a
       ><a name="2998"
       >
+
+</a
+      ><a name="3000" href="Beta.html#3000" class="Function"
+      >&#946;-star</a
+      ><a name="3006"
+      > </a
+      ><a name="3007" class="Symbol"
+      >:</a
+      ><a name="3008"
+      > </a
+      ><a name="3009" class="Symbol"
+      >&#8704;</a
+      ><a name="3010"
+      > </a
+      ><a name="3011" class="Symbol"
+      >{</a
+      ><a name="3012" href="Beta.html#3012" class="Bound"
+      >x</a
+      ><a name="3013"
+      > </a
+      ><a name="3014" href="Beta.html#3014" class="Bound"
+      >M</a
+      ><a name="3015"
+      > </a
+      ><a name="3016" href="Beta.html#3016" class="Bound"
+      >N</a
+      ><a name="3017"
+      > </a
+      ><a name="3018" class="Symbol"
+      >}</a
+      ><a name="3019"
+      > </a
+      ><a name="3020" class="Symbol"
+      >&#8594;</a
+      ><a name="3021"
+      > </a
+      ><a name="3022" href="Term.html#1045" class="InductiveConstructor"
+      >&#411;</a
+      ><a name="3023"
+      > </a
+      ><a name="3024" href="Beta.html#3012" class="Bound"
+      >x</a
+      ><a name="3025"
+      > </a
+      ><a name="3026" href="Beta.html#3014" class="Bound"
+      >M</a
+      ><a name="3027"
+      > </a
+      ><a name="3028" href="Term.html#1025" class="InductiveConstructor Operator"
+      >&#183;</a
+      ><a name="3029"
+      > </a
+      ><a name="3030" href="Beta.html#3016" class="Bound"
+      >N</a
+      ><a name="3031"
+      > </a
+      ><a name="3032" href="Beta.html#1680" class="Function Operator"
+      >&#8594;&#945;*</a
+      ><a name="3035"
+      > </a
+      ><a name="3036" href="Beta.html#3014" class="Bound"
+      >M</a
+      ><a name="3037"
+      > </a
+      ><a name="3038" href="Substitution.html#898" class="Function Operator"
+      >[</a
+      ><a name="3039"
+      > </a
+      ><a name="3040" href="Beta.html#3012" class="Bound"
+      >x</a
+      ><a name="3041"
+      > </a
+      ><a name="3042" href="Substitution.html#898" class="Function Operator"
+      >&#8788;</a
+      ><a name="3043"
+      > </a
+      ><a name="3044" href="Beta.html#3016" class="Bound"
+      >N</a
+      ><a name="3045"
+      > </a
+      ><a name="3046" href="Substitution.html#898" class="Function Operator"
+      >]</a
+      ><a name="3047"
+      >
+</a
+      ><a name="3048" href="Beta.html#3000" class="Function"
+      >&#946;-star</a
+      ><a name="3054"
+      > </a
+      ><a name="3055" class="Symbol"
+      >=</a
+      ><a name="3056"
+      > </a
+      ><a name="3057" href="Relation.html#2162" class="InductiveConstructor"
+      >just</a
+      ><a name="3061"
+      > </a
+      ><a name="3062" class="Symbol"
+      >(</a
+      ><a name="3063" href="Data.Sum.html#489" class="InductiveConstructor"
+      >inj&#8321;</a
+      ><a name="3067"
+      > </a
+      ><a name="3068" class="Symbol"
+      >(</a
+      ><a name="3069" href="Beta.html#1211" class="InductiveConstructor"
+      >ctxinj</a
+      ><a name="3075"
+      > </a
+      ><a name="3076" href="Beta.html#970" class="InductiveConstructor"
+      >&#9657;&#946;</a
+      ><a name="3078" class="Symbol"
+      >))</a
+      ><a name="3080"
+      >
 \end{code}
 </a
-      ><a name="3010" class="Comment"
+      ><a name="3092" class="Comment"
       >
 Reduction is a preorder over terms, hence we can use the combinators of
 the standard library for proving the reduction of a term to another.
 
 </a
-      ><a name="3153"
+      ><a name="3235"
       >\begin{code}
 </a
-      ><a name="3166" class="Keyword"
+      ><a name="3248" class="Keyword"
       >open</a
-      ><a name="3170"
+      ><a name="3252"
       > </a
-      ><a name="3171" class="Keyword"
+      ><a name="3253" class="Keyword"
       >import</a
-      ><a name="3177"
+      ><a name="3259"
       > </a
-      ><a name="3178" href="Relation.Nullary.html#1" class="Module"
+      ><a name="3260" href="Relation.Nullary.html#1" class="Module"
       >Relation.Nullary</a
-      ><a name="3194"
+      ><a name="3276"
       >
 </a
-      ><a name="3195" class="Keyword"
+      ><a name="3277" class="Keyword"
       >open</a
-      ><a name="3199"
+      ><a name="3281"
       > </a
-      ><a name="3200" class="Keyword"
+      ><a name="3282" class="Keyword"
       >import</a
-      ><a name="3206"
-      > </a
-      ><a name="3207" href="Relation.Binary.PropositionalEquality.html#1" class="Module"
-      >Relation.Binary.PropositionalEquality</a
-      ><a name="3244"
-      > </a
-      ><a name="3245" class="Keyword"
-      >renaming</a
-      ><a name="3253"
-      > </a
-      ><a name="3254" class="Symbol"
-      >(</a
-      ><a name="3255" href="Relation.Binary.PropositionalEquality.Core.html#565" class="Function"
-      >sym</a
-      ><a name="3258"
-      > </a
-      ><a name="3259" class="Symbol"
-      >to</a
-      ><a name="3261"
-      > </a
-      ><a name="3262" href="Relation.Binary.PropositionalEquality.Core.html#565" class="Function"
-      >sym'</a
-      ><a name="3266" class="Symbol"
-      >;</a
-      ><a name="3267" href="Relation.Binary.PropositionalEquality.Core.html#632" class="Function"
-      >trans</a
-      ><a name="3272"
-      > </a
-      ><a name="3273" class="Symbol"
-      >to</a
-      ><a name="3275"
-      > </a
-      ><a name="3276" href="Relation.Binary.PropositionalEquality.Core.html#632" class="Function"
-      >trans'</a
-      ><a name="3282" class="Symbol"
-      >)</a
-      ><a name="3283"
-      >
-</a
-      ><a name="3284" class="Keyword"
-      >open</a
       ><a name="3288"
       > </a
-      ><a name="3289" class="Keyword"
-      >import</a
-      ><a name="3295"
+      ><a name="3289" href="Relation.Binary.PropositionalEquality.html#1" class="Module"
+      >Relation.Binary.PropositionalEquality</a
+      ><a name="3326"
       > </a
-      ><a name="3296" href="Relation.Binary.html#1" class="Module"
-      >Relation.Binary</a
-      ><a name="3311"
-      > </a
-      ><a name="3312" class="Keyword"
-      >using</a
-      ><a name="3317"
-      > </a
-      ><a name="3318" class="Symbol"
-      >(</a
-      ><a name="3319" href="Relation.Binary.html#1470" class="Record"
-      >Preorder</a
-      ><a name="3327" class="Symbol"
-      >)</a
-      ><a name="3328"
-      >
-</a
-      ><a name="3329" class="Keyword"
-      >import</a
+      ><a name="3327" class="Keyword"
+      >renaming</a
       ><a name="3335"
       > </a
-      ><a name="3336" href="Relation.Binary.PreorderReasoning.html#1" class="Module"
-      >Relation.Binary.PreorderReasoning</a
-      ><a name="3369"
+      ><a name="3336" class="Symbol"
+      >(</a
+      ><a name="3337" href="Relation.Binary.PropositionalEquality.Core.html#565" class="Function"
+      >sym</a
+      ><a name="3340"
       > </a
-      ><a name="3370" class="Symbol"
-      >as</a
-      ><a name="3372"
+      ><a name="3341" class="Symbol"
+      >to</a
+      ><a name="3343"
       > </a
-      ><a name="3373" class="Module"
-      >PreR</a
-      ><a name="3377"
-      >    
-
+      ><a name="3344" href="Relation.Binary.PropositionalEquality.Core.html#565" class="Function"
+      >sym'</a
+      ><a name="3348" class="Symbol"
+      >;</a
+      ><a name="3349" href="Relation.Binary.PropositionalEquality.Core.html#632" class="Function"
+      >trans</a
+      ><a name="3354"
+      > </a
+      ><a name="3355" class="Symbol"
+      >to</a
+      ><a name="3357"
+      > </a
+      ><a name="3358" href="Relation.Binary.PropositionalEquality.Core.html#632" class="Function"
+      >trans'</a
+      ><a name="3364" class="Symbol"
+      >)</a
+      ><a name="3365"
+      >
 </a
-      ><a name="3383" href="Beta.html#3383" class="Function"
-      >&#8594;-preorder</a
+      ><a name="3366" class="Keyword"
+      >open</a
+      ><a name="3370"
+      > </a
+      ><a name="3371" class="Keyword"
+      >import</a
+      ><a name="3377"
+      > </a
+      ><a name="3378" href="Relation.Binary.html#1" class="Module"
+      >Relation.Binary</a
       ><a name="3393"
       > </a
-      ><a name="3394" class="Symbol"
-      >:</a
-      ><a name="3395"
+      ><a name="3394" class="Keyword"
+      >using</a
+      ><a name="3399"
       > </a
-      ><a name="3396" href="Relation.Binary.html#1470" class="Record"
+      ><a name="3400" class="Symbol"
+      >(</a
+      ><a name="3401" href="Relation.Binary.html#1470" class="Record"
       >Preorder</a
-      ><a name="3404"
-      > </a
-      ><a name="3405" class="Symbol"
-      >_</a
-      ><a name="3406"
-      > </a
-      ><a name="3407" class="Symbol"
-      >_</a
-      ><a name="3408"
-      > </a
       ><a name="3409" class="Symbol"
-      >_</a
+      >)</a
       ><a name="3410"
       >
 </a
-      ><a name="3411" href="Beta.html#3383" class="Function"
-      >&#8594;-preorder</a
-      ><a name="3421"
+      ><a name="3411" class="Keyword"
+      >import</a
+      ><a name="3417"
       > </a
-      ><a name="3422" class="Symbol"
+      ><a name="3418" href="Relation.Binary.PreorderReasoning.html#1" class="Module"
+      >Relation.Binary.PreorderReasoning</a
+      ><a name="3451"
+      > </a
+      ><a name="3452" class="Symbol"
+      >as</a
+      ><a name="3454"
+      > </a
+      ><a name="3455" class="Module"
+      >PreR</a
+      ><a name="3459"
+      >    
+
+</a
+      ><a name="3465" href="Beta.html#3465" class="Function"
+      >&#8594;-preorder</a
+      ><a name="3475"
+      > </a
+      ><a name="3476" class="Symbol"
+      >:</a
+      ><a name="3477"
+      > </a
+      ><a name="3478" href="Relation.Binary.html#1470" class="Record"
+      >Preorder</a
+      ><a name="3486"
+      > </a
+      ><a name="3487" class="Symbol"
+      >_</a
+      ><a name="3488"
+      > </a
+      ><a name="3489" class="Symbol"
+      >_</a
+      ><a name="3490"
+      > </a
+      ><a name="3491" class="Symbol"
+      >_</a
+      ><a name="3492"
+      >
+</a
+      ><a name="3493" href="Beta.html#3465" class="Function"
+      >&#8594;-preorder</a
+      ><a name="3503"
+      > </a
+      ><a name="3504" class="Symbol"
       >=</a
-      ><a name="3423"
+      ><a name="3505"
       >  
     </a
-      ><a name="3430" class="Keyword"
+      ><a name="3512" class="Keyword"
       >record</a
-      ><a name="3436"
+      ><a name="3518"
       > </a
-      ><a name="3437" class="Symbol"
+      ><a name="3519" class="Symbol"
       >{</a
-      ><a name="3438"
+      ><a name="3520"
       > 
       </a
-      ><a name="3446" class="Field"
+      ><a name="3528" class="Field"
       >Carrier</a
-      ><a name="3453"
+      ><a name="3535"
       > </a
-      ><a name="3454" class="Symbol"
+      ><a name="3536" class="Symbol"
       >=</a
-      ><a name="3455"
+      ><a name="3537"
       > </a
-      ><a name="3456" href="Term.html#990" class="Datatype"
+      ><a name="3538" href="Term.html#990" class="Datatype"
       >&#923;</a
-      ><a name="3457" class="Symbol"
+      ><a name="3539" class="Symbol"
       >;</a
-      ><a name="3458"
+      ><a name="3540"
       >
       </a
-      ><a name="3465" class="Field Operator"
+      ><a name="3547" class="Field Operator"
       >_&#8776;_</a
-      ><a name="3468"
+      ><a name="3550"
       > </a
-      ><a name="3469" class="Symbol"
+      ><a name="3551" class="Symbol"
       >=</a
-      ><a name="3470"
+      ><a name="3552"
       > </a
-      ><a name="3471" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
+      ><a name="3553" href="Agda.Builtin.Equality.html#83" class="Datatype Operator"
       >_&#8801;_</a
-      ><a name="3474" class="Symbol"
+      ><a name="3556" class="Symbol"
       >;</a
-      ><a name="3475"
+      ><a name="3557"
       >
       </a
-      ><a name="3482" class="Field Operator"
+      ><a name="3564" class="Field Operator"
       >_&#8764;_</a
-      ><a name="3485"
+      ><a name="3567"
       > </a
-      ><a name="3486" class="Symbol"
+      ><a name="3568" class="Symbol"
       >=</a
-      ><a name="3487"
+      ><a name="3569"
       > </a
-      ><a name="3488" href="Beta.html#1680" class="Function Operator"
+      ><a name="3570" href="Beta.html#1680" class="Function Operator"
       >_&#8594;&#945;*_</a
-      ><a name="3493" class="Symbol"
+      ><a name="3575" class="Symbol"
       >;</a
-      ><a name="3494"
+      ><a name="3576"
       >
       </a
-      ><a name="3501" class="Field"
+      ><a name="3583" class="Field"
       >isPreorder</a
-      ><a name="3511"
+      ><a name="3593"
       > </a
-      ><a name="3512" class="Symbol"
+      ><a name="3594" class="Symbol"
       >=</a
-      ><a name="3513"
+      ><a name="3595"
       >  </a
-      ><a name="3515" class="Keyword"
+      ><a name="3597" class="Keyword"
       >record</a
-      ><a name="3521"
+      ><a name="3603"
       > </a
-      ><a name="3522" class="Symbol"
+      ><a name="3604" class="Symbol"
       >{</a
-      ><a name="3523"
+      ><a name="3605"
       >
         </a
-      ><a name="3532" class="Field"
+      ><a name="3614" class="Field"
       >isEquivalence</a
-      ><a name="3545"
+      ><a name="3627"
       > </a
-      ><a name="3546" class="Symbol"
+      ><a name="3628" class="Symbol"
       >=</a
-      ><a name="3547"
+      ><a name="3629"
       > </a
-      ><a name="3548" href="Relation.Binary.html#2031" class="Field"
+      ><a name="3630" href="Relation.Binary.html#2031" class="Field"
       >Relation.Binary.Setoid.isEquivalence</a
-      ><a name="3584"
+      ><a name="3666"
       > </a
-      ><a name="3585" class="Symbol"
+      ><a name="3667" class="Symbol"
       >(</a
-      ><a name="3586" href="Relation.Binary.PropositionalEquality.html#1526" class="Function"
+      ><a name="3668" href="Relation.Binary.PropositionalEquality.html#1526" class="Function"
       >PropEq.setoid</a
-      ><a name="3599"
+      ><a name="3681"
       > </a
-      ><a name="3600" href="Term.html#990" class="Datatype"
+      ><a name="3682" href="Term.html#990" class="Datatype"
       >&#923;</a
-      ><a name="3601" class="Symbol"
+      ><a name="3683" class="Symbol"
       >)</a
-      ><a name="3602"
+      ><a name="3684"
       > </a
-      ><a name="3603" class="Symbol"
+      ><a name="3685" class="Symbol"
       >;</a
-      ><a name="3604"
+      ><a name="3686"
       >
         </a
-      ><a name="3613" class="Field"
+      ><a name="3695" class="Field"
       >reflexive</a
-      ><a name="3622"
+      ><a name="3704"
       > </a
-      ><a name="3623" class="Symbol"
+      ><a name="3705" class="Symbol"
       >=</a
-      ><a name="3624"
+      ><a name="3706"
       > </a
-      ><a name="3625" class="Symbol"
+      ><a name="3707" class="Symbol"
       >&#955;</a
-      ><a name="3626"
+      ><a name="3708"
       > </a
-      ><a name="3627" class="Symbol"
+      ><a name="3709" class="Symbol"
       >{</a
-      ><a name="3628"
+      ><a name="3710"
       > </a
-      ><a name="3629" class="Symbol"
+      ><a name="3711" class="Symbol"
       >{</a
-      ><a name="3630" href="Beta.html#3630" class="Bound"
+      ><a name="3712" href="Beta.html#3712" class="Bound"
       >M</a
-      ><a name="3631" class="Symbol"
+      ><a name="3713" class="Symbol"
       >}</a
-      ><a name="3632"
+      ><a name="3714"
       > </a
-      ><a name="3633" class="Symbol"
+      ><a name="3715" class="Symbol"
       >{</a
-      ><a name="3634" class="DottedPattern Symbol"
+      ><a name="3716" class="DottedPattern Symbol"
       >.</a
-      ><a name="3635" href="Beta.html#3630" class="DottedPattern Bound"
+      ><a name="3717" href="Beta.html#3712" class="DottedPattern Bound"
       >M</a
-      ><a name="3636" class="Symbol"
+      ><a name="3718" class="Symbol"
       >}</a
-      ><a name="3637"
+      ><a name="3719"
       > </a
-      ><a name="3638" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
+      ><a name="3720" href="Agda.Builtin.Equality.html#140" class="InductiveConstructor"
       >refl</a
-      ><a name="3642"
+      ><a name="3724"
       > </a
-      ><a name="3643" class="Symbol"
+      ><a name="3725" class="Symbol"
       >&#8594;</a
-      ><a name="3644"
+      ><a name="3726"
       > </a
-      ><a name="3645" href="Relation.html#2132" class="InductiveConstructor"
+      ><a name="3727" href="Relation.html#2132" class="InductiveConstructor"
       >refl</a
-      ><a name="3649" class="Symbol"
+      ><a name="3731" class="Symbol"
       >};</a
-      ><a name="3651"
+      ><a name="3733"
       >
         </a
-      ><a name="3660" class="Field"
+      ><a name="3742" class="Field"
       >trans</a
-      ><a name="3665"
+      ><a name="3747"
       > </a
-      ><a name="3666" class="Symbol"
+      ><a name="3748" class="Symbol"
       >=</a
-      ><a name="3667"
+      ><a name="3749"
       > </a
-      ><a name="3668" href="Relation.html#2202" class="InductiveConstructor"
+      ><a name="3750" href="Relation.html#2202" class="InductiveConstructor"
       >star.trans</a
-      ><a name="3678"
+      ><a name="3760"
       > </a
-      ><a name="3679" class="Symbol"
+      ><a name="3761" class="Symbol"
       >}</a
-      ><a name="3680"
+      ><a name="3762"
       > 
     </a
-      ><a name="3686" class="Symbol"
+      ><a name="3768" class="Symbol"
       >}</a
-      ><a name="3687"
+      ><a name="3769"
       >
 
 </a
-      ><a name="3689" class="Keyword"
+      ><a name="3771" class="Keyword"
       >open</a
-      ><a name="3693"
+      ><a name="3775"
       > </a
-      ><a name="3694" href="Relation.Binary.PreorderReasoning.html#1" class="Module"
+      ><a name="3776" href="Relation.Binary.PreorderReasoning.html#1" class="Module"
       >PreR</a
-      ><a name="3698"
+      ><a name="3780"
       > </a
-      ><a name="3699" href="Beta.html#3383" class="Function"
+      ><a name="3781" href="Beta.html#3465" class="Function"
       >&#8594;-preorder</a
-      ><a name="3709"
+      ><a name="3791"
       > </a
-      ><a name="3710" class="Keyword"
+      ><a name="3792" class="Keyword"
       >renaming</a
-      ><a name="3718"
+      ><a name="3800"
       > </a
-      ><a name="3719" class="Symbol"
+      ><a name="3801" class="Symbol"
       >(</a
-      ><a name="3720"
+      ><a name="3802"
       >begin_ </a
-      ><a name="3727" class="Symbol"
+      ><a name="3809" class="Symbol"
       >to</a
-      ><a name="3729"
+      ><a name="3811"
       > begin&#8594;_</a
-      ><a name="3737" class="Symbol"
+      ><a name="3819" class="Symbol"
       >;</a
-      ><a name="3738"
+      ><a name="3820"
       >_&#8764;&#10216;_&#10217;_ </a
-      ><a name="3745" class="Symbol"
+      ><a name="3827" class="Symbol"
       >to</a
-      ><a name="3747"
+      ><a name="3829"
       > _&#8594;&#10216;_&#10217;_</a
-      ><a name="3754" class="Symbol"
+      ><a name="3836" class="Symbol"
       >;</a
-      ><a name="3755"
+      ><a name="3837"
       >_&#8776;&#10216;_&#10217;_ </a
-      ><a name="3762" class="Symbol"
+      ><a name="3844" class="Symbol"
       >to</a
-      ><a name="3764"
+      ><a name="3846"
       > _=&#10216;_&#10217;_</a
-      ><a name="3771" class="Symbol"
+      ><a name="3853" class="Symbol"
       >;</a
-      ><a name="3772"
+      ><a name="3854"
       >_&#8718; </a
-      ><a name="3775" class="Symbol"
+      ><a name="3857" class="Symbol"
       >to</a
-      ><a name="3777"
+      ><a name="3859"
       > _&#9635;</a
-      ><a name="3780" class="Symbol"
+      ><a name="3862" class="Symbol"
       >)</a
-      ><a name="3781"
+      ><a name="3863"
       > </a
-      ><a name="3782" class="Keyword"
+      ><a name="3864" class="Keyword"
       >public</a
-      ><a name="3788"
+      ><a name="3870"
       >
 \end{code}
 </a
-      ><a name="3800" class="Comment"
+      ><a name="3882" class="Comment"
       >
 -- </a
-      ><a name="3804"
+      ><a name="3886"
       >\begin{code}
 </a
-      ><a name="3817" class="Comment"
+      ><a name="3899" class="Comment"
       >-- lemma&#9657;* : {x : Atom} &#8594; (_*_ x) preserved-by (dual _&#9657;_) </a
-      ><a name="3875"
+      ><a name="3957"
       >
 </a
-      ><a name="3876" class="Comment"
+      ><a name="3958" class="Comment"
       >-- lemma&#9657;* {x} .{M [ y &#8788; N ]} {&#411; y M &#183; N} x*M[x&#8788;N] &#9657;&#946;</a
-      ><a name="3929"
+      ><a name="4011"
       >
 </a
-      ><a name="3930" class="Comment"
+      ><a name="4012" class="Comment"
       >--   = {!!}</a
-      ><a name="3941"
+      ><a name="4023"
       >
 
 </a
-      ><a name="3943" class="Comment"
+      ><a name="4025" class="Comment"
       >-- lemma&#8594;&#945;* : {x : Atom} &#8594; (_*_ x) preserved-by (dual _&#8594;&#946;_) </a
-      ><a name="4003"
+      ><a name="4085"
       >
 </a
-      ><a name="4004" class="Comment"
+      ><a name="4086" class="Comment"
       >-- lemma&#8594;&#945;* x*N           (ctxinj &#9657;&#946;)   = lemma&#9657;* x*N &#9657;&#946;</a
-      ><a name="4060"
+      ><a name="4142"
       >
 </a
-      ><a name="4061" class="Comment"
+      ><a name="4143" class="Comment"
       >-- lemma&#8594;&#945;* (*&#183;l x*N)     (ctx&#183;l M&#8594;&#946;N)  = *&#183;l (lemma&#8594;&#945;* x*N M&#8594;&#946;N)</a
-      ><a name="4126"
+      ><a name="4208"
       >
 </a
-      ><a name="4127" class="Comment"
+      ><a name="4209" class="Comment"
       >-- lemma&#8594;&#945;* (*&#183;r x*N')    (ctx&#183;l M&#8594;&#946;N)  = *&#183;r x*N'</a
-      ><a name="4177"
+      ><a name="4259"
       >
 </a
-      ><a name="4178" class="Comment"
+      ><a name="4260" class="Comment"
       >-- lemma&#8594;&#945;* (*&#183;l x*N)     (ctx&#183;r M&#8594;&#946;N)  = *&#183;l x*N</a
-      ><a name="4227"
+      ><a name="4309"
       >
 </a
-      ><a name="4228" class="Comment"
+      ><a name="4310" class="Comment"
       >-- lemma&#8594;&#945;* (*&#183;r x*N')    (ctx&#183;r M&#8594;&#946;N)  = *&#183;r (lemma&#8594;&#945;* x*N' M&#8594;&#946;N)</a
-      ><a name="4294"
+      ><a name="4376"
       >
 </a
-      ><a name="4295" class="Comment"
+      ><a name="4377" class="Comment"
       >-- lemma&#8594;&#945;* (*&#411; x*N y&#8802;x)  (ctx&#411; M&#8594;&#946;N)   = *&#411; (lemma&#8594;&#945;* x*N M&#8594;&#946;N) y&#8802;x</a
-      ><a name="4363"
+      ><a name="4445"
       >
 
 </a
-      ><a name="4365" class="Comment"
+      ><a name="4447" class="Comment"
       >-- lemma&#8594;&#946;# : {x : Atom} &#8594; (_#_ x) preserved-by (_&#8594;&#946;_) </a
-      ><a name="4420"
+      ><a name="4502"
       >
 </a
-      ><a name="4421" class="Comment"
+      ><a name="4503" class="Comment"
       >-- lemma&#8594;&#946;# = {!!} --dual-*-# lemma&#8594;&#945;*</a
-      ><a name="4459"
+      ><a name="4541"
       >
 
 </a
-      ><a name="4461" class="Comment"
+      ><a name="4543" class="Comment"
       >-- lemma&#8594;&#945;# : {x : Atom} &#8594; (_#_ x) preserved-by (_&#8594;&#945;_) </a
-      ><a name="4516"
+      ><a name="4598"
       >
 </a
-      ><a name="4517" class="Comment"
+      ><a name="4599" class="Comment"
       >-- lemma&#8594;&#945;#      x#M (inj&#8321; M&#8594;&#946;N)  = lemma&#8594;&#946;# x#M M&#8594;&#946;N</a
-      ><a name="4570"
+      ><a name="4652"
       >
 </a
-      ><a name="4571" class="Comment"
+      ><a name="4653" class="Comment"
       >-- lemma&#8594;&#945;# {x}  x#M (inj&#8322; M~N)   = {!!} -- lemmaM&#8764;N# M~N x x#M</a
-      ><a name="4634"
+      ><a name="4716"
       >
 
 </a
-      ><a name="4636" class="Comment"
+      ><a name="4718" class="Comment"
       >-- lemma&#8594;&#945;*# : {x : Atom} &#8594; (_#_ x) preserved-by (_&#8594;&#945;*_)</a
-      ><a name="4692"
+      ><a name="4774"
       >
 </a
-      ><a name="4693" class="Comment"
+      ><a name="4775" class="Comment"
       >-- lemma&#8594;&#945;*# x#M refl                 = x#M </a
-      ><a name="4737"
+      ><a name="4819"
       >
 </a
-      ><a name="4738" class="Comment"
+      ><a name="4820" class="Comment"
       >-- lemma&#8594;&#945;*# x#M (just M&#8594;&#945;N)          = lemma&#8594;&#945;# x#M M&#8594;&#945;N</a
-      ><a name="4795"
+      ><a name="4877"
       >
 </a
-      ><a name="4796" class="Comment"
+      ><a name="4878" class="Comment"
       >-- lemma&#8594;&#945;*# x#M (trans M&#8594;&#945;*P P&#8594;&#945;*N)  = lemma&#8594;&#945;*# (lemma&#8594;&#945;*# x#M M&#8594;&#945;*P) P&#8594;&#945;*N</a
-      ><a name="4873"
+      ><a name="4955"
       >
 </a
-      ><a name="4874" class="Comment"
+      ><a name="4956" class="Comment"
       >-- \end{code}</a
-      ><a name="4887"
+      ><a name="4969"
       >
 
 </a
-      ><a name="4889" class="Comment"
+      ><a name="4971" class="Comment"
       >-- Subject Reduction</a
-      ><a name="4909"
+      ><a name="4991"
       >
 
 </a
-      ><a name="4911" class="Comment"
+      ><a name="4993" class="Comment"
       >-- \begin{code}</a
-      ><a name="4926"
+      ><a name="5008"
       >
 </a
-      ><a name="4927" class="Comment"
+      ><a name="5009" class="Comment"
       >-- lemma&#8866;&#8594;&#945;* :  {&#915; : Cxt}{&#945; : Type}{M N : &#923;} </a
-      ><a name="4972"
+      ><a name="5054"
       >
 </a
-      ><a name="4973" class="Comment"
+      ><a name="5055" class="Comment"
       >--              &#8594; &#915; &#8866; M &#8758; &#945; &#8594; M &#8594;&#945;* N &#8594; &#915; &#8866; N &#8758; &#945;</a
-      ><a name="5022"
+      ><a name="5104"
       >
 </a
-      ><a name="5023" class="Comment"
+      ><a name="5105" class="Comment"
       >-- lemma&#8866;&#8594;&#945;* &#915;&#8866;M:&#945; refl                  = &#915;&#8866;M:&#945;</a
-      ><a name="5071"
+      ><a name="5153"
       >
 </a
-      ><a name="5072" class="Comment"
+      ><a name="5154" class="Comment"
       >-- lemma&#8866;&#8594;&#945;* &#915;&#8866;M:&#945; (just M&#8594;&#946;N)           = lemma&#8866;&#8594;&#945; &#915;&#8866;M:&#945; M&#8594;&#946;N</a
-      ><a name="5134"
+      ><a name="5216"
       >
 </a
-      ><a name="5135" class="Comment"
+      ><a name="5217" class="Comment"
       >-- lemma&#8866;&#8594;&#945;* &#915;&#8866;M:&#945; (trans M&#8594;&#945;*N N&#8594;&#945;*P)   = lemma&#8866;&#8594;&#945;* (lemma&#8866;&#8594;&#945;* &#915;&#8866;M:&#945; M&#8594;&#945;*N) N&#8594;&#945;*P</a
-      ><a name="5217"
+      ><a name="5299"
       >
 </a
-      ><a name="5218" class="Comment"
+      ><a name="5300" class="Comment"
       >-- \end{code}</a
-      ><a name="5231"
+      ><a name="5313"
       >
 
 

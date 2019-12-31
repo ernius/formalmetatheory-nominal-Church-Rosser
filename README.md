@@ -16,8 +16,9 @@ The Church-Rosser theorem is in the file *Diamond.agda* file, while the Subject 
 The entire code can be browsed in html format here: [https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/index.html](https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/index.html).
 
 The principal results are in the following links:
-* Church-Rosser Theorem: [https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/Diamond.html](https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/Diamond.html)
-* Subject Reduction Theorem: [https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/Types.html](https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/Types.html)
+* Church-Rosser: [https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/Diamond.html](https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/Diamond.html)
+* Subject Reduction: [https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/Types.html](https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/Types.html)
+* Weak Normalization: [https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/WeakNormalization.html](https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/WeakNormalization.html)
 
 # Authors
 

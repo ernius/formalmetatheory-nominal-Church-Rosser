@@ -34,6 +34,7 @@ FreeVariables : FreeVariables.lagda
 html : *.lagda
 	$(AGDA) $(AGDAHTMLFLAGS) $(AGDALIBRARYFLAGS) Diamond.agda
 	$(AGDA) $(AGDAHTMLFLAGS) $(AGDALIBRARYFLAGS) Types.lagda
+	$(AGDA) $(AGDAHTMLFLAGS) $(AGDALIBRARYFLAGS) WeakNormalization.lagda
 
 clean :
 	rm *.agdai
