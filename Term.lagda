@@ -199,6 +199,13 @@ lemma-free→¬# {x} {ƛ .x M} (*ƛ xfreeM x≢x) #ƛ≡
   = ⊥-elim (x≢x refl)
 lemma-free→¬# {x} {ƛ y M} (*ƛ xfreeM y≢x) (#ƛ x#M)  
   = ⊥-elim ((lemma-free→¬# xfreeM) x#M)
+
+lemma-#→¬* : {x : Atom}{M : Λ} → x # M →  ¬ (x * M)
+lemma-#→¬* {x} .{v x}  (#v x≢x)     *v = ⊥-elim (x≢x refl)
+lemma-#→¬* {x} {M · N} (#· x#M x#N) (*·l x*M)   = ⊥-elim ((lemma-#→¬* x#M) x*M)
+lemma-#→¬* {x} {M · N} (#· x#M x#N) (*·r x*N)   = ⊥-elim ((lemma-#→¬* x#N) x*N)
+lemma-#→¬*             #ƛ≡          (*ƛ _ x≢x)  = ⊥-elim (x≢x refl)
+lemma-#→¬* {x} {ƛ y M} (#ƛ x#M)     (*ƛ x*M y≢x) = ⊥-elim ((lemma-#→¬* x#M) x*M) 
 \end{code}
 
 Term swap

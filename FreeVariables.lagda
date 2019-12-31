@@ -19,7 +19,7 @@ open import Data.Nat hiding (_*_)
 open import Data.Nat.Properties
 open import Data.Empty
 open import Data.Sum -- renaming (_⊎_ to _∨_)
-open import Data.List
+open import Data.List hiding (any)
 open import Data.List.Any as Any hiding (map)
 open import Data.List.Any.Membership
 open Any.Membership-≡
@@ -92,7 +92,6 @@ lemma·lfree {a} M {N} afreeN = inj₂ afreeN --rewrite ΛIt· Set (λ b → a �
 Pfs : Atom → Λ → Set
 Pfs a M = ∀ b c → a ≢ b → a ≢ c → a free M → a free (（ b ∙ c ） M)
 --
---postulate
 lemmaFreeSwap : ∀ M a → Pfs a M
 lemmaFreeSwap M a
   = TermαIndPerm  
@@ -159,7 +158,6 @@ lemmaFreeSwap2 M a b c a≢b a≢c afree（bc）M
 Pf* : Atom → Λ → Set
 Pf* a M = a free M → a * M
 --
---postulate
 lemmafree→* : ∀ {a M} → Pf* a M
 lemmafree→* {a} {M} 
   = TermαPrimInd (Pf* a) αCompatiblePf*a (λ {.a refl → *v}) lemma· ([ a ] , lemmaƛ) M
@@ -230,7 +228,6 @@ Pffv a M = a free M → a ∈ fv M
     lemma∼αfv M∼N 
   | freeStrongCompatible a N M (σ M∼N) = PffvM afreeM
 --
---postulate
 lemmaffv : ∀ {a} {M} → Pffv a M
 lemmaffv {a} {M} 
   = TermαIndPerm  (Pffv a) (αCompatiblePffva a) 
@@ -316,7 +313,6 @@ Pfv* a M = a ∈ fv M → a * M
 αCompatiblePfv* a M∼N a∈fvM→a*M a∈fvN 
   rewrite lemma∼αfv M∼N = lemma∼α* M∼N (a∈fvM→a*M a∈fvN)
 --
---postulate
 lemmafv* : ∀ {a} {M} → Pfv* a M
 lemmafv* {a} {M} = TermαIndPerm (Pfv* a) (αCompatiblePfv* a) lemmav lemma· ([ a ] , lemmaƛ) M
   where
@@ -344,7 +340,8 @@ lemmafv* {a} {M} = TermαIndPerm (Pfv* a) (αCompatiblePfv* a) lemmav lemma· ([
 \end{code}
 
 \begin{code}
-postulate
-  #→∉fv : {a : Atom}{M : Λ} → a # M → a ∉ fv M
--- #→∉fv a#M = {!!}
+#→∉fv : {a : Atom}{M : Λ} → a # M → a ∉ fv M
+#→∉fv {a} {M} a#M with any (_≟ₐ_ a) (fv M)
+... | yes a∈fvM = ⊥-elim (lemma-#→¬* a#M (lemmafv* a∈fvM))
+... | no  a∉fvM = a∉fvM
 \end{code}

@@ -132,7 +132,6 @@ lemma⊆∷ Γ⊆Δ (there z≢x z∈Γ)  = there z≢x (proj₁ (Γ⊆Δ z∈Γ
 -- _\\_ : Cxt → K → Cxt
 -- cxt \\ k = filter (λ y → not (⌊ k ≟ proj₁ y ⌋)) cxt
 
--- postulate
 --   lemma\\→  : (x y : K)(xs : Cxt) → (p : x ∈ xs \\ y) 
 --             → x ≢ y × Σ (x ∈ xs) (λ p' → (xs \\ y) ⟨ p ⟩ ≡ xs ⟨ p' ⟩)
 --   lemmm\\→dom : (x : K)(xs : Cxt) 
