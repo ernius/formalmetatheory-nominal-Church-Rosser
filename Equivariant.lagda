@@ -8,6 +8,9 @@ open import Permutation
 open import Relation.Nullary
 open import Relation.Binary.PropositionalEquality as PropEq hiding ([_])
 
+EquivariantPred : (Λ → Set) → Set
+EquivariantPred P = {M : Λ}(π : Π) → P M → P (π ∙ M)
+--
 EquivariantRel : (Λ → Λ → Set) → Set
 EquivariantRel R = {M N : Λ}(π : Π) → R M N → R (π ∙ M) (π ∙ N)
 --

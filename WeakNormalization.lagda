@@ -14,6 +14,7 @@ open import Permutation
 open import Alpha renaming (τ to ∼τ)
 open import Types
 open import FreeVariables
+open import Equivariant
 
 open import Induction.WellFounded
 open import Data.Bool hiding (_∨_;_≟_)
@@ -25,7 +26,7 @@ open import Relation.Nullary
 open import Relation.Nullary.Decidable hiding (map)
 open import Relation.Binary
 open import Relation.Binary.PropositionalEquality as PropEq hiding ([_]) renaming (trans to trans≡)
-open import Data.List hiding ([_])
+open import Data.List renaming ([_] to [_]l)
 open import Data.List.Any as Any hiding (map)
 open import Data.List.Any.Membership
 open Any.Membership-≡  renaming (_∈_ to _∈l_;_⊆_ to _⊆l_;_∉_ to _∉l_)
@@ -83,14 +84,38 @@ data Nf where
   ne  : ∀ {x r} → Ne x r → Nf r
   ƛ : ∀ {x r} → Nf r → Nf (ƛ x r)
 
+NeEquiv : EquivariantRela Ne
+NfEquiv : EquivariantPred Nf
+
+NeEquiv π (v x)
+  with π ∙ (v x)   | lemmaπv {x} {π}
+... | .(v (π ∙ₐ x)) | refl = v (π ∙ₐ x)
+NeEquiv {x} {M · N} π (NeM · NfN)
+  with π ∙ (M · N) | lemmaπ· {M} {N} {π}
+... | .((π ∙ M) · (π ∙ N)) | refl = NeEquiv π NeM · NfEquiv π NfN
+
+NfEquiv π (ne NeM) = ne (NeEquiv π NeM) 
+NfEquiv {ƛ x M} π (ƛ NfM)
+  with π ∙ (ƛ x M) | lemmaπƛ {x} {M} {π}
+... | .(ƛ (π ∙ₐ x) (π ∙ M)) | refl = ƛ (NfEquiv π NfM)
+
 NeαComp : {x : V} → αCompatiblePred (Ne x)
 NfαComp : αCompatiblePred Nf
 
 NeαComp {.x} ∼αv            (v x)       = v x
 NeαComp {x} (∼α· M~M' N~N') (NeM · NfN) = NeαComp M~M' NeM · NfαComp N~N' NfN
 
-NfαComp M~N               (ne NeM) = ne (NeαComp M~N NeM)
-NfαComp (∼αƛ xs xzM~yzN)  (ƛ NfM)  = {!!}
+NfαComp M~N         (ne NeM) = ne (NeαComp M~N NeM)
+NfαComp (∼αƛ {M} {N} {x} {y} xs f)  (ƛ NfM) = ƛ (subst Nf （xy）（xy）N≡N Nf（xy）（xy）N)
+  where
+  M~（xy）N :  M ∼α （ x ∙ y ） N
+  M~（xy）N = σ (lemma~αswap (σ (∼αƛ xs f)))
+  hiM : Nf (（ x ∙ y ） N)
+  hiM = NfαComp M~（xy）N NfM
+  Nf（xy）（xy）N : Nf (（ x ∙ y ） (（ x ∙ y ） N))
+  Nf（xy）（xy）N = NfEquiv [ x ∶ y ]l hiM
+  （xy）（xy）N≡N : （ x ∙ y ） (（ x ∙ y ） N) ≡ N
+  （xy）（xy）N≡N = lemmaπ⁻¹∘π≡id {[ x ∶ y ]l} {N}
 
 infix 4 _↓
 infix 5 _↓_
@@ -228,7 +253,7 @@ thm-proof {β} {N} {M} (acc accβ) =
   ... | .(v y) | inj₂ (x≢y ∶ refl) = v y ∶ refl ∶ ne (v y)
   
   lemma2-var : (y : V) → thm-lemma2 {β} {N} (v y)
-  lemma2-var = {!!}
+  lemma2-var y Γ⊢y:β→α Γ⊢N:β _ (P ∶ N→P ∶ nfP) = v y · P ∶ app-star-r N→P ∶ ne (v y · nfP)
 
   thm-var : (y : V) → thm {β} {N} (v y)
   thm-var y = lemma1-var y ∶ lemma2-var y
@@ -326,14 +351,6 @@ thm-proof {β} {N} {M} (acc accβ) =
     → thm {β} {N} (ƛ y M)
   thm-abs M y fresh thmM = lemma1-abs M y fresh thmM ∶ lemma2-abs M y fresh thmM
 
---   -- where
---   -- thm-var-lemma2 : (y : Atom) → lemma2 {x} {γ ⟶ φ} {β} {Γ} {N} (v y)
---   -- thm-var-lemma2 y Γ,x:β⊢y:γ→φ Γ⊢N:β N↓ _     {P}      (y[x≔N]→P ∶ ne neP) {Q}  Γ⊢Q:γ (R ∶ Q→R ∶ nfR)
---   --   = P · R ∶ app-star-r Q→R ∶ ne (neP · nfR)
---   -- thm-var-lemma2 y Γ,x:β⊢y:γ→φ Γ⊢N:β N↓ refl  {ƛ z P}  (y[x≔N]→ƛzP ∶ ƛ nfP) {Q}  Γ⊢Q:γ Q↓
---   --   with lemma⊢→α* (lemma⊢[] Γ,x:β⊢y:γ→φ Γ⊢N:β) y[x≔N]→ƛzP
---   -- ... | ⊢ƛ Γ,z:γ⊢P:φ = thm-subst (proj₁ (thm-proof {z} {φ} P) Γ,z:γ⊢P:φ Γ⊢Q:γ Q↓)
-
 wk : {α : Type}{Γ : Cxt}{M : Λ} → Γ ⊢ M ∶ α → M ↓
 wk {M = v x}   _                  = v x ∶ refl ∶ ne (v x)
 wk {M = ƛ x M} (⊢ƛ Γ,x:β⊢M:α)     = ƛ↓ (wk Γ,x:β⊢M:α)
@@ -342,7 +359,6 @@ wk {M = M · N} (⊢· {α} Γ⊢M:α→β Γ⊢N:α)
 ... | M' ∶ M→M' ∶ nfM' | N' ∶ N→N' ∶ nfN'
   with (proj₂ (thm-proof (wf< α))) (lemma⊢→α* Γ⊢M:α→β M→M') (lemma⊢→α* Γ⊢N:α N→N') nfM' (N' ∶ refl ∶ nfN')
 ... | P ∶ M'N'→P ∶ nfP = P ∶ trans (app-star M→M' N→N') M'N'→P ∶ nfP  
-
 \end{code}
 
 
