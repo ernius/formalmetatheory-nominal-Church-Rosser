@@ -5,13 +5,13 @@ We here show one a complete proof of the  Church-Rosser  and the Subject Reducti
 
 # Documentation
 
-* Machine-checked proof  of the Church-Rosser theorem for Lambda-Calculus using the Barendregt Variable Convention in Constructive Type Theory, Electronic Notes in Theoretical Computer Science,2018 in press.
+* [Machine-checked proof  of the Church-Rosser theorem for Lambda-Calculus using the Barendregt Variable Convention in Constructive Type Theory](https://www.sciencedirect.com/science/article/pii/S1571066118300720), Electronic Notes in Theoretical Computer Science,2018 in press.
 
 * [Alpha-Structural Induction and Recursion for the Lambda Calculus in Constructive Type Theory.](https://www.sciencedirect.com/science/article/pii/S1571066116300354?via%3Dihub) Electr. Notes Theor. Comput. Sci. 323: 109-124 (2016)
 
 # Principal Results
 
-The Church-Rosser theorem is in the file *Diamond.agda* file, while the Subject Reduction theorem is in the file *Types.lagda*.
+The Church-Rosser theorem is in the file [Diamond.agda](https://github.com/ernius/formalmetatheory-nominal-Church-Rosser/blob/master/Diamond.agda) file, Subject Reduction theorem is in the file [Types.lagda](https://github.com/ernius/formalmetatheory-nominal-Church-Rosser/blob/master/Types.lagda), and Weak Normalization result is in [WeakNormalization.lagda](https://github.com/ernius/formalmetatheory-nominal-Church-Rosser/blob/master/WeakNormalization.lagda)
 
 The entire code can be browsed in html format here: [https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/index.html](https://ernius.github.io/formalmetatheory-nominal-Church-Rosser/html/index.html).
 
