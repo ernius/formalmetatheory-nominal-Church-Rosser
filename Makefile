@@ -35,6 +35,7 @@ html : *.lagda
 	$(AGDA) $(AGDAHTMLFLAGS) $(AGDALIBRARYFLAGS) Diamond.agda
 	$(AGDA) $(AGDAHTMLFLAGS) $(AGDALIBRARYFLAGS) Types.lagda
 	$(AGDA) $(AGDAHTMLFLAGS) $(AGDALIBRARYFLAGS) WeakNormalization.lagda
+	./html/auto-index.sh > index.html
 
 clean :
 	rm *.agdai
